@@ -1,10 +1,11 @@
 package com.valueservice.djs.db;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.valueservice.djs.db.entity.Resources;
+import org.springframework.context.annotation.Lazy;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name="t_login_user")

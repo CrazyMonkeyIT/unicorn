@@ -23,8 +23,8 @@
             <version>1.2.15</version>
         </dependency>
         <dependency>
-            <groupId>com.baozun.crm</groupId>
-            <artifactId>monitor-service</artifactId>
+            <groupId>com.valueservice.djs</groupId>
+            <artifactId>djs-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--shiro -->

@@ -1,10 +1,10 @@
 package com.valueservice.djs.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.valueservice.djs.db.LoginUser;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "t_user_resource")
@@ -14,8 +14,14 @@ public class UserResource {
     @GeneratedValue
     private Long userResourceId;
 
-    private Long userId;
-    private Long resourceId;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<LoginUser> loginUser;
+
+    @OneToMany
+    @JoinColumn(name = "resource_id")
+    private List<UserResource> userResource;
+
     private Short active;
     private Timestamp createTime;
     private Timestamp updateTime;
@@ -28,20 +34,20 @@ public class UserResource {
         this.userResourceId = userResourceId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public List<LoginUser> getLoginUser() {
+        return loginUser;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setLoginUser(List<LoginUser> loginUser) {
+        this.loginUser = loginUser;
     }
 
-    public Long getResourceId() {
-        return resourceId;
+    public List<UserResource> getUserResource() {
+        return userResource;
     }
 
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
+    public void setUserResource(List<UserResource> userResource) {
+        this.userResource = userResource;
     }
 
     public Short getActive() {

@@ -25,6 +25,7 @@ public class Resources {
     private Timestamp createTime;
     private Timestamp updateTime;
 
+
     public Long getResourceId() {
         return resourceId;
     }
