@@ -33,7 +33,7 @@ public class ResourceController extends BaseController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(ModelAndView mv){
 		List<ResourcesDO> resources = resourcesService.selectAll();
 		List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
@@ -51,7 +51,7 @@ public class ResourceController extends BaseController {
 		}
 		mv.addObject("data", JSONUtils.toJSONString(mapList));
 		mv.addObject("resourceList",resources);
-		mv.setViewName("pages/system/resource/list");
+		mv.setViewName("system/resource/list");
 		return mv;
 	}
 
@@ -60,7 +60,7 @@ public class ResourceController extends BaseController {
 	 * @param resourceId
 	 * @return
 	 */
-	@RequestMapping(value="/getResourceInfo.html",method= RequestMethod.POST)
+	@RequestMapping(value="/getResourceInfo",method= RequestMethod.POST)
 	public @ResponseBody
 	ResourcesDO preEdit(Long resourceId){
 		ResourcesDO resource = null;
@@ -76,7 +76,7 @@ public class ResourceController extends BaseController {
 	 * 删除资源信息
 	 * @return
 	 */
-	@RequestMapping(value="/deleteResource.html",method= RequestMethod.POST)
+	@RequestMapping(value="/deleteResource",method= RequestMethod.POST)
 	public @ResponseBody
     boolean deleteResource(Long resourceId){
 		boolean result = false;
@@ -91,7 +91,7 @@ public class ResourceController extends BaseController {
 	 * 更新资源信息
 	 * @return
 	 */
-	@RequestMapping(value="/editResource.html",method= RequestMethod.POST)
+	@RequestMapping(value="/editResource",method= RequestMethod.POST)
 	public @ResponseBody
     boolean addResource(ResourcesDO resource){
 		boolean result = false;

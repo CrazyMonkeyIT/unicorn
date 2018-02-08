@@ -54,19 +54,18 @@ public class LoginController {
 	/**
 	 * 登录
 	 * @param req
-	 * @param resp
 	 * @param loginname
 	 * @param password
 	 * @return
 	 */
 	@RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult loginSubmit(HttpServletRequest req, HttpServletResponse resp, String loginname, String password){
+	public BaseResult loginSubmit(HttpServletRequest req,String loginname, String password){
 		BaseResult result = new BaseResult(false,"account_error");
 		Subject subject;
 		try {
-			subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(loginname, Des3Util.decode(password));
+			subject = SecurityUtils.getSubject();
 			subject.login(token);
 		} catch (UnknownAccountException uae) {
 			logger.error("登录失败：用户名或密码错误");

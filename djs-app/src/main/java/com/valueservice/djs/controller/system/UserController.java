@@ -49,7 +49,7 @@ public class UserController extends BaseController{
         }
         modelMap.addAttribute("page",page);
         modelMap.addAttribute("userName",userName);
-        return "pages/system/user/list";
+        return "system/user/list";
     }
     /**
      * 更新用户信息
