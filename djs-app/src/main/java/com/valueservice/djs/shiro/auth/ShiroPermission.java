@@ -4,13 +4,13 @@ import org.apache.shiro.authz.Permission;
 
 public class ShiroPermission implements Permission {
 
-	private Integer resourceId;
+	private Long resourceId;
 	
 	private String resourceUrl;
 	
 	private String cssCls;
 	
-	private Integer parentId;
+	private Long parentId;
 	
 	private Integer orderNo;
 	
@@ -41,26 +41,21 @@ public class ShiroPermission implements Permission {
 		this.cssCls = cssCls;
 	}
 
-
-	public Integer getParentId() {
-		return parentId;
-	}
-
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
-
-	public Integer getResourceId() {
+	public Long getResourceId() {
 		return resourceId;
 	}
 
-
-	public void setResourceId(Integer resourceId) {
+	public void setResourceId(Long resourceId) {
 		this.resourceId = resourceId;
 	}
 
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 
 	public Integer getOrderNo() {
 		return orderNo;

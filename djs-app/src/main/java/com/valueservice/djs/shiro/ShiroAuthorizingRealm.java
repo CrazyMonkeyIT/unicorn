@@ -1,25 +1,12 @@
 package com.valueservice.djs.shiro;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import com.valueservice.djs.db.LoginUser;
-import com.valueservice.djs.db.entity.Resources;
-import com.valueservice.djs.service.LoginUserService;
+import com.valueservice.djs.db.entity.system.ResourcesDO;
+import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.ResourceService;
+import com.valueservice.djs.service.UserInfoService;
 import com.valueservice.djs.shiro.auth.ShiroPermission;
-import com.valueservice.djs.util.SHA256;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
@@ -29,6 +16,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import util.SHA256;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 自定义shiroRealm
@@ -43,7 +34,7 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm{
 	private EhCacheManager cacheManager;
 
 	@Autowired
-	private LoginUserService loginUserService;
+	private UserInfoService userInfoService;
 
 	@Autowired
 	private ResourceService resourcesService;
@@ -75,7 +66,7 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm{
         String tokenUsername = token.getUsername();
         String tokenPassword = new String(token.getPassword());
         //查出是否有此用户
-        LoginUser loginUser = loginUserService.selectByLoginName(tokenUsername);
+        UserInfoDO loginUser = userInfoService.selectByLoginName(tokenUsername);
         if(loginUser == null){
         	logger.error("用户名:" + tokenUsername + "  不存在");
 			//用户不存在
@@ -100,24 +91,20 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm{
 		Cache<Object, Object> cache  = cacheManager.getCache("sessionCache");
 		cache.put(tokenUsername, SecurityUtils.getSubject().getSession().getId().toString());
 		return info;
-
     }
 
-//    private List<ShiroPermission> getPermissions(Integer userId){
-//    	List<Resources> resources = resourcesService.selectByUserId(userId);
-//    	List<ShiroPermission> permissions = new ArrayList<ShiroPermission>();
-//    	for (TBResourcesDO res : resources) {
-//    		ShiroPermission per = new ShiroPermission();
-//    		per.setResourceId(res.getResourceId());
-//    		per.setResourceUrl(res.getResourceUrl());
-//    		per.setCssCls(res.getCssCls());
-//    		per.setParentId(res.getParentId());
-//    		per.setOrderNo(res.getOrderNo());
-//    		permissions.add(per);
-//		}
-//    	return permissions;
-//    }
-
-
-
+    private List<ShiroPermission> getPermissions(Long userId){
+    	List<ResourcesDO> resources = resourcesService.selectByUserId(userId);
+    	List<ShiroPermission> permissions = new ArrayList<>();
+    	for (ResourcesDO res : resources) {
+    		ShiroPermission per = new ShiroPermission();
+    		per.setResourceId(res.getResourceId());
+    		per.setResourceUrl(res.getResourceUrl());
+    		per.setCssCls(res.getCssCls());
+    		per.setParentId(res.getParentId());
+    		per.setOrderNo(res.getOrderNo());
+    		permissions.add(per);
+		}
+    	return permissions;
+    }
 }

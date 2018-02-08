@@ -1,29 +1,29 @@
-package com.valueservice.djs.db;
+package com.valueservice.djs.db.entity.system;
 
-import com.valueservice.djs.db.entity.Resources;
-import org.springframework.context.annotation.Lazy;
-
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
-@Entity
-@Table(name="t_login_user")
-public class LoginUser {
-
-    @Id
-    @GeneratedValue
+public class UserInfoDO {
     private Long userId;
+
     private String userName;
+
     private String loginName;
+
     private String loginPwd;
+
     private Integer userStatus;
-    private Timestamp loginInvalid;
-    private Integer parentId;
+
+    private Long parentId;
+
+    private Timestamp loginInvallid;
+
     private Timestamp lastLoginTime;
-    private Timestamp createTime;
-    private String lastLoginIp;
+
     private Timestamp updateTime;
+
+    private String lastLoginIp;
+
+    private Timestamp createTime;
 
     public Long getUserId() {
         return userId;
@@ -65,20 +65,20 @@ public class LoginUser {
         this.userStatus = userStatus;
     }
 
-    public Timestamp getLoginInvalid() {
-        return loginInvalid;
-    }
-
-    public void setLoginInvalid(Timestamp loginInvalid) {
-        this.loginInvalid = loginInvalid;
-    }
-
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Timestamp getLoginInvallid() {
+        return loginInvallid;
+    }
+
+    public void setLoginInvallid(Timestamp loginInvallid) {
+        this.loginInvallid = loginInvallid;
     }
 
     public Timestamp getLastLoginTime() {
@@ -89,12 +89,12 @@ public class LoginUser {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
+    public Timestamp getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getLastLoginIp() {
@@ -105,11 +105,11 @@ public class LoginUser {
         this.lastLoginIp = lastLoginIp;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getCreateTime() {
+        return createTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 }

@@ -3,16 +3,14 @@ package com.valueservice.djs.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.google.common.collect.Lists;
-import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,7 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-@org.springframework.context.annotation.Configuration
+/**
+ * created by Bill
+ */
+@Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Resource
@@ -37,7 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurer factory = new FreeMarkerConfigurer();
         writerProperties(factory);
 
-        Configuration configuration = null;
+        freemarker.template.Configuration configuration = null;
         try {
             configuration = factory.createConfiguration();
             Map<String,String> map = new HashMap<>();

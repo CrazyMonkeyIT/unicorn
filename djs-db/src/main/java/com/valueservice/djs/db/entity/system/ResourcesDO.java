@@ -1,30 +1,42 @@
-package com.valueservice.djs.db.entity;
+package com.valueservice.djs.db.entity.system;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.util.Date;
 
-@Entity
-@Table(name = "t_resources")
-public class Resources {
-
-    @Id
-    @GeneratedValue
+public class ResourcesDO {
     private Long resourceId;
-    private String resourceName;
-    private String resourceCode;
-    private String resourceUrl;
-    private String resourceDesc;
-    private String cssCls;
-    private Integer orderNo;
-    private Integer parentId;
-    private Short resourceType;//0 菜单 1:按钮
-    private Short active;
-    private Timestamp createTime;
-    private Timestamp updateTime;
 
+    private String resourceName;
+
+    private String resourceCode;
+
+    private String resourceUrl;
+
+    private String resourceDesc;
+
+    private String cssCls;
+
+    private Integer orderNo;
+
+    private Long parentId;
+
+    private Integer resourceType;
+
+    private Integer active;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private boolean hasChild;
+
+
+    public boolean isHasChild() {
+        return hasChild;
+    }
+
+    public void setHasChild(boolean hasChild) {
+        this.hasChild = hasChild;
+    }
 
     public Long getResourceId() {
         return resourceId;
@@ -39,7 +51,7 @@ public class Resources {
     }
 
     public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
+        this.resourceName = resourceName == null ? null : resourceName.trim();
     }
 
     public String getResourceCode() {
@@ -47,7 +59,7 @@ public class Resources {
     }
 
     public void setResourceCode(String resourceCode) {
-        this.resourceCode = resourceCode;
+        this.resourceCode = resourceCode == null ? null : resourceCode.trim();
     }
 
     public String getResourceUrl() {
@@ -55,7 +67,7 @@ public class Resources {
     }
 
     public void setResourceUrl(String resourceUrl) {
-        this.resourceUrl = resourceUrl;
+        this.resourceUrl = resourceUrl == null ? null : resourceUrl.trim();
     }
 
     public String getResourceDesc() {
@@ -63,7 +75,7 @@ public class Resources {
     }
 
     public void setResourceDesc(String resourceDesc) {
-        this.resourceDesc = resourceDesc;
+        this.resourceDesc = resourceDesc == null ? null : resourceDesc.trim();
     }
 
     public String getCssCls() {
@@ -71,7 +83,7 @@ public class Resources {
     }
 
     public void setCssCls(String cssCls) {
-        this.cssCls = cssCls;
+        this.cssCls = cssCls == null ? null : cssCls.trim();
     }
 
     public Integer getOrderNo() {
@@ -82,43 +94,43 @@ public class Resources {
         this.orderNo = orderNo;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
-    public Short getResourceType() {
+    public Integer getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(Short resourceType) {
+    public void setResourceType(Integer resourceType) {
         this.resourceType = resourceType;
     }
 
-    public Short getActive() {
+    public Integer getActive() {
         return active;
     }
 
-    public void setActive(Short active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 }
