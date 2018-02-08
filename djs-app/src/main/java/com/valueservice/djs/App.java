@@ -7,8 +7,6 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableTransactionManagement
-//@ImportResource(locations="classpath:shiro/shiro.xml")
 public class App extends SpringBootServletInitializer {
     public static void main(String[] args) {
         new SpringApplicationBuilder().sources(App.class).run(args);
