@@ -12,13 +12,6 @@
 		diskExpiryThreadIntervalSeconds="120">
 	</defaultCache>
 	
-	<cache name="shiro-activeSessionCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="true"
-		diskPersistent="true"
-		diskExpiryThreadIntervalSeconds="600"
-	/>
 	<cache name="sessionCache"
 		maxElementsInMemory="10000"
 		eternal="true"
