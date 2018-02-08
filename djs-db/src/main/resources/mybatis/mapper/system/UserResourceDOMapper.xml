@@ -18,6 +18,12 @@
     from t_b_user_resource
     where user_resource_id = #{userResourceId,jdbcType=BIGINT}
   </select>
+
+  <update id="deleteByUserId">
+    update T_B_USER_RESOURCE set active = 0 where user_id = #{userId}
+  </update>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_b_user_resource
     where user_resource_id = #{userResourceId,jdbcType=BIGINT}

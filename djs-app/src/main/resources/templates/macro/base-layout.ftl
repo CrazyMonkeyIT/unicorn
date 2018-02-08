@@ -159,7 +159,7 @@
 										<#list menuList as submenu>
 											<#if submenu.parentId?exists && submenu.parentId = menu.resourceId>
 												<li class="<#if SelectTwoLevelId?? && SelectTwoLevelId == submenu.resourceId>active</#if>">
-													<a href="${request.contextPath}${submenu.resourceUrl!'index.html'}" onclick="updateMenuStatus(${menu.resourceId},${submenu.resourceId},'${menu.resourceName}','${submenu.resourceName}')">
+													<a href="${request.contextPath}${submenu.resourceUrl!'index'}" onclick="updateMenuStatus(${menu.resourceId},${submenu.resourceId},'${menu.resourceName}','${submenu.resourceName}')">
 														<i class="menu-icon fa fa-caret-right"></i>
 														${submenu.resourceName!''}
 													</a>
@@ -169,7 +169,7 @@
 										</#list>
 									</ul>
 								<#else>
-                                    <a href="${request.contextPath}${menu.resourceUrl!'index.html'}" onclick="updateMenuStatus(${menu.resourceId},null,'${menu.resourceName}',null)">
+                                    <a href="${request.contextPath}${menu.resourceUrl!'index'}" onclick="updateMenuStatus(${menu.resourceId},null,'${menu.resourceName}',null)">
                                         <i class="${menu.cssCls!'menu-icon fa fa-desktop'}"></i>
                                         <span class="menu-text"> ${menu.resourceName!''} </span>
                                     </a>
@@ -191,7 +191,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="${request.contextPath}/index.html" onclick="updateMenuStatus()">首页</a>
+							<a href="${request.contextPath}/index" onclick="updateMenuStatus()">首页</a>
 						</li>
 						<#if SelectOneLevelName??>
                             <li class="active">${SelectOneLevelName}</li>
@@ -241,7 +241,7 @@
             var _opt = $.extend(opt, {
                 success:function(data, textStatus){
                     if(data == 'logout') {
-                        window.location.href= basePath+"/login.html";
+                        window.location.href= basePath+"/login";
                         return;
                     }
                     _success(data, textStatus);
@@ -257,7 +257,7 @@
 	 * 登出
 	 */
 	function logout(){
-		window.location.href='${request.contextPath}/logout.html';
+		window.location.href='${request.contextPath}/logout';
 	}
 
     /**
@@ -265,7 +265,7 @@
      */
     function updateMenuStatus(oneId,twoId,oneName,twoName){
         $.ajax({
-            url : '${request.getContextPath()}/updateMenuStatus.html',
+            url : '${request.getContextPath()}/updateMenuStatus',
             type : 'post',
             data : {
                 "oneId":oneId,

@@ -26,6 +26,12 @@
     where resource_id = #{resourceId,jdbcType=BIGINT}
   </select>
 
+  <select id="selectLasrOrderNo" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select max(order_no) from T_B_RESOURCES
+    where parent_id = #{parentId,jdbcType=BIGINT}
+    order by order_no desc
+  </select>
+
   <select id="selectAllActive" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

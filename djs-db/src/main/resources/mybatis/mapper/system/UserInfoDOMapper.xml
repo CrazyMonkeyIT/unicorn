@@ -29,6 +29,18 @@
     <include refid="Base_Column_List" />
     from t_b_user_info where login_name = #{loginName}
   </select>
+
+  <select id="selectUserList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_B_LOGIN_USER where FIND_IN_SET(user_id,getChildList(#{userId}))
+    <if test="userName != null" >
+      and user_name like CONCAT('%',#{userName},'%')
+    </if>
+    and user_status != 4 <!-- 非删除状态的 -->
+    order by create_time desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_b_user_info
     where user_id = #{userId,jdbcType=BIGINT}

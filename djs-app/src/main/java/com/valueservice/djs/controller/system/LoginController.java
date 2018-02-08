@@ -1,6 +1,6 @@
-package com.valueservice.djs.controller;
+package com.valueservice.djs.controller.system;
 
-import com.valueservice.djs.bean.BaseResult;
+import bean.BaseResult;
 import com.valueservice.djs.db.entity.system.ResourcesDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.ResourceService;

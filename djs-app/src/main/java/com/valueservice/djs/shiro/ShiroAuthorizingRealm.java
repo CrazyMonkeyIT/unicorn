@@ -107,4 +107,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm{
 		}
     	return permissions;
     }
+
+	public static void main(String[] args) {
+		System.out.println(SHA256.encrypt("Bill%%123"));
+	}
 }

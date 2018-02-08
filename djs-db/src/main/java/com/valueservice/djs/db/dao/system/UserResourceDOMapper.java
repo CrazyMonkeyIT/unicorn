@@ -14,4 +14,6 @@ public interface UserResourceDOMapper {
     int updateByPrimaryKeySelective(UserResourceDO record);
 
     int updateByPrimaryKey(UserResourceDO record);
+
+    int deleteByUserId(Long userId);
 }

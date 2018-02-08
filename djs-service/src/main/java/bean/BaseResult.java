@@ -1,4 +1,4 @@
-package com.valueservice.djs.bean;
+package bean;
 
 public class BaseResult {
 	

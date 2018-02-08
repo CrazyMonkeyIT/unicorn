@@ -35,7 +35,7 @@
                     <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                     <h4 class="blue"><i class="ace-icon fa fa-pencil-square-o"></i>编辑资源信息</h4>
                 </div>
-                <form id="EditForm" action="${request.getContextPath()}/system/resource/editResource.html" method="post">
+                <form id="EditForm" action="${request.getContextPath()}/system/resource/editResource" method="post">
                     <!-- 资源ID -->
                     <input type="hidden" name="resourceId" />
 
@@ -238,7 +238,7 @@
                     node.pId=0;
                 }
                 $.ajax({
-                    url : '${request.getContextPath()}/system/resource/changeResource.html',
+                    url : '${request.getContextPath()}/system/resource/changeResource',
                     type : 'post',
                     data : {
                         'upOrder' : node.order,
@@ -248,7 +248,7 @@
                     },
                     success : function(result) {
                         if(result){
-                            window.location.href = '${request.getContextPath()}/system/resource/list.html';
+                            window.location.href = '${request.getContextPath()}/system/resource/list';
                         }else{
                             alert("系统异常");
                         }
@@ -274,7 +274,7 @@
                     node.pId=0;
                 }
                 $.ajax({
-                    url : '${request.getContextPath()}/system/resource/changeResource.html',
+                    url : '${request.getContextPath()}/system/resource/changeResource',
                     type : 'post',
                     data : {
                         'upOrder' : node.order,
@@ -284,7 +284,7 @@
                     },
                     success : function(result) {
                         if(result){
-                            window.location.href = '${request.getContextPath()}/system/resource/list.html';
+                            window.location.href = '${request.getContextPath()}/system/resource/list';
                         }else{
                             alert("系统异常");
                         }
@@ -321,7 +321,7 @@
         }
     }
     function onRemove(e, treeId, treeNode) {
-        window.location.href = '${request.getContextPath()}/system/resource/list.html';
+        window.location.href = '${request.getContextPath()}/system/resource/list';
     }
     function beforeRename(treeId, treeNode, newName, isCancel) {
         if (newName.length == 0) {
@@ -386,7 +386,7 @@
                 data : $("#EditForm").serialize(),
                 success : function(result) {
                     if(result){
-                        window.location.href = '${request.getContextPath()}/system/resource/list.html';
+                        window.location.href = '${request.getContextPath()}/system/resource/list';
                     }else{
                         alert("添加失败");
                     }
@@ -397,7 +397,7 @@
     //获取资源信息
     function getEditInfo(resourceId){
         $.ajax({
-            url : '${request.getContextPath()}/system/resource/getResourceInfo.html',
+            url : '${request.getContextPath()}/system/resource/getResourceInfo',
             type : 'post',
             data : {
                 'resourceId' : resourceId
@@ -420,7 +420,7 @@
     //删除资源
     function deleteResource(){
         $.ajax({
-            url : '${request.getContextPath()}/system/resource/deleteResource.html',
+            url : '${request.getContextPath()}/system/resource/deleteResource',
             type : 'post',
             async:false,
             data : {
@@ -428,7 +428,7 @@
             },
             success : function(result) {
                 if(result){
-                    window.location.href = '${request.getContextPath()}/system/resource/list.html';
+                    window.location.href = '${request.getContextPath()}/system/resource/list';
                 }else{
                     alert("系统异常");
                 }

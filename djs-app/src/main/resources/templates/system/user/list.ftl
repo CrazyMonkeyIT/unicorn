@@ -11,7 +11,7 @@
     <div>
         <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
             <div class="row">
-                <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/system/user/list.html" method="post">
+                <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/system/user/list" method="post">
                     <input id="pageIndex" name="pageIndex" value="${page.pageNum}" type="hidden" />
                     <div class="input-group">
                         <input type="text" name="userName" value="${userName!}" class="form-control search-query" placeholder="用户名">
@@ -115,7 +115,7 @@
                 <h4 class="blue"><i class="fa fa-pencil"></i>&nbsp;编辑用户</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser.html" method="post">
+                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
                     <div class="form-horizontal">
                         <!-- 用户ID -->
                         <input type="hidden" name="userId" />
@@ -249,7 +249,7 @@ function updateUser(){
 function showEditModal(loginName){
     clearForm();
     $.ajax({
-        url : basePath+"/system/user/getUserInfo.html",
+        url : basePath+"/system/user/getUserInfo",
         type : 'post',
         data : {
             "loginName":loginName
@@ -273,7 +273,7 @@ function showEditModal(loginName){
 function resetUserPwd(userId){
     Ewin.confirm({ message: "确认要重置该用户的密码吗？<br/><br/>初始密码为：123456" }).on(function () {
         $.ajax({
-            url: basePath + "/system/user/resetUserPwd.html",
+            url: basePath + "/system/user/resetUserPwd",
             type: 'post',
             data: {
                 "userId": userId
@@ -294,7 +294,7 @@ function resetUserPwd(userId){
  */
 function updateUserStatus(userId,status){
     $.ajax({
-        url : basePath+"/system/user/updateUserStatus.html",
+        url : basePath+"/system/user/updateUserStatus",
         type : 'post',
         data : {
             "userId":userId,
@@ -316,7 +316,7 @@ function updateUserStatus(userId,status){
 function deleteUser(userId){
     Ewin.confirm({ message: "确认要删除该用户吗？" }).on(function () {
         $.ajax({
-            url : basePath+"/system/user/deleteUser.html",
+            url : basePath+"/system/user/deleteUser",
             type : 'post',
             data : {
                 "userId":userId
@@ -355,7 +355,7 @@ var setting = {
  */
 function loadCurrPowerList(){
     $.ajax({
-        url : basePath+"/system/user/getUserPowerList.html",
+        url : basePath+"/system/user/getUserPowerList",
         type : 'post',
         success : function(data) {
             if(data != null){
@@ -378,7 +378,7 @@ function showPowerSeting(userId){
     treeObj.checkAllNodes(false);
 
     $.ajax({
-        url : basePath+"/system/user/getUserPowerList.html",
+        url : basePath+"/system/user/getUserPowerList",
         type : 'post',
         data:{
             "userId":userId
@@ -410,7 +410,7 @@ function saveUserPower(){
         v.push(nodes[i].id);
     }
     $.ajax({
-        url : basePath+"/system/user/updateUserPower.html",
+        url : basePath+"/system/user/updateUserPower",
         type : 'post',
         data:{
             "userId":$("#powerUserId").val(),
