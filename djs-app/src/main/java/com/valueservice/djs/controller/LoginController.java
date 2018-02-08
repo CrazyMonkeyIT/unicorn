@@ -63,7 +63,7 @@ public class LoginController {
 	@ResponseBody
 	public BaseResult loginSubmit(HttpServletRequest req, HttpServletResponse resp, String loginname, String password){
 		BaseResult result = new BaseResult(false,"account_error");
-		Subject subject = null;
+		Subject subject;
 		try {
 			subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(loginname, Des3Util.decode(password));

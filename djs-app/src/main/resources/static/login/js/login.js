@@ -62,7 +62,7 @@ layui.use('layer', function () {
 
 
             $.ajax({
-                url : basePath+"/loginSubmit.html",
+                url : basePath+"/loginSubmit",
                 type : "post",
                 dataType : "json",
                 data : {
@@ -91,7 +91,7 @@ layui.use('layer', function () {
 //                                   $('.success').fadeIn(1000);
 //                                   $('.success').html("恭喜，登录成功");
                             //跳转操作
-                            window.location.href = basePath+'/index.html';
+                            window.location.href = basePath+'/index';
                         } else {
                             switch(data.message){
                                 case "account_error":
