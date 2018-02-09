@@ -18,30 +18,30 @@ Page({
     duration: 500,
     indicatorDots: false,
     roadShowImages: [
-      '../../images/test/1.jpg',
-      '../../images/test/2.jpg',
-      '../../images/test/3.jpg',
-      '../../images/test/4.jpg'],
+      '../../images/home/test/1.jpg',
+      '../../images/home/test/2.jpg',
+      '../../images/home/test/3.jpg',
+      '../../images/home/test/4.jpg'],
     chiefInfoList: [
       {
         name: "Lee",
         desc: "招商证券食品饮料行业首席分析师，研发中心董事。4次新财富最佳分析师第一名，11次上榜",
-        photoPath: "../../images/test/Lee.jpg"
+        photoPath: "../../images/home/test/Lee.jpg"
       },
       {
         name: "Bill",
         desc: "安信证券农林牧渔行业首席分析师，新财富最佳分析师第一名，汤森路透StarMine全球卖方分析师第一名",
-        photoPath: "../../images/test/bill.jpg"
+        photoPath: "../../images/home/test/bill.jpg"
       },
       {
         name: "xin",
         desc: "华泰证券建筑建材行业首席分析师，3次新财富最佳分析师团队第一名",
-        photoPath: "../../images/test/xin.jpg"
+        photoPath: "../../images/home/test/xin.jpg"
       },
       {
         name: "myron",
         desc: "天风证券传媒互联网高级分析师，包揽新财富最佳分析师、水晶球、金牛奖第一名",
-        photoPath: "../../images/test/myron.jpg"
+        photoPath: "../../images/home/test/myron.jpg"
       }
     ]
   },
