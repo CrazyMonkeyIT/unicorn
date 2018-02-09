@@ -99,7 +99,7 @@ public class DruidDataSourceConfig {
         BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
         beanNameAutoProxyCreator.setProxyTargetClass(true);
         // 监控如下两个controller的spring处理情况
-        beanNameAutoProxyCreator.setBeanNames("taskController","webServiceController");
+        beanNameAutoProxyCreator.setBeanNames("loginController");
         beanNameAutoProxyCreator.setInterceptorNames("druid-stat-interceptor");
         return beanNameAutoProxyCreator;
     }
