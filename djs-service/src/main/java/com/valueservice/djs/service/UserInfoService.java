@@ -47,7 +47,7 @@ public class UserInfoService {
         size = (size==null || StringUtils.isBlank(size))?"10":size;
         PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(size));
         List<UserInfoDO> list = userInfoDOMapper.selectUserList(userId,userName);
-        PageInfo<UserInfoDO> r = new PageInfo<UserInfoDO>(list);
+        PageInfo<UserInfoDO> r = new PageInfo<>(list);
         return r;
     }
 
