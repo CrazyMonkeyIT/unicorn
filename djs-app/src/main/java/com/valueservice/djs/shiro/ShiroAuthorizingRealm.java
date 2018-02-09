@@ -16,7 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import util.SHA256;
+import com.valueservice.djs.util.SHA256;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;

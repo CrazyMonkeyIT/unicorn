@@ -1,4 +1,4 @@
-package util;
+package com.valueservice.djs.util;
 
 import java.io.Serializable;
 import java.security.MessageDigest;

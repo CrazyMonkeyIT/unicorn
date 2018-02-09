@@ -1,4 +1,4 @@
-package util;
+package com.valueservice.djs.util;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.commons.lang3.StringUtils;

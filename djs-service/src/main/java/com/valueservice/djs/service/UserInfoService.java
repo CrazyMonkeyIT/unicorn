@@ -1,6 +1,6 @@
 package com.valueservice.djs.service;
 
-import bean.BaseResult;
+import com.valueservice.djs.bean.BaseResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.db.dao.system.UserInfoDOMapper;
@@ -9,7 +9,7 @@ import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.db.entity.system.UserResourceDO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import util.SHA256;
+import com.valueservice.djs.util.SHA256;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.valueservice.djs.controller.system;
 
-import bean.BaseResult;
+import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.db.entity.system.ResourcesDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.ResourceService;
@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import util.Des3Util;
-import util.IpUtil;
+import com.valueservice.djs.util.Des3Util;
+import com.valueservice.djs.util.IpUtil;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package util;
+package com.valueservice.djs.util;
 
 import org.apache.commons.lang3.StringUtils;
 

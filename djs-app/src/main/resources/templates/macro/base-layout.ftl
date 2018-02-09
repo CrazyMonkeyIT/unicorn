@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>上海专精特新</title>
+	<title>独角兽管理后台</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="${request.contextPath}/static/assets/css/bootstrap.min.css" />
@@ -62,7 +62,7 @@
 				<a href="#" class="navbar-brand">
 					<small>
 						<i class="fa fa-leaf"></i>
-						上海专精特新
+						独角兽后台管理
 					</small>
 				</a><!-- /.brand -->
 			</div><!-- /.navbar-header -->
