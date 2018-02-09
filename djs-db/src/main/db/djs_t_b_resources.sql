@@ -11,8 +11,8 @@ CREATE TABLE `t_b_resources` (
   `parent_id` bigint(20) DEFAULT NULL,
   `resource_type` int(11) DEFAULT NULL,
   `active` int(11) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL,
+  `update_time` timestamp NULL,
   PRIMARY KEY (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

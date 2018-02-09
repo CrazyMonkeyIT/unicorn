@@ -7,9 +7,9 @@ CREATE TABLE `t_b_user_info` (
   `login_pwd` varchar(100) DEFAULT NULL,
   `user_status` int(11) DEFAULT NULL,
   `parent_id` bigint(11) DEFAULT NULL,
-  `login_invallid` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `last_login_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `login_invallid` timestamp NULL,
+  `last_login_time` timestamp NULL,
+  `update_time` timestamp NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

@@ -5,8 +5,8 @@ CREATE TABLE `t_b_user_resource` (
   `user_id` bigint(20) NOT NULL,
   `resource_id` bigint(20) NOT NULL,
   `active` int(11) NOT NULL,
-  `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL,
+  `update_time` timestamp NULL,
   PRIMARY KEY (`user_resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 LOCK TABLES `t_b_user_resource` WRITE;
