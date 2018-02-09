@@ -1,0 +1,57 @@
+/* pages/person/person.wxss */
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.person_avart {
+  height:300rpx;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:20rpx 0;
+  box-sizing:border-box;
+  background-color: #99CC33;
+
+}
+.person-control-bar {
+  height:70rpx;
+  display:flex;
+  background-color: gray;
+  margin: 10px 0;
+  align-items :center;
+}
+
+.person-con-title {
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  padding:20rpx 0;
+  box-sizing:border-box;
+  width: 50%;
+  display: flex;
+}
+
+.person-right {
+  flex-direction: row-reverse;
+}
+.right-resev {
+  padding-right: 10rpx;
+  font-family :'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 30rpx;
+  color: blue;
+}
