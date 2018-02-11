@@ -1,7 +1,5 @@
-// pages/person/person.js
-
+// pages/personal/vip/vip.js
 const app = getApp();
-
 Page({
 
   /**
@@ -43,7 +41,14 @@ Page({
       })
     }
   },
-
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  }, 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -91,32 +96,5 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },  
-  /** 前往我的直播 */
-  toMylive:function(e){
-    wx.navigateTo({
-      url: 'mylive/mylive',
-    })
-  },
-  /** 前往我的订阅 */
-  toMySubscribe: function (e) {
-    wx.navigateTo({
-      url: 'subscribe/subscribe',
-    })
-  },
-  /** 前往账户安全 */
-  toAccount:function(e){
-    wx.navigateTo({
-      url: 'account/account',
-    })
   }
 })

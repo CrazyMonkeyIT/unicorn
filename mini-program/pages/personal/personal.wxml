@@ -1,24 +1,68 @@
 <!--pages/person/person.wxml-->
 <view class="globle_back_view">
-<view class="person_avart">
-  <view class="userinfo">
-      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
-
-    </view>
-</view>
- 
-  <view class='person-control-bar'>
-    <view class='person-con-title'>VIP</view>
-    <view class='person-con-title person-right'>
-      <view class="right-resev">加入></view>
+  <view class="person_avart" style='background-image:url(../../images/personal/personal_back.png)'>
+    <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <block wx:else>
+          
+          <image bindtap="toAccount" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+          <text bindtap="toAccount" class="userinfo-nickname">{{userInfo.nickName}}</text>
+          
+          <view class="follow_div">
+            <text class="me_follow_other">关注  0</text>
+            <text class="other_follow_me">粉丝  0</text>
+          </view>
+        </block>
     </view>
   </view>
-
-  <navigator open-type="navigate" url="/pages/live/live">
-      <button size="mini"> 我的直播间 </button>
-    </navigator>
+  <view class="flex-wrp" style="flex-direction:row;">
+    <view class="flex-item " hover-class="flex-item-hover" bindtap="toMylive">
+      <view><image src="../../images/personal/audio.png"/></view>
+      <view><text>发起直播</text></view>
+    </view>
+    <view class="separator"></view>
+    <view class="flex-item" hover-class="flex-item-hover" bindtap="toMySubscribe">
+      <view><image src="../../images/personal/collect.png"/></view>
+      <view><text>我的订阅</text></view>
+    </view>
+  </view>
+  <view class='empty_tip'>
+    <view class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="speaker/speaker">
+          <view class="navigator-icon"><image src="../../images/personal/person_info.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">申请为讲师</view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view> 
+    <view class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="vip/vip">
+          <view class="navigator-icon"><image src="../../images/personal/vip.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">VIP会员</view>
+            <view class='navigator-righttext'>开通</view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view> 
+    <view class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="wallet/wallet">
+          <view class="navigator-icon"><image src="../../images/personal/money.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">我的钱包</view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view> 
+    <view class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="setting/setting">
+          <view class="navigator-icon"><image src="../../images/personal/setting.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">设置</view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view> 
+  </view>
 </view> 

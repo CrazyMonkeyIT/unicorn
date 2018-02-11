@@ -1,0 +1,70 @@
+<view class="globle_back_view">
+  
+  <view class="person_avart" style='background-image:url(../../../images/personal/vip/vip_back.jpg)'>
+    <view class="userinfo">
+        <block>
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+          <view style="height:45rpx;"></view>
+          <view class="detail">
+            • 开通VIP会员，享受首席分析师高品质投研服务 •
+          </view>
+        </block>
+    </view>
+  </view>
+
+  <view class="navigator-box navigator-box-show">
+      
+      <navigator class="navigator" hover-class="none">
+        <view class="navigator-content">
+          <view class="navigator-text" style="font-size:14px;"><text style="color:#DFA863;">┃</text> 开通VIP会员</view>
+        </view>
+      </navigator>
+
+      <view class="navigator-bottom-border"></view>
+
+      <navigator class="navigator" style="height:100rpx;" hover-class="none">
+        <view class="navigator-content">
+          <view class="navigator-text">一年 <text style="color:#DFA863;">2299</text> 元</view>
+          <view class='navigator-righttext'>
+              <button class="mini-btn" type="primary" size="mini">开通</button>
+          </view>
+        </view>
+      </navigator>
+
+      <view class="navigator-bottom-border"></view>
+
+      <navigator class="navigator" style="height:100rpx;" hover-class="none">
+        <view class="navigator-content">
+          <view class="navigator-text">三个月 <text style="color:#DFA863;">699</text> 元</view>
+          <view class='navigator-righttext'>
+              <button class="mini-btn" type="primary" size="mini">开通</button>
+          </view>
+        </view>
+      </navigator>
+
+      <view class="navigator-bottom-border"></view>
+
+      <navigator class="navigator" style="height:100rpx;" hover-class="none">
+        <view class="navigator-content">
+          <view class="navigator-text">一个月 <text style="color:#DFA863;">99</text> 元</view>
+          <view class='navigator-righttext'>
+              <button class="mini-btn" type="primary" size="mini">开通</button>
+          </view>
+        </view>
+      </navigator>
+
+      <view class="navigator-bottom-border"></view>
+
+      <navigator class="navigator" url="vip/vip">
+        <view class="navigator-content">
+          <view class="navigator-text">
+            <text style="color:#6E6E6E;font-size:13px;">VIP服务协议</text>
+          </view>
+          <view class="navigator-arrow"></view>
+        </view>
+      </navigator>
+
+  </view> 
+
+</view>

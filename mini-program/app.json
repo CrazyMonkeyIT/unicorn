@@ -4,20 +4,31 @@
     "pages/logs/logs",
     "pages/live/live",
     "pages/live/player/player",
-	  "pages/live/startlive/startlive",
-	  "pages/live/chat/chat",
-    "pages/personal/personal"
+    "pages/live/startlive/startlive",
+    "pages/live/chat/chat",
+    "pages/personal/personal",
+    "pages/personal/mylive/mylive",
+    "pages/personal/mylive/create/create",
+    "pages/personal/subscribe/subscribe",
+    "pages/personal/setting/setting",
+    "pages/personal/wallet/wallet",
+    "pages/personal/vip/vip",
+    "pages/personal/account/account",
+    "pages/personal/speaker/speaker"
   ],
   "window": {
-    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#EFEFF4",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
   },
   "tabBar": {
-    "color": "#a9b7b7",
-    "selectedColor": "#11cd6e",
-    "borderStyle": "white",
+    "color": "#000000",
+    "backgroundColor": "#FFFFFF",
+    "selectedColor": "#1296DB",
+    "borderStyle": "black",
     "list": [
       {
         "selectedIconPath": "images/home/home-hover.png",
