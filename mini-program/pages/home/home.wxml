@@ -51,10 +51,14 @@
       <view class="position_right">更多>></view>
     </view>
     <view class="content">
-      <view wx:for="{{chiefInfoList}}" style="width:100%;height:100px;" > 
-        {{item.name}}
-        <image src="{{item.photoPath}}" mode="aspectFit" style="width:50px;height:50px;"></image> 
-        {{item.desc}}
+      <view wx:for="{{chiefInfoList}}" class="lecturer-list" style="width:100%;height:100px;" > 
+        <view class='lecturer-avat'>
+          <view><image src="{{item.photoPath}}" mode="aspectFit" style="width:50px;height:50px;"></image> </view>
+          <view>{{item.name}}</view>
+        </view>
+        <view class='lecturer-intro'>
+          {{item.desc}}
+        </view> 
       </view>  
     </view>
   </view>
