@@ -8,9 +8,9 @@
     </view> 
     <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">  
     <!-- 我是哈哈 -->  
-      <swiper-item>  
-        <view>
-          <navigator open-type="navigate" url="/pages/livechat/livechat">
+      <swiper-item> 
+        <view> 
+          <navigator open-type="navigate" url="/pages/live/chat/chat">
       <button size="mini"> 我的直播间 </button>
     </navigator>
         </view>  

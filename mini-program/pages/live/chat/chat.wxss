@@ -20,7 +20,7 @@ page {
 }
 
 .scrool-view {
-  height: 91%
+  height: 71%
 }
 
 .chat-left {
@@ -97,6 +97,9 @@ page {
   border-radius: 70rpx;
 }
 
+.courseware-area{
+  width : 100%;
+}
 .text-video-img {
   width: 70rpx;
   height: 70rpx;
