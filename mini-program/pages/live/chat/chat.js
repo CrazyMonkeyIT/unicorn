@@ -8,7 +8,7 @@ var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试'
   { chatid: 8, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 9, orientation: 'l', text: '这是一个小测试', type: 'text' },
   { chatid: 10, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 11, orientation: 'l', text: '这是一个小测试', type: 'text' },
   { chatid: 12, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 13, orientation: 'l', text: '这是一个小测试', type: 'text' },
-{ chatid: 14, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/audio_icon_3.png' }, { chatId: 15, orientation: 'l', text: '这是一个小测试', type: 'text' },
+{ chatid: 14, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 15, orientation: 'l', text: '这是一个小测试', type: 'text' },
   { chatid: 16, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 17, orientation: 'l', text: '这是一个小测试', type: 'text' },
   { chatid: 18, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 19, orientation: 'l', text: '这是一个小测试', type: 'text' },
   { chatid: 20, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }];
@@ -24,15 +24,15 @@ Page({
     userLogoUrl: '/images/user_default.png',
     keyboard: true,
     isSpeaking: false,
-    speakerUrl: '/images/speaker0.png',
-    speakerUrlPrefix: '/images/speaker',
+    speakerUrl: '/images/live/speaker0.png',
+    speakerUrlPrefix: '/images/live/speaker',
     speakerUrlSuffix: '.png',
     filePath: null,
     contactFlag: true,
     imgUrls: [{
-      id: 'i10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
+      id: 'tp10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
     },{
-        id: 'i19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
+        id: 'tp19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
     }
     ]
   },
@@ -40,15 +40,6 @@ Page({
     console.log("[Console log]:Loading...");
     that = this;
     this.setData({ chatList: chatListData});
-    app.getUserInfo(function (userInfo) {
-      var aUrl = userInfo.avatarUrl;
-      if (aUrl != null) {
-        that.setData({
-          userLogoUrl: aUrl
-        });
-      }
-    });
-    this.sendRequest(this.data.defaultCorpus);
   },
 
   onReady: function () {
@@ -166,9 +157,9 @@ Page({
     chatListData.forEach(function (chater) {//从对话列表中找出当前点击的语音记录，并执行播放操作
       if (chater.chatid == chatId) {
         voiceObject = chater;
-        this.voiceAnimate(chater);
+        that.voiceAnimate(chater);
       }
-    });
+    }); 
     //找不到指定文件时的提示框
     if (voiceObject = null){
       wx.showToast({
@@ -182,57 +173,59 @@ Page({
       })
     }
   },
-  //下载语音并返回本地语音的临时地址
-  downloadVoice : function (voiceUrl){
-    wx.downloadFile({
-      url: voiceUrl,
-      header: {},
-      success: function(res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        if (res.statusCode === 200) {
-          return res.tempFilePath;
-        }
-      },
-      fail: function(res) {
-        return null;
-      }
-    })
-  },
   //语音的动画效果 - 播放
   //判断语音对象中是否已经存了，如果已经存在则直接播放，不存在则下载
   voiceAnimatePlay: function (voiceObject) {
     voicePlaying = true;
     chartDetail = voiceObject;
-    var voiceTempFilepath = voiceObject.voiceTempFilepath ? voiceObject.voiceTempFilepath : this.downloadVoice(voiceObject.url);
-    if(voiceTempFilepath == null){
-      wx.showToast({
-        title: '没有找到指定语音',
-        icon: 'none',
-        duration: 200,
-        mask: true,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
+    if (voiceObject.voiceTempFilepath == undefined || voiceObject.voiceTempFilepath == null){
+      console.log('111111');
+      wx.downloadFile({
+        url: voiceObject.url,
+        header: {},
+        success: function (res) {
+
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容 
+          that.voiceOper(voiceObject, res.tempFilePath);
+          
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: '没有找到指定语音',
+            icon: 'none',
+            duration: 200,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }
       })
+    }else {
+      console.log('22222222');
+      that.voiceOper(voiceObject, voiceObject.voiceTempFilepath);
     }
+  },
+
+  voiceOper: function (voiceObject, voiceTempFilepath){
     //语音播放动画
     var i = 0;
     that.speakerInterval = setInterval(function () {
       i++;
       i = i % 3;
-      chatTo.voiceImg = "/images/live/audio_icon_" + (i + 1) + ".png";
+      voiceObject.voiceImg = "/images/live/audio_icon_" + (i + 1) + ".png";
       that.setData({
         chatList: chatListData
-      });
+      }); 
     }, 300);
     //播放语音，语音完成后执行停止播放
     wx.playVoice({
       filePath: voiceTempFilepath,
       duration: 0,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {
-        this.voiceAnimateStop(voiceObject);
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) {
+        that.voiceAnimateStop(voiceObject);
       },
     })
   },
@@ -249,12 +242,12 @@ Page({
   //语音的动画效果
   voiceAnimate : function (chatTo) {
     if (chatTo == chartDetail && voicePlaying == true) {
-      this.voiceAnimateStop(chatTo);
+      that.voiceAnimateStop(chatTo);
     } else if (chartDetail != null && chatTo != chartDetail && voicePlaying == true) {
-      this.voiceAnimateStop(chartDetail);
-      this.voiceAnimatePlay(chatTo);
+      that.voiceAnimateStop(chartDetail);
+      that.voiceAnimatePlay(chatTo);
     } else {
-      this.voiceAnimatePlay(chatTo);
+      that.voiceAnimatePlay(chatTo);
     }
   }
   
