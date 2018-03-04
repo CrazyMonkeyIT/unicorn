@@ -2,7 +2,6 @@ package com.valueservice.djs.util;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.commons.lang3.StringUtils;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;

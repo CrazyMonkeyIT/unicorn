@@ -85,6 +85,18 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArguments>
+                        <extdirs>djs-app\lib</extdirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
