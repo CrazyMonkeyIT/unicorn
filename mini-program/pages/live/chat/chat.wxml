@@ -3,7 +3,7 @@
 <!--index.wxml-->
 <view class="chat_container">
 
-  <scroll-view scroll-x="true" class="courseware-area" style="height: 20%;" scroll-left = '100' scroll-into-view="tp19234926">
+  <scroll-view scroll-x="true" class="courseware-area" scroll-left = '100' scroll-into-view="tp19234926">
     <view class='chat-list'>
     <block wx:for="{{imgUrls}}" wx:key="item">
          <view class="courseware-area-item bc_blue">
@@ -18,7 +18,7 @@
         <view id="roll{{index + 1}}" class="chat-left" wx:if="{{item.orientation == 'l'}}">
           <image class="avatar-img" src="/images/live/user_default.png"></image>
           <view class='chat-msg-title'>
-            <label>讲师-陈道明  2018年2月7日</label>
+            <label>{{item.nickName}}  {{item.chatTime}}</label>
             <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
             <block wx:if="{{item.type == 'voice'}}">
               <view class='voice-row'>
@@ -32,12 +32,12 @@
             </block>
           </view>
           <image class="avatar-img"></image>
-        </view>
+        </view> 
         <view id="roll{{index + 1}}" class="chat-right" wx:if="{{item.orientation == 'r'}}">
           <image class="avatar-img"></image>
           
          <view class='chat-msg-title-right'>
-            <label>{{item.nickName}}  2018年2月7日</label>
+            <label>{{item.nickName}}  {{item.chatTime}}</label>
             <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
             <block wx:if="{{item.type == 'voice'}}">
               <view class='voice-row'>
@@ -62,4 +62,8 @@
       <button hidden="{{!keyboard}}" bindtouchstart="touchdown" bindtouchend="touchup">按住 说话</button>
     </view>
 </view>
-<image class="speaker" hidden="{{!isSpeaking}}" src="{{speakerUrl}}"></image>
+<view class='speaker-view' hidden="{{!isSpeaking}}">
+  <image class="speaker" hidden="{{!isSpeaking}}" src="{{speakerUrl}}"></image>
+  <label class='{{speakerSecondCls}}'>{{speakerSecond}}''</label>
+</view>
+
