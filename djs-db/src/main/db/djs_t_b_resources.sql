@@ -18,4 +18,7 @@ CREATE TABLE `t_b_resources` (
 
 LOCK TABLES `t_b_resources` WRITE;
 INSERT INTO `t_b_resources` VALUES (1,'系统管理','system','#','system_manager',NULL,NULL,0,0,1,'2018-02-08 10:15:30','2018-02-08 10:15:30'),(2,'资源管理','resource','/system/resource/list','system_resource',NULL,NULL,1,0,1,'2018-02-08 10:14:32','2018-02-08 10:14:35');
+INSERT INTO `t_b_resources` VALUES ('2', '资源管理', 'resource', '/system/resource/list', 'system_resource', null, null, '1', '0', '1', '2018-02-08 10:14:32', '2018-02-08 10:14:35');
+INSERT INTO `t_b_resources` VALUES ('3', 'chatDemo', '', '/chatDemo', '', '', '1', '1', '0', '1', '2018-03-04 13:08:19', '2018-03-04 13:09:02');
+INSERT INTO `t_b_resources` VALUES ('4', 'import', '', '/toUp', '', '', '2', '1', '0', '1', '2018-03-04 16:16:28', null);
 UNLOCK TABLES;
