@@ -3,6 +3,7 @@ package com.valueservice.djs.controller.system;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,11 @@ public class ImportController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportController.class);
 
-    private static String sysPath;
+    @Value("${file.path}")
+    private String filePath;
 
     @RequestMapping("/toUp")
     public String toUp(HttpServletRequest request){
-        sysPath =  ImportController.class.getResource("/").getPath()+"/upload/";
         return "system/import/import";
     }
 
@@ -34,7 +35,7 @@ public class ImportController {
                 String myFileName = file.getOriginalFilename();
                 if(StringUtils.isNotBlank(myFileName.trim())){
                     String fileName = file.getOriginalFilename();
-                    String filepath = sysPath + fileName;
+                    String filepath = filePath + fileName;
                     File localFile = new File(filepath);
                     try {
                         file.transferTo(localFile);
@@ -52,7 +53,7 @@ public class ImportController {
 
     @RequestMapping("/getFileList")
     public @ResponseBody Vector<String> getFileList(){
-        File file = new File(sysPath+"/");
+        File file = new File(filePath);
         Vector<String> vecFile = new Vector<String>();
         File[] tempList = file.listFiles();
         if(tempList != null){
@@ -70,7 +71,7 @@ public class ImportController {
 
     @RequestMapping("/delete")
     public String delete(@RequestParam String name,Model model){
-        File file = new File(sysPath + name);
+        File file = new File(filePath + name);
         if(file.exists()){
             file.delete();
             model.addAttribute("msg","delete success!");
