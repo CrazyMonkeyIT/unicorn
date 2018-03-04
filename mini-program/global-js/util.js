@@ -14,6 +14,13 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const uuid = chatId => {
+  const mydate = new Date();
+  const uuid = "cms" + chatId + mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
+  return uuid
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  uuid :uuid
 }
