@@ -36,20 +36,30 @@
         <view id="roll{{index + 1}}" class="chat-right" wx:if="{{item.orientation == 'r'}}">
           <image class="avatar-img"></image>
           
-            <text>{{item.text}}{{item.url}}</text>
-          
-          <image class="avatar-img" src="{{userLogoUrl}}"></image>
+         <view class='chat-msg-title-right'>
+            <label>{{item.nickName}}  2018年2月7日</label>
+            <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
+            <block wx:if="{{item.type == 'voice'}}">
+              <view class='voice-row'>
+                <view class='voice-duration'>
+                  {{item.duration}}''
+                </view>
+                <view class="{{isPlay?'voice-view-right-play':'voice-view-right'}}" bindtap='chatVoicePlay' data-url="{{item.url}}" data-chatid="{{item.chatid}}">
+                  <image class="chat-audio-img-right" src="{{item.voiceImg}}"></image>
+                </view>
+              </view>
+            </block>
+          </view>
+          <image class="avatar-img" src="{{item.avatarImg}}"></image>
         </view>
       </block>
     </view>
-  </scroll-view>
-  <form bindsubmit="sendChat">
+  </scroll-view> 
     <view class="ask-input-word">
       <image class="text-video-img" src="/images/live/speak.png" hidden="{{keyboard}}" bindtap="switchInputType"></image>
       <image class="text-video-img" src="/images/live/keyboard.png" hidden="{{!keyboard}}" bindtap="switchInputType"></image>
       <input class="input-big" hidden="{{keyboard}}" focus="{{!keyboard}}" placeholder="" confirm-type="send" name="ask_word" type="text" bindconfirm="sendChat" bindinput="Typing" value="{{askWord}}" />
       <button hidden="{{!keyboard}}" bindtouchstart="touchdown" bindtouchend="touchup">按住 说话</button>
     </view>
-  </form>
 </view>
 <image class="speaker" hidden="{{!isSpeaking}}" src="{{speakerUrl}}"></image>

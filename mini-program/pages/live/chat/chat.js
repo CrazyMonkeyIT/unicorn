@@ -1,17 +1,10 @@
 // pages/livechat/livechat.js
+const util = require('../../../global-js/util.js')
 var app = getApp();
-var that;
-var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text' },
-{ chatid: 2, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 3, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 4, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 5, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 6, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 7, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 8, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 9, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 10, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 11, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 12, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 13, orientation: 'l', text: '这是一个小测试', type: 'text' },
-{ chatid: 14, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 15, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 16, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatid: 17, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 18, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }, { chatId: 19, orientation: 'l', text: '这是一个小测试', type: 'text' },
-  { chatid: 20, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png' }];
+var that,currentUser;
+var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' },
+  { chatid: 2, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', nickName:'陈道明' }, 
+  { chatid: 20, orientation: 'r', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', avatarImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLgZK43CgcILte4AfCBOicPTgYb7oIXq9CUPoYSDOgZyZZt000sR5eVib1UW70kW2OWNLeUF1vNu9xg/0', nickName: '楼得罚'}];
 var speakerInterval; 
 var chartDetail,voicePlaying = false;
 Page({
@@ -34,17 +27,76 @@ Page({
     },{
         id: 'tp19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
     }
-    ]
+    ] 
   },
   onLoad: function () {
     console.log("[Console log]:Loading...");
     that = this;
+    //获取用户登录信息
+    wx.getSetting({
+      success: (response) => {
+        console.log(response)
+        if (!response.authSetting['scope.userInfo']) {
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success: () => {
+              console.log('yes');
+              wx.getUserInfo({
+                success: function (res) {
+                  console.log(userInfo);
+                  currentUser = res.userInfo;
+                  //更新数据
+                  that.setData({
+                    userInfo: currentUser
+                  })
+                }
+              })
+              
+            }
+          })
+        } else {
+          //调用应用实例的方法获取全局数据
+          wx.getUserInfo({
+            success: function (res) {
+              console.log("get user info next");
+              console.log(res.userInfo);
+              currentUser = res.userInfo;
+              //更新数据
+              that.setData({
+                userInfo: currentUser
+              })
+            }
+          })
+        }
+/*
+        if (!response.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success: () => {
+              console.log('scope.record -- > auth');
+            }
+          })
+        }
+
+        if (!response.authSetting['scope.camera']) {
+          wx.authorize({
+            scope: 'scope.camera',
+            success: () => {
+              console.log('scope.camera -- > auth');
+            }
+          })
+        }*/
+      }
+    })
+
+    //远程取一次本聊天室所有的聊天记录做一次初始化
+    //todo
     this.setData({ chatList: chatListData});
   },
 
   onReady: function () {
 
-  },
+  }, 
   // 切换语音输入和文字输入
   switchInputType: function () {
     this.setData({
@@ -74,6 +126,10 @@ Page({
         var tempFilePath = res.tempFilePath;
         that.data.filePath = tempFilePath;
         console.log("[Console log]:Record success!File path:" + tempFilePath);
+        var myVoiceChat = { chatid: util.uuid(1234), orientation: 'r', url: '', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName };
+        console.log("[录音结束]")
+        console.log(myVoiceChat)
+        that.addChat(myVoiceChat);
       },
       'fail': function () {
         console.log("[Console log]:Record failed!");
@@ -98,13 +154,12 @@ Page({
     clearInterval(that.speakerInterval);
   },
   // 增加对话到显示界面（scrolltopFlag为True）
-  addChat: function (word, orientation) {
-    that.addChatWithFlag(word, orientation, true);
+  addChat: function (chatOjbect) {
+    that.addChatWithFlag(chatOjbect, true);
   },
   // 增加对话到显示界面（scrolltopFlag为是否滚动标志）
-  addChatWithFlag: function (word, orientation, scrolltopFlag) {
-    let ch = { 'text': word, 'time': new Date().getTime(), 'orientation': orientation };
-    chatListData.push(ch);
+  addChatWithFlag: function (chatOjbect, scrolltopFlag) {
+    chatListData.push(chatOjbect);
     var charlenght = chatListData.length;
     console.log("[Console log]:Add message to chat list...");
     if (scrolltopFlag) {
@@ -184,10 +239,8 @@ Page({
         url: voiceObject.url,
         header: {},
         success: function (res) {
-
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容 
-          that.voiceOper(voiceObject, res.tempFilePath);
-          
+          that.voiceOper(voiceObject, res.tempFilePath);         
         },
         fail: function (res) {
           wx.showToast({

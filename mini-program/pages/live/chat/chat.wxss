@@ -28,11 +28,23 @@ page {
   align-items: center;
   margin-top: 20rpx;
 }
+.chat-right {
+  display: flex;
+  margin-top: 20rpx;
+}
 .chat-msg-title {
   flex: 1;
   margin-left: 10rpx;
   display: flex;
   flex-direction: column;
+}
+
+.chat-msg-title-right{
+  margin-right: 10rpx;
+  display: flex;
+  flex: 4;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .chat-left text {
@@ -57,8 +69,23 @@ page {
   width: 200rpx;
   background-color: white;
 }
+.voice-view-right {
+  border-radius: 11rpx;
+  padding: 10rpx 10rpx 1rpx;
+  width: 200rpx;
+  background-color: #7afec6;
+  display:flex;
+  justify-content:flex-end;
+}
 
 .voice-view-left-play {
+  border-radius: 11rpx;
+  padding: 10rpx 10rpx;
+  width: 200rpx;
+  background-color: greenyellow;
+}
+
+.voice-view-right-play {
   border-radius: 11rpx;
   padding: 10rpx 10rpx;
   width: 200rpx;
@@ -68,6 +95,18 @@ page {
   width: 40rpx;
   height: 40rpx;
   display:inline-block;
+}
+
+.chat-audio-img-right {
+  width: 40rpx;
+  height: 40rpx;
+  display:inline-block;
+  -moz-transform:scaleX(-1);
+  -webkit-transform:scaleX(-1);
+  -o-transform:scaleX(-1);
+  transform:scaleX(-1);
+  /*IE*/
+  filter:FlipH;
 }
 
 .chat-left label {
@@ -80,6 +119,12 @@ page {
   display: flex;
   align-items: center;
   margin-top: 20rpx;
+}
+
+.chat-right label {
+  word-break: break-all;
+  padding: 5rpx 10rpx;
+  font-size: 22rpx;
 }
 
 .chat-right text {
@@ -115,15 +160,17 @@ page {
   height: 70rpx;
   border-radius: 60rpx;
   margin-right: 5px;
+  margin-left: 5px;
 }
 
 .ask-input-word {
-  width: 96%;
+  width: 100%;
   position: fixed;
-  padding: 5rpx;
   bottom: 5rpx;
   display: flex;
   align-items: center;
+  background-color: #f3f3fa;
+  margin: 0 -15rpx 0 -15rpx;
 }
 
 .ask-input-word input {
@@ -140,12 +187,12 @@ page {
   min-height:2rem;
   font-size:18px;
   padding:0 0.34em;
-  width:100%;
+  width:85%;
   text-align: center;
   position: relative;
   display: block;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 10px;
   padding-left: 14px;
   padding-right: 14px;
   box-sizing: border-box;
