@@ -21,4 +21,5 @@ INSERT INTO `t_b_resources` VALUES (1,'系统管理','system','#','system_manage
 INSERT INTO `t_b_resources` VALUES ('2', '资源管理', 'resource', '/system/resource/list', 'system_resource', null, null, '1', '0', '1', '2018-02-08 10:14:32', '2018-02-08 10:14:35');
 INSERT INTO `t_b_resources` VALUES ('3', 'chatDemo', '', '/chatDemo', '', '', '1', '1', '0', '1', '2018-03-04 13:08:19', '2018-03-04 13:09:02');
 INSERT INTO `t_b_resources` VALUES ('4', 'import', '', '/toUp', '', '', '2', '1', '0', '1', '2018-03-04 16:16:28', null);
+INSERT INTO `t_b_resources` VALUES ('5', '用户管理', '', '/system/user/list', '', '', '3', '1', '0', '1', '2018-03-05 22:33:06', null);
 UNLOCK TABLES;
