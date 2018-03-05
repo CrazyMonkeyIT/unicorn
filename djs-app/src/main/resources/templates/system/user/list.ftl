@@ -49,7 +49,7 @@
                                 <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
                                 <td><span class="blue">${data.userName!''}</span></td>
                                 <td>${data.loginName!''}</td>
-                                <td><#if data.loginInvalid??>${(data.loginInvalid?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
+                                <td><#if data.loginInvallid??>${(data.loginInvallid?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                                 <td><#if data.lastLoginTime??>${(data.lastLoginTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                                 <td><#if data.createTime??>${(data.createTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                                 <td>
