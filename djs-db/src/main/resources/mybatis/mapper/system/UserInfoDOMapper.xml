@@ -33,7 +33,7 @@
   <select id="selectUserList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from T_B_LOGIN_USER where FIND_IN_SET(user_id,getChildList(#{userId}))
+    from t_b_user_info where FIND_IN_SET(user_id,getChildList(#{userId}))
     <if test="userName != null" >
       and user_name like CONCAT('%',#{userName},'%')
     </if>
