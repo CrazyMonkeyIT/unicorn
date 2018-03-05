@@ -39,7 +39,7 @@ public class UserController extends BaseController{
     /**
      * 用户列表
      */
-    @RequestMapping("/list.html")
+    @RequestMapping("/list")
     public String list(ModelMap modelMap, String userName, String pageIndex){
         PageInfo<UserInfoDO> page = null;
         try{
@@ -54,7 +54,7 @@ public class UserController extends BaseController{
     /**
      * 更新用户信息
      */
-    @RequestMapping("/updateUser.html")
+    @RequestMapping("/updateUser")
     @ResponseBody
     public Map<String,Object> updateUser(UserInfoDO user,String loginInvalidDate){
         Map<String,Object> resultMap = new HashMap<String,Object>();
@@ -77,7 +77,7 @@ public class UserController extends BaseController{
     /**
      * 获取用户信息
      */
-    @RequestMapping("/getUserInfo.html")
+    @RequestMapping("/getUserInfo")
     @ResponseBody
     public UserInfoDO getUserInfo(String loginName){
         UserInfoDO record = null;
@@ -91,7 +91,7 @@ public class UserController extends BaseController{
     /**
      * 重置用户密码
      */
-    @RequestMapping("/resetUserPwd.html")
+    @RequestMapping("/resetUserPwd")
     @ResponseBody
     public Boolean resetUserPwd(Long userId){
         Boolean result = false;
@@ -105,7 +105,7 @@ public class UserController extends BaseController{
     /**
      * 更新用户状态
      */
-    @RequestMapping("/updateUserStatus.html")
+    @RequestMapping("/updateUserStatus")
     @ResponseBody
     public Boolean updateUserStatus(Long userId,Integer status){
         Boolean result = false;
@@ -119,7 +119,7 @@ public class UserController extends BaseController{
     /**
      * 删除用户
      */
-    @RequestMapping("/deleteUser.html")
+    @RequestMapping("/deleteUser")
     @ResponseBody
     public Boolean deleteUser(Long userId){
         Boolean result = false;

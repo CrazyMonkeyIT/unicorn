@@ -98,7 +98,7 @@
             <div class="row">
                 <!-- 分页begin -->
                 <#if (page.pages>0)>
-                    <#import "../../../macro/pagination.ftl" as cast/>
+                    <#import "../../macro/pagination.ftl" as cast/>
                     <@cast.pagination callFunName="submitForm" />
                 </#if>
                 <!-- 分页end -->

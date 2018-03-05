@@ -10,11 +10,12 @@
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="login_invallid" jdbcType="TIMESTAMP" property="loginInvallid" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, user_name, login_name, login_pwd, user_status, parent_id, login_invallid, 
-    last_login_time, update_time
+    last_login_time, create_time, update_time
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -33,11 +34,10 @@
   <select id="selectUserList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_b_user_info where FIND_IN_SET(user_id,getChildList(#{userId}))
+    from t_b_user_info where user_status != 4 <!-- 非删除状态的 -->
     <if test="userName != null" >
       and user_name like CONCAT('%',#{userName},'%')
     </if>
-    and user_status != 4 <!-- 非删除状态的 -->
     order by create_time desc
   </select>
 

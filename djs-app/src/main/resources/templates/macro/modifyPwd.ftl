@@ -96,6 +96,7 @@ function confirmModifyPwd(){
         url : $("#modifyPwdForm").attr("action"),
         type : 'post',
         data : $("#modifyPwdForm").serialize(),
+        dataType:'json',
         success : function(data) {
             console.log(data);
             if(data.success){
