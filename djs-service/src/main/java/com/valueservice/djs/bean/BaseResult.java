@@ -6,15 +6,21 @@ public class BaseResult {
 	
 	private String message;
 
+	public BaseResult(){
+		this.success = false;
+		this.message = "系统错误";
+	}
+
+	public BaseResult(boolean success){
+		this.success = success;
+	}
+
 	public BaseResult(boolean success, String msg){
 		this.success = success;
 		this.message = msg;
 	}
 	
-	public BaseResult(){
-		
-	}
-	
+
 	public boolean isSuccess() {
 		return success;
 	}

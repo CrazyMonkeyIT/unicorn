@@ -29,8 +29,8 @@ CREATE TABLE `t_b_lecturer_invite` (
   `invite_code` varchar(50) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL COMMENT '状态 （notallow/allow）',
   `create_user_id` varchar(11) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL,
+  `create_time` timestamp NULL ,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

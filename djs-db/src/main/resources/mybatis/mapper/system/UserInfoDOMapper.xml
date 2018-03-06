@@ -56,6 +56,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.system.UserInfoDO">
+    <selectKey keyProperty="userId" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as user_id
+    </selectKey>
     insert into t_b_user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

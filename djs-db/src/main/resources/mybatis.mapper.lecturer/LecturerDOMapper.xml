@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.lecturer.LecturerDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.lecturer.LecturerDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
+    <result column="is_chief" jdbcType="VARCHAR" property="isChief" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="status_desc" jdbcType="VARCHAR" property="statusDesc" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="live_number" jdbcType="VARCHAR" property="liveNumber" />
+    <result column="live_hours" jdbcType="VARCHAR" property="liveHours" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, lecturer_name, phone, grade_id, is_chief, status, status_desc, company, position, 
+    live_number, live_hours, create_time, update_time
+  </sql>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_lecturer where 1=1
+    <if test="lecturerName != null">
+      and lecturer_name like CONCAT('%',#{lecturerName},'%')
+    </if>
+    <if test="phone != null">
+      and phone like CONCAT('%',#{phone},'%')
+    </if>
+    order by create_time desc
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_b_lecturer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_b_lecturer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerDO">
+    <selectKey keyProperty="userId" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as user_id
+    </selectKey>
+    insert into t_b_lecturer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lecturerName != null">
+        lecturer_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="gradeId != null">
+        grade_id,
+      </if>
+      <if test="isChief != null">
+        is_chief,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="statusDesc != null">
+        status_desc,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="liveNumber != null">
+        live_number,
+      </if>
+      <if test="liveHours != null">
+        live_hours,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lecturerName != null">
+        #{lecturerName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        #{gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="isChief != null">
+        #{isChief,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="statusDesc != null">
+        #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="liveNumber != null">
+        #{liveNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="liveHours != null">
+        #{liveHours,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerDO">
+    update t_b_lecturer
+    <set>
+      <if test="lecturerName != null">
+        lecturer_name = #{lecturerName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        grade_id = #{gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="isChief != null">
+        is_chief = #{isChief,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="statusDesc != null">
+        status_desc = #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="liveNumber != null">
+        live_number = #{liveNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="liveHours != null">
+        live_hours = #{liveHours,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
