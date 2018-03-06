@@ -6,35 +6,13 @@
 </head>
 <script src="${request.contextPath}/static/js/jquery-1.11.0.js"></script>
 <script type="text/javascript">
-    var remoteAjax = function(url,option){
-        return $.ajax({
-            url:url,
-            data:option && option.data || '',
-            type:option && option.type || 'POST',
-        });
-    }
-
     $(function(){
         $('#up').click(excuteup);
-        getFileList();
     });
 
     var excuteup = function(){
         $('#progressMsg').text('正在上传文件...');
         $('#upForm').submit();
-    }
-
-    var getFileList = function(){
-        var $table = $('#fileTable');
-        var url = '${request.contextPath}/getFileList';
-        remoteAjax(url).done(function(data){
-            if(data && data.length>0){
-                for(var i= 0;i<data.length;i++){
-                    $table.append("<tr><td>"+data[i]+"</td><td><a href='${request.contextPath}/delete?name="+data[i]+"'>delete</a></td>></tr>");
-                }
-            }
-        });
-
     }
 </script>
 <body>

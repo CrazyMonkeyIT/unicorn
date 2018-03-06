@@ -63,9 +63,9 @@ public class ImportController {
         return lists;
     }
 
-    @GetMapping("/getFileList")
-    public @ResponseBody Vector<String> getFileList(){
-        File file = new File(filePath);
+    @PostMapping("/getFileList/{roomId}")
+    public @ResponseBody Vector<String> getFileList(@PathVariable String roomId){
+        File file = new File(String.format("%s/%s", filePath,roomId));
         Vector<String> vecFile = new Vector<String>();
         File[] tempList = file.listFiles();
         if(tempList != null){
@@ -80,17 +80,4 @@ public class ImportController {
         }
         return vecFile;
     }
-
-    @DeleteMapping("/delete")
-    public String delete(@RequestParam String name,Model model){
-        File file = new File(filePath + name);
-        if(file.exists()){
-            file.delete();
-            model.addAttribute("msg","delete success!");
-        }else{
-            model.addAttribute("msg","not exists!");
-        }
-        return "system/import/import";
-    }
-
 }
