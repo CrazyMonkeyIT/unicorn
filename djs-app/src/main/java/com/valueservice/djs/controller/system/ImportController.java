@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Controller
 public class ImportController {
@@ -34,32 +34,32 @@ public class ImportController {
             return null;
         }
         List<Map<String,String>> lists = new ArrayList<>();
-        try {
-            File userFile = new File(String.format("%s/%s", filePath,roomId));
-            if (!userFile.exists()){
-                userFile.mkdir();
-            }
-            String userFilePath = String.format("%s%s",userFile.getPath(),"\\");
-            for(MultipartFile file : files){
-                if(file != null){
+        File userFile = new File(String.format("%s/%s", filePath,roomId));
+        if (!userFile.exists()){
+            userFile.mkdir();
+        }
+        String userFilePath = String.format("%s%s",userFile.getPath(),"\\");
+        Stream.of(files).forEach(file->{
+            try {
+                if (file != null) {
                     String myFileName = file.getOriginalFilename();
-                    if(StringUtils.isNotBlank(myFileName.trim())){
-                        Map<String,String> map = new HashMap<>();
+                    if (StringUtils.isNotBlank(myFileName.trim())) {
+                        Map<String, String> map = new HashMap<>();
                         String fileAllName = file.getOriginalFilename();
-                        String prefixName = fileAllName.substring(0,fileAllName.indexOf("."));
-                        String suffixName = fileAllName.substring(fileAllName.indexOf("."),fileAllName.length());
-                        prefixName += "("+System.currentTimeMillis()+")";
-                        String currentFilePath = String.format("%s%s%s",userFilePath,prefixName,suffixName);
+                        String prefixName = fileAllName.substring(0, fileAllName.indexOf("."));
+                        String suffixName = fileAllName.substring(fileAllName.indexOf("."), fileAllName.length());
+                        prefixName += "(" + System.currentTimeMillis() + ")";
+                        String currentFilePath = String.format("%s%s%s", userFilePath, prefixName, suffixName);
                         File localFile = new File(currentFilePath);
                         file.transferTo(localFile);
-                        map.put("filePath",currentFilePath);
+                        map.put("filePath", currentFilePath);
                         lists.add(map);
                     }
                 }
+            }catch (Exception e){
+                    logger.error("",e);
             }
-        } catch (IllegalStateException | IOException e){
-            logger.error("",e);
-        }
+        });
         return lists;
     }
 
