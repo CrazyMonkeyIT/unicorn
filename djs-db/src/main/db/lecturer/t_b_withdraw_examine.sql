@@ -25,7 +25,7 @@ CREATE TABLE `t_b_withdraw_examine` (
   `withdraw_money` decimal(11,2) DEFAULT NULL COMMENT '提现金额',
   `status` varchar(10) DEFAULT NULL COMMENT '状态 （wait 等待审核/already 已通过/refuse 已拒绝）',
   `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
