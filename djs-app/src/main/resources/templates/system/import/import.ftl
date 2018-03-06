@@ -38,7 +38,7 @@
     }
 </script>
 <body>
-<form id="upForm" action="${request.contextPath}/up" enctype="multipart/form-data" method='post'>
+<form id="upForm" action="${request.contextPath}/up/12" enctype="multipart/form-data" method='post'>
     <div id="upDiv">
         File to upload: <input type="file" name="file" multiple="multiple"><br />
     </div>
