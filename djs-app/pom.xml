@@ -11,6 +11,29 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <profiles.active>local</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <profiles.active>uat</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <profiles.active>pro</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
