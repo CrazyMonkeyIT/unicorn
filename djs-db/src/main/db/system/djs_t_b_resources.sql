@@ -1,7 +1,7 @@
 
 DROP TABLE IF EXISTS `t_b_resources`;
 CREATE TABLE `t_b_resources` (
-  `resource_id` bigint(20) NOT NULL,
+  `resource_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `resource_name` varchar(255) NOT NULL,
   `resource_code` varchar(255) NOT NULL,
   `resource_url` varchar(255) NOT NULL,

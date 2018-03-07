@@ -1,7 +1,7 @@
 
 DROP TABLE IF EXISTS `t_b_user_resource`;
 CREATE TABLE `t_b_user_resource` (
-  `user_resource_id` bigint(20) NOT NULL,
+  `user_resource_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `resource_id` bigint(20) NOT NULL,
   `active` int(11) NOT NULL,
