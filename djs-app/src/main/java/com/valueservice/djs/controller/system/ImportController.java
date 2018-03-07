@@ -31,7 +31,7 @@ public class ImportController {
     public @ResponseBody List<Map<String,String>> up(@PathVariable String roomId,@RequestParam("file") MultipartFile[] files){
 
         if(Objects.isNull(roomId) || Objects.isNull(files)){
-            logger.error("The required parameter is null.");
+            logger.error("The required parameter is null..");
             return null;
         }
         List<Map<String,String>> lists = new ArrayList<>();
