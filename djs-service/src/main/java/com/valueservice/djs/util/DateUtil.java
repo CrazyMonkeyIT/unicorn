@@ -18,4 +18,8 @@ public class DateUtil {
 		}
 		return new Timestamp(new SimpleDateFormat(format).parse(date).getTime());
 	}
+
+	public static Date currentDate(){
+		return new Date();
+	}
 }

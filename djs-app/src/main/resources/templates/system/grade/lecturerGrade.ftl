@@ -1,13 +1,8 @@
 <@ui.layout >
-<!-- zTree -->
-<link rel="stylesheet" href="${request.contextPath}/static/ztree/zTreeStyle.css" type="text/css">
-<script src="${request.contextPath}/static/ztree/jquery.ztree.all-3.5.js"></script>
-<!-- My97 -->
-<script src="${request.contextPath}/static/My97DatePicker/WdatePicker.js"></script>
 
 <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
     <div class="row">
-        <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/system/user/list" method="post">
+        <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/lecturer/grade/list" method="post">
             <a onclick="showAddModal()" class="btn btn-white btn-info">
                 <i class="glyphicon glyphicon-plus"></i>
                 创建等级
@@ -21,41 +16,35 @@
             <th >序号a</th>
             <th >等级名称</th>
             <th >分成比例</th>
-            <th >优先级</th>
             <th >操作</th>
         </tr>
         </thead>
         <tbody>
+            <#list page.list as data>
             <tr>
-                <td>1</td>
-                <td>等级A</td>
-                <td>10</td>
-                <td>1</td>
+                <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
+                <td>${data.gradeName!''}</td>
+                <td>${data.paymentRatio!''}</td>
                 <td>
                     <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                         <i class="fa fa-pencil bigger-110 green" ></i>
                     </a>
-                    <a class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
+                    <a onclick="delGrade(${data.lecturerGradeId})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
                         <i class="fa fa-trash-o bigger-110 red"></i>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>等级B</td>
-                <td>20</td>
-                <td>2</td>
-                <td>
-                    <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
-                        <i class="fa fa-pencil bigger-110 green" ></i>
-                    </a>
-                    <a class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
-                        <i class="fa fa-trash-o bigger-110 red"></i>
-                    </a>
-                </td>
-            </tr>
+            </#list>
         </tbody>
     </table>
+    <div class="row">
+        <!-- 分页begin -->
+        <#if (page.pages>0)>
+        <#import "../../macro/pagination.ftl" as cast/>
+        <@cast.pagination callFunName="submitForm" />
+    </#if>
+    <!-- 分页end -->
+</div>
 </div>
 
 <!--等级新增/修改div开始-->
@@ -67,28 +56,28 @@
                 <h4 class="blue"><i class="fa fa-pencil"></i>编辑等级</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
+                <form id="editForm" action="${request.getContextPath()}/lecturer/grade/edit" method="post">
                     <div class="form-horizontal">
-                        <!-- 用户ID -->
-                        <input type="hidden" name="userId" />
+                        <!-- 讲师等级ID -->
+                        <input type="hidden" name="lecturerGradeId" />
 
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">等级名称</label>
                             <div class="col-sm-8">
-                                <input name="userName" type="text"  />
+                                <input name="gradeName" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">分成比例</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="paymentRatio" type="text"  />
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-white btn-info btn-bold">
+                <a onclick="editLecturerGrade()" class="btn btn-white btn-info btn-bold">
                     <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                     保存
                 </a>
@@ -103,6 +92,59 @@
 <!--等级新增/修改div结束-->
 
 <script >
+
+/**
+ * 编辑讲师等级信息
+ */
+function editLecturerGrade(){
+    var userName = $("#editForm").find("input[name='gradeName']").val();
+    var loginName = $("#editForm").find("input[name='paymentRatio']").val();
+    if(!userName){
+        alert("讲师等级名称不能为空");
+        $("#editForm").find("input[name='gradeName']").focus();
+        return false;
+    }
+    if(!loginName){
+        alert("讲师分成比例不能为空");
+        $("#editForm").find("input[name='paymentRatio']").focus();
+        return false;
+    }
+    $.ajax({
+        url : $("#editForm").attr("action"),
+        type : 'post',
+        data : $("#editForm").serialize(),
+        success : function(data) {
+            if(data){
+                location.href = basePath + "/lecturer/grade/list";
+            }else{
+                alert("failed");
+            }
+        }
+    });
+}
+
+/**
+ * 删除讲师等级
+ */
+function delGrade(lecturerGradeId){
+    Ewin.confirm({ message: "确认要删除该讲师等级吗？" }).on(function () {
+        $.ajax({
+            url: basePath + "/lecturer/grade/del",
+            type: 'post',
+            data: {
+                "lecturerGradeId": lecturerGradeId
+            },
+            success: function (data) {
+                if (data) {
+                    location.href = basePath + "/lecturer/grade/list";
+                } else {
+                    alert("操作失败，系统异常");
+                }
+            }
+        });
+    });
+}
+
 /**
  * 清空表单
  */

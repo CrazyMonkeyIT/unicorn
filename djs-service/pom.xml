@@ -50,5 +50,10 @@
             <artifactId>shiro-core</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <!--gson-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
     </dependencies>
 </project>
