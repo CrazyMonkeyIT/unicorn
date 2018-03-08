@@ -1,4 +1,4 @@
-package com.valueservice.djs.service;
+package com.valueservice.djs.service.system;
 
 import com.valueservice.djs.db.dao.system.ResourcesDOMapper;
 import com.valueservice.djs.db.entity.system.ResourcesDO;

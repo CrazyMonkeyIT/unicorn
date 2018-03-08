@@ -1,4 +1,4 @@
-package com.valueservice.djs.service;
+package com.valueservice.djs.service.system;
 
 import com.valueservice.djs.bean.BaseResult;
 import com.github.pagehelper.PageHelper;

@@ -1,4 +1,4 @@
-package com.valueservice.djs.service;
+package com.valueservice.djs.service.system;
 
 import org.springframework.stereotype.Service;
 

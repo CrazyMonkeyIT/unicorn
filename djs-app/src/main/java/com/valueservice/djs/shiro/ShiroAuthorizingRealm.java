@@ -2,8 +2,8 @@ package com.valueservice.djs.shiro;
 
 import com.valueservice.djs.db.entity.system.ResourcesDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
-import com.valueservice.djs.service.ResourceService;
-import com.valueservice.djs.service.UserInfoService;
+import com.valueservice.djs.service.system.ResourceService;
+import com.valueservice.djs.service.system.UserInfoService;
 import com.valueservice.djs.shiro.auth.ShiroPermission;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
