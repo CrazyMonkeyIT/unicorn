@@ -3,6 +3,7 @@ package com.valueservice.djs.service.system;
 import com.valueservice.djs.db.dao.system.ResourcesDOMapper;
 import com.valueservice.djs.db.entity.system.ResourcesDO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -26,6 +27,7 @@ public class ResourceService {
       return resourcesDOMapper.selectByPrimaryKey(resourceId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteResource(Long resourceId) {
         ResourcesDO record = new ResourcesDO();
         record.setResourceId(resourceId);
@@ -34,6 +36,7 @@ public class ResourceService {
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertOrUpdate(ResourcesDO record) {
         if(record.getResourceId() == null){
             record.setOrderNo(selectCurrOrderNo(record.getParentId()));
@@ -62,6 +65,7 @@ public class ResourceService {
         return (maxOrderNo + 1);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateResourcePosition(ResourcesDO resource, Long upId,Integer upOrder) {
         Integer order = resource.getOrderNo();
         resource.setOrderNo(upOrder);

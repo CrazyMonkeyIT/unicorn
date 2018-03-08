@@ -10,6 +10,8 @@ import com.valueservice.djs.db.entity.system.UserResourceDO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import com.valueservice.djs.util.SHA256;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
@@ -28,6 +30,7 @@ public class UserInfoService {
         return userInfoDOMapper.findByLoginName(loginName);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertOrUpdate(UserInfoDO userInfoDO){
         int rows = 0;
         if(userInfoDO.getUserId() == null){
@@ -51,6 +54,7 @@ public class UserInfoService {
         return r;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean resetUserPwd(Long userId) {
         UserInfoDO loginUser = new UserInfoDO();
         loginUser.setUserId(userId);
@@ -59,6 +63,7 @@ public class UserInfoService {
         return (rows > 0);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateUserStatus(Long userId, Integer status) {
         UserInfoDO loginUser = new UserInfoDO();
         loginUser.setUserId(userId);
