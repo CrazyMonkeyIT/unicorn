@@ -1,7 +1,8 @@
 package com.valueservice.djs.util;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.util.encoders.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
@@ -59,7 +60,7 @@ public class Des3Util {
         IvParameterSpec ips = new IvParameterSpec(IV.getBytes());
         cipher.init(Cipher.ENCRYPT_MODE, desKey,ips);
         byte[] encryptData = cipher.doFinal(plainText.getBytes(ENCODING));
-        return Base64.encode(encryptData);
+        return Base64.encode(encryptData).toString();
     }
 
     /**
