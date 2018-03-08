@@ -169,4 +169,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where advertisement_id = #{advertisementId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
+    select * from t_b_advertisement a
+  </select>
+
 </mapper>

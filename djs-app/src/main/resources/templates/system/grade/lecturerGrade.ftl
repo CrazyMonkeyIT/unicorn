@@ -26,7 +26,7 @@
                 <td>${data.gradeName!''}</td>
                 <td>${data.paymentRatio!''}</td>
                 <td>
-                    <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
+                    <a onclick="showEditModal(${data.lecturerGradeId}, '${data.gradeName}', ${data.paymentRatio})" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                         <i class="fa fa-pencil bigger-110 green" ></i>
                     </a>
                     <a onclick="delGrade(${data.lecturerGradeId})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
@@ -94,17 +94,28 @@
 <script >
 
 /**
+ * 编辑讲师等级信息时 附带上一次的值
+ */
+function showEditModal(lecturerGradeId, gradeName, paymentRatio){
+    clearForm();
+    $("#editForm").find("input[name='lecturerGradeId']").val(lecturerGradeId);
+    $("#editForm").find("input[name='gradeName']").val(gradeName);
+    $("#editForm").find("input[name='paymentRatio']").val(paymentRatio);
+    $("#edit_grade_modal").modal("show");
+}
+
+/**
  * 编辑讲师等级信息
  */
 function editLecturerGrade(){
-    var userName = $("#editForm").find("input[name='gradeName']").val();
-    var loginName = $("#editForm").find("input[name='paymentRatio']").val();
-    if(!userName){
+    var gradeName = $("#editForm").find("input[name='gradeName']").val();
+    var paymentRatio = $("#editForm").find("input[name='paymentRatio']").val();
+    if(!gradeName){
         alert("讲师等级名称不能为空");
         $("#editForm").find("input[name='gradeName']").focus();
         return false;
     }
-    if(!loginName){
+    if(!paymentRatio){
         alert("讲师分成比例不能为空");
         $("#editForm").find("input[name='paymentRatio']").focus();
         return false;

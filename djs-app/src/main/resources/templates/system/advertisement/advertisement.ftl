@@ -12,35 +12,39 @@
 
     <table class="table table-striped table-bordered table-hover dataTable no-footer" >
         <thead class="thin-border-bottom">
-        <tr >
-            <th >序号</th>
-            <th >广告标题</th>
-            <th >广告描述</th>
-            <th >广告类型</th>
-            <th >广告图片</th>
-            <th >到期时间</th>
-            <th >广告状态</th>
-            <th >操作</th>
-        </tr>
+            <tr >
+                <th >序号</th>
+                <th >广告标题</th>
+                <th >广告描述</th>
+                <th >广告类型</th>
+                <th >广告连接</th>
+                <th >广告图片</th>
+                <th >到期时间</th>
+                <th >广告状态</th>
+                <th >操作</th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>超链接广告</td>
-            <td>这是链接广告</td>
-            <td>超链接广告</td>
-            <td>图片</td>
-            <td>2018-4-1</td>
-            <td>正常</td>
-            <td>
-                <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
-                    <i class="fa fa-pencil bigger-110 green" ></i>
-                </a>
-                <a class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
-                    <i class="fa fa-trash-o bigger-110 red"></i>
-                </a>
-            </td>
-        </tr>
+            <#list page.list as data>
+            <tr>
+                <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
+                <td>${data.advertisementTitle!''}</td>
+                <td>${data.advertisementDesc!''}</td>
+                <td>asd</td>
+                <td>${data.advertisementUrl!''}</td>
+                <td>图片</td>
+                <td>2018-4-1</td>
+                <td>${data.status!''}</td>
+                <td>
+                    <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
+                        <i class="fa fa-pencil bigger-110 green" ></i>
+                    </a>
+                    <a class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
+                        <i class="fa fa-trash-o bigger-110 red"></i>
+                    </a>
+                </td>
+            </tr>
+            </#list>
         </tbody>
     </table>
 </div>
@@ -51,24 +55,48 @@
         <div class="modal-content"  >
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
-                <h4 class="blue"><i class="fa fa-pencil"></i>编辑等级</h4>
+                <h4 class="blue"><i class="fa fa-pencil"></i>编辑广告</h4>
             </div>
             <div class="modal-body">
                 <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
                     <div class="form-horizontal">
                         <!-- 用户ID -->
-                        <input type="hidden" name="userId" />
+                        <input type="hidden" name="advertisementId" />
 
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">等级名称</label>
+                            <label class="col-sm-4 control-label">广告标题</label>
                             <div class="col-sm-8">
-                                <input name="userName" type="text"  />
+                                <input name="advertisementTitle" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">分成比例</label>
+                            <label class="col-sm-4 control-label">广告描述</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="advertisementDesc" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">广告类型</label>
+                            <div class="col-sm-8">
+                                <input name="advertisementType" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">广告连接</label>
+                            <div class="col-sm-8">
+                                <input name="advertisementUrl" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">广告图片</label>
+                            <div class="col-sm-8">
+                                <input name="advertisementImg" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">到期时间</label>
+                            <div class="col-sm-8">
+                                <input name="invalidDate" type="text"  />
                             </div>
                         </div>
                     </div>

@@ -33,9 +33,13 @@ public class LecturerGradeController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public Boolean addLecturerGrade(String gradeName, Integer paymentRatio){
+    public Boolean addLecturerGrade(Integer lecturerGradeId, String gradeName, Integer paymentRatio){
         try {
-            lecturerGradeService.addLecturerGradeData(gradeName, paymentRatio);
+            if(null == lecturerGradeId){
+                lecturerGradeService.addLecturerGradeData(gradeName, paymentRatio);
+            }else{
+                lecturerGradeService.updateLecturerGradeInfo(lecturerGradeId, gradeName , paymentRatio);
+            }
         }catch (Exception ex){
             LOGGER.error("", ex);
             return false;
