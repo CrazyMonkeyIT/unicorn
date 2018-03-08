@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.EncryptUserInfo;
 import org.apache.tomcat.util.codec.binary.Base64;
-
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.HashMap;

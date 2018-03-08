@@ -97,16 +97,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.47</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
-        </dependency>
     </dependencies>
     <build>
         <finalName>djs-app</finalName>
@@ -117,18 +107,6 @@
                 <configuration>
                     <fork>true</fork>
                     <addResources>true</addResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <encoding>utf-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <extdirs>djs-app\lib</extdirs>
-                    </compilerArguments>
                 </configuration>
             </plugin>
         </plugins>
