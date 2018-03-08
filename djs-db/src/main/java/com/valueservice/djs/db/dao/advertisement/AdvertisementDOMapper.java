@@ -2,6 +2,8 @@ package com.valueservice.djs.db.dao.advertisement;
 
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 
+import java.util.List;
+
 public interface AdvertisementDOMapper {
     int deleteByPrimaryKey(Integer advertisementId);
 
@@ -16,4 +18,6 @@ public interface AdvertisementDOMapper {
     int updateByPrimaryKeyWithBLOBs(AdvertisementDO record);
 
     int updateByPrimaryKey(AdvertisementDO record);
+
+    List<AdvertisementDO> selectAll();
 }
