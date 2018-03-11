@@ -31,7 +31,7 @@ public class MiniGramController {
         int resultInt = miniUserService.saveOrUpdate(miniUserDO);
         BaseResult result = new BaseResult();
         if (resultInt == 1){
-            result.setSuccess(true);
+            result.setResult(true);
             result.setMessage("小程序用户:" + miniUserDO.getOpenid() + "保存成功~~");
         }
         return result;
