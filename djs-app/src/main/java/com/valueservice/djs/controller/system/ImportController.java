@@ -15,6 +15,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 @Controller
+@RequestMapping("/import")
 public class ImportController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportController.class);

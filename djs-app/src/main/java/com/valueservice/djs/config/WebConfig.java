@@ -183,6 +183,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/websocket/**", "anon");
+        filterChainDefinitionMap.put("/import/**", "anon");
         filterChainDefinitionMap.put("/minigram/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
