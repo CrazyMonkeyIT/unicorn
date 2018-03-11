@@ -85,7 +85,7 @@ layui.use('layer', function () {
                     setTimeout(function () {
                         $('.authent').hide();
                         $('.login').removeClass('test');
-                        if (data.success) {
+                        if (data.result) {
                             //登录成功
 //                                   $('.login div').fadeOut(100);
 //                                   $('.success').fadeIn(1000);

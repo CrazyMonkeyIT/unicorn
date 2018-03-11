@@ -97,14 +97,14 @@ public class UserInfoService {
 
     public BaseResult modifyPwd(Long userId, String oldPwd, String newPwd) {
         BaseResult result = new BaseResult();
-        result.setSuccess(false);
+        result.setResult(false);
         UserInfoDO user = userInfoDOMapper.selectByPrimaryKey(userId);
         if(!user.getLoginPwd().equals(SHA256.encrypt(oldPwd))){
             result.setMessage("原密码不正确");
         }else{
             user.setLoginPwd(SHA256.encrypt(newPwd));
             userInfoDOMapper.updateByPrimaryKeySelective(user);
-            result.setSuccess(true);
+            result.setResult(true);
         }
         return result;
     }

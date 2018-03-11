@@ -99,7 +99,7 @@ function confirmModifyPwd(){
         dataType:'json',
         success : function(data) {
             console.log(data);
-            if(data.success){
+            if(data.result){
                 alert("恭喜，密码修改成功，请重新登录");
                 setTimeout(logout,2000);
             }else{

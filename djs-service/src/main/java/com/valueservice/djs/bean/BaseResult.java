@@ -2,31 +2,30 @@ package com.valueservice.djs.bean;
 
 public class BaseResult {
 	
-	private boolean success;
+	private boolean result;
 	
 	private String message;
 
 	public BaseResult(){
-		this.success = false;
+		this.result = false;
 		this.message = "系统错误";
 	}
 
 	public BaseResult(boolean success){
-		this.success = success;
+		this.result = success;
 	}
 
-	public BaseResult(boolean success, String msg){
-		this.success = success;
+	public BaseResult(boolean result, String msg){
+		this.result = result;
 		this.message = msg;
 	}
-	
 
-	public boolean isSuccess() {
-		return success;
+	public boolean isResult() {
+		return result;
 	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public void setResult(boolean result) {
+		this.result = result;
 	}
 
 	public String getMessage() {

@@ -109,7 +109,7 @@ public class LoginController {
         	return result;
         }
         req.getSession().setAttribute("menuList", userResources);
-		result.setSuccess(true);
+		result.setResult(true);
 		result.setMessage("success");
 		return result;
 	}

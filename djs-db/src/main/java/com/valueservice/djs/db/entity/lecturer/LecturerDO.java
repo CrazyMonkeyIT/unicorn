@@ -7,6 +7,8 @@ public class LecturerDO {
 
     private String lecturerName;
 
+    private String openId;
+
     private String phone;
 
     private Integer gradeId;
@@ -43,6 +45,14 @@ public class LecturerDO {
 
     public void setLecturerName(String lecturerName) {
         this.lecturerName = lecturerName == null ? null : lecturerName.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     public String getPhone() {

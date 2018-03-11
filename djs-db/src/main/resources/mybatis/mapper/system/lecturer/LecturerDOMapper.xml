@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.lecturer.LecturerDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
     <result column="is_chief" jdbcType="VARCHAR" property="isChief" />
@@ -17,7 +18,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, lecturer_name, phone, grade_id, is_chief, status, status_desc, company, position, 
+    id, lecturer_name, open_id, phone, grade_id, is_chief, status, status_desc, company, position,
     live_number, live_hours, create_time, update_time
   </sql>
 
@@ -56,6 +57,9 @@
       </if>
       <if test="lecturerName != null">
         lecturer_name,
+      </if>
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="phone != null">
         phone,
@@ -98,6 +102,9 @@
       <if test="lecturerName != null">
         #{lecturerName,jdbcType=VARCHAR},
       </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
@@ -138,6 +145,9 @@
     <set>
       <if test="lecturerName != null">
         lecturer_name = #{lecturerName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},

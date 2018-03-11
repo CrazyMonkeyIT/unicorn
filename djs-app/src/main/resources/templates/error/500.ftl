@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>小票-500</title>
+    <title>500</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <link href="${request.contextPath}/static/error/css/base.css" rel="stylesheet">

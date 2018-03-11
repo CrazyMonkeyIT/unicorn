@@ -29,9 +29,6 @@ public class LecturerService {
     LecturerDOMapper lecturerDOMapper;
 
     @Resource
-    LecturerInviteDOMapper lecturerInviteDOMapper;
-
-    @Resource
     LecturerAccountDOMapper lecturerAccountDOMapper;
     /**
      * 查询讲师列表
@@ -46,51 +43,7 @@ public class LecturerService {
         return new PageInfo<LecturerDO>(list);
     }
 
-    /**
-     * 创建讲师邀请
-     * @param lecturerInvite
-     * @return
-     */
-    public BaseResult createLecturerInvite(LecturerInviteDO lecturerInvite){
-        lecturerInvite.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        lecturerInviteDOMapper.insertSelective(lecturerInvite);
-        return new BaseResult(true);
-    }
 
-    /**
-     * 接受邀请
-     * @param inviteCode
-     * @return
-     */
-    public BaseResult replyLecturerInvite(Integer inviteCode){
-        //获取讲师邀请信息
-        LecturerInviteDO lecturerInvite = lecturerInviteDOMapper.selectByInviteCode(inviteCode);
-        //创建讲师信息
-        LecturerDO lecturer = new LecturerDO();
-        lecturer.setLecturerName(lecturerInvite.getLecturerName());
-        lecturer.setPhone(lecturerInvite.getPhone());
-        lecturer.setGradeId(lecturerInvite.getGradeId());
-        lecturer.setCompany(lecturerInvite.getCompany());
-        lecturer.setPosition(lecturerInvite.getPosition());
-        lecturer.setIsChief("NO");
-        lecturer.setStatus(LecturerStatus.NORMAL.getCode());
-        lecturer.setStatusDesc("首次激活");
-        lecturer.setLiveHours("0");
-        lecturer.setLiveNumber("0");
-        lecturer.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        lecturerDOMapper.insertSelective(lecturer);
-        //创建讲师账户
-        LecturerAccountDO lecturerAccount = new LecturerAccountDO();
-        lecturerAccount.setLecturerId(lecturer.getId());
-        lecturerAccount.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        lecturerAccount.setPaymentRatio(0);
-        lecturerAccount.setTotalIncome(new BigDecimal(0));
-        lecturerAccount.setWithdrawCash(new BigDecimal(0));
-        lecturerAccount.setWithdrawSwitch("ON");
-        lecturerAccountDOMapper.insertSelective(lecturerAccount);
-
-        return new BaseResult(true);
-    }
 
     /**
      * 封停账号
@@ -99,9 +52,10 @@ public class LecturerService {
      * @return
      */
     public BaseResult frozenLecturer(Integer lecturerId,String describle){
+        LecturerDO dbRecord = lecturerDOMapper.selectByPrimaryKey(lecturerId);
         LecturerDO lecturer = new LecturerDO();
         lecturer.setId(lecturerId);
-        lecturer.setStatus(LecturerStatus.FROZEN.getCode());
+        lecturer.setStatus(dbRecord.getStatus() == LecturerStatus.FROZEN.getCode() ? LecturerStatus.NORMAL.getCode() : LecturerStatus.FROZEN.getCode());
         lecturer.setStatusDesc(describle);
         lecturerDOMapper.updateByPrimaryKeySelective(lecturer);
         return new BaseResult(true);
@@ -114,8 +68,9 @@ public class LecturerService {
      * @return
      */
     public BaseResult frozenLecturerAccount(Integer lecturerId,String describle){
+        LecturerAccountDO old = lecturerAccountDOMapper.selectByLecturerId(lecturerId);
         LecturerAccountDO lecturerAccount = lecturerAccountDOMapper.selectByLecturerId(lecturerId);
-        lecturerAccount.setWithdrawSwitch("OFF");
+        lecturerAccount.setWithdrawSwitch(old.getWithdrawSwitch().equals("OFF") ? "ON" : "OFF");
         lecturerAccount.setWithdrawOffDesc(describle);
         lecturerAccountDOMapper.updateByPrimaryKeySelective(lecturerAccount);
         return new BaseResult(true);
@@ -127,9 +82,10 @@ public class LecturerService {
      * @return
      */
     public BaseResult recommendChief(Integer lecturerId){
+        LecturerDO old = lecturerDOMapper.selectByPrimaryKey(lecturerId);
         LecturerDO lecturer = new LecturerDO();
         lecturer.setId(lecturerId);
-        lecturer.setIsChief("YES");
+        lecturer.setIsChief(old.getIsChief().equals("YES") ? "NO" : "YES");
         lecturerDOMapper.updateByPrimaryKeySelective(lecturer);
         return new BaseResult(true);
     }
