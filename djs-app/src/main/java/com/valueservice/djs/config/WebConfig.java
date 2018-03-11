@@ -90,19 +90,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         factory.setFreemarkerSettings(settings);
     }
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        super.configureMessageConverters(converters);
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(
-                SerializerFeature.PrettyFormat
-        );
-        fastConverter.setFastJsonConfig(fastJsonConfig);
-        converters.add(fastConverter);
-    }
-
     @Bean
     public EhCacheManager getEhCacheManager() {
         EhCacheManager em = new EhCacheManager();
