@@ -1,5 +1,6 @@
 // pages/livechat/livechat.js
-const util = require('../../../global-js/util.js')
+const util = require('../../../global-js/util.js');
+const userUtil = require('../../../global-js/userUtil.js');
 var app = getApp();
 var that, currentUser, speakerSec = 0;
 var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' ,chatTime: util.formatTime(new Date())},
@@ -34,44 +35,13 @@ Page({
   onLoad: function () {
     console.log("[Console log]:Loading...");
     that = this;
+    currentUser = userUtil.login();
     //获取用户登录信息
     wx.getSetting({
-      success: (response) => {
-        console.log(response)
-        if (!response.authSetting['scope.userInfo']) {
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success: () => {
-              console.log('yes');
-              wx.getUserInfo({
-                success: function (res) {
-                  console.log(userInfo);
-                  currentUser = res.userInfo;
-                  //更新数据
-                  that.setData({
-                    userInfo: currentUser
-                  })
-                }
-              })
-              
-            }
-          })
-        } else {
-          //调用应用实例的方法获取全局数据
-          wx.getUserInfo({
-            success: function (res) {
-              console.log("get user info next");
-              console.log(res.userInfo);
-              currentUser = res.userInfo;
-              //更新数据
-              that.setData({
-                userInfo: currentUser
-              })
-            }
-          })
-        }
-
-        if (!response.authSetting['scope.record']) {
+      success(res) {
+        console.log(res);
+        if (!res.authSetting['scope.record']) {
+          console.log('record is not auth.........');
           wx.authorize({
             scope: 'scope.record',
             success: () => {

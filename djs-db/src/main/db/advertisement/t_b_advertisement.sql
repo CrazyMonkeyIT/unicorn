@@ -13,12 +13,6 @@ File Encoding         : 65001
 Date: 2018-03-07 17:54:06
 */
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for t_b_advertisement
--- ----------------------------
-DROP TABLE IF EXISTS `t_b_advertisement`;
 CREATE TABLE `t_b_advertisement` (
   `advertisement_id` int(11) NOT NULL AUTO_INCREMENT,
   `advertisement_type_id` int(11) DEFAULT NULL,

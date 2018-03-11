@@ -28,7 +28,7 @@ public class CommonConst {
     /**
      * 小程序的app secret
      */
-    public static final String MINI_PROGRAM_APPSECRET = "";
+    public static final String MINI_PROGRAM_APPSECRET = "113424b4213786ce6d508d62e04ece26";
 
     /**
      * 小程序的grantType
