@@ -40,7 +40,7 @@ public class ImportController {
         if (!userFile.exists()){
             userFile.mkdir();
         }
-        String userFilePath = String.format("%s%s",userFile.getPath(),"\\");
+        String userFilePath = String.format("%s%s",userFile.getPath(),"/");
         Stream.of(files).forEach(file->{
             try {
                 if (file != null) {
