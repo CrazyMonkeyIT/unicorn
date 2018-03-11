@@ -28,7 +28,7 @@ public class MiniGramController {
 
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
     public @ResponseBody BaseResult saveMiniUser(@RequestBody MiniUserDO miniUserDO){
-        int resultInt = miniUserService.insert(miniUserDO);
+        int resultInt = miniUserService.saveOrUpdate(miniUserDO);
         BaseResult result = new BaseResult();
         if (resultInt == 1){
             result.setSuccess(true);
