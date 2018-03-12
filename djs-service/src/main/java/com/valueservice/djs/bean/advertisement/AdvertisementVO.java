@@ -1,8 +1,6 @@
-package com.valueservice.djs.db.entity.advertisement;
+package com.valueservice.djs.bean.advertisement;
 
-import java.util.Date;
-
-public class AdvertisementDO {
+public class AdvertisementVO {
     private Integer advertisementId;
 
     private Integer advertisementTypeId;
@@ -17,11 +15,7 @@ public class AdvertisementDO {
 
     private Integer status;
 
-    private Date invalidDate;
-
-    private Date createTime;
-
-    private Date updateTime;
+    private String invalidDateStr;
 
     public Integer getAdvertisementId() {
         return advertisementId;
@@ -44,7 +38,7 @@ public class AdvertisementDO {
     }
 
     public void setAdvertisementUrl(String advertisementUrl) {
-        this.advertisementUrl = advertisementUrl == null ? null : advertisementUrl.trim();
+        this.advertisementUrl = advertisementUrl;
     }
 
     public String getAdvertisementImgPath() {
@@ -52,7 +46,7 @@ public class AdvertisementDO {
     }
 
     public void setAdvertisementImgPath(String advertisementImgPath) {
-        this.advertisementImgPath = advertisementImgPath == null ? null : advertisementImgPath.trim();
+        this.advertisementImgPath = advertisementImgPath;
     }
 
     public String getAdvertisementTitle() {
@@ -60,7 +54,7 @@ public class AdvertisementDO {
     }
 
     public void setAdvertisementTitle(String advertisementTitle) {
-        this.advertisementTitle = advertisementTitle == null ? null : advertisementTitle.trim();
+        this.advertisementTitle = advertisementTitle;
     }
 
     public String getAdvertisementDesc() {
@@ -68,7 +62,7 @@ public class AdvertisementDO {
     }
 
     public void setAdvertisementDesc(String advertisementDesc) {
-        this.advertisementDesc = advertisementDesc == null ? null : advertisementDesc.trim();
+        this.advertisementDesc = advertisementDesc;
     }
 
     public Integer getStatus() {
@@ -79,27 +73,11 @@ public class AdvertisementDO {
         this.status = status;
     }
 
-    public Date getInvalidDate() {
-        return invalidDate;
+    public String getInvalidDateStr() {
+        return invalidDateStr;
     }
 
-    public void setInvalidDate(Date invalidDate) {
-        this.invalidDate = invalidDate;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setInvalidDateStr(String invalidDateStr) {
+        this.invalidDateStr = invalidDateStr;
     }
 }

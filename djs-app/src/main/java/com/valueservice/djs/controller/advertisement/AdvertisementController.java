@@ -1,15 +1,17 @@
 package com.valueservice.djs.controller.advertisement;
 
 import com.github.pagehelper.PageInfo;
-import com.valueservice.djs.controller.grade.LecturerGradeController;
+import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -39,6 +41,11 @@ public class AdvertisementController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public @ResponseBody String editAdvertisement(AdvertisementVO advertisementVO){
+        advertisementService.addAdvertisement(advertisementVO);
+        return "success";
+    }
 
 
 }

@@ -5,6 +5,7 @@
     <id column="advertisement_id" jdbcType="INTEGER" property="advertisementId" />
     <result column="advertisement_type_id" jdbcType="INTEGER" property="advertisementTypeId" />
     <result column="advertisement_url" jdbcType="VARCHAR" property="advertisementUrl" />
+    <result column="advertisement_img_path" jdbcType="VARCHAR" property="advertisementImgPath" />
     <result column="advertisement_title" jdbcType="VARCHAR" property="advertisementTitle" />
     <result column="advertisement_desc" jdbcType="VARCHAR" property="advertisementDesc" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -12,21 +13,13 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
-    <result column="advertisement_img" jdbcType="LONGVARBINARY" property="advertisementImg" />
-  </resultMap>
   <sql id="Base_Column_List">
-    advertisement_id, advertisement_type_id, advertisement_url, advertisement_title, 
-    advertisement_desc, status, invalid_date, create_time, update_time
+    advertisement_id, advertisement_type_id, advertisement_url, advertisement_img_path, 
+    advertisement_title, advertisement_desc, status, invalid_date, create_time, update_time
   </sql>
-  <sql id="Blob_Column_List">
-    advertisement_img
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_b_advertisement
     where advertisement_id = #{advertisementId,jdbcType=INTEGER}
   </select>
@@ -36,13 +29,15 @@
   </delete>
   <insert id="insert" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     insert into t_b_advertisement (advertisement_id, advertisement_type_id, 
-      advertisement_url, advertisement_title, advertisement_desc, 
+      advertisement_url, advertisement_img_path, 
+      advertisement_title, advertisement_desc, 
       status, invalid_date, create_time, 
-      update_time, advertisement_img)
+      update_time)
     values (#{advertisementId,jdbcType=INTEGER}, #{advertisementTypeId,jdbcType=INTEGER}, 
-      #{advertisementUrl,jdbcType=VARCHAR}, #{advertisementTitle,jdbcType=VARCHAR}, #{advertisementDesc,jdbcType=VARCHAR}, 
+      #{advertisementUrl,jdbcType=VARCHAR}, #{advertisementImgPath,jdbcType=VARCHAR}, 
+      #{advertisementTitle,jdbcType=VARCHAR}, #{advertisementDesc,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{invalidDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{advertisementImg,jdbcType=LONGVARBINARY})
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     insert into t_b_advertisement
@@ -55,6 +50,9 @@
       </if>
       <if test="advertisementUrl != null">
         advertisement_url,
+      </if>
+      <if test="advertisementImgPath != null">
+        advertisement_img_path,
       </if>
       <if test="advertisementTitle != null">
         advertisement_title,
@@ -74,9 +72,6 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="advertisementImg != null">
-        advertisement_img,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="advertisementId != null">
@@ -87,6 +82,9 @@
       </if>
       <if test="advertisementUrl != null">
         #{advertisementUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisementImgPath != null">
+        #{advertisementImgPath,jdbcType=VARCHAR},
       </if>
       <if test="advertisementTitle != null">
         #{advertisementTitle,jdbcType=VARCHAR},
@@ -106,9 +104,6 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="advertisementImg != null">
-        #{advertisementImg,jdbcType=LONGVARBINARY},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
@@ -119,6 +114,9 @@
       </if>
       <if test="advertisementUrl != null">
         advertisement_url = #{advertisementUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisementImgPath != null">
+        advertisement_img_path = #{advertisementImgPath,jdbcType=VARCHAR},
       </if>
       <if test="advertisementTitle != null">
         advertisement_title = #{advertisementTitle,jdbcType=VARCHAR},
@@ -138,29 +136,14 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="advertisementImg != null">
-        advertisement_img = #{advertisementImg,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    where advertisement_id = #{advertisementId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
-    update t_b_advertisement
-    set advertisement_type_id = #{advertisementTypeId,jdbcType=INTEGER},
-      advertisement_url = #{advertisementUrl,jdbcType=VARCHAR},
-      advertisement_title = #{advertisementTitle,jdbcType=VARCHAR},
-      advertisement_desc = #{advertisementDesc,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      invalid_date = #{invalidDate,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      advertisement_img = #{advertisementImg,jdbcType=LONGVARBINARY}
     where advertisement_id = #{advertisementId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     update t_b_advertisement
     set advertisement_type_id = #{advertisementTypeId,jdbcType=INTEGER},
       advertisement_url = #{advertisementUrl,jdbcType=VARCHAR},
+      advertisement_img_path = #{advertisementImgPath,jdbcType=VARCHAR},
       advertisement_title = #{advertisementTitle,jdbcType=VARCHAR},
       advertisement_desc = #{advertisementDesc,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
@@ -169,9 +152,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where advertisement_id = #{advertisementId,jdbcType=INTEGER}
   </update>
-
-  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
-    select * from t_b_advertisement a
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from t_b_advertisement
   </select>
-
+  
 </mapper>

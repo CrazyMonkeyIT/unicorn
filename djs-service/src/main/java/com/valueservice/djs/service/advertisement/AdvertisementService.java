@@ -3,6 +3,7 @@ package com.valueservice.djs.service.advertisement;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.CommonConst;
+import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.dao.advertisement.AdvertisementDOMapper;
 import com.valueservice.djs.db.dao.advertisement.AdvertisementTypeDOMapper;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
@@ -47,13 +48,19 @@ public class AdvertisementService {
         return pageInfo;
     }
 
-    public void addAdvertisement(AdvertisementDO advertisementDO){
+    public void addAdvertisement(AdvertisementVO advertisementVO){
+        AdvertisementDO advertisementDO = new AdvertisementDO();
+        advertisementDO.setAdvertisementTypeId(advertisementVO.getAdvertisementTypeId());
+        advertisementDO.setAdvertisementUrl(advertisementVO.getAdvertisementUrl());
+        advertisementDO.setAdvertisementImgPath(advertisementVO.getAdvertisementImgPath());
+        advertisementDO.setAdvertisementTitle(advertisementVO.getAdvertisementTitle());
+        advertisementDO.setAdvertisementDesc(advertisementVO.getAdvertisementDesc());
         advertisementDO.setCreateTime(DateUtil.currentDate());
         advertisementDO.setStatus(CommonConst.ADVERTISEMENT_STATUS_NORMAL);
+        advertisementDOMapper.insertSelective(advertisementDO);
+        //Integer primaryKeyValue = advertisementDO.getAdvertisementId();
     }
 
-    public void updateAdvertisement(AdvertisementDO advertisementDO){
 
-    }
 
 }

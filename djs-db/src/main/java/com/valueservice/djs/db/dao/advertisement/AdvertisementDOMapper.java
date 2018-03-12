@@ -15,8 +15,6 @@ public interface AdvertisementDOMapper {
 
     int updateByPrimaryKeySelective(AdvertisementDO record);
 
-    int updateByPrimaryKeyWithBLOBs(AdvertisementDO record);
-
     int updateByPrimaryKey(AdvertisementDO record);
 
     List<AdvertisementDO> selectAll();

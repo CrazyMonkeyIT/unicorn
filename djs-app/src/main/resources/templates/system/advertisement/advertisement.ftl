@@ -1,4 +1,7 @@
 <@ui.layout >
+<script src="${request.contextPath}/static/js/jquery-1.11.0.js"></script>
+<script src="${request.contextPath}/static/js/jquery.form.js" type="text/javascript"></script>
+<script src="${request.contextPath}/static/advertisement/advertisement.js" ></script>
 
 <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
     <div class="row">
@@ -57,9 +60,8 @@
                 <h4 class="blue"><i class="fa fa-pencil"></i>编辑广告</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
+                <form id="editForm" action="${request.getContextPath()}/advertisement/edit" method="post">
                     <div class="form-horizontal">
-                        <!-- 用户ID -->
                         <input type="hidden" name="advertisementId" />
 
                         <div class="form-group ">
@@ -92,13 +94,14 @@
                                 <input name="invalidDate" type="text"  />
                             </div>
                         </div>
+                        <input id="advertisementImgPath" type="hidden" name="advertisementImgPath" />
                     </div>
                 </form>
                 <div class="form-horizontal">
                     <div class="form-group ">
                         <label class="col-sm-4 control-label">广告图片</label>
                         <div class="col-sm-8">
-                            <form id="upForm" action="${request.getContextPath()}/import/up/advertisement" method="post" enctype="multipart/form-data" >
+                            <form id="imgForm" action="${request.getContextPath()}/import/up/advertisement" method="post" enctype="multipart/form-data" >
                                 <input type="file" name="file" value="请选择广告图片">
                                 <input id="upFileBtn" type="button" value="上传">
                             </form>
@@ -107,7 +110,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-white btn-info btn-bold">
+                <a onclick="saveAdvertisementInfo()" class="btn btn-white btn-info btn-bold">
                     <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                     保存
                 </a>
@@ -119,38 +122,5 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" >
-    $(function () {
-        $("#upFileBtn").click(function () {
-            $.ajax({
-                type:'post',
-                url:'${request.getContextPath()}/import/up/advertisement',
-                data:$("#upForm").serialize(),
-                cache:false,
-                dataType:'json',
-                success:function(data){
-                    alert(data);
-                }
-            });
-        });
-    })
-
-    /**
-     * 清空表单
-     */
-    function clearForm(){
-        $("#editForm")[0].reset();
-        $("#editForm").find("input[name='userId']").val("");
-    }
-
-    /**
-     * 显示新增等级窗口
-     */
-    function showAddModal(){
-        clearForm();
-        $("#edit_grade_modal").modal("show");
-    }
-</script>
 
 </@ui.layout>
