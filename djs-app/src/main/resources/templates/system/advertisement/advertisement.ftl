@@ -49,7 +49,6 @@
     </table>
 </div>
 
-<!--等级新增/修改div开始-->
 <div id="edit_grade_modal" class="modal fade" style="display: none; " data-backdrop="static" role="dialog" tabindex="-1" class="modal fade in exam_newbox">
     <div class="modal-dialog">
         <div class="modal-content"  >
@@ -88,12 +87,6 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">广告图片</label>
-                            <div class="col-sm-8">
-                                <input name="advertisementImg" type="text"  />
-                            </div>
-                        </div>
-                        <div class="form-group ">
                             <label class="col-sm-4 control-label">到期时间</label>
                             <div class="col-sm-8">
                                 <input name="invalidDate" type="text"  />
@@ -101,6 +94,17 @@
                         </div>
                     </div>
                 </form>
+                <div class="form-horizontal">
+                    <div class="form-group ">
+                        <label class="col-sm-4 control-label">广告图片</label>
+                        <div class="col-sm-8">
+                            <form id="upForm" action="${request.getContextPath()}/import/up/advertisement" method="post" enctype="multipart/form-data" >
+                                <input type="file" name="file" value="请选择广告图片">
+                                <input id="upFileBtn" type="button" value="上传">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-white btn-info btn-bold">
@@ -115,9 +119,23 @@
         </div>
     </div>
 </div>
-<!--等级新增/修改div结束-->
 
-<script >
+<script type="text/javascript" >
+    $(function () {
+        $("#upFileBtn").click(function () {
+            $.ajax({
+                type:'post',
+                url:'${request.getContextPath()}/import/up/advertisement',
+                data:$("#upForm").serialize(),
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    alert(data);
+                }
+            });
+        });
+    })
+
     /**
      * 清空表单
      */
