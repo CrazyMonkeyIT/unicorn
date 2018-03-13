@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.chat.RoomDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.chat.RoomDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="room_price" jdbcType="DECIMAL" property="roomPrice" />
+    <result column="prepare_live_begin_time" jdbcType="TIMESTAMP" property="prepareLiveBeginTime" />
+    <result column="prepare_live_end_time" jdbcType="TIMESTAMP" property="prepareLiveEndTime" />
+    <result column="actual_live_begin_time" jdbcType="TIMESTAMP" property="actualLiveBeginTime" />
+    <result column="actual_live_end_time" jdbcType="TIMESTAMP" property="actualLiveEndTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
+    <result column="members" jdbcType="LONGVARCHAR" property="members" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
+    actual_live_begin_time, actual_live_end_time, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    members
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_b_room
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_b_room
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    insert into t_b_room (id, creator_id, name, 
+      type, count, status, 
+      room_price, prepare_live_begin_time, prepare_live_end_time, 
+      actual_live_begin_time, actual_live_end_time, 
+      create_time, members)
+    values (#{id,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{roomPrice,jdbcType=DECIMAL}, #{prepareLiveBeginTime,jdbcType=TIMESTAMP}, #{prepareLiveEndTime,jdbcType=TIMESTAMP}, 
+      #{actualLiveBeginTime,jdbcType=TIMESTAMP}, #{actualLiveEndTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{members,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    insert into t_b_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="roomPrice != null">
+        room_price,
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        prepare_live_begin_time,
+      </if>
+      <if test="prepareLiveEndTime != null">
+        prepare_live_end_time,
+      </if>
+      <if test="actualLiveBeginTime != null">
+        actual_live_begin_time,
+      </if>
+      <if test="actualLiveEndTime != null">
+        actual_live_end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="members != null">
+        members,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roomPrice != null">
+        #{roomPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepareLiveEndTime != null">
+        #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveBeginTime != null">
+        #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveEndTime != null">
+        #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="members != null">
+        #{members,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    update t_b_room
+    <set>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roomPrice != null">
+        room_price = #{roomPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepareLiveEndTime != null">
+        prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveBeginTime != null">
+        actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveEndTime != null">
+        actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="members != null">
+        members = #{members,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    update t_b_room
+    set creator_id = #{creatorId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      room_price = #{roomPrice,jdbcType=DECIMAL},
+      prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      members = #{members,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    update t_b_room
+    set creator_id = #{creatorId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      room_price = #{roomPrice,jdbcType=DECIMAL},
+      prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
