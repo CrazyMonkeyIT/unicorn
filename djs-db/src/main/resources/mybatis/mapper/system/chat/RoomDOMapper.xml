@@ -33,22 +33,7 @@
     from t_b_room
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_b_room
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
-    insert into t_b_room (id, creator_id, name, 
-      type, count, status, 
-      room_price, prepare_live_begin_time, prepare_live_end_time, 
-      actual_live_begin_time, actual_live_end_time, 
-      create_time, members)
-    values (#{id,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{roomPrice,jdbcType=DECIMAL}, #{prepareLiveBeginTime,jdbcType=TIMESTAMP}, #{prepareLiveEndTime,jdbcType=TIMESTAMP}, 
-      #{actualLiveBeginTime,jdbcType=TIMESTAMP}, #{actualLiveEndTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{members,jdbcType=LONGVARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
     insert into t_b_room
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -174,37 +159,6 @@
         members = #{members,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
-    update t_b_room
-    set creator_id = #{creatorId,jdbcType=BIGINT},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      room_price = #{roomPrice,jdbcType=DECIMAL},
-      prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
-      prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
-      actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
-      actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      members = #{members,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
-    update t_b_room
-    set creator_id = #{creatorId,jdbcType=BIGINT},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      room_price = #{roomPrice,jdbcType=DECIMAL},
-      prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
-      prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
-      actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
-      actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

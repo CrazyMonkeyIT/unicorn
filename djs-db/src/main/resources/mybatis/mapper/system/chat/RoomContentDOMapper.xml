@@ -24,16 +24,7 @@
     from t_b_room_content
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_b_room_content
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
-    insert into t_b_room_content (id, room_id, user_id, 
-      create_time, content)
-    values (#{id,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
     insert into t_b_room_content
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -87,21 +78,6 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
-    update t_b_room_content
-    set room_id = #{roomId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
-    update t_b_room_content
-    set room_id = #{roomId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
