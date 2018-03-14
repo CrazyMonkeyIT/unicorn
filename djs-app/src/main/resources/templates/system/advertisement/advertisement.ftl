@@ -35,9 +35,21 @@
                 <td>${data.advertisementDesc!''}</td>
                 <td>asd</td>
                 <td>${data.advertisementUrl!''}</td>
-                <td>图片</td>
-                <td>2018-4-1</td>
-                <td>${data.status!''}</td>
+                <td style="width: 100px; height: 25px">
+                    <a href="${data.advertisementImgPath}" target="_blank" >
+                        <img src="${data.advertisementImgPath}" style="width: 100px; height: 25px">
+                    </a>
+                </td>
+                <td>${data.invalidDate?string('yyyy-MM-dd')}</td>
+                <td>
+                    <#if data.status == 1>
+                        正常
+                    <#elseif data.status == -1>
+                        到期
+                    <#elseif data.status == -2>
+                        人工暂停
+                    </#if>
+                </td>
                 <td>
                     <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                         <i class="fa fa-pencil bigger-110 green" ></i>
@@ -71,6 +83,12 @@
                             </div>
                         </div>
                         <div class="form-group ">
+                            <label class="col-sm-4 control-label">到期时间</label>
+                            <div class="col-sm-8">
+                                <input name="invalidDate" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
                             <label class="col-sm-4 control-label">广告描述</label>
                             <div class="col-sm-8">
                                 <input name="advertisementDesc" type="text"  />
@@ -79,21 +97,57 @@
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">广告类型</label>
                             <div class="col-sm-8">
-                                <input name="advertisementType" type="text"  />
+                                <select id="advertisementType">
+                                    <option value="-1">
+                                        --请选择--
+                                    </option>
+                                    <#list typeList as type>
+                                        <option value="${type.advertisementTypeId!''}">
+                                        ${type.advertisementTypeDesc!''}
+                                        </option>
+                                    </#list>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group ">
+                        <!-- 动态显示DIV开始 -->
+                        <div id="urlDiv" class="form-group " style="display: none">
                             <label class="col-sm-4 control-label">广告连接</label>
                             <div class="col-sm-8">
                                 <input name="advertisementUrl" type="text"  />
                             </div>
                         </div>
-                        <div class="form-group ">
-                            <label class="col-sm-4 control-label">到期时间</label>
+                        <div id="roomDiv" class="form-group " style="display: none">
+                            <label class="col-sm-4 control-label">关联房间</label>
                             <div class="col-sm-8">
-                                <input name="invalidDate" type="text"  />
+                                <select id="room">
+                                    <option value="-1">
+                                        --请选择--
+                                    </option>
+                                    <#list roomList as room>
+                                        <option value="${room.id!''}">
+                                        ${room.name!''}
+                                        </option>
+                                    </#list>
+                                </select>
                             </div>
                         </div>
+                        <div id="lecturerDiv" class="form-group " style="display: none">
+                            <label class="col-sm-4 control-label">关联讲师</label>
+                            <div class="col-sm-8">
+                                <select id="lecturer">
+                                    <option value="-1">
+                                        --请选择--
+                                    </option>
+                                    <#list lecturerList as lecturer>
+                                        <option value="${lecturer.id!''}">
+                                        ${lecturer.lecturerName!''}
+                                        </option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 动态显示DIV结束 -->
+
                         <input id="advertisementImgPath" type="hidden" name="advertisementImgPath" />
                     </div>
                 </form>

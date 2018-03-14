@@ -30,6 +30,11 @@ public class LecturerService {
 
     @Resource
     LecturerAccountDOMapper lecturerAccountDOMapper;
+
+    public List<LecturerDO> selectAll(){
+        return lecturerDOMapper.selectAll();
+    }
+
     /**
      * 查询讲师列表
      * @param lecturerName

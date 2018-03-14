@@ -1,4 +1,32 @@
 
+$(function () {
+    //监听下拉框，显示/隐藏对应的输入框
+   $("#advertisementType").click(function () {
+       var type = $('#advertisementType option:selected').val();
+       if(type == 1){
+           $("#urlDiv").show();
+           $("#roomDiv").hide();
+           $("#lecturerDiv").hide();
+       }else if(type == 2){
+           $("#urlDiv").hide();
+           $("#roomDiv").hide();
+           $("#lecturerDiv").hide();
+       }else if(type == 3){
+           $("#urlDiv").hide();
+           $("#roomDiv").hide();
+           $("#lecturerDiv").hide();
+       }else if(type == 4){
+           $("#urlDiv").hide();
+           $("#roomDiv").hide();
+           $("#lecturerDiv").show();
+       }else if(type == 5){
+           $("#urlDiv").hide();
+           $("#roomDiv").show();
+           $("#lecturerDiv").hide();
+       }
+   });
+});
+
 /**
  * 保存广告信息
  */

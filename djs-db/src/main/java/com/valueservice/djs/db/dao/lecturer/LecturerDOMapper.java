@@ -16,4 +16,6 @@ public interface LecturerDOMapper {
 
     List<LecturerDO> selectList(@Param("lecturerName")String lecturerName,@Param("phone")String phone);
 
+    List<LecturerDO> selectAll();
+
 }
