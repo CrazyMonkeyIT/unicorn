@@ -13,7 +13,9 @@ var config = {
     //保存用户信息
     saveUser:host + '/minigram/saveUser',
     //获取用户加密信息的解密文档
-    getauth: host + '/minigram/getauth'
+    getauth: host + '/minigram/getauth',
+    //上传文件URL
+    upUrl : host + '/up/'
   }
 };
 

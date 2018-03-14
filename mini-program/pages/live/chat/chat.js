@@ -1,6 +1,7 @@
 // pages/livechat/livechat.js
 const util = require('../../../global-js/util.js');
 const userUtil = require('../../../global-js/userUtil.js');
+const config = require('../../../config.js');
 var app = getApp();
 var that, currentUser, speakerSec = 0;
 var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' ,chatTime: util.formatTime(new Date())},
@@ -39,13 +40,12 @@ Page({
     //获取用户登录信息
     wx.getSetting({
       success(res) {
-        console.log(res);
         if (!res.authSetting['scope.record']) {
           console.log('record is not auth.........');
           wx.authorize({
             scope: 'scope.record',
             success: () => {
-              console.log('scope.record -- > auth');
+              
             }
           })
         }
@@ -65,6 +65,18 @@ Page({
     this.setData({
       keyboard: !(this.data.keyboard),
     })
+  },
+  sendChat : function (e){
+    var inputVal = e.detail.value;
+    console.log('[input log]:' + inputVal);
+    if (!inputVal){
+      wx.showToast({
+        title: '不能发送空内容!!!',
+        icon: 'none',
+        duration: 0,
+        mask: true
+      })
+    }
   },
   // 监控输入框输入
   Typing: function (e) {
@@ -88,6 +100,17 @@ Page({
       'success': function (res) {
         var tempFilePath = res.tempFilePath;
         that.data.filePath = tempFilePath;
+        wx.uploadFile({
+          url: config.service.upUrl + '123',
+          filePath: tempFilePath,
+          name: 'file',
+          success: function(res) {
+            console.log('文件上传成功，返回信息如下：');
+            console.log(res.data);
+          },
+          fail: function(res) {},
+          complete: function(res) {},
+        })
         console.log("[Console log]:Record success!File path:" + tempFilePath);
         var myVoiceChat = { chatid: util.uuid(1234), orientation: 'r', url: '', type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, chatTime: util.formatTime(new Date()) };
         console.log("[录音结束]")
