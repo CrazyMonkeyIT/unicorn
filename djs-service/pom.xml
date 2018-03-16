@@ -110,12 +110,29 @@
             <groupId>org.icepdf.os</groupId>
             <artifactId>icepdf-core</artifactId>
             <version>6.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.media</groupId>
+                    <artifactId>jai_core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.icepdf.os</groupId>
             <artifactId>icepdf-viewer</artifactId>
             <version>6.2.2</version>
+            <exclusions>
+                    <exclusion>
+                        <groupId>org.icepdf.os</groupId>
+                        <artifactId>icepdf-core</artifactId>
+                    </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>com.artofsolving</groupId>
+            <artifactId>jodconverter</artifactId>
+            <version>2.2.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
