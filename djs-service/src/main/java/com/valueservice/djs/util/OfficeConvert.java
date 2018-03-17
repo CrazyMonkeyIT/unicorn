@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 /**
  * @desc:利用openoffice将word、ppt、excel等转化为pdf,再而转化为图片
  * @author biao.chen
- * @date
+ * @date 20172
  */
 //@Component
 public class OfficeConvert {
