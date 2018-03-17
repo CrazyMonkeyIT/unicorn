@@ -24,8 +24,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/lecturer/invite")
-public class lecturerInviteController extends BaseController {
-    private static final Logger log = LoggerFactory.getLogger(lecturerInviteController.class);
+public class LecturerInviteController extends BaseController {
+    private static final Logger log = LoggerFactory.getLogger(LecturerInviteController.class);
 
     @Resource
     LecturerInviteService lecturerInviteService;
