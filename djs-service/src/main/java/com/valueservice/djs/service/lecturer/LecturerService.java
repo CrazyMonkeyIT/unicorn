@@ -51,7 +51,7 @@ public class LecturerService {
 
 
     /**
-     * 封停账号
+     * 封停/解封账号
      * @param lecturerId
      * @param describle
      * @return
@@ -67,22 +67,21 @@ public class LecturerService {
     }
 
     /**
-     * 封停讲师账户提现
-     * @param lecturerId
+     * 封停/解封讲师账户提现
+     * @param accountId
      * @param describle
      * @return
      */
-    public BaseResult frozenLecturerAccount(Integer lecturerId,String describle){
-        LecturerAccountDO old = lecturerAccountDOMapper.selectByLecturerId(lecturerId);
-        LecturerAccountDO lecturerAccount = lecturerAccountDOMapper.selectByLecturerId(lecturerId);
-        lecturerAccount.setWithdrawSwitch(old.getWithdrawSwitch().equals("OFF") ? "ON" : "OFF");
+    public BaseResult frozenLecturerAccount(Integer accountId,String wswitch, String describle){
+        LecturerAccountDO lecturerAccount = lecturerAccountDOMapper.selectByPrimaryKey(accountId);
+        lecturerAccount.setWithdrawSwitch(wswitch);
         lecturerAccount.setWithdrawOffDesc(describle);
         lecturerAccountDOMapper.updateByPrimaryKeySelective(lecturerAccount);
         return new BaseResult(true);
     }
 
     /**
-     * 推荐首席
+     * 推荐/取消首席
      * @param lecturerId
      * @return
      */
@@ -95,4 +94,28 @@ public class LecturerService {
         return new BaseResult(true);
     }
 
+    /**
+     * 更新讲师信息
+     * @param record
+     * @return
+     */
+    public BaseResult updateInfo(LecturerDO record){
+        lecturerDOMapper.updateByPrimaryKeySelective(record);
+        return new BaseResult(true);
+    }
+
+    /**
+     * 获取讲师信息
+     * @return
+     */
+    public LecturerDO selectById(Integer id){
+        return lecturerDOMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 获取讲师账户信息
+     */
+    public LecturerAccountDO selectLecturerAccount(Integer lecturerId){
+        return lecturerAccountDOMapper.selectByLecturerId(lecturerId);
+    }
 }

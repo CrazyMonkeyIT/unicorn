@@ -13,6 +13,14 @@
   <sql id="Base_Column_List">
     id, lecturer_id, withdraw_money, status, create_time, update_time
   </sql>
+
+  <select id="selectByList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_withdraw_examine
+    order by create_time desc
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

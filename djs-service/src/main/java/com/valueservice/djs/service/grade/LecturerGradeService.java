@@ -84,4 +84,14 @@ public class LecturerGradeService {
         record.setUpdateTime(DateUtil.currentDate());
         lecturerGradeDOMapper.updateByPrimaryKeySelective(record);
     }
+
+
+    /**
+     * 获取有效的讲师等级列表
+     * @return
+     */
+    public List<LecturerGradeDO> selectLecturerGradeList(){
+        List<LecturerGradeDO> list = lecturerGradeDOMapper.selectAll();
+        return list;
+    }
 }

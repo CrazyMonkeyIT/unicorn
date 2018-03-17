@@ -3,7 +3,9 @@ package com.valueservice.djs.controller.lecturer;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.controller.BaseController;
+import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerInviteDO;
+import com.valueservice.djs.service.grade.LecturerGradeService;
 import com.valueservice.djs.service.lecturer.LecturerInviteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 讲师邀请
@@ -20,13 +23,15 @@ import javax.annotation.Resource;
  * @date 2018-03-11
  */
 @Controller
-@RequestMapping("/lecturerInvite")
+@RequestMapping("/lecturer/invite")
 public class lecturerInviteController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(lecturerInviteController.class);
 
     @Resource
     LecturerInviteService lecturerInviteService;
 
+    @Resource
+    LecturerGradeService lecturerGradeService;
     /**
      * 查询讲师邀请列表
      * @param modelMap
@@ -36,7 +41,9 @@ public class lecturerInviteController extends BaseController {
     @RequestMapping("/list")
     public String list(ModelMap modelMap,Integer pageIndex){
         PageInfo<LecturerInviteDO> page = lecturerInviteService.selectList(pageIndex);
+        List<LecturerGradeDO> list = lecturerGradeService.selectLecturerGradeList();
         modelMap.addAttribute("page",page);
+        modelMap.addAttribute("gradeList",list);
         return "/lecturer/lecturerInvite";
     }
 
@@ -56,7 +63,7 @@ public class lecturerInviteController extends BaseController {
      * @param record
      * @return
      */
-    @RequestMapping("/createInvite")
+    @RequestMapping("/create")
     @ResponseBody
     public BaseResult createInvite(LecturerInviteDO record){
         record.setCreateUserId(getCurrentUser().getUserId().toString());

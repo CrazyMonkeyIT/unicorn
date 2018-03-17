@@ -5,9 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.LecturerStatus;
+import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerInviteDOMapper;
+import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerInviteDO;
@@ -35,6 +37,8 @@ public class LecturerInviteService {
     @Resource
     LecturerAccountDOMapper lecturerAccountDOMapper;
 
+    @Resource
+    private LecturerGradeDOMapper lecturerGradeDOMapper;
     /**
      * 查询邀请列表
      * @param pageIndex
@@ -51,6 +55,7 @@ public class LecturerInviteService {
      * @return
      */
     public BaseResult createLecturerInvite(LecturerInviteDO lecturerInvite){
+        lecturerInvite.setStatus("NOTALLOW");
         lecturerInvite.setCreateTime(new Timestamp(System.currentTimeMillis()));
         lecturerInviteDOMapper.insertSelective(lecturerInvite);
         return new BaseResult(true);
@@ -80,15 +85,18 @@ public class LecturerInviteService {
         lecturer.setCreateTime(new Timestamp(System.currentTimeMillis()));
         lecturerDOMapper.insertSelective(lecturer);
         //创建讲师账户
+        LecturerGradeDO lecturerGrade = lecturerGradeDOMapper.selectByPrimaryKey(lecturer.getGradeId());
         LecturerAccountDO lecturerAccount = new LecturerAccountDO();
         lecturerAccount.setLecturerId(lecturer.getId());
         lecturerAccount.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        lecturerAccount.setPaymentRatio(0);
+        lecturerAccount.setPaymentRatio(lecturerGrade.getPaymentRatio());
         lecturerAccount.setTotalIncome(new BigDecimal(0));
         lecturerAccount.setWithdrawCash(new BigDecimal(0));
         lecturerAccount.setWithdrawSwitch("ON");
         lecturerAccountDOMapper.insertSelective(lecturerAccount);
-
+        //修改邀请记录状态为已接受
+        lecturerInvite.setStatus("ALLOW");
+        lecturerInviteDOMapper.updateByPrimaryKeySelective(lecturerInvite);
         return new BaseResult(true);
     }
 
