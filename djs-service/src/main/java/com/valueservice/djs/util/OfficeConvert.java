@@ -1,66 +1,59 @@
 package com.valueservice.djs.util;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import javax.imageio.ImageIO;
 import com.artofsolving.jodconverter.DocumentConverter;
 import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
-import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * @desc:利用openoffice将word、ppt、excel等转化为pdf,再而转化为图片
  * @author biao.chen
- * @date 20172
  */
-//@Component
 public class OfficeConvert {
 
     private final static Logger logger = LoggerFactory.getLogger(OfficeConvert.class);
 
+    private static Properties p = new Properties();
+
     // 水印透明度
-    private float alpha = 0.5f;
+    private static float alpha = 0.5f;
     // 水印横向位置
-    private int positionWidth = 150;
+    private static int positionWidth = 150;
     // 水印纵向位置
-    private int positionHeight = 300;
+    private static int positionHeight = 300;
     // 水印文字字体
-    private Font font = new Font("仿宋", Font.BOLD, 26);
+    private static Font font = new Font("仿宋", Font.BOLD, 26);
     // 水印文字颜色
-    private Color color = Color.RED;
+    private static Color color = Color.RED;
 
-    @Value("${openoffice.workpath}")
-    private String OPENOFFICE_HOME;
+    public static String OPENOFFICE_HOME;
 
-    @Value("${execute.openoffice.command}")
-    private String OPENOFFICE_COMMAND;
+    public static String OPENOFFICE_COMMAND;
 
 
     /**
      *TEST
      */
     public static void main(String[] args) {
-        OfficeConvert officeConvert = new OfficeConvert();
-        officeConvert.docToPdf("C:/Users/biao.chen/Desktop/服务器列表.pptx", "C:/Users/biao.chen/Desktop/file/logback.pdf");
-        officeConvert.pdfToIamge(1.2f,"C:/Users/biao.chen/Desktop/file/logback.pdf", "C:/Users/biao.chen/Desktop/file/");
+        OPENOFFICE_HOME = "C:/Program Files (x86)/OpenOffice 4/";
+        OPENOFFICE_COMMAND = "program/soffice.exe -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;";
+        docToPdf("C:\\Users\\Administrator\\Desktop\\财经直播小程序需求文档.docx", "C:\\Users\\Administrator\\Desktop/file/logback.pdf");
+//        pdfToIamge(1.2f,"C:/Users/biao.chen/Desktop/file/logback.pdf", "C:/Users/biao.chen/Desktop/file/");
     }
 
     /**
@@ -69,7 +62,7 @@ public class OfficeConvert {
      * @param inputFile  需要生成缩略图的书籍的完整路径
      * @param outputFile 生成缩略图的放置路径
      */
-    public List<String> pdfToIamge(float zoom, String inputFile, String outputFile) {
+    public static List<String> pdfToIamge(float zoom, String inputFile, String outputFile) {
         List<String> list = null;
         Document document = null;
         try {
@@ -99,7 +92,7 @@ public class OfficeConvert {
         return list;
     }
 
-    public String docToPdf(String inputFilePath, String outputFilePath){
+    public static String docToPdf(String inputFilePath, String outputFilePath){
         if(StringUtils.isEmpty(inputFilePath) || StringUtils.isEmpty(outputFilePath)){
             logger.error("Parameters cannot be empty!");
             return null;
@@ -110,21 +103,16 @@ public class OfficeConvert {
             logger.error("inputFile cannot be empty!");
             return null;
         }
-        if(StringUtil.isEmpty(OPENOFFICE_HOME)){
-            //当成工具类启动会注入地址失败
-            OPENOFFICE_HOME = "C:/Program Files (x86)/OpenOffice 4/";
-            OPENOFFICE_COMMAND = "program/soffice.exe -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;";
-        }
         if(OPENOFFICE_HOME.charAt(OPENOFFICE_HOME.length()-1)!='/'){
             OPENOFFICE_HOME += "/";
         }
         Process pro = null;
         OpenOfficeConnection connection = null;
         // 启动OpenOffice的服务
-        OPENOFFICE_COMMAND = String.format("%s%s",OPENOFFICE_HOME,OPENOFFICE_COMMAND);
+        String command = String.format("%s%s",OPENOFFICE_HOME,OPENOFFICE_COMMAND);
         try{
             // connect to an OpenOffice.org instance running on port 8100
-            pro = Runtime.getRuntime().exec(OPENOFFICE_COMMAND);
+            pro = Runtime.getRuntime().exec(command);
             connection = new SocketOpenOfficeConnection(8100);
             connection.connect();
 
@@ -151,7 +139,7 @@ public class OfficeConvert {
      * @param bfimage
      * @return
      */
-    private BufferedImage setGraphics(BufferedImage bfimage){
+    private static BufferedImage setGraphics(BufferedImage bfimage){
         Graphics2D g = bfimage.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         // 5、设置水印文字颜色

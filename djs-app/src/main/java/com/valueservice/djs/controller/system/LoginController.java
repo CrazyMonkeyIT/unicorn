@@ -6,6 +6,7 @@ import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.system.ResourceService;
 import com.valueservice.djs.service.system.UserInfoService;
 import com.valueservice.djs.util.Des3Util;
+import com.valueservice.djs.util.OfficeConvert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -45,6 +46,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(ModelAndView mv){
+		OfficeConvert.docToPdf("C:\\Users\\Administrator\\Desktop\\财经直播小程序需求文档.docx", "C:\\Users\\Administrator\\Desktop/file/logback.pdf");
 		mv.addObject("DES_SECRET_KEY", Des3Util.SECRET_KEY);
 		mv.setViewName("login");
 		return mv;
