@@ -36,7 +36,7 @@ public class WithdrawExamineService {
     /**
      * 处理提现申请
      * @param id
-     * @param handleResult (wait:等待审核  already: 已通过 refuse: 已拒绝)
+     * @param handleResult (WAIT:等待审核  ALREADY: 已通过 REFUSE: 已拒绝)
      * @return
      */
     public BaseResult handle(Integer id,String handleResult){

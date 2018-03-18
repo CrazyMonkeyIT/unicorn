@@ -1,4 +1,5 @@
 <#macro pagination callFunName>
+<#if (page.pages > 1 )>
 <div class="row-fluid">
     <#if page.pageNum == 1>
         <#assign min=1 >
@@ -52,4 +53,5 @@ function goto(page){
     $("#form1").submit();
 }
 </script>
+</#if>
 </#macro>

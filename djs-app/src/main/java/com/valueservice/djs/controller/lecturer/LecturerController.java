@@ -4,7 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.controller.BaseController;
 import com.valueservice.djs.controller.system.LoginController;
+import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
+import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
+import com.valueservice.djs.service.grade.LecturerGradeService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 讲师管理
@@ -28,6 +32,8 @@ public class LecturerController extends BaseController{
     @Resource
     LecturerService lecturerService;
 
+    @Resource
+    LecturerGradeService lecturerGradeService;
     /**
      * 列表
      * @param modelMap
@@ -39,7 +45,9 @@ public class LecturerController extends BaseController{
     @RequestMapping("/list")
     public String list(ModelMap modelMap,String lecturerName, String phone, Integer pageIndex){
         PageInfo<LecturerDO> page = lecturerService.selectList(lecturerName,phone,pageIndex);
+        List<LecturerGradeDO> gradeList = lecturerGradeService.selectLecturerGradeList();
         modelMap.addAttribute("page",page);
+        modelMap.addAttribute("gradeList",gradeList);
         modelMap.addAttribute("lecturerName",lecturerName);
         modelMap.addAttribute("phone",phone);
         return "lecturer/lecturer";
@@ -59,14 +67,14 @@ public class LecturerController extends BaseController{
 
     /**
      * 封停提现
-     * @param id
+     * @param accountId
      * @param desc
      * @return
      */
     @RequestMapping("/frozenLecturerAccount")
     @ResponseBody
-    public BaseResult frozenLecturerAccount(Integer id,String desc){
-        return lecturerService.frozenLecturerAccount(id,desc);
+    public BaseResult frozenLecturerAccount(Integer accountId,String wswitch,String desc){
+        return lecturerService.frozenLecturerAccount(accountId,wswitch,desc);
     }
 
     /**
@@ -78,5 +86,33 @@ public class LecturerController extends BaseController{
     @ResponseBody
     public BaseResult recommendChief(Integer id){
         return lecturerService.recommendChief(id);
+    }
+
+    /**
+     * 查询讲师信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/get")
+    @ResponseBody
+    public LecturerDO get(Integer id){
+        return lecturerService.selectById(id);
+    }
+    /**
+     * 更新讲师信息
+     */
+    @RequestMapping("/update")
+    @ResponseBody
+    public BaseResult update(LecturerDO lecturer){
+        return lecturerService.updateInfo(lecturer);
+    }
+
+    /**
+     * 获取讲师账户信息
+     */
+    @RequestMapping("/account")
+    @ResponseBody
+    public LecturerAccountDO account(Integer lecturerId){
+        return lecturerService.selectLecturerAccount(lecturerId);
     }
 }
