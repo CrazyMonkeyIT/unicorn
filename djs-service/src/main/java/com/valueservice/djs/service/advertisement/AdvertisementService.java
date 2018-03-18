@@ -52,6 +52,8 @@ public class AdvertisementService {
         AdvertisementDO advertisementDO = new AdvertisementDO();
         advertisementDO.setAdvertisementTypeId(advertisementVO.getAdvertisementTypeId());
         advertisementDO.setAdvertisementUrl(advertisementVO.getAdvertisementUrl());
+        advertisementDO.setRoomId(advertisementVO.getRoomId());
+        advertisementDO.setLecturerId(advertisementVO.getLecturerId());
         advertisementDO.setAdvertisementImgPath(advertisementVO.getAdvertisementImgPath());
         advertisementDO.setAdvertisementTitle(advertisementVO.getAdvertisementTitle());
         advertisementDO.setAdvertisementDesc(advertisementVO.getAdvertisementDesc());
@@ -61,6 +63,10 @@ public class AdvertisementService {
         //Integer primaryKeyValue = advertisementDO.getAdvertisementId();
     }
 
-
+    public void delAdvertisement(Integer advertisementId, Integer status){
+        AdvertisementDO dbRecord = advertisementDOMapper.selectByPrimaryKey(advertisementId);
+        dbRecord.setStatus(status);
+        advertisementDOMapper.updateByPrimaryKeySelective(dbRecord);
+    }
 
 }

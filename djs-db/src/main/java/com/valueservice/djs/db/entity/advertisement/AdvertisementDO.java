@@ -7,6 +7,10 @@ public class AdvertisementDO {
 
     private Integer advertisementTypeId;
 
+    private Integer lecturerId;
+
+    private Integer roomId;
+
     private String advertisementUrl;
 
     private String advertisementImgPath;
@@ -37,6 +41,22 @@ public class AdvertisementDO {
 
     public void setAdvertisementTypeId(Integer advertisementTypeId) {
         this.advertisementTypeId = advertisementTypeId;
+    }
+
+    public Integer getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(Integer lecturerId) {
+        this.lecturerId = lecturerId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
     public String getAdvertisementUrl() {

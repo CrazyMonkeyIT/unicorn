@@ -22,7 +22,7 @@ CREATE TABLE `t_b_advertisement` (
   `advertisement_img_path` varchar(255) DEFAULT NULL '广告图片地址',
   `advertisement_title` varchar(255) DEFAULT NULL COMMENT '广告标题',
   `advertisement_desc` varchar(255) DEFAULT NULL COMMENT '广告描述',
-  `status` int(255) DEFAULT NULL COMMENT '状态 -2:人工暂停 1:正常 -1:到期',
+  `status` int(255) DEFAULT NULL COMMENT '状态 -2:人工暂停 1:正常 -1:到期 0:删除',
   `invalid_date` datetime DEFAULT NULL COMMENT '失效时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',

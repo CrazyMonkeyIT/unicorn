@@ -4,8 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;
+import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
+import com.valueservice.djs.service.chat.RoomService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,16 +37,19 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
     @Resource
     private LecturerService lecturerService;
+    @Resource
+    private RoomService roomService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView selectAdvertisement(){
         ModelAndView modelAndView = new ModelAndView();
         List<AdvertisementTypeDO> advertisementTypeList =  advertisementService.selectAllAdvertisementType();
         List<LecturerDO> lecturerDOList = lecturerService.selectAll();
+        List<RoomDO> roomList = roomService.selectAll();
         PageInfo<AdvertisementDO> pageInfo =  advertisementService.selectValidAdvertisement(1, 10);
         modelAndView.addObject("lecturerList", lecturerDOList);
         modelAndView.addObject("typeList", advertisementTypeList);
-        modelAndView.addObject("roomList", Collections.emptyList());
+        modelAndView.addObject("roomList", roomList);
         modelAndView.addObject("page", pageInfo);
         modelAndView.setViewName("system/advertisement/advertisement");
         return modelAndView;
@@ -56,9 +61,26 @@ public class AdvertisementController {
         return "success";
     }
 
-/*    @RequestMapping(value = "/type/list", method = RequestMethod.GET)
-    public @ResponseBody List<AdvertisementTypeDO> selectAdvertisementType(){
-        return advertisementService.selectAllAdvertisementType();
-    }*/
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public @ResponseBody Boolean delAdvertisement(Integer advertisementId){
+        try {
+            advertisementService.delAdvertisement(advertisementId, 0);
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            return false;
+        }
+        return true;
+    }
+
+    @RequestMapping(value = "/stop", method = RequestMethod.POST)
+    public @ResponseBody Boolean stopAdvertisement(Integer advertisementId){
+        try {
+            advertisementService.delAdvertisement(advertisementId, -2);
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -161,4 +161,9 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
+    select * from t_b_room
+  </select>
+
 </mapper>

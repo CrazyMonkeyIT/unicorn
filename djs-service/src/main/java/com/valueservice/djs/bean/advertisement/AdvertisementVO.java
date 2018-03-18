@@ -17,6 +17,26 @@ public class AdvertisementVO {
 
     private String invalidDateStr;
 
+    //关联信息
+    private Integer lecturerId;
+    private Integer roomId;
+
+    public Integer getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(Integer lecturerId) {
+        this.lecturerId = lecturerId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
+    }
+
     public Integer getAdvertisementId() {
         return advertisementId;
     }

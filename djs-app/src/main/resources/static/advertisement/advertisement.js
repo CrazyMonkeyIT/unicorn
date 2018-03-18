@@ -23,6 +23,10 @@ $(function () {
            $("#urlDiv").hide();
            $("#roomDiv").show();
            $("#lecturerDiv").hide();
+       }else if(type == 6){
+           $("#urlDiv").hide();
+           $("#roomDiv").hide();
+           $("#lecturerDiv").hide();
        }
    });
 });
@@ -33,29 +37,44 @@ $(function () {
 function saveAdvertisementInfo(){
     var advertisementTitle = $("#editForm").find("input[name='advertisementTitle']").val();
     if(!advertisementTitle){
-        alert("讲师等级名称不能为空");
+        alert("广告标题不能为空！");
         return;
     }
     var advertisementDesc = $("#editForm").find("input[name='advertisementDesc']").val();
     if(!advertisementDesc){
-        alert("讲师等级名称不能为空");
-        return;
-    }
-    var advertisementType = $("#editForm").find("input[name='advertisementType']").val();
-    if(!advertisementType){
-        alert("讲师等级名称不能为空");
-        return;
-    }
-    var advertisementUrl = $("#editForm").find("input[name='advertisementUrl']").val();
-    if(!advertisementUrl){
-        alert("讲师等级名称不能为空");
+        alert("广告描述不能为空！");
         return;
     }
     var invalidDate = $("#editForm").find("input[name='invalidDate']").val();
     if(!invalidDate){
-        alert("讲师等级名称不能为空");
+        alert("广告到期时间不能为空！");
         return;
     }
+    var type = $('#advertisementType option:selected').val();
+    if(type == -1){
+        alert("请选择广告类型！");
+        return;
+    }else if(type == 1){
+        var advertisementUrl = $("#editForm").find("input[name='advertisementUrl']").val();
+        if(!advertisementUrl){
+            alert("请填写广告链接地址！");
+            return;
+        }
+    }else if(type == 4){
+        var lecturer = $('#lecturer option:selected').val();
+        if(lecturer == -1){
+            alert("请选择需要关联的讲师！");
+            return;
+        }
+    }else if(type == 5){
+        var room = $('#room option:selected').val();
+        if(room == -1){
+            alert("请选择需要关联的房间！");
+            return;
+        }
+    }
+    debugger;
+    $("#advertisementTypeId").val(type);
     $.ajax({
         url : $("#editForm").attr("action"),
         type : 'post',
@@ -68,6 +87,12 @@ function saveAdvertisementInfo(){
             }
         }
     });
+}
+
+function showEditModal(advertisementTitle){
+    alert(advertisementTitle);
+//    $("#editForm").find("input[name='advertisementTitle']").val(advertisementTitle);
+
 }
 
 /**
@@ -102,4 +127,46 @@ function clearForm(){
 function showAddModal(){
     clearForm();
     $("#edit_grade_modal").modal("show");
+}
+
+function delAdvertisement(advertisementId){
+    if(window.confirm("确认要删除该广告吗？")){
+        $.ajax({
+            url: basePath + "/advertisement/del",
+            type: 'post',
+            data: {
+                "advertisementId": advertisementId
+            },
+            success: function (data) {
+                if (data) {
+                    location.href = basePath + "/advertisement/list";
+                } else {
+                    alert("操作失败，系统异常");
+                }
+            }
+        });
+    }else{
+        return;
+    }
+}
+
+function stopAdvertisement(advertisementId){
+    if(window.confirm("确认暂停此广告使用吗？")){
+        $.ajax({
+            url: basePath + "/advertisement/stop",
+            type: 'post',
+            data: {
+                "advertisementId": advertisementId
+            },
+            success: function (data) {
+                if (data) {
+                    location.href = basePath + "/advertisement/list";
+                } else {
+                    alert("操作失败，系统异常");
+                }
+            }
+        });
+    }else{
+        return;
+    }
 }

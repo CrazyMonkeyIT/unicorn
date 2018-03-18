@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     <id column="advertisement_id" jdbcType="INTEGER" property="advertisementId" />
     <result column="advertisement_type_id" jdbcType="INTEGER" property="advertisementTypeId" />
+    <result column="lecturer_id" jdbcType="INTEGER" property="lecturerId" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
     <result column="advertisement_url" jdbcType="VARCHAR" property="advertisementUrl" />
     <result column="advertisement_img_path" jdbcType="VARCHAR" property="advertisementImgPath" />
     <result column="advertisement_title" jdbcType="VARCHAR" property="advertisementTitle" />
@@ -14,8 +16,9 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    advertisement_id, advertisement_type_id, advertisement_url, advertisement_img_path, 
-    advertisement_title, advertisement_desc, status, invalid_date, create_time, update_time
+    advertisement_id, advertisement_type_id, lecturer_id, room_id, advertisement_url, 
+    advertisement_img_path, advertisement_title, advertisement_desc, status, invalid_date, 
+    create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,15 +32,15 @@
   </delete>
   <insert id="insert" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     insert into t_b_advertisement (advertisement_id, advertisement_type_id, 
-      advertisement_url, advertisement_img_path, 
-      advertisement_title, advertisement_desc, 
-      status, invalid_date, create_time, 
-      update_time)
+      lecturer_id, room_id, advertisement_url, 
+      advertisement_img_path, advertisement_title, 
+      advertisement_desc, status, invalid_date, 
+      create_time, update_time)
     values (#{advertisementId,jdbcType=INTEGER}, #{advertisementTypeId,jdbcType=INTEGER}, 
-      #{advertisementUrl,jdbcType=VARCHAR}, #{advertisementImgPath,jdbcType=VARCHAR}, 
-      #{advertisementTitle,jdbcType=VARCHAR}, #{advertisementDesc,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{invalidDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{lecturerId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{advertisementUrl,jdbcType=VARCHAR}, 
+      #{advertisementImgPath,jdbcType=VARCHAR}, #{advertisementTitle,jdbcType=VARCHAR}, 
+      #{advertisementDesc,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{invalidDate,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     insert into t_b_advertisement
@@ -47,6 +50,12 @@
       </if>
       <if test="advertisementTypeId != null">
         advertisement_type_id,
+      </if>
+      <if test="lecturerId != null">
+        lecturer_id,
+      </if>
+      <if test="roomId != null">
+        room_id,
       </if>
       <if test="advertisementUrl != null">
         advertisement_url,
@@ -80,6 +89,12 @@
       <if test="advertisementTypeId != null">
         #{advertisementTypeId,jdbcType=INTEGER},
       </if>
+      <if test="lecturerId != null">
+        #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
       <if test="advertisementUrl != null">
         #{advertisementUrl,jdbcType=VARCHAR},
       </if>
@@ -112,6 +127,12 @@
       <if test="advertisementTypeId != null">
         advertisement_type_id = #{advertisementTypeId,jdbcType=INTEGER},
       </if>
+      <if test="lecturerId != null">
+        lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
       <if test="advertisementUrl != null">
         advertisement_url = #{advertisementUrl,jdbcType=VARCHAR},
       </if>
@@ -142,6 +163,8 @@
   <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.advertisement.AdvertisementDO">
     update t_b_advertisement
     set advertisement_type_id = #{advertisementTypeId,jdbcType=INTEGER},
+      lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=INTEGER},
       advertisement_url = #{advertisementUrl,jdbcType=VARCHAR},
       advertisement_img_path = #{advertisementImgPath,jdbcType=VARCHAR},
       advertisement_title = #{advertisementTitle,jdbcType=VARCHAR},
@@ -152,9 +175,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where advertisement_id = #{advertisementId,jdbcType=INTEGER}
   </update>
-  
+
   <select id="selectAll" resultMap="BaseResultMap" >
-    select * from t_b_advertisement
+    select * from t_b_advertisement where status != 0
   </select>
-  
+
 </mapper>

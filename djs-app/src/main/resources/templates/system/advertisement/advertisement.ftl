@@ -33,7 +33,23 @@
                 <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
                 <td>${data.advertisementTitle!''}</td>
                 <td>${data.advertisementDesc!''}</td>
-                <td>asd</td>
+                <td>
+                    <#if data.advertisementTypeId == 1>
+                    超链接广告
+                    <#elseif data.advertisementTypeId == 2>
+                    路演主题广告
+                    <#elseif data.advertisementTypeId == 3>
+                    专题广告
+                    <#elseif data.advertisementTypeId == 4>
+                    讲师广告
+                    <#elseif data.advertisementTypeId == 5>
+                    指定路演广告
+                    <#elseif data.advertisementTypeId == 6>
+                    VIP广告
+                    <#else>
+                    未知广告类型
+                    </#if>
+                </td>
                 <td>${data.advertisementUrl!''}</td>
                 <td style="width: 100px; height: 25px">
                     <a href="${data.advertisementImgPath}" target="_blank" >
@@ -51,10 +67,15 @@
                     </#if>
                 </td>
                 <td>
-                    <a class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
+                    <#if data.status == 1>
+                    <a onclick="stopAdvertisement(${data.advertisementId})">
+                        暂停
+                    </a>
+                    <a onclick="showEditModal(${data.advertisementId})" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                         <i class="fa fa-pencil bigger-110 green" ></i>
                     </a>
-                    <a class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
+                    </#if>
+                    <a onclick="delAdvertisement(${data.advertisementId})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="删除" title="删除">
                         <i class="fa fa-trash-o bigger-110 red"></i>
                     </a>
                 </td>
@@ -83,15 +104,15 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">到期时间</label>
-                            <div class="col-sm-8">
-                                <input name="invalidDate" type="text"  />
-                            </div>
-                        </div>
-                        <div class="form-group ">
                             <label class="col-sm-4 control-label">广告描述</label>
                             <div class="col-sm-8">
                                 <input name="advertisementDesc" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">到期时间</label>
+                            <div class="col-sm-8">
+                                <input name="invalidDate" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
@@ -149,6 +170,7 @@
                         <!-- 动态显示DIV结束 -->
 
                         <input id="advertisementImgPath" type="hidden" name="advertisementImgPath" />
+                        <input id="advertisementTypeId" type="hidden" name="advertisementTypeId">
                     </div>
                 </form>
                 <div class="form-horizontal">
