@@ -1,6 +1,10 @@
 package com.valueservice.djs.controller.socket;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.valueservice.djs.bean.ChatModel;
+import com.valueservice.djs.db.dao.chat.RoomContentDOMapper;
+import com.valueservice.djs.db.entity.chat.RoomContentDO;
+import com.valueservice.djs.service.chat.RoomContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,11 +24,22 @@ public class ChatSocketController {
     @Resource
     private SimpMessagingTemplate messageingTemplate;
 
+    @Resource
+    private RoomContentService roomContentService;
+
     @MessageMapping("/chat")
-    public void handleChat(@RequestBody ChatModel chatModel){
+    public void handleChat(@RequestBody RoomContentDO roomContent){
+        //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
-        messageingTemplate.convertAndSend(String.format(destination, chatModel.getRoomId()),
-                chatModel.getUserName()+ ":"+chatModel.getContent());
+        try {
+            roomContentService.saveMessage(roomContent);
+            messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomId()),
+                    JSONUtils.toJSONString(roomContent));
+        }catch (Exception e){
+            logger.error("消息持久化失败！",e);
+        }
+        messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomId()),
+                "null");
     }
 
     @RequestMapping("/chatDemo")

@@ -5,13 +5,14 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="room_id" jdbcType="BIGINT" property="roomId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomContentDO">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, room_id, user_id, create_time
+    id, room_id, user_id,user_name, create_time
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -19,8 +20,6 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_b_room_content
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -36,6 +35,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
       </if>
       <if test="createTime != null">
         create_time,
@@ -54,6 +56,9 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -70,6 +75,9 @@
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

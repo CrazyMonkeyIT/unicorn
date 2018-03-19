@@ -28,15 +28,15 @@ public class ImportController {
         return "system/import/import";
     }
 
-    @PostMapping("/up/{roomId}")
-    public @ResponseBody List<Map<String,String>> up(@PathVariable String roomId,@RequestParam("file") MultipartFile[] files){
+    @PostMapping("/up/{rootId}")
+    public @ResponseBody List<Map<String,String>> up(@PathVariable String rootId,@RequestParam("file") MultipartFile[] files){
 
-        if(Objects.isNull(roomId) || Objects.isNull(files)){
+        if(Objects.isNull(rootId) || Objects.isNull(files)){
             logger.error("The required parameter is null..");
             return null;
         }
         List<Map<String,String>> lists = new ArrayList<>();
-        File userFile = new File(String.format("%s/%s", filePath,roomId));
+        File userFile = new File(String.format("%s/%s", filePath,rootId));
         if (!userFile.exists()){
             userFile.mkdir();
         }

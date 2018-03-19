@@ -9,6 +9,8 @@ public class RoomContentDO {
 
     private Long userId;
 
+    private String userName;
+
     private Date createTime;
 
     private String content;
@@ -31,6 +33,14 @@ public class RoomContentDO {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserId(Long userId) {
