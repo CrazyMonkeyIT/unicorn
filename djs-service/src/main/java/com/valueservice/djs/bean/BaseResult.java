@@ -6,6 +6,8 @@ public class BaseResult {
 	
 	private String message;
 
+	private Object obj;
+
 	public BaseResult(){
 		this.result = false;
 		this.message = "系统错误";
@@ -20,7 +22,15 @@ public class BaseResult {
 		this.message = msg;
 	}
 
-	public boolean isResult() {
+	public Object getObj() {
+		return obj;
+	}
+
+	public void setObj(Object obj) {
+		this.obj = obj;
+	}
+
+	public boolean getResult() {
 		return result;
 	}
 

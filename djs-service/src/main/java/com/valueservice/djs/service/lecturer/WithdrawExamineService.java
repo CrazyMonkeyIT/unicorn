@@ -4,8 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
+import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
 import com.valueservice.djs.db.dao.lecturer.WithdrawExamineDOMapper;
+import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.WithdrawExamineDO;
+import com.valueservice.djs.service.pay.EnterprisePayService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +25,11 @@ public class WithdrawExamineService {
     @Resource
     WithdrawExamineDOMapper withdrawExamineDOMapper;
 
+    @Resource
+    LecturerDOMapper lecturerDOMapper;
+
+    @Resource
+    EnterprisePayService enterprisePayService;
     /**
      * 查询提现申请列表
      * @param pageIndex
@@ -40,9 +48,23 @@ public class WithdrawExamineService {
      * @return
      */
     public BaseResult handle(Integer id,String handleResult){
+        BaseResult result = new BaseResult();
         WithdrawExamineDO record = withdrawExamineDOMapper.selectByPrimaryKey(id);
-        record.setStatus(handleResult);
-        withdrawExamineDOMapper.updateByPrimaryKeySelective(record);
-        return new BaseResult(true);
+        if("ALREADY".equals(handleResult)){
+            LecturerDO lecturer = lecturerDOMapper.selectByPrimaryKey(record.getLecturerId());
+            BaseResult br = enterprisePayService.pay(lecturer.getOpenId(), record.getWithdrawMoney().intValue(), "提现");
+            if(br.getResult()){
+                record.setStatus(handleResult);
+                withdrawExamineDOMapper.updateByPrimaryKeySelective(record);
+                result.setResult(true);
+            }else{
+                result.setMessage("支付失败：" + br.getMessage());
+            }
+        }else{
+            record.setStatus(handleResult);
+            withdrawExamineDOMapper.updateByPrimaryKeySelective(record);
+            result.setResult(true);
+        }
+        return result;
     }
 }

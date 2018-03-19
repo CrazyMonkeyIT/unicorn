@@ -6,17 +6,20 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.security.KeyStore;
+import java.util.*;
 
 public class HttpClientUtil {
     public static String doGet(String url, Map<String, String> param) {
@@ -130,4 +133,58 @@ public class HttpClientUtil {
 
         return resultString;
     }
+
+    /**
+     * xml请求
+     * @param url 请求地址
+     * @param param 参数
+     * @param isCert 是否需要证书
+     * @param certFilePath 证书文件地址
+     * @return
+     */
+    public static Map<String,String> doPostXml(String url, Map<String, String> param,Boolean isCert, String mchId, String certFilePath) {
+        Map<String, String> resultMap = null;
+        // 创建Httpclient对象
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse response = null;
+        String resultString = "";
+        KeyStore keyStore = null;
+        if(isCert) {
+            keyStore = PayUtil.getKeyStore(mchId, certFilePath);
+            if (keyStore == null) {
+                return null;
+            }
+        }
+        try {
+            if(isCert){
+                SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, mchId.toCharArray()).build();
+                SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" },null,
+                        SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+                httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+            }else{
+                httpClient = HttpClients.createDefault();
+            }
+            // 创建Http Post请求
+            HttpPost httpPost = new HttpPost(url);
+            // 创建请求内容
+            StringEntity entity = new StringEntity(PayUtil.parseMapXML(param), "UTF-8");
+            httpPost.addHeader("Content-Type", "text/xml");
+            httpPost.setEntity(entity);
+            // 执行http请求
+            response = httpClient.execute(httpPost);
+            resultString = EntityUtils.toString(response.getEntity(), "utf-8");
+            resultMap = PayUtil.parseStrXml(resultString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                response.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultMap;
+    }
+
+
 }
