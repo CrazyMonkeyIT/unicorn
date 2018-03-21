@@ -9,8 +9,7 @@
           <text bindtap="toAccount" class="userinfo-nickname">{{userInfo.nickName}}</text>
           
           <view class="follow_div">
-            <text class="me_follow_other">关注  0</text>
-            <text class="other_follow_me">粉丝  0</text>
+           
           </view>
         </block>
     </view>

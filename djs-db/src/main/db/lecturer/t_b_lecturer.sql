@@ -25,6 +25,7 @@ CREATE TABLE `t_b_lecturer` (
   `open_id` varchar(100) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `grade_id` int(11) DEFAULT NULL COMMENT '讲师等级',
+  `head_photo_file` varchar(100) DEFAULT NULL COMMENT '讲师头像',
   `is_chief` varchar(10) DEFAULT NULL COMMENT '是否首席 (yes/no)',
   `status` int(2) DEFAULT NULL COMMENT '状态 （0：正常 1：直播中 2：封停）',
   `status_desc` varchar(200) DEFAULT NULL COMMENT '状态描述',

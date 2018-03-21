@@ -41,7 +41,7 @@
 }
 .navigator-content{
   width:100%;
-  padding: 20rpx 30rpx 20rpx 10rpx;
+  padding: 25rpx 30rpx 25rpx 10rpx;
   position: relative;
   display: flex;
   align-items: center;

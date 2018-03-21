@@ -13,6 +13,8 @@ public class LecturerDO {
 
     private Integer gradeId;
 
+    private String headPhotoFile;
+
     private String isChief;
 
     private Integer status;
@@ -141,5 +143,13 @@ public class LecturerDO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getHeadPhotoFile() {
+        return headPhotoFile;
+    }
+
+    public void setHeadPhotoFile(String headPhotoFile) {
+        this.headPhotoFile = headPhotoFile;
     }
 }
