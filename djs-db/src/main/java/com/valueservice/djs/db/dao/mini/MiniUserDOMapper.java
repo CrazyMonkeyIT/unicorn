@@ -11,9 +11,9 @@ public interface MiniUserDOMapper {
 
     MiniUserDO selectByPrimaryKey(Integer id);
 
-    MiniUserDO selectByOpenid(String openId);
-
     int updateByPrimaryKeySelective(MiniUserDO record);
 
     int updateByPrimaryKey(MiniUserDO record);
+
+    MiniUserDO selectByOpenid(String openId);
 }

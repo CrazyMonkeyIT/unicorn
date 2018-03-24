@@ -2,7 +2,8 @@ package com.valueservice.djs.db.entity.chat;
 
 import java.util.Date;
 
-public class RoomContentDO {
+public class RoomContentShow {
+
     private Integer id;
 
     private Integer roomid;
@@ -18,6 +19,13 @@ public class RoomContentDO {
     private Date createTime;
 
     private Integer active;
+
+    private String openId;//用户openId
+
+    private String avatarurl;//用户头像链接
+
+
+    private String nickName;//用户昵称
 
     public Integer getId() {
         return id;
@@ -48,7 +56,7 @@ public class RoomContentDO {
     }
 
     public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+        this.type = type;
     }
 
     public Integer getDuration() {
@@ -64,7 +72,7 @@ public class RoomContentDO {
     }
 
     public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.url = url;
     }
 
     public Date getCreateTime() {
@@ -81,5 +89,29 @@ public class RoomContentDO {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl;
     }
 }

@@ -4,9 +4,9 @@ const userUtil = require('../../../global-js/userUtil.js');
 const config = require('../../../config.js');
 var app = getApp();
 var that, currentUser, speakerSec = 0;
-var chatListData = [{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' ,chatTime: util.formatTime(new Date())},
+var chatListData = [/*{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' ,chatTime: '2018-03-11 14:23:54'},
   { chatid: 2, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', nickName: '陈道明', chatTime: util.formatTime(new Date())}, 
-  { chatid: 20, orientation: 'r', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', avatarImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLgZK43CgcILte4AfCBOicPTgYb7oIXq9CUPoYSDOgZyZZt000sR5eVib1UW70kW2OWNLeUF1vNu9xg/0', nickName: '楼得罚', chatTime: util.formatTime(new Date())}];
+  { chatid: 20, orientation: 'r', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', avatarImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLgZK43CgcILte4AfCBOicPTgYb7oIXq9CUPoYSDOgZyZZt000sR5eVib1UW70kW2OWNLeUF1vNu9xg/0', nickName: '楼得罚', chatTime: util.formatTime(new Date())}*/];
 var speakerInterval, speakerSecInterval; 
 var chartDetail,voicePlaying = false;
 Page({
@@ -58,8 +58,42 @@ Page({
   },
 
   onReady: function () {
-
+      wx.request({
+        url: config.service.roomHistory,
+        data: {roomid:123},
+        header: {},
+        method: 'POST',
+        dataType:'json',
+        responseType: 'text',
+        success: function(res) {
+          console.log("room history。。。。。。");
+          console.log(res.data);
+          res.data.forEach(function(data){
+            that.roomContentProcess(data,false);
+          });
+        }
+      })
   }, 
+  //接收后台传来的聊天内容的处理
+  //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的
+  //isRealTime是否实时聊天产生的标识，如果实时聊天产生，判断是当前用户的聊天直接抛弃，
+  //因为本地发送时已经处理到聊天窗口里了
+  roomContentProcess : function(chatContent,isRealTime){
+    console.log("----------------roomContentProcess-------------------");
+    console.log(chatContent);
+    if (chatContent.type == 'voice'){
+      chatContent.voiceImg = '/images/live/audio_icon_3.png';
+    }
+    if (chatContent.openId == currentUser.openId){
+      if (isRealTime == true) return;
+      chatContent.orientation = "r";
+    }else{
+      chatContent.orientation = "l";
+    }
+    console.log("----------------roomContentProcess-------------------");
+    console.log(chatContent);
+    that.addChat(chatContent);
+  },
   // 切换语音输入和文字输入
   switchInputType: function () {
     this.setData({
@@ -112,10 +146,22 @@ Page({
           complete: function(res) {},
         })
         console.log("[Console log]:Record success!File path:" + tempFilePath);
-        var myVoiceChat = { chatid: util.uuid(1234), orientation: 'r', url: '', type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, chatTime: util.formatTime(new Date()) };
+        var myVoiceChat = { url: '', type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId,roomid:123};
         console.log("[录音结束]")
         console.log(myVoiceChat)
-        that.addChat(myVoiceChat);
+        //that.addChat(myVoiceChat);
+        wx.request({
+          url: config.service.contentTest,
+          data: myVoiceChat,
+          header: {},
+          method: 'POST',
+          dataType: 'json',
+          responseType: 'text',
+          success: function(res) {
+            console.log('-----------save content result');
+            console.log(res.data);
+          }
+        })
       },
       'fail': function () {
         console.log("[Console log]:Record failed!");

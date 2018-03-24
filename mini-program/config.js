@@ -15,7 +15,11 @@ var config = {
     //获取用户加密信息的解密文档
     getauth: host + '/minigram/getauth',
     //上传文件URL
-    upUrl : host + '/up/'
+    upUrl : host + '/up/',
+    //获取房间历史聊天记录
+    roomHistory: host + '/minigram/roomHistory',
+    //存储聊天内容的临时url
+    contentTest: host + '/minigram/contentTest'
   }
 };
 

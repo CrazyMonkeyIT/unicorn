@@ -1,8 +1,6 @@
 package com.valueservice.djs.controller.socket;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.valueservice.djs.bean.ChatModel;
-import com.valueservice.djs.db.dao.chat.RoomContentDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.service.chat.RoomContentService;
 import org.slf4j.Logger;
@@ -33,12 +31,12 @@ public class ChatSocketController {
         String destination = "/topic/notifications/%s";
         try {
             roomContentService.saveMessage(roomContent);
-            messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomId()),
+            messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomid()),
                     JSONUtils.toJSONString(roomContent));
         }catch (Exception e){
             logger.error("消息持久化失败！",e);
         }
-        messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomId()),
+        messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomid()),
                 "null");
     }
 
