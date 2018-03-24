@@ -29,10 +29,10 @@ const loginOper = function(){
                 wx.request({
                   url: config.service.saveUser,
                   data: {
-                    openId: result.data.openId,
+                    openid: result.data.openId,
                     gender: result.data.gender,
                     country: result.data.country,
-                    avatarUrl: result.data.avatarUrl,
+                    avatarurl: result.data.avatarUrl,
                     city: result.data.city,
                     province: result.data.province,
                     nickName: result.data.nickName
