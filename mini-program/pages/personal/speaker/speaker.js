@@ -1,4 +1,5 @@
 // pages/personal/speaker/speaker.js
+const app = getApp();
 Page({
 
   /**
@@ -6,19 +7,31 @@ Page({
    */
   data: {
     tempFilePath: '',
-    savedFilePath: '',
-    dialog: {
-      hidden: true
-    }
+    applyDivDisplay:true,
+    inviteCodeDiv:true,
+    inviteInfoDiv:true,
+    lecturerInfoDiv:true,
+    inviteInfo:{},
+    lecturerInfo:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      savedFilePath: wx.getStorageSync('savedFilePath')
-    })
+    if(!!app.globalData.lecturerInfo){
+      //已经是讲师，直接显示讲师信息
+      this.setData({
+        lecturerInfo:app.globalData.lecturerInfo,
+        lecturerInfoDiv:false
+      })
+    }else{
+      //注册讲师
+      this.setData({
+        applyDivDisplay:false
+      })
+    }
+    
   },
 
   /**
@@ -85,41 +98,150 @@ Page({
       }
     })
   },
-  saveFile: function () {
-    if (this.data.tempFilePath.length > 0) {
-      var that = this
-      wx.saveFile({
-        tempFilePath: this.data.tempFilePath,
-        success: function (res) {
-          that.setData({
-            savedFilePath: res.savedFilePath
-          })
-          wx.setStorageSync('savedFilePath', res.savedFilePath)
-          that.setData({
-            dialog: {
-              title: '保存成功',
-              content: '下次进入应用时，此文件仍可用',
-              hidden: false
+  //提交讲师申请
+  submitForm:function(e){
+    
+    wx.uploadFile({
+      url: app.globalData.serverPath + '/lecturer/register/saveHeadPhoto',
+      filePath: this.data.tempFilePath,
+      name: 'file',
+      success: function (res) {
+        if(res.result){
+          wx.request({
+            url: app.globalData.serverPath + '/lecturer/register/submit',
+            data: {
+              headPhotoFile: res.obj,
+              lecturerName: e.detail.value.lecturerName,
+              openId: getApp().globalData.user.openId,
+              phone: e.detail.value.phone,
+              company: e.detail.value.company,
+              position: e.detail.value.position
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              if(res.result){
+                wx.showToast({
+                  title: '申请成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }else{
+                wx.showToast({
+                  title: res.message,
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
             }
           })
-        },
-        fail: function (res) {
-          that.setData({
-            dialog: {
-              title: '保存失败',
-              content: '应该是有 bug 吧',
-              hidden: false
-            }
+        }else{
+          wx.showToast({
+            title: res.message,
+            icon: 'success',
+            duration: 2000
           })
         }
-      })
-    }
+      }
+    })
+    
   },
-  clear: function () {
-    wx.setStorageSync('savedFilePath', '')
+  //显示输入邀请码
+  inputInviteCode: function () {
     this.setData({
-      tempFilePath: '',
-      savedFilePath: ''
+      applyDivDisplay: true,
+      inviteCodeDiv: false
+    })
+  },
+  //提交邀请码
+  submitInvite:function(e){
+    wx.request({
+      url: app.globalData.serverPath + '/lecturer/invite/getLecturerByInviteCode',
+      data: {
+        inviteCode: e.detail.value.inviteCode
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.result) {
+          this.setData({
+            inviteInfo:res.obj,
+            inviteCodeDiv: true,
+            inviteInfoDiv: false
+          })
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
+  },
+  //返回注册
+  returnRegister:function(){
+    this.setData({
+      applyDivDisplay: false,
+      inviteCodeDiv: true,
+      inviteInfoDiv:true
+    })
+  },
+  //确认邀请信息
+  sureInfo:function(){
+    
+    wx.request({
+      url: app.globalData.serverPath + '/lecturer/invite/accept',
+      data: {
+        inviteCode: this.data.inviteInfo.inviteCode,
+        openId: getApp().globalData.user.openId
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.result) {
+          this.setData({
+            inviteInfoDiv: true,
+            lecturerInfoDiv:false
+          })
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
+
+  },
+  //获取讲师信息
+  getLecturerInfo:function(){
+    wx.request({
+      url: app.globalData.serverPath + '/lecturer/getByOpenId',
+      data: {
+        openId: getApp().globalData.user.openId
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.result) {
+          this.setData({
+            lecturerInfo: res.obj
+          })
+          app.globalData.lecturerInfo = res.obj;
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
     })
   }
 })

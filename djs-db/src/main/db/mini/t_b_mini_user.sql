@@ -35,6 +35,8 @@ CREATE TABLE `t_b_mini_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `active` int(11) DEFAULT '1' COMMENT '用户状态(1:正常，0：失效)',
+  `is_vip` int(1) DEFAULT NULL COMMENT '是否VIP (0 ：否  1：是)',
+  `vip_invalid_time` timestamp NULL DEFAULT NULL COMMENT 'vip过期时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_b_mini_user_id_uindex` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

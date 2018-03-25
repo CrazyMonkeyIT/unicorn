@@ -200,4 +200,10 @@
     select * from t_b_lecturer where status != 2
   </select>
 
+  <select id="selectByOpenId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_lecturer
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
 </mapper>

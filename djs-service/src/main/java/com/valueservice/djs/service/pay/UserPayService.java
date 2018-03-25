@@ -26,22 +26,22 @@ import java.util.TreeMap;
 @Service
 public class UserPayService {
 
-    @Value("appid")
+    @Value("${appid}")
     private String appId;
 
-    @Value("mchid")
+    @Value("${mchid}")
     private String mchId;
 
-    @Value("apikey")
+    @Value("${apikey}")
     private  String apiKey;
 
-    @Value("cert.file.path")
+    @Value("${cert.file.path}")
     private String certFilePath;
 
-    @Value("extranet.url")
+    @Value("${extranet.url}")
     private String extranetUrl;
 
-    @Value("local.ip")
+    @Value("${local.ip}")
     private String localIp;
 
     @Resource

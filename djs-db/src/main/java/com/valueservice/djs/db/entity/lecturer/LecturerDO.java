@@ -13,6 +13,8 @@ public class LecturerDO {
 
     private Integer gradeId;
 
+    private String gradeName;
+
     private String headPhotoFile;
 
     private String isChief;
@@ -147,6 +149,14 @@ public class LecturerDO {
 
     public String getHeadPhotoFile() {
         return headPhotoFile;
+    }
+
+    public String getGradeName() {
+        return gradeName;
+    }
+
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
     }
 
     public void setHeadPhotoFile(String headPhotoFile) {

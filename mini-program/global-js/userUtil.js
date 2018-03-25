@@ -26,6 +26,7 @@ const loginOper = function(){
               dataType: 'json',
               responseType: 'text',
               success: function (result) {
+                
                 wx.request({
                   url: config.service.saveUser,
                   data: {
@@ -41,7 +42,7 @@ const loginOper = function(){
                   dataType: 'json',
                   responseType: 'text',
                   success: function(saveRes) {
-                    if (saveRes.data.success == true){
+                    if (saveRes.data.result == true){
                       wx.setStorageSync('miniUser', {
                         openId: result.data.openId,
                         gender: result.data.gender,

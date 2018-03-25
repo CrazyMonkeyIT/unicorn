@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 讲师注册
@@ -50,6 +51,20 @@ public class LecturerRegisterService {
         PageHelper.startPage(pageIndex != null? pageIndex : 1, CommonConst.DEFAULT_PAGE_SIZE);
         List<LecturerRegisterDO> list = lecturerRegisterDOMapper.selectList(lecturerName,phone);
         return new PageInfo<LecturerRegisterDO>(list);
+    }
+
+    /**
+     * 更新讲师注册信息
+     * @param record
+     */
+    public void insertOrUpdate(LecturerRegisterDO record){
+        if(Objects.isNull(record.getId())){
+            record.setStatus("WAIT");
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            lecturerRegisterDOMapper.insertSelective(record);
+        }else{
+            lecturerRegisterDOMapper.updateByPrimaryKeySelective(record);
+        }
     }
 
     /**

@@ -9,41 +9,60 @@ Page({
    */
   data: {
     hasUserInfo: false,
-    userInfo: {}
+    userInfo: {},
+    lecturerInfo:{},
+    noRegister:false,
+    alreadyRegister:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo) {
+    if (!!app.globalData.user){
       this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+        userInfo: app.globalData.user,
+        hasUserInfo:true
       })
     }
+    if (!!app.globalData.lecturerInfo){
+      this.setData({
+        lecturerInfo: app.globalData.lecturerInfo,
+        noRegister: true,
+        alreadyRegister: false
+      })
+    }else{
+      this.getLecturerInfo();
+    }
   },
-
+  //获取讲师信息
+  getLecturerInfo: function () {
+    wx.request({
+      url: app.globalData.serverPath + '/lecturer/getByOpenId',
+      data: {
+        openId: getApp().globalData.user.openId
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.result) {
+          this.setData({
+            lecturerInfo: res.obj,
+            noRegister: true,
+            alreadyRegister: false
+          })
+          app.globalData.lecturerInfo = res.obj;
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -92,15 +111,6 @@ Page({
   onShareAppMessage: function () {
   
   },
-
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },  
   /** 前往我的直播 */
   toMylive:function(e){
     wx.navigateTo({
