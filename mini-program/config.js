@@ -3,7 +3,7 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'http://localhost:9090/unicorn';
+var host = 'https://dujiaoshouzhiku.com/unicorn';//'http://localhost:9090/unicorn';
 
 var config = {
 
@@ -15,7 +15,7 @@ var config = {
     //获取用户加密信息的解密文档
     getauth: host + '/minigram/getauth',
     //上传文件URL
-    upUrl : host + '/up/',
+    upUrl : host + '/import/up/',
     //获取房间历史聊天记录
     roomHistory: host + '/minigram/roomHistory',
     //存储聊天内容的临时url

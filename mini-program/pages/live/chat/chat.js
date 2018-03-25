@@ -32,14 +32,12 @@ Page({
     ] 
   },
   onLoad: function () {
-    console.log("[Console log]:Loading...");
     that = this;
     currentUser = userUtil.login();
     //获取用户登录信息
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.record']) {
-          console.log('record is not auth.........');
           wx.authorize({
             scope: 'scope.record',
             success: () => {
@@ -49,6 +47,32 @@ Page({
         }
       }
     })
+    wx.connectSocket({ url: 'wss://dujiaoshouzhiku.com/unicorn/websocket/endpointChat', data: {}, header: { 'content-type': 'application/json' }, method: "POST" }) 
+    wx.onSocketOpen(function (res) { console.log('WebSocket连接已打开！') 
+      wx.sendSocketMessage({
+        data: { "a111": "344444" }
+      })
+    }) 
+    wx.onSocketError(function (res) { console.log('WebSocket连接打开失败，请检查！') 
+      console.log(res)}) 
+    wx.onSocketMessage(function (res) { console.log('收到服务器内容：' + res.data) }) 
+    wx.onSocketClose(function (res) {
+      console.log('WebSocket 已关闭！')
+    });
+    
+    /*wx.connectSocket({
+      url: 'wss://dujiaoshouzhiku.com/chat/websocket/endpointChat',
+      success: function(res) {
+        console.log('-----------connect socket success-----------')
+        console.log(res)
+      },
+      fail: function(res) {
+        console.log('-----------connect socket fail-----------')
+        console.log(res)
+      },
+      complete: function(res) {},
+    })*/
+
 
     //远程取一次本聊天室所有的聊天记录做一次初始化
     //todo
@@ -68,21 +92,18 @@ Page({
       dataType:'json',
       responseType: 'text',
       success: function(res) {
-        console.log("room history。。。。。。");
-        console.log(res.data);
         res.data.forEach(function(data){
           that.roomContentProcess(data,false);
         });
       }
     })
+    
   }, 
   //接收后台传来的聊天内容的处理
   //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的
   //isRealTime是否实时聊天产生的标识，如果实时聊天产生，判断是当前用户的聊天直接抛弃，
   //因为本地发送时已经处理到聊天窗口里了
   roomContentProcess : function(chatContent,isRealTime){
-    console.log("----------------roomContentProcess-------------------");
-    console.log(chatContent);
     if (chatContent.type == 'voice'){
       chatContent.voiceImg = '/images/live/audio_icon_3.png';
     }
@@ -92,8 +113,6 @@ Page({
     }else{
       chatContent.orientation = "l";
     }
-    console.log("----------------roomContentProcess-------------------");
-    console.log(chatContent);
     that.addChat(chatContent);
   },
   // 切换语音输入和文字输入
@@ -104,7 +123,6 @@ Page({
   },
   sendChat : function (e){
     var inputVal = e.detail.value;
-    console.log('[input log]:' + inputVal);
     if (!inputVal){
       wx.showToast({
         title: '不能发送空内容!!!',
@@ -135,35 +153,41 @@ Page({
     wx.startRecord({
       'success': function (res) {
         var tempFilePath = res.tempFilePath;
+        
         that.data.filePath = tempFilePath;
+        wx.showToast({title: config.service.upUrl});
         wx.uploadFile({
           url: config.service.upUrl + '123',
           filePath: tempFilePath,
           name: 'file',
           success: function(res) {
+            wx.showToast({ title: '文件上传成功，返回信息如下：' });
             console.log('文件上传成功，返回信息如下：');
             console.log(res.data);
+            console.log("[Console log]:Record success!File path:" + tempFilePath);
+            var myVoiceChat = { url: res.data[0].filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
+            console.log("[录音结束]")
+            console.log(myVoiceChat)
+            that.roomContentProcess(myVoiceChat, true);
+            wx.request({
+              url: config.service.contentTest,
+              data: myVoiceChat,
+              header: {},
+              method: 'POST',
+              dataType: 'json',
+              responseType: 'text',
+              success: function (res) {
+                console.log('-----------save content result');
+                console.log(res.data);
+              }
+            })
           },
-          fail: function(res) {},
+          fail: function(res) {
+            wx.showToast({ title: '文件上传失败，返回信息如下：' +res});
+          },
           complete: function(res) {},
         })
-        console.log("[Console log]:Record success!File path:" + tempFilePath);
-        var myVoiceChat = { url: '', type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId,roomid:123};
-        console.log("[录音结束]")
-        console.log(myVoiceChat)
-        //that.addChat(myVoiceChat);
-        wx.request({
-          url: config.service.contentTest,
-          data: myVoiceChat,
-          header: {},
-          method: 'POST',
-          dataType: 'json',
-          responseType: 'text',
-          success: function(res) {
-            console.log('-----------save content result');
-            console.log(res.data);
-          }
-        })
+        
       },
       'fail': function () {
         console.log("[Console log]:Record failed!");
@@ -268,9 +292,10 @@ Page({
   },
   //播放语音，查找到指定的语音节点并播放，展示播放动画
   chatVoicePlay :function(e){
-    var chatId = e.target.dataset.chatid,voiceObject = null;
+    console.log(e);
+    var chatId = e.target.id,voiceObject = null;
     chatListData.forEach(function (chater) {//从对话列表中找出当前点击的语音记录，并执行播放操作
-      if (chater.chatid == chatId) {
+      if (chater.id == chatId) {
         voiceObject = chater;
         that.voiceAnimate(chater);
       }
@@ -293,12 +318,15 @@ Page({
   voiceAnimatePlay: function (voiceObject) {
     voicePlaying = true;
     chartDetail = voiceObject;
+    console.log(voiceObject);
     if (voiceObject.voiceTempFilepath == undefined || voiceObject.voiceTempFilepath == null){
       wx.downloadFile({
         url: voiceObject.url,
         header: {},
         success: function (res) {
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容 
+          console.log("--------downloadfile res------------")
+          console.log(res)
           that.voiceOper(voiceObject, res.tempFilePath);         
         },
         fail: function (res) {

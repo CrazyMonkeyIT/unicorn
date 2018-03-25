@@ -3,6 +3,7 @@ package com.valueservice.djs.db.dao.mini;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
 
 public interface MiniUserDOMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(MiniUserDO record);

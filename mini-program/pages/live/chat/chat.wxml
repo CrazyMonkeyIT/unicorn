@@ -44,7 +44,7 @@
                 <view class='voice-duration'>
                   {{item.duration}}''
                 </view>
-                <view class="{{isPlay?'voice-view-right-play':'voice-view-right'}}" bindtap='chatVoicePlay' data-url="{{item.url}}" data-chatid="{{item.chatid}}">
+                <view class="{{isPlay?'voice-view-right-play':'voice-view-right'}}" bindtap='chatVoicePlay' data-url="{{item.url}}" id="{{item.id}}">
                   <image class="chat-audio-img-right" src="{{item.voiceImg}}"></image>
                 </view>
               </view>

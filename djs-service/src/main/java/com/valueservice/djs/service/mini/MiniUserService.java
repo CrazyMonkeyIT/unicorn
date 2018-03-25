@@ -22,7 +22,14 @@ public class MiniUserService {
             record.setCreateTime(existsUser.getCreateTime());
             return miniUserDOMapper.updateByPrimaryKey(record);
         }
+    }
 
-
+    /**
+     * 通过openId查询用户信息
+     * @param openId
+     * @return
+     */
+    public MiniUserDO selectByOpenId(String openId){
+        return miniUserDOMapper.selectByOpenid(openId);
     }
 }
