@@ -23,6 +23,9 @@ public class ImportController {
     @Value("${file.path}")
     private String filePath;
 
+    @Value("${context.path}")
+    private String contextPath;
+
     @GetMapping("/toUp")
     public String toUp(HttpServletRequest request){
         return "system/import/import";
@@ -54,7 +57,8 @@ public class ImportController {
                         String currentFilePath = String.format("%s%s%s", userFilePath, prefixName, suffixName);
                         File localFile = new File(currentFilePath);
                         file.transferTo(localFile);
-                        map.put("filePath", currentFilePath);
+                        String nginxFilePath =String.format("%s%s%s%s",contextPath,"minifile/",prefixName,suffixName);
+                        map.put("filePath", nginxFilePath);
                         lists.add(map);
                     }
                 }
