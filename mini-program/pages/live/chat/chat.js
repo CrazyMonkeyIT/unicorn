@@ -4,9 +4,7 @@ const userUtil = require('../../../global-js/userUtil.js');
 const config = require('../../../config.js');
 var app = getApp();
 var that, currentUser, speakerSec = 0;
-var chatListData = [/*{ chatid: 1, orientation: 'l', text: '这是一个小测试', type: 'text', nickName: '陈道明' ,chatTime: '2018-03-11 14:23:54'},
-  { chatid: 2, orientation: 'l', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', nickName: '陈道明', chatTime: util.formatTime(new Date())}, 
-  { chatid: 20, orientation: 'r', url: 'http://sc1.111ttt.cn/2017/1/11/11/304112004168.mp3', type: 'voice', duration: 5, voiceImg: '/images/live/audio_icon_3.png', avatarImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLgZK43CgcILte4AfCBOicPTgYb7oIXq9CUPoYSDOgZyZZt000sR5eVib1UW70kW2OWNLeUF1vNu9xg/0', nickName: '楼得罚', chatTime: util.formatTime(new Date())}*/];
+var chatListData = [];
 var speakerInterval, speakerSecInterval; 
 var chartDetail,voicePlaying = false;
 Page({
@@ -29,7 +27,7 @@ Page({
     imgUrls: [{
       id: 'tp10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
     },{
-        id: 'tp19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
+      id: 'tp19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
     }
     ] 
   },
@@ -58,21 +56,25 @@ Page({
   },
 
   onReady: function () {
-      wx.request({
-        url: config.service.roomHistory,
-        data: {roomid:123},
-        header: {},
-        method: 'POST',
-        dataType:'json',
-        responseType: 'text',
-        success: function(res) {
-          console.log("room history。。。。。。");
-          console.log(res.data);
-          res.data.forEach(function(data){
-            that.roomContentProcess(data,false);
-          });
-        }
-      })
+    var lastChatId = 0;
+    if (chatListData.length != 0){
+      lastChatId = chatListData[chatListData.length - 1].id;
+    }
+    wx.request({
+      url: config.service.roomHistory,
+      data: { roomid: 123, id: lastChatId},
+      header: {},
+      method: 'POST',
+      dataType:'json',
+      responseType: 'text',
+      success: function(res) {
+        console.log("room history。。。。。。");
+        console.log(res.data);
+        res.data.forEach(function(data){
+          that.roomContentProcess(data,false);
+        });
+      }
+    })
   }, 
   //接收后台传来的聊天内容的处理
   //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的

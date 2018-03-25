@@ -27,8 +27,8 @@ public class RoomContentService {
 
         roomContentDOMapper.insertSelective(roomContentDO);
     }
-    public List<RoomContentShow> queryContentsByRoomId(Integer roomId){
-        return roomContentDOMapper.selectContentShowByRoom(roomId);
+    public List<RoomContentShow> queryContentsByRoomId(Integer roomId,Integer id){
+        return roomContentDOMapper.selectContentShowByRoom(roomId,id);
     }
 
     public void saveContent(RoomContentShow roomContentShow){
