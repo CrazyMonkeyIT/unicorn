@@ -13,48 +13,30 @@
     </view>
   </view>
 
-  <view class="navigator-box navigator-box-show">
+  <view hidden="{{isVipDiv}}" class="navigator-box navigator-box-show">
+    到期时间：{{userInfo.vipInvalidTime}}
+  </view>
+
+  <view hidden="{{isNotVipDiv}}" class="navigator-box navigator-box-show">
       
-      <navigator class="navigator" hover-class="none">
+      <view class="navigator" hover-class="none">
         <view class="navigator-content">
           <view class="navigator-text" style="font-size:14px;"><text style="color:#DFA863;">┃</text> 开通VIP会员</view>
         </view>
-      </navigator>
-
+      </view>
       <view class="navigator-bottom-border"></view>
-
-      <navigator class="navigator" style="height:100rpx;" hover-class="none">
-        <view class="navigator-content">
-          <view class="navigator-text">一年 <text style="color:#DFA863;">2299</text> 元</view>
-          <view class='navigator-righttext'>
-              <button class="mini-btn" type="primary" size="mini">开通</button>
+      
+      <view wx:for="{{vipList}}" wx:for-item="vip" >
+        <view class="navigator" style="height:100rpx;" hover-class="none">
+          <view class="navigator-content">
+            <view class="navigator-text">{{vip.vipName}} <text style="color:#DFA863;">{{vip.openMoney}}</text> 元</view>
+            <view class='navigator-righttext'>
+                <button class="mini-btn" type="primary" bindtap="openMember" data-vipid="{{vip.id}}" data-money="{{vip.openMoney}}" size="mini">开通</button>
+            </view>
           </view>
         </view>
-      </navigator>
-
-      <view class="navigator-bottom-border"></view>
-
-      <navigator class="navigator" style="height:100rpx;" hover-class="none">
-        <view class="navigator-content">
-          <view class="navigator-text">三个月 <text style="color:#DFA863;">699</text> 元</view>
-          <view class='navigator-righttext'>
-              <button class="mini-btn" type="primary" size="mini">开通</button>
-          </view>
-        </view>
-      </navigator>
-
-      <view class="navigator-bottom-border"></view>
-
-      <navigator class="navigator" style="height:100rpx;" hover-class="none">
-        <view class="navigator-content">
-          <view class="navigator-text">一个月 <text style="color:#DFA863;">99</text> 元</view>
-          <view class='navigator-righttext'>
-              <button class="mini-btn" type="primary" size="mini">开通</button>
-          </view>
-        </view>
-      </navigator>
-
-      <view class="navigator-bottom-border"></view>
+        <view class="navigator-bottom-border"></view>
+      </view>
 
       <navigator class="navigator" url="vip/vip">
         <view class="navigator-content">

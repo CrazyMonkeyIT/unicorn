@@ -17,17 +17,61 @@ public class MiniUserDO {
 
     private String language;
 
-    private String avatarurl;
+    private String avatarUrl;
 
-    private String openid;
+    private String openId;
 
-    private String unionid;
+    private String unionId;
 
     private Date createTime;
 
     private Date updateTime;
 
     private Integer active;
+
+    private Integer isVip;
+
+    private Date vipInvalidTime;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    public Integer getIsVip() {
+        return isVip;
+    }
+
+    public void setIsVip(Integer isVip) {
+        this.isVip = isVip;
+    }
+
+    public Date getVipInvalidTime() {
+        return vipInvalidTime;
+    }
+
+    public void setVipInvalidTime(Date vipInvalidTime) {
+        this.vipInvalidTime = vipInvalidTime;
+    }
 
     public Integer getId() {
         return id;
@@ -83,30 +127,6 @@ public class MiniUserDO {
 
     public void setLanguage(String language) {
         this.language = language == null ? null : language.trim();
-    }
-
-    public String getAvatarurl() {
-        return avatarurl;
-    }
-
-    public void setAvatarurl(String avatarurl) {
-        this.avatarurl = avatarurl == null ? null : avatarurl.trim();
-    }
-
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid == null ? null : openid.trim();
-    }
-
-    public String getUnionid() {
-        return unionid;
-    }
-
-    public void setUnionid(String unionid) {
-        this.unionid = unionid == null ? null : unionid.trim();
     }
 
     public Date getCreateTime() {

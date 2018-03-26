@@ -10,9 +10,11 @@ Page({
   data: {
     hasUserInfo: false,
     userInfo: {},
-    lecturerInfo:{},
-    noRegister:false,
-    alreadyRegister:true
+    lecturerInfo:null,
+    noRegister:true,
+    alreadyRegister:true,
+    noVip:true,
+    alreadyVip:true
   },
 
   /**
@@ -24,7 +26,16 @@ Page({
         userInfo: app.globalData.user,
         hasUserInfo:true
       })
+      //判断该用户是否是vip
+      if (this.data.userInfo.isVip == 0){
+        console.log("该用户还未是vip");
+        this.setData({ noVip:false});
+      }else{
+        console.log("该用户已是vip");
+        this.setData({ alreadyVip: false });
+      }
     }
+
     if (!!app.globalData.lecturerInfo){
       this.setData({
         lecturerInfo: app.globalData.lecturerInfo,
@@ -37,6 +48,7 @@ Page({
   },
   //获取讲师信息
   getLecturerInfo: function () {
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/lecturer/getByOpenId',
       data: {
@@ -46,18 +58,17 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
-            lecturerInfo: res.obj,
+        if (res.data.result) {
+          that.setData({
+            lecturerInfo: res.data.obj,
             noRegister: true,
             alreadyRegister: false
           })
-          app.globalData.lecturerInfo = res.obj;
+          app.globalData.lecturerInfo = res.data.obj;
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
+          console.log("该用户还不是讲师");
+          that.setData({
+            noRegister: false
           })
         }
       }

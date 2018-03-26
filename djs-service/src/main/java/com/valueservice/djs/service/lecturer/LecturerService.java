@@ -13,12 +13,14 @@ import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerInviteDO;
+import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author shawn
@@ -131,8 +133,10 @@ public class LecturerService {
      */
     public LecturerDO selectByOpenId(String openid){
         LecturerDO record =  lecturerDOMapper.selectByOpenId(openid);
-        LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getId());
-        record.setGradeName(grade.getGradeName());
+        if(!Objects.isNull(record)) {
+            LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getId());
+            record.setGradeName(grade.getGradeName());
+        }
         return record;
     }
 }

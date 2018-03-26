@@ -2,10 +2,10 @@ package com.valueservice.djs.db.dao.mini;
 
 import com.valueservice.djs.db.entity.mini.UserVipDO;
 
+import java.util.List;
+
 public interface UserVipDOMapper {
     int deleteByPrimaryKey(Integer id);
-
-    int insert(UserVipDO record);
 
     int insertSelective(UserVipDO record);
 
@@ -13,5 +13,6 @@ public interface UserVipDOMapper {
 
     int updateByPrimaryKeySelective(UserVipDO record);
 
-    int updateByPrimaryKey(UserVipDO record);
+    List<UserVipDO> selectAllList();
+
 }

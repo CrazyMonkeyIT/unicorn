@@ -21,12 +21,7 @@
     delete from t_b_user_vip_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
-    insert into t_b_user_vip_record (id, mini_user_id, user_vip_id, 
-      open_money, create_time)
-    values (#{id,jdbcType=INTEGER}, #{miniUserId,jdbcType=INTEGER}, #{userVipId,jdbcType=INTEGER}, 
-      #{openMoney,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
     insert into t_b_user_vip_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -82,12 +77,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
-    update t_b_user_vip_record
-    set mini_user_id = #{miniUserId,jdbcType=INTEGER},
-      user_vip_id = #{userVipId,jdbcType=INTEGER},
-      open_money = #{openMoney,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

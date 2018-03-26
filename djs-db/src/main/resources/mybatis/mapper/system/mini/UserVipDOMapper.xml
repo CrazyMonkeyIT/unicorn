@@ -10,6 +10,13 @@
   <sql id="Base_Column_List">
     id, vip_name, valid_day, open_money
   </sql>
+
+  <select id="selectAllList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_user_vip
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -20,12 +27,7 @@
     delete from t_b_user_vip
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.mini.UserVipDO">
-    insert into t_b_user_vip (id, vip_name, valid_day, 
-      open_money)
-    values (#{id,jdbcType=INTEGER}, #{vipName,jdbcType=VARCHAR}, #{validDay,jdbcType=INTEGER}, 
-      #{openMoney,jdbcType=DOUBLE})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.mini.UserVipDO">
     insert into t_b_user_vip
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -72,11 +74,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.mini.UserVipDO">
-    update t_b_user_vip
-    set vip_name = #{vipName,jdbcType=VARCHAR},
-      valid_day = #{validDay,jdbcType=INTEGER},
-      open_money = #{openMoney,jdbcType=DOUBLE}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

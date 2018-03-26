@@ -44,7 +44,7 @@
           </view>
         </navigator>
     </view> 
-    <view class="navigator-box navigator-box-show">
+    <view hidden="{{noVip}}" class="navigator-box navigator-box-show">
         <navigator class="navigator" url="vip/vip">
           <view class="navigator-icon"><image src="../../images/personal/vip.png"/></view>
           <view class="navigator-content">
@@ -54,6 +54,16 @@
           </view>
         </navigator>
     </view> 
+    <view hidden="{{alreadyVip}}" class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="vip/vip">
+          <view class="navigator-icon"><image src="../../images/personal/vip.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">我的会员</view>
+            <view class='navigator-righttext'></view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view>
     <view class="navigator-box navigator-box-show">
         <navigator class="navigator" url="wallet/wallet">
           <view class="navigator-icon"><image src="../../images/personal/money.png"/></view>
