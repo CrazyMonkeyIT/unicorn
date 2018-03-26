@@ -21,7 +21,7 @@
 	<view class = "index_advertisement">
     <swiper indicator-dots="{{indicatorDots}}"
       autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}">
+      <block wx:for="{{imgUrls}}" wx:key="imgs">
         <swiper-item>
           <image src="{{item}}" class="slide-image" width="355" height="150"/>
         </swiper-item>
@@ -37,7 +37,7 @@
     </view> 
     <view class="content">
       <scroll-view scroll-x="true" style=" white-space: nowrap; display: flex">  
-        <view class="content_image" wx:for="{{roadShowImages}}" >  
+        <view class="content_image" wx:for="{{roadShowImages}}" wx:key="roadShows" >  
           <image src="{{item}}" mode="aspectFit" style="width: 150px;height: 100px;"></image>
         </view>  
       </scroll-view> 
@@ -51,7 +51,7 @@
       <view class="position_right">更多>></view>
     </view>
     <view class="content">
-      <view wx:for="{{chiefInfoList}}" class="lecturer-list" style="width:100%;height:100px;" > 
+      <view wx:for="{{chiefInfoList}}" wx:key="chiefs" class="lecturer-list" style="width:100%;height:100px;" > 
         <view class='lecturer-avat'>
           <view><image src="{{item.photoPath}}" mode="aspectFit" style="width:50px;height:50px;"></image> </view>
           <view>{{item.name}}</view>
