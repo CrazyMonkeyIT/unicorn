@@ -115,4 +115,23 @@ public class LecturerController extends BaseController{
     public LecturerAccountDO account(Integer lecturerId){
         return lecturerService.selectLecturerAccount(lecturerId);
     }
+
+    /**
+     * 获取讲师信息，根据OpenId
+     * @param openId
+     * @return
+     */
+    @RequestMapping("/getByOpenId")
+    @ResponseBody
+    public BaseResult getByOpenId(String openId){
+        BaseResult result = new BaseResult();
+        LecturerDO record = lecturerService.selectByOpenId(openId);
+        if(record != null){
+            result.setResult(true);
+            result.setObj(record);
+        }else{
+            result.setMessage("未找到对应的讲师");
+        }
+        return result;
+    }
 }

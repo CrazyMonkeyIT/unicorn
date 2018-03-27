@@ -10,11 +10,12 @@
     <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, lecturer_name, open_id, company, position, grade_id, phone, status, create_time, 
+    id, lecturer_name, open_id, company, position, grade_id, phone, status, head_photo_file, create_time,
     update_time
   </sql>
 
@@ -69,6 +70,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="headPhotoFile != null">
+        head_photo_file,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -101,6 +105,9 @@
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="headPhotoFile != null">
+        #{headPhotoFile,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -132,6 +139,9 @@
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="headPhotoFile != null">
+        head_photo_file = #{headPhotoFile,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

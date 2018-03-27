@@ -2,9 +2,11 @@ package com.valueservice.djs.service.mini;
 
 import com.valueservice.djs.db.dao.mini.MiniUserDOMapper;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
+import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 
 @Service
 public class MiniUserService {
@@ -12,15 +14,18 @@ public class MiniUserService {
     @Resource
     private MiniUserDOMapper miniUserDOMapper;
 
-    public int saveOrUpdate(MiniUserDO record){
-
-        MiniUserDO existsUser = miniUserDOMapper.selectByOpenid(record.getOpenid());
+    public MiniUserDO saveOrUpdate(MiniUserDO record) throws Exception{
+        MiniUserDO existsUser = miniUserDOMapper.selectByOpenid(record.getOpenId());
         if(existsUser == null){
-            return miniUserDOMapper.insert(record);
+            record.setActive(1);
+            record.setIsVip(0);
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            miniUserDOMapper.insert(record);
+            return record;
         }else {
             record.setId(existsUser.getId());
-            record.setCreateTime(existsUser.getCreateTime());
-            return miniUserDOMapper.updateByPrimaryKey(record);
+            miniUserDOMapper.updateByPrimaryKeySelective(record);
+            return existsUser;
         }
     }
 

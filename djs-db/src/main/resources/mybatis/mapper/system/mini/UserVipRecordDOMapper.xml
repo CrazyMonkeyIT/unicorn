@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.mini.UserVipRecordDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mini_user_id" jdbcType="INTEGER" property="miniUserId" />
+    <result column="user_vip_id" jdbcType="INTEGER" property="userVipId" />
+    <result column="open_money" jdbcType="VARCHAR" property="openMoney" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, mini_user_id, user_vip_id, open_money, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_b_user_vip_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_b_user_vip_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
+    insert into t_b_user_vip_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="miniUserId != null">
+        mini_user_id,
+      </if>
+      <if test="userVipId != null">
+        user_vip_id,
+      </if>
+      <if test="openMoney != null">
+        open_money,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="miniUserId != null">
+        #{miniUserId,jdbcType=INTEGER},
+      </if>
+      <if test="userVipId != null">
+        #{userVipId,jdbcType=INTEGER},
+      </if>
+      <if test="openMoney != null">
+        #{openMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.mini.UserVipRecordDO">
+    update t_b_user_vip_record
+    <set>
+      <if test="miniUserId != null">
+        mini_user_id = #{miniUserId,jdbcType=INTEGER},
+      </if>
+      <if test="userVipId != null">
+        user_vip_id = #{userVipId,jdbcType=INTEGER},
+      </if>
+      <if test="openMoney != null">
+        open_money = #{openMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

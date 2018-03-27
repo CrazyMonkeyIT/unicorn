@@ -18,4 +18,5 @@ public interface LecturerDOMapper {
 
     List<LecturerDO> selectAll();
 
+    LecturerDO selectByOpenId(@Param("openId")String openId);
 }

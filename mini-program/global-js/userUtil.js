@@ -24,15 +24,14 @@ const loginOper = function(){
               header: {},
               method: 'GET',
               dataType: 'json',
-              responseType: 'text',
               success: function (result) {
                 wx.request({
                   url: config.service.saveUser,
                   data: {
-                    openid: result.data.openId,
+                    openId: result.data.openId,
                     gender: result.data.gender,
                     country: result.data.country,
-                    avatarurl: result.data.avatarUrl,
+                    avatarUrl: result.data.avatarUrl,
                     city: result.data.city,
                     province: result.data.province,
                     nickName: result.data.nickName
@@ -41,15 +40,18 @@ const loginOper = function(){
                   dataType: 'json',
                   responseType: 'text',
                   success: function(saveRes) {
-                    if (saveRes.data.success == true){
+                    if (saveRes.data.result == true){
                       wx.setStorageSync('miniUser', {
+                        id: result.data.id,
                         openId: result.data.openId,
                         gender: result.data.gender,
                         country: result.data.country,
                         avatarUrl: result.data.avatarUrl,
                         city: result.data.city,
                         province: result.data.province,
-                        nickName: result.data.nickName
+                        nickName: result.data.nickName,
+                        isVip: saveRes.data.obj.isVip,
+                        vipInvalidTime: saveRes.data.obj.vipInvalidTime
                       });
                     }
                   }

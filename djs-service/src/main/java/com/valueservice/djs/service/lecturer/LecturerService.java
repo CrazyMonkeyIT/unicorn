@@ -5,18 +5,22 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.LecturerStatus;
+import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerInviteDOMapper;
+import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerInviteDO;
+import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author shawn
@@ -30,6 +34,9 @@ public class LecturerService {
 
     @Resource
     LecturerAccountDOMapper lecturerAccountDOMapper;
+
+    @Resource
+    LecturerGradeDOMapper  lecturerGradeDOMapper;
 
     public List<LecturerDO> selectAll(){
         return lecturerDOMapper.selectAll();
@@ -117,5 +124,19 @@ public class LecturerService {
      */
     public LecturerAccountDO selectLecturerAccount(Integer lecturerId){
         return lecturerAccountDOMapper.selectByLecturerId(lecturerId);
+    }
+
+    /**
+     * 获取讲师信息
+     * @param openid
+     * @return
+     */
+    public LecturerDO selectByOpenId(String openid){
+        LecturerDO record =  lecturerDOMapper.selectByOpenId(openid);
+        if(!Objects.isNull(record)) {
+            LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getId());
+            record.setGradeName(grade.getGradeName());
+        }
+        return record;
     }
 }

@@ -9,16 +9,18 @@
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="language" jdbcType="VARCHAR" property="language" />
-    <result column="avatarUrl" jdbcType="VARCHAR" property="avatarurl" />
-    <result column="openId" jdbcType="VARCHAR" property="openid" />
-    <result column="unionId" jdbcType="VARCHAR" property="unionid" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="union_id" jdbcType="VARCHAR" property="unionId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="active" jdbcType="INTEGER" property="active" />
+    <result column="is_vip" jdbcType="INTEGER" property="isVip"/>
+    <result column="vip_invalid_time" jdbcType="TIMESTAMP" property="vipInvalidTime"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, nick_name, gender, country, province, city, language, avatarUrl, openId, unionId, 
-    create_time, update_time, active
+    id, nick_name, gender, country, province, city, language, avatar_url, open_id, union_id,
+    create_time, update_time, active, is_vip, vip_invalid_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -30,25 +32,31 @@
     select
     <include refid="Base_Column_List" />
     from t_b_mini_user
-    where openId = #{openId,jdbcType=INTEGER}
+    where open_id = #{openId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_b_mini_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.valueservice.djs.db.entity.mini.MiniUserDO">
-    insert into t_b_mini_user (id, nick_name, gender, 
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_b_mini_user (id, nick_name, gender,
       country, province, city, 
-      language, avatarUrl, openId, 
-      unionId, create_time, update_time, 
-      active)
+      language, avatar_url, open_id,
+      union_id, create_time, update_time,
+      active, is_vip, vip_invalid_time)
     values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
       #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{language,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
-      #{unionid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{active,jdbcType=INTEGER})
+      #{language,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+      #{unionId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{active,jdbcType=INTEGER},#{isVip,jdbcType=INTEGER},#{vipInvalidTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.mini.MiniUserDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_b_mini_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -72,14 +80,14 @@
       <if test="language != null">
         language,
       </if>
-      <if test="avatarurl != null">
-        avatarUrl,
+      <if test="avatarUrl != null">
+        avatar_url,
       </if>
-      <if test="openid != null">
-        openId,
+      <if test="openId != null">
+        open_id,
       </if>
-      <if test="unionid != null">
-        unionId,
+      <if test="unionId != null">
+        union_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -89,6 +97,12 @@
       </if>
       <if test="active != null">
         active,
+      </if>
+      <if test="isVip != null">
+        is_vip,
+      </if>
+      <if test="vipInvalidTime != null">
+        vip_invalid_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -113,14 +127,14 @@
       <if test="language != null">
         #{language,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null">
-        #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null">
-        #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="unionid != null">
-        #{unionid,jdbcType=VARCHAR},
+      <if test="unionId != null">
+        #{unionId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -130,6 +144,12 @@
       </if>
       <if test="active != null">
         #{active,jdbcType=INTEGER},
+      </if>
+      <if test="isVip != null">
+        #{isVip,jdbcType=INTEGER},
+      </if>
+      <if test="vipInvalidTime != null">
+        #{vipInvalidTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -154,14 +174,14 @@
       <if test="language != null">
         language = #{language,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null">
-        avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null">
-        openId = #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="unionid != null">
-        unionId = #{unionid,jdbcType=VARCHAR},
+      <if test="unionId != null">
+        union_id = #{unionId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -171,6 +191,12 @@
       </if>
       <if test="active != null">
         active = #{active,jdbcType=INTEGER},
+      </if>
+      <if test="isVip != null">
+        is_vip = #{isVip,jdbcType=INTEGER},
+      </if>
+      <if test="vipInvalidTime != null">
+        vip_invalid_time = #{vipInvalidTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -183,12 +209,14 @@
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       language = #{language,jdbcType=VARCHAR},
-      avatarUrl = #{avatarurl,jdbcType=VARCHAR},
-      openId = #{openid,jdbcType=VARCHAR},
-      unionId = #{unionid,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      union_id = #{unionId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      active = #{active,jdbcType=INTEGER}
+      active = #{active,jdbcType=INTEGER},
+      is_vip = #{isVip,jdbcType=INTEGER},
+      vip_invalid_time = #{vipInvalidTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

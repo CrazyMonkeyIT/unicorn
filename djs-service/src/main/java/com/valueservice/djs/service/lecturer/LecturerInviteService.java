@@ -62,6 +62,14 @@ public class LecturerInviteService {
     }
 
     /**
+     * 查询邀请信息
+     * @param inviteCode
+     * @return
+     */
+    public LecturerInviteDO selectByInviteCode(Integer inviteCode){
+        return lecturerInviteDOMapper.selectByInviteCode(inviteCode);
+    }
+    /**
      * 接受邀请
      * @param inviteCode
      * @return

@@ -3,7 +3,7 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://dujiaoshouzhiku.com/unicorn';//'http://localhost:9090/unicorn';
+var host = 'http://localhost:9090/unicorn';//'https://dujiaoshouzhiku.com/unicorn';
 
 var config = {
 

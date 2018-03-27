@@ -2,8 +2,7 @@
 <view class="globle_back_view">
   <view class="person_avart" style='background-image:url(../../images/personal/personal_back.png)'>
     <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-        <block wx:else>
+        
           
           <image bindtap="toAccount" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
           <text bindtap="toAccount" class="userinfo-nickname">{{userInfo.nickName}}</text>
@@ -11,7 +10,7 @@
           <view class="follow_div">
            
           </view>
-        </block>
+        
     </view>
   </view>
   <view class="flex-wrp" style="flex-direction:row;">
@@ -26,7 +25,7 @@
     </view>
   </view>
   <view class='empty_tip'>
-    <view class="navigator-box navigator-box-show">
+    <view hidden="{{noRegister}}" class="navigator-box navigator-box-show">
         <navigator class="navigator" url="speaker/speaker">
           <view class="navigator-icon"><image src="../../images/personal/person_info.png"/></view>
           <view class="navigator-content">
@@ -35,7 +34,17 @@
           </view>
         </navigator>
     </view> 
-    <view class="navigator-box navigator-box-show">
+    <view hidden="{{alreadyRegister}}" class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="speaker/speaker">
+          <view class="navigator-icon"><image src="../../images/personal/person_info.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">讲师信息</view>
+            <view class='navigator-righttext'>{{lecturerInfo.gradeName}}</view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view> 
+    <view hidden="{{noVip}}" class="navigator-box navigator-box-show">
         <navigator class="navigator" url="vip/vip">
           <view class="navigator-icon"><image src="../../images/personal/vip.png"/></view>
           <view class="navigator-content">
@@ -45,6 +54,16 @@
           </view>
         </navigator>
     </view> 
+    <view hidden="{{alreadyVip}}" class="navigator-box navigator-box-show">
+        <navigator class="navigator" url="vip/vip">
+          <view class="navigator-icon"><image src="../../images/personal/vip.png"/></view>
+          <view class="navigator-content">
+            <view class="navigator-text">我的会员</view>
+            <view class='navigator-righttext'></view>
+            <view class="navigator-arrow"></view>
+          </view>
+        </navigator>
+    </view>
     <view class="navigator-box navigator-box-show">
         <navigator class="navigator" url="wallet/wallet">
           <view class="navigator-icon"><image src="../../images/personal/money.png"/></view>

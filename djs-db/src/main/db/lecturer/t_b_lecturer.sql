@@ -119,7 +119,8 @@ CREATE TABLE `t_b_lecturer_register` (
   `position` varchar(100) DEFAULT NULL,
   `grade_id` int(11) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL COMMENT '状态（SUCCESS/FAILURE）',
+  `status` varchar(10) DEFAULT NULL COMMENT '状态（WAIT/SUCCESS/FAILURE）',
+  `head_photo_file` varchar(100) DEFAULT NULL COMMENT '头像',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

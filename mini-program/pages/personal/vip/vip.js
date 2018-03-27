@@ -6,49 +6,47 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hasUserInfo: false,
-    userInfo: {}
+    userInfo: {},
+    vipList:null,
+    isVipDiv:true,
+    isNotVipDiv:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo) {
+    if (!!app.globalData.user) {
       this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        userInfo: app.globalData.user,
       })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
+      if(this.data.userInfo.isVip == 0){
+        this.setData({ isNotVipDiv:false}) 
+      }else{
+        this.setData({ isVipDiv: false })
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
     }
-  },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+    this.loadVipList();
   }, 
+  loadVipList:function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/vip/all',
+      success: function (res) {
+        if (res.data.result) {
+          that.setData({
+            vipList: res.data.obj
+          })
+        }else{
+          console.log(res.data.message);
+        }
+      }
+    })
+  },
+  openMember:function(e){
+    console.log(e.target.dataset.vipid);
+    console.log(e.target.dataset.money);
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

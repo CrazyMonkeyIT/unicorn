@@ -19,6 +19,8 @@ public class LecturerRegisterDO {
 
     private String status;
 
+    private String headPhotoFile;
+
     private Date createTime;
 
     private Date updateTime;
@@ -101,5 +103,13 @@ public class LecturerRegisterDO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getHeadPhotoFile() {
+        return headPhotoFile;
+    }
+
+    public void setHeadPhotoFile(String headPhotoFile) {
+        this.headPhotoFile = headPhotoFile;
     }
 }
