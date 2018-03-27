@@ -1,5 +1,6 @@
 // pages/personal/vip/vip.js
 const app = getApp();
+const paymentUtils = require("../../../global-js/paymentUtil.js");
 Page({
 
   /**
@@ -11,7 +12,6 @@ Page({
     isVipDiv:true,
     isNotVipDiv:true
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -28,6 +28,7 @@ Page({
     }
     this.loadVipList();
   }, 
+  //加载会员类型列表
   loadVipList:function(){
     var that = this;
     wx.request({
@@ -43,9 +44,31 @@ Page({
       }
     })
   },
+  //开通会员
   openMember:function(e){
-    console.log(e.target.dataset.vipid);
-    console.log(e.target.dataset.money);
+    var vipid = e.target.dataset.vipid;
+    var money = e.target.dataset.money;
+    paymentUtils.pay("开通VIP", (money * 100), function(){
+      saveOpenMemberRecord(vipid);
+    });
+  },
+  saveOpenMemberRecord:function(vipId){
+    wx.request({
+      url: app.globalData.serverPath + '/vip/openMember',
+      data:{
+        vipId: vipId,
+        openId: app.globalData.user.openId
+      },
+      success:function(res){
+        if (res.data.result){
+          //此处更新用户的信息
+          app.reloadUser();
+          wx.navigateBack({
+            delta: 0
+          })
+        }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

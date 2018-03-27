@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Service
 public class MiniUserService {
@@ -15,7 +16,7 @@ public class MiniUserService {
     private MiniUserDOMapper miniUserDOMapper;
 
     public MiniUserDO saveOrUpdate(MiniUserDO record) throws Exception{
-        MiniUserDO existsUser = miniUserDOMapper.selectByOpenid(record.getOpenId());
+        MiniUserDO existsUser = miniUserDOMapper.selectByOpenId(record.getOpenId());
         if(existsUser == null){
             record.setActive(1);
             record.setIsVip(0);
@@ -25,6 +26,7 @@ public class MiniUserService {
         }else {
             record.setId(existsUser.getId());
             miniUserDOMapper.updateByPrimaryKeySelective(record);
+            existsUser.setVipInvalidDay(DateUtil.daysBetween(existsUser.getVipInvalidTime(),new Date()));
             return existsUser;
         }
     }
@@ -35,6 +37,6 @@ public class MiniUserService {
      * @return
      */
     public MiniUserDO selectByOpenId(String openId){
-        return miniUserDOMapper.selectByOpenid(openId);
+        return miniUserDOMapper.selectByOpenId(openId);
     }
 }

@@ -33,7 +33,7 @@ public class RoomContentService {
 
     public void saveContent(RoomContentShow roomContentShow){
         MiniUserDO miniUserDO = miniUserDOMapper
-                .selectByOpenid(roomContentShow.getOpenId());
+                .selectByOpenId(roomContentShow.getOpenId());
 
         RoomContentDO contentDO = new RoomContentDO();
         contentDO.setRoomid(roomContentShow.getRoomid());

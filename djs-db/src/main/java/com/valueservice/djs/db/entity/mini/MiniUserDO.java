@@ -33,6 +33,10 @@ public class MiniUserDO {
 
     private Date vipInvalidTime;
 
+    private Integer vipInvalidDay;
+
+    private Integer totalPayAmount;
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -151,5 +155,21 @@ public class MiniUserDO {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public Integer getVipInvalidDay() {
+        return vipInvalidDay;
+    }
+
+    public void setVipInvalidDay(Integer vipInvalidDay) {
+        this.vipInvalidDay = vipInvalidDay;
+    }
+
+    public Integer getTotalPayAmount() {
+        return totalPayAmount;
+    }
+
+    public void setTotalPayAmount(Integer totalPayAmount) {
+        this.totalPayAmount = totalPayAmount;
     }
 }

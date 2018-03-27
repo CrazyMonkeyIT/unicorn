@@ -51,7 +51,8 @@ const loginOper = function(){
                         province: result.data.province,
                         nickName: result.data.nickName,
                         isVip: saveRes.data.obj.isVip,
-                        vipInvalidTime: saveRes.data.obj.vipInvalidTime
+                        vipInvalidTime: saveRes.data.obj.vipInvalidTime,
+                        vipInvalidDay: saveRes.data.obj.vipInvalidDay
                       });
                     }
                   }

@@ -12,6 +12,10 @@ App({
     }
 
   },
+  //重新加载用户信息
+  reloadUser:function(){
+    this.globalData.user = userUtil.login();
+  },
   globalData: {
     //用户信息
     user:null,

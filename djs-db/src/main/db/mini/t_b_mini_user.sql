@@ -37,6 +37,7 @@ CREATE TABLE `t_b_mini_user` (
   `active` int(11) DEFAULT '1' COMMENT '用户状态(1:正常，0：失效)',
   `is_vip` int(1) DEFAULT NULL COMMENT '是否VIP (0 ：否  1：是)',
   `vip_invalid_time` timestamp NULL DEFAULT NULL COMMENT 'vip过期时间',
+  `total_pay_amount` int(11) DEFAULT 0 COMMENT '总支付金额',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_b_mini_user_id_uindex` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

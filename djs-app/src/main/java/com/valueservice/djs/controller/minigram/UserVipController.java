@@ -7,6 +7,7 @@ import com.valueservice.djs.service.mini.UserVipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,4 +40,22 @@ public class UserVipController {
         }
         return result;
     }
+
+    /**
+     * 开通VIP
+     * @param vipId
+     * @param openId
+     * @return
+     */
+    @PostMapping("/openMember")
+    public @ResponseBody BaseResult openMember(Integer vipId, String openId){
+        BaseResult result = new BaseResult();
+        try{
+            result = userVipService.openMember(vipId, openId);
+        }catch (Exception ex){
+            LOGGER.error("处理用户开通VIP异常",ex);
+        }
+        return result;
+    }
+
 }

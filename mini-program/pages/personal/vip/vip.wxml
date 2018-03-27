@@ -14,7 +14,21 @@
   </view>
 
   <view hidden="{{isVipDiv}}" class="navigator-box navigator-box-show">
-    到期时间：{{userInfo.vipInvalidTime}}
+    <view class="navigator" hover-class="none">
+        <view class="navigator-content">
+          <view class="navigator-text" style="font-size:14px;"><text style="color:#DFA863;">┃</text> 会员中心</view>
+        </view>
+      </view>
+    <view class="navigator-bottom-border"></view>
+    <view class="navigator" style="height:100rpx;" hover-class="none">
+          <view class="navigator-content">
+              <view class="navigator-text">您的VIP还有 <text style="color:#DFA863;">{{userInfo.vipInvalidDay}}</text> 天到期</view>
+              <view class='navigator-righttext'>
+                <button class="mini-btn" type="primary" bindtap="openMember" size="mini">续费</button>
+              </view>
+          </view>
+    </view>
+       
   </view>
 
   <view hidden="{{isNotVipDiv}}" class="navigator-box navigator-box-show">
