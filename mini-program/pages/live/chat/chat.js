@@ -75,14 +75,9 @@ Page({
         method: "get"
     }) 
     wx.onSocketOpen(function (res) {
-        console.log('WebSocket连接已打开！') 
-        socketOpen = true
-        for (var i = 0; i < socketMsgQueue.length; i++) {
-          sendSocketMessage(socketMsgQueue[i])
-        }
-        socketMsgQueue = []
-
-        ws.onopen && ws.onopen()
+        console.log('WebSocket连接已打开！') ;
+        socketOpen = true;
+        ws.onopen && ws.onopen();
     }) 
     wx.onSocketError(function (res) {
       console.log('WebSocket连接打开失败，请检查！') 
@@ -105,9 +100,7 @@ Page({
       });
 
       var chatObj = {};
-      chatObj.userName = 'roce';
-      chatObj.roomId = 1001;
-      chatObj.content = 'hello world!';
+      chatObj.roomid = '1001';
       client.send("/chat", {}, JSON.stringify(chatObj));
     })
 
