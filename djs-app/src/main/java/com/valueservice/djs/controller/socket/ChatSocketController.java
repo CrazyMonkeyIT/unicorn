@@ -30,7 +30,6 @@ public class ChatSocketController {
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
         try {
-            roomContentService.saveMessage(roomContent);
             messageingTemplate.convertAndSend(String.format(destination, roomContent.getRoomid()),
                     JSONUtils.toJSONString(roomContent));
         }catch (Exception e){

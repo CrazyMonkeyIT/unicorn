@@ -47,32 +47,73 @@ Page({
         }
       }
     })
-    wx.connectSocket({ url: 'wss://dujiaoshouzhiku.com/unicorn/websocket/endpointChat', data: {}, header: { 'content-type': 'application/json' }, method: "POST" }) 
-    wx.onSocketOpen(function (res) { console.log('WebSocket连接已打开！') 
-      wx.sendSocketMessage({
-        data: { "a111": "344444" }
-      })
+
+    var socketOpen = false
+    var socketMsgQueue = []
+    function sendSocketMessage(msg) {
+      console.log('send msg:')
+      console.log(msg);
+      if (socketOpen) {
+        wx.sendSocketMessage({
+          data: msg
+        })
+      } else {
+        socketMsgQueue.push(msg)
+      }
+    }
+
+    var ws = {
+      send: sendSocketMessage,
+      onopen: null,
+      onmessage: null
+    }
+
+    wx.connectSocket({ 
+      url: 'ws://localhost:8080/websocket/endpointChat',
+        data: {},
+        header: { 'content-type': 'application/json' },
+        method: "get"
     }) 
-    wx.onSocketError(function (res) { console.log('WebSocket连接打开失败，请检查！') 
-      console.log(res)}) 
-    wx.onSocketMessage(function (res) { console.log('收到服务器内容：' + res.data) }) 
+    wx.onSocketOpen(function (res) {
+        console.log('WebSocket连接已打开！') 
+        socketOpen = true
+        for (var i = 0; i < socketMsgQueue.length; i++) {
+          sendSocketMessage(socketMsgQueue[i])
+        }
+        socketMsgQueue = []
+
+        ws.onopen && ws.onopen()
+    }) 
+    wx.onSocketError(function (res) {
+      console.log('WebSocket连接打开失败，请检查！') 
+    }) 
+    wx.onSocketMessage(function (res) {
+      console.log('收到onmessage事件:', res)
+      ws.onmessage && ws.onmessage(res)
+    }) 
+
+    var Stomp = require('stomp-2.3.3.js').Stomp;
+    Stomp.setInterval = function () { }
+    Stomp.clearInterval = function () { }
+    var client = Stomp.over(ws);
+
+    var destination = '/topic/notifications/1001';
+    client.connect({}, {}, function (sessionId) {
+      console.log('sessionId', sessionId)
+      client.subscribe(destination, function (message) {
+        console.log('From MQ:', message.body);
+      });
+
+      var chatObj = {};
+      chatObj.userName = 'roce';
+      chatObj.roomId = 1001;
+      chatObj.content = 'hello world!';
+      client.send("/chat", {}, JSON.stringify(chatObj));
+    })
+
     wx.onSocketClose(function (res) {
       console.log('WebSocket 已关闭！')
     });
-    
-    /*wx.connectSocket({
-      url: 'wss://dujiaoshouzhiku.com/chat/websocket/endpointChat',
-      success: function(res) {
-        console.log('-----------connect socket success-----------')
-        console.log(res)
-      },
-      fail: function(res) {
-        console.log('-----------connect socket fail-----------')
-        console.log(res)
-      },
-      complete: function(res) {},
-    })*/
-
 
     //远程取一次本聊天室所有的聊天记录做一次初始化
     //todo
