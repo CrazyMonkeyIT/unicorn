@@ -69,7 +69,7 @@ Page({
     }
 
     wx.connectSocket({ 
-      url: 'ws://localhost:8080/websocket/endpointChat',
+      url: 'ws://localhost:9090/unicorn/websocket/endpointChat',
         data: {},
         header: { 'content-type': 'application/json' },
         method: "get"

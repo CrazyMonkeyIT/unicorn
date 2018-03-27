@@ -44,6 +44,7 @@ public class ImportController {
             userFile.mkdir();
         }
         String userFilePath = String.format("%s%s",userFile.getPath(),"/");
+        String httpPathForRoot  = String.format("%s%s%s",contextPath,"minifile/",rootId);
         Stream.of(files).forEach(file->{
             try {
                 if (file != null) {
@@ -57,8 +58,8 @@ public class ImportController {
                         String currentFilePath = String.format("%s%s%s", userFilePath, prefixName, suffixName);
                         File localFile = new File(currentFilePath);
                         file.transferTo(localFile);
-                        String nginxFilePath =String.format("%s%s%s%s",contextPath,"minifile/",prefixName,suffixName);
-                        map.put("filePath", nginxFilePath);
+                        String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefixName,suffixName);
+                        map.put("filePath", httpPathForFile);
                         lists.add(map);
                     }
                 }
