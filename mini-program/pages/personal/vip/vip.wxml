@@ -24,7 +24,7 @@
           <view class="navigator-content">
               <view class="navigator-text">您的VIP还有 <text style="color:#DFA863;">{{userInfo.vipInvalidDay}}</text> 天到期</view>
               <view class='navigator-righttext'>
-                <button class="mini-btn" type="primary" bindtap="openMember" size="mini">续费</button>
+                
               </view>
           </view>
     </view>

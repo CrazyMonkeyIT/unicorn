@@ -3,18 +3,36 @@ const userUtil = require("/global-js/userUtil.js");
 const config = require("config.js");
 App({
   onLaunch: function () {
-
+    
     if (!this.globalData.user) {
-      this.globalData.user = userUtil.login();
+      var that = this;
+      userUtil.login(function () {
+        that.globalData.user = wx.getStorageSync('miniUser');
+      });
     }
     if(!this.globalData.serverPath){
       this.globalData.serverPath = config.service.host;
     }
 
   },
-  //重新加载用户信息
-  reloadUser:function(){
-    this.globalData.user = userUtil.login();
+  //重新获取用户信息
+  reloadUser:function(callback){
+    console.log("reloadUser");
+    var that = this;
+    that.callback = callback;
+    userUtil.login(function (callback) {
+      that.globalData.user = wx.getStorageSync('miniUser');
+      console.log("已获取到用户信息");
+      that.callback();
+    });
+  },
+  //提示信息
+  alert: function (content){
+    wx.showToast({
+      title: content,
+      icon: 'none',
+      duration: 2000
+    })
   },
   globalData: {
     //用户信息
