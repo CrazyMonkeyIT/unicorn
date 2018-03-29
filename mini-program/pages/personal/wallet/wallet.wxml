@@ -2,13 +2,13 @@
   <view class="top" style='background-image:url(../../../images/personal/wallet/back.jpg)'>
     <view style="height:80rpx;"></view>
     <view class="money-wrp" style="flex-direction:row;" >
-      <view class="money-item" bindtap="toMylive">
-        <view><text class="money-item-number">9999999.00</text></view>
+      <view class="money-item" bindtap="toIncome">
+        <view><text class="money-item-number">{{incomeAmount}}</text></view>
         <view><text class="money-item-name">余额（元）</text></view>
       </view>
       <view class="separator"></view>
-      <view class="money-item" bindtap="toMySubscribe">
-         <view><text class="money-item-number">9999999.00</text></view>
+      <view class="money-item" bindtap="toShopping">
+         <view><text class="money-item-number">{{shopingAmount}}</text></view>
          <view><text class="money-item-name">支出（元）</text></view>
       </view>
     </view>
@@ -16,7 +16,7 @@
 
   <view class='empty_tip' style="background-color:#FFFFFF;">
     <view class="navigator-box navigator-box-show">
-        <navigator class="navigator">
+        <navigator class="navigator" bindtap="toAll">
           <view class="navigator-icon"><image src="../../../images/personal/wallet/list.png"/></view>
           <view class="navigator-content">
             <view class="navigator-text">账单明细</view>

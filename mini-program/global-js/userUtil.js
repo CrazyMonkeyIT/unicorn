@@ -2,13 +2,13 @@
 const config = require("../config.js")
 
 const login = function(callback){
-  var userData  = wx.getStorageSync('miniUser');//从本地缓存中读取用户信息
-  if(!userData){//如果没有读取到用户信息，则进行授权
-    loginOper(callback);
-  }else{
-    callback();
-  }
-  return userData;
+  //var userData  = wx.getStorageSync('miniUser');//从本地缓存中读取用户信息
+  //if(!userData){//如果没有读取到用户信息，则进行授权
+  loginOper(callback);
+  //}else{
+   // callback();
+  //}
+  //return userData;
 }
 
 //异步方法

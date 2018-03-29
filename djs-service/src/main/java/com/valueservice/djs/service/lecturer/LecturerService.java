@@ -134,8 +134,10 @@ public class LecturerService {
     public LecturerDO selectByOpenId(String openid){
         LecturerDO record =  lecturerDOMapper.selectByOpenId(openid);
         if(!Objects.isNull(record)) {
-            LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getId());
-            record.setGradeName(grade.getGradeName());
+            LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getGradeId());
+            if(grade != null) {
+                record.setGradeName(grade.getGradeName());
+            }
         }
         return record;
     }

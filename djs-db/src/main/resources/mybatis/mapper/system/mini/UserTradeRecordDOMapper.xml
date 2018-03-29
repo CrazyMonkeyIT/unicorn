@@ -11,6 +11,18 @@
   <sql id="Base_Column_List">
     id, open_id, trade_amount, trade_type, create_time
   </sql>
+
+  <select id="selectListByOpenId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_user_trade_record
+    where open_id = #{openId,jdbcType=INTEGER}
+    <if test="tradeType != null" >
+      and trade_type = #{tradeType}
+    </if>
+    order by create_time desc
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
