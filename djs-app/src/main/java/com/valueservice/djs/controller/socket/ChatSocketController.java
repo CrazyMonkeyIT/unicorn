@@ -1,6 +1,8 @@
 package com.valueservice.djs.controller.socket;
 
 import com.alibaba.fastjson.JSON;
+import com.valueservice.djs.db.entity.chat.RoomContentDO;
+import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import com.valueservice.djs.service.chat.RoomContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ public class ChatSocketController {
     private RoomContentService roomContentService;
 
     @MessageMapping("/chat")
-    public void handleChat(@RequestBody RoomContentDO roomContent){
+    public void handleChat(@RequestBody RoomContentShow roomContent){
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
         try {

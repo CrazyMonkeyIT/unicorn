@@ -19,5 +19,5 @@ public interface RoomContentDOMapper {
 
     int updateByPrimaryKey(RoomContentDO record);
 
-    List selectContentShowByRoom(Integer roomId);
+    List selectContentShowByRoom(Integer roomId,Integer id);
 }
