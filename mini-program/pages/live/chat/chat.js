@@ -74,6 +74,8 @@ Page({
     client.send("/chat", {}, JSON.stringify(chatContent));
   },
   onReady: function () {
+    console.log('00000000')
+    console.log(chatListData.length)
     var lastChatId = 0;
     if (chatListData.length != 0){
       lastChatId = chatListData[chatListData.length - 1].id;

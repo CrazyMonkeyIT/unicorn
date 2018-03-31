@@ -38,7 +38,7 @@
     a.id, a.roomId, a.user_id, a.type, a.duration, a.url, a.create_time, a.active,
     b.avatar_url,b.open_id,b.nick_name,a.content
     from t_b_room_content a inner join t_b_mini_user b on a.user_id = b.id
-    and a.roomId = #{roomid,jdbcType=INTEGER} and a.active = 1
+    and a.roomId = #{roomId,jdbcType=INTEGER} and a.active = 1
     and a.id > #{id,jdbcType=INTEGER}
     order by a.create_time ASC
   </select>
