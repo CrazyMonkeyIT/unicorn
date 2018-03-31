@@ -89,6 +89,7 @@ Page({
       responseType: 'text',
       success: function(res) {
         res.data.forEach(function(data){
+          
           that.roomContentProcess(data,false);
         });
       }
@@ -162,7 +163,7 @@ Page({
             console.log('文件上传成功，返回信息如下：');
             let filePath = JSON.parse(res.data)[0].filePath;
             console.log("[Console log]:Record success!File path:" + tempFilePath);
-            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
+            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
             console.log("[录音结束]")
             console.log(myVoiceChat)
             that.socketSend(myVoiceChat,client);
