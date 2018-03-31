@@ -18,10 +18,6 @@ public class RoomContentService {
     @Resource
     private RoomContentDOMapper roomContentDOMapper;
 
-    @Resource
-    private MiniUserDOMapper miniUserDOMapper;
-
-
     @Transactional(rollbackFor = Exception.class)
     public void saveMessage(RoomContentDO roomContentDO) {
         roomContentDOMapper.insertSelective(roomContentDO);
