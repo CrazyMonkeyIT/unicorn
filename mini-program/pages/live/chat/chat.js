@@ -126,6 +126,7 @@ Page({
       dataType:'json',
       responseType: 'text',
       success: function(res) {
+        console.log(res.data);
         res.data.forEach(function(data){
           that.roomContentProcess(data,false);
         });
@@ -138,6 +139,8 @@ Page({
   //isRealTime是否实时聊天产生的标识，如果实时聊天产生，判断是当前用户的聊天直接抛弃，
   //因为本地发送时已经处理到聊天窗口里了
   roomContentProcess : function(chatContent,isRealTime){
+    console.log("----------")
+    console.log(chatContent)
     if (chatContent.type == 'voice'){
       chatContent.voiceImg = '/images/live/audio_icon_3.png';
     }
@@ -197,24 +200,12 @@ Page({
           success: function(res) {
             wx.showToast({ title: '文件上传成功，返回信息如下：' });
             console.log('文件上传成功，返回信息如下：');
-            console.log(res.data);
+            let filePath = JSON.parse(res.data)[0].filePath;
             console.log("[Console log]:Record success!File path:" + tempFilePath);
-            var myVoiceChat = { url: res.data[0].filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
+            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
             console.log("[录音结束]")
             console.log(myVoiceChat)
             that.roomContentProcess(myVoiceChat, true);
-            wx.request({
-              url: config.service.contentTest,
-              data: myVoiceChat,
-              header: {},
-              method: 'POST',
-              dataType: 'json',
-              responseType: 'text',
-              success: function (res) {
-                console.log('-----------save content result');
-                console.log(res.data);
-              }
-            })
           },
           fail: function(res) {
             wx.showToast({ title: '文件上传失败，返回信息如下：' +res});

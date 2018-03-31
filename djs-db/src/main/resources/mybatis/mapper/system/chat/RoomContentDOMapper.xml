@@ -12,8 +12,8 @@
     <result column="active" jdbcType="INTEGER" property="active" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapExt" type="com.valueservice.djs.db.entity.chat.RoomContentShow">
-    <result column="avatarUrl" jdbcType="VARCHAR" property="avatarurl" />
-    <result column="openId" jdbcType="VARCHAR" property="openId" />
+    <result column="avatar_Url" jdbcType="VARCHAR" property="avatarurl" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -28,7 +28,7 @@
   <select id="selectContentShowByRoom" parameterType="java.lang.Integer" resultMap="ResultMapExt">
     select
       a.id, a.roomId, a.user_id, a.type, a.duration, a.url, a.create_time, a.active,
-      b.avatarUrl,b.openId,b.nick_name
+      b.avatar_url,b.open_id,b.nick_name
     from t_b_room_content a inner join t_b_mini_user b on a.user_id = b.id
     and a.roomId = #{roomid,jdbcType=INTEGER} and a.active = 1
     and a.id > #{id,jdbcType=INTEGER}
