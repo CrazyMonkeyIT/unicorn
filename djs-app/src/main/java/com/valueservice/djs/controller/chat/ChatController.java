@@ -29,20 +29,6 @@ public class ChatController {
         return roomContentService.queryContentsByRoomId(roomContent.getRoomid(),roomContent.getId());
     }
 
-    /**
-     * 临时用来测试聊天内容存储的Controller
-     * @param roomContentShow
-     * @return
-     */
-    @RequestMapping(value = "/minigram/contentTest", method = RequestMethod.POST)
-    @ResponseBody
-    public BaseResult savechatContentTest(@RequestBody RoomContentShow roomContentShow){
-        roomContentService.saveContent(roomContentShow);
-        BaseResult result = new BaseResult();
-        result.setResult(true);
-        return result;
-    }
-
     @RequestMapping(value = "/minigram/checkUserPermission", method = RequestMethod.POST)
     @ResponseBody
     public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult result){

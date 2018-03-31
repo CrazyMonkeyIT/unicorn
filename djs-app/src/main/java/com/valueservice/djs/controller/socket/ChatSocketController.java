@@ -35,6 +35,7 @@ public class ChatSocketController {
             RoomContentDO roomContentDO = new RoomContentDO();
             BeanUtils.copyNotNullFields(contentVO,roomContentDO);
             roomContentDO.setCreateTime(new Date());
+            roomContentService.saveMessage(roomContentDO);
             messageingTemplate.convertAndSend(String.format(destination, contentVO.getRoomid()),
                     JSON.toJSONString(contentVO));
         }catch (Exception e){
