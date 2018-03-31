@@ -15,7 +15,7 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <resultMap extends="ResultMapWithBLOBs" id="ResultMapExt" type="com.valueservice.djs.db.entity.chat.RoomContentShow">
-    <result column="avatar_Url" jdbcType="VARCHAR" property="avatarurl" />
+    <result column="avatar_Url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
   </resultMap>

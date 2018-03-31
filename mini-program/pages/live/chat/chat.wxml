@@ -16,7 +16,7 @@
     <view class="chat-list">
       <block wx:for="{{chatList}}" wx:key="item">
         <view id="roll{{index + 1}}" class="chat-left" wx:if="{{item.orientation == 'l'}}">
-          <image class="avatar-img" src="{{item.avatarurl}}"></image>
+          <image class="avatar-img" src="{{item.avatarUrl}}"></image>
           <view class='chat-msg-title'>
             <label>{{item.nickName}}  {{item.chatTime}}</label>
             <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
@@ -50,7 +50,7 @@
               </view>
             </block>
           </view>
-          <image class="avatar-img" src="{{item.avatarurl}}"></image>
+          <image class="avatar-img" src="{{item.avatarUrl}}"></image>
         </view>
       </block>
     </view>

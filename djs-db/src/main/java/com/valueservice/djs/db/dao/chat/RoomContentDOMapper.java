@@ -1,6 +1,7 @@
 package com.valueservice.djs.db.dao.chat;
 
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
+import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface RoomContentDOMapper {
 
     int updateByPrimaryKey(RoomContentDO record);
 
-    List selectContentShowByRoom(@Param("roomId") Integer roomId, @Param("id")Integer id);
+    List<RoomContentShow> selectContentShowByRoom(@Param("roomId") Integer roomId, @Param("id")Integer id);
 }
