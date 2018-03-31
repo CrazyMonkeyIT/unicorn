@@ -24,7 +24,6 @@ public class RoomContentService {
 
     @Transactional(rollbackFor = Exception.class)
     public void saveMessage(RoomContentDO roomContentDO) {
-
         roomContentDOMapper.insertSelective(roomContentDO);
     }
     public List<RoomContentShow> queryContentsByRoomId(Integer roomId,Integer id){

@@ -32,7 +32,7 @@ CREATE TABLE `t_b_mini_user` (
   `avatar_url` varchar(2000) COLLATE utf8_bin DEFAULT NULL COMMENT '用户头像地址',
   `open_id` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'openid',
   `union_id` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'unionId',
-  `create_time` timestamp NOT NULL DEFAULT  COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `active` int(11) DEFAULT '1' COMMENT '用户状态(1:正常，0：失效)',
   `is_vip` int(1) DEFAULT NULL COMMENT '是否VIP (0 ：否  1：是)',
