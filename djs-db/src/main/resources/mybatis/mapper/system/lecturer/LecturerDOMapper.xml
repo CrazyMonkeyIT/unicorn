@@ -13,6 +13,7 @@
     <result column="status_desc" jdbcType="VARCHAR" property="statusDesc" />
     <result column="company" jdbcType="VARCHAR" property="company" />
     <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="live_number" jdbcType="VARCHAR" property="liveNumber" />
     <result column="live_hours" jdbcType="VARCHAR" property="liveHours" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -20,7 +21,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, lecturer_name, open_id, phone, grade_id, head_photo_file, is_chief, status, status_desc, company, position,
-    live_number, live_hours, create_time, update_time
+    introduction, live_number, live_hours, create_time, update_time
   </sql>
 
   <select id="selectList" resultMap="BaseResultMap">
@@ -86,6 +87,9 @@
       <if test="position != null">
         position,
       </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
       <if test="liveNumber != null">
         live_number,
       </if>
@@ -133,6 +137,9 @@
       <if test="position != null">
         #{position,jdbcType=VARCHAR},
       </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
       <if test="liveNumber != null">
         #{liveNumber,jdbcType=VARCHAR},
       </if>
@@ -179,6 +186,9 @@
       </if>
       <if test="position != null">
         position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="liveNumber != null">
         live_number = #{liveNumber,jdbcType=VARCHAR},
