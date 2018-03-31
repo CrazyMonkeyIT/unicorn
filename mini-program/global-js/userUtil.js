@@ -36,8 +36,9 @@ const asynchronous = function (result, callback){
 }
 //保存用户信息到缓存
 const saveUserStorage = function (result, saveRes, callback){
+  console.log(saveRes);
   wx.setStorageSync('miniUser', {
-    id: result.data.id,
+    id: saveRes.data.obj.id,
     openId: result.data.openId,
     gender: result.data.gender,
     country: result.data.country,
@@ -50,7 +51,9 @@ const saveUserStorage = function (result, saveRes, callback){
     vipInvalidDay: saveRes.data.obj.vipInvalidDay,
     totalPayAmount: saveRes.data.obj.totalPayAmount
   });
-  callback();
+  if(callback){
+    callback();
+  }
 }
 
 const loginOper = function(callback){

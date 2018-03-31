@@ -4,7 +4,7 @@ const userUtil = require('../../../global-js/userUtil.js');
 const config = require('../../../config.js');
 const socketUtil = require("./socketUtil.js")
 var app = getApp();
-var that, currentUser, speakerSec = 0,client = null;
+var that, currentUser, speakerSec = 0,client = null,roomId;
 var chatListData = [];
 var speakerInterval, speakerSecInterval; 
 var chartDetail,voicePlaying = false;
@@ -33,8 +33,10 @@ Page({
     }
     ] 
   },
-  onLoad: function () {
+  onLoad: function (e) {
     that = this;
+    roomId = e.roomId;
+    console.log("roomId:"+roomId)
     currentUser = userUtil.login();
     //获取用户登录信息
     wx.getSetting({
@@ -50,7 +52,7 @@ Page({
       }
     })
     client = socketUtil.stomClient();
-    var destination = '/topic/notifications/123';
+    var destination = '/topic/notifications/' + roomId;
     client.connect({}, {}, function (sessionId) {
       console.log('sessionId', sessionId)
       client.subscribe(destination, function (message) {
@@ -82,7 +84,7 @@ Page({
     }
     wx.request({
       url: config.service.roomHistory,
-      data: { roomid: 123, id: lastChatId},
+      data: { roomid: roomId, id: lastChatId},
       header: {},
       method: 'POST',
       dataType:'json',
@@ -155,7 +157,7 @@ Page({
         that.data.filePath = tempFilePath;
         wx.showToast({title: config.service.upUrl});
         wx.uploadFile({
-          url: config.service.upUrl + '123',
+          url: config.service.upUrl + roomId,
           filePath: tempFilePath,
           name: 'file',
           success: function(res) {
@@ -163,7 +165,7 @@ Page({
             console.log('文件上传成功，返回信息如下：');
             let filePath = JSON.parse(res.data)[0].filePath;
             console.log("[Console log]:Record success!File path:" + tempFilePath);
-            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
+            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId,userId:currentUser.id };
             console.log("[录音结束]")
             console.log(myVoiceChat)
             that.socketSend(myVoiceChat,client);
