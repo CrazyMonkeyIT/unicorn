@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.LecturerStatus;
+import com.valueservice.djs.bean.chief.ChiefListVO;
 import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,4 +143,28 @@ public class LecturerService {
         }
         return record;
     }
+
+    /**
+     * 获取是否首席讲师
+     * @param isChief
+     * @return
+     */
+    public List<ChiefListVO> selectChiefList(String isChief){
+        List<ChiefListVO> chiefListVOList = new ArrayList<>();
+        List<LecturerDO> lecturerDOList = lecturerDOMapper.selectByChief(isChief);
+        for(LecturerDO lecturerDO : lecturerDOList){
+            ChiefListVO chiefListVO = new ChiefListVO();
+            chiefListVO.setLecturerId(lecturerDO.getId());
+            chiefListVO.setLecturerName(lecturerDO.getLecturerName());
+            chiefListVO.setCompany(lecturerDO.getCompany());
+            chiefListVO.setPosition(lecturerDO.getPosition());
+            chiefListVO.setHeadPhotoFile(lecturerDO.getHeadPhotoFile());
+            chiefListVO.setLiveNumber(lecturerDO.getLiveNumber());
+            chiefListVO.setGradeName(lecturerDO.getGradeName());
+            chiefListVO.setIntroduction(lecturerDO.getIntroduction());
+            chiefListVOList.add(chiefListVO);
+        }
+        return chiefListVOList;
+    }
+
 }

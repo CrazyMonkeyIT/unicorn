@@ -18,6 +18,7 @@
     <result column="live_hours" jdbcType="VARCHAR" property="liveHours" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, lecturer_name, open_id, phone, grade_id, head_photo_file, is_chief, status, status_desc, company, position,
@@ -215,5 +216,17 @@
     <include refid="Base_Column_List" />
     from t_b_lecturer
     where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByChief" resultMap="BaseResultMap" >
+    select
+    a.id,a.lecturer_name,a.company,a.position,a.head_photo_file,a.live_number,b.grade_name,a.introduction
+    from t_b_lecturer a
+    inner join t_b_lecturer_grade b on a.grade_id = b.lecturer_grade_id
+    where 1 = 1
+    <if test="isChief != null" >
+      and a.is_chief = #{isChief}
+    </if>
+    and a.status != 2
   </select>
 </mapper>

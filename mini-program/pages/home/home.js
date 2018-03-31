@@ -1,6 +1,5 @@
 //index.js
 
-
 //获取应用实例
 const app = getApp()
 
@@ -22,28 +21,7 @@ Page({
       '../../images/home/test/2.jpg',
       '../../images/home/test/3.jpg',
       '../../images/home/test/4.jpg'],
-    chiefInfoList: [
-      {
-        name: "Lee",
-        desc: "招商证券食品饮料行业首席分析师，研发中心董事。4次新财富最佳分析师第一名，11次上榜",
-        photoPath: "../../images/home/test/Lee.jpg"
-      },
-      {
-        name: "Bill",
-        desc: "安信证券农林牧渔行业首席分析师，新财富最佳分析师第一名，汤森路透StarMine全球卖方分析师第一名",
-        photoPath: "../../images/home/test/bill.jpg"
-      },
-      {
-        name: "xin",
-        desc: "华泰证券建筑建材行业首席分析师，3次新财富最佳分析师团队第一名",
-        photoPath: "../../images/home/test/xin.jpg"
-      },
-      {
-        name: "myron",
-        desc: "天风证券传媒互联网高级分析师，包揽新财富最佳分析师、水晶球、金牛奖第一名",
-        photoPath: "../../images/home/test/myron.jpg"
-      }
-    ]
+    chiefInfoList: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -51,7 +29,37 @@ Page({
       url: '../logs/logs'
     })
   },
+  //初始化首页数据
   onLoad: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/lecturer/chief/list',
+      method: 'POST',
+      dataType: 'json',
+      success: function (result) {
+        let obj = result.data.obj;
+        if(obj.length > 2){
+          obj = [obj[0], obj[1]];
+        }
+        that.setData({
+          'chiefInfoList': obj
+        })
+      }
+    })
+  },
 
+  //更多首席
+  moreChiefInfo: function(){
+    wx.redirectTo({
+      url: 'chief/chief',
+    })
+  },
+
+  //键盘完成按钮时触发(用来搜索)
+  bindconfirm: function(event){
+    wx.showToast({
+      title: '搜索小哥正在快马加鞭的查找，请稍后!',
+      icon: 'none'
+    })
   }
 });

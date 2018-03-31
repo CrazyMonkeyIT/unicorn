@@ -15,7 +15,8 @@
     "pages/personal/vip/vip",
     "pages/personal/account/account",
     "pages/personal/speaker/speaker",
-    "pages/personal/wallet/detail/detail"
+    "pages/personal/wallet/detail/detail",
+    "pages/home/chief/chief"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
