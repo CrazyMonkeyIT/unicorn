@@ -4,6 +4,7 @@
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
 var host = 'http://localhost:9090/unicorn';//'https://dujiaoshouzhiku.com/unicorn';
+var wsshost = 'ws://localhost:9090/unicorn/websocket/endpointChat';
 
 var config = {
 
@@ -19,7 +20,8 @@ var config = {
     //获取房间历史聊天记录
     roomHistory: host + '/minigram/roomHistory',
     //存储聊天内容的临时url
-    contentTest: host + '/minigram/contentTest'
+    contentTest: host + '/minigram/contentTest',
+    socketUrl: wsshost
   }
 };
 

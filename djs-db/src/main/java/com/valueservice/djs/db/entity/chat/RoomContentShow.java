@@ -24,6 +24,7 @@ public class RoomContentShow {
 
     private String avatarurl;//用户头像链接
 
+    private String content;//聊天内容
 
     private String nickName;//用户昵称
 
@@ -113,5 +114,13 @@ public class RoomContentShow {
 
     public void setAvatarurl(String avatarurl) {
         this.avatarurl = avatarurl;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

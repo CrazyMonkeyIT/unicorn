@@ -2,7 +2,6 @@ package com.valueservice.djs.controller.chat;
 
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
-import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import com.valueservice.djs.service.chat.RoomContentService;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ChatController {

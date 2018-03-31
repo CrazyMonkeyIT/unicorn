@@ -19,6 +19,8 @@ public class RoomContentDO {
 
     private Integer active;
 
+    private String content;
+
     public Integer getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class RoomContentDO {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

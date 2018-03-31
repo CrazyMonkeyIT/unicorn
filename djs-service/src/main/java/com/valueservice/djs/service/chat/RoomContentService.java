@@ -1,8 +1,6 @@
 package com.valueservice.djs.service.chat;
 
-import com.valueservice.djs.db.dao.chat.RoomContentDOMapper;
 import com.valueservice.djs.db.dao.mini.MiniUserDOMapper;
-import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
 import org.springframework.stereotype.Service;

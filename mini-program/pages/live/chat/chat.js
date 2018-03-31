@@ -2,11 +2,13 @@
 const util = require('../../../global-js/util.js');
 const userUtil = require('../../../global-js/userUtil.js');
 const config = require('../../../config.js');
+const socketUtil = require("./socketUtil.js")
 var app = getApp();
-var that, currentUser, speakerSec = 0;
+var that, currentUser, speakerSec = 0,client = null;
 var chatListData = [];
 var speakerInterval, speakerSecInterval; 
 var chartDetail,voicePlaying = false;
+
 Page({
   data: {
     isPlay : false,
@@ -47,61 +49,16 @@ Page({
         }
       }
     })
-
-    var socketOpen = false
-    var socketMsgQueue = []
-    function sendSocketMessage(msg) {
-      console.log('send msg:')
-      console.log(msg);
-      if (socketOpen) {
-        wx.sendSocketMessage({
-          data: msg
-        })
-      } else {
-        socketMsgQueue.push(msg)
-      }
-    }
-
-    var ws = {
-      send: sendSocketMessage,
-      onopen: null,
-      onmessage: null
-    }
-
-    wx.connectSocket({ 
-      url: 'ws://localhost:9090/unicorn/websocket/endpointChat',
-        data: {},
-        header: { 'content-type': 'application/json' },
-        method: "get"
-    }) 
-    wx.onSocketOpen(function (res) {
-        console.log('WebSocket连接已打开！') ;
-        socketOpen = true;
-        ws.onopen && ws.onopen();
-    }) 
-    wx.onSocketError(function (res) {
-      console.log('WebSocket连接打开失败，请检查！') 
-    }) 
-    wx.onSocketMessage(function (res) {
-      console.log('收到onmessage事件:', res)
-      ws.onmessage && ws.onmessage(res)
-    }) 
-
-    var Stomp = require('stomp-2.3.3.js').Stomp;
-    Stomp.setInterval = function () { }
-    Stomp.clearInterval = function () { }
-    var client = Stomp.over(ws);
-
-    var destination = '/topic/notifications/1001';
+    client = socketUtil.stomClient();
+    var destination = '/topic/notifications/123';
     client.connect({}, {}, function (sessionId) {
       console.log('sessionId', sessionId)
       client.subscribe(destination, function (message) {
         console.log('From MQ:', message.body);
-      });
-
-      var chatObj = {};
-      chatObj.roomid = '1001';
-      client.send("/chat", {}, JSON.stringify(chatObj));
+        let chatContent = JSON.parse(message.body);
+        console.debug(chatContent);
+        that.roomContentProcess(chatContent,true);
+      });    
     })
 
     wx.onSocketClose(function (res) {
@@ -112,7 +69,10 @@ Page({
     //todo
     this.setData({ chatList: chatListData});
   },
-
+  //发送socket消息
+  socketSend: function (chatContent,client){
+    client.send("/chat", {}, JSON.stringify(chatContent));
+  },
   onReady: function () {
     var lastChatId = 0;
     if (chatListData.length != 0){
@@ -126,7 +86,6 @@ Page({
       dataType:'json',
       responseType: 'text',
       success: function(res) {
-        console.log(res.data);
         res.data.forEach(function(data){
           that.roomContentProcess(data,false);
         });
@@ -139,11 +98,10 @@ Page({
   //isRealTime是否实时聊天产生的标识，如果实时聊天产生，判断是当前用户的聊天直接抛弃，
   //因为本地发送时已经处理到聊天窗口里了
   roomContentProcess : function(chatContent,isRealTime){
-    console.log("----------")
-    console.log(chatContent)
     if (chatContent.type == 'voice'){
       chatContent.voiceImg = '/images/live/audio_icon_3.png';
     }
+    console.log("chatopenid:" + chatContent.openId + ";openId:" + currentUser.openId);
     if (chatContent.openId == currentUser.openId){
       if (isRealTime == true) return;
       chatContent.orientation = "r";
@@ -205,6 +163,7 @@ Page({
             var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarImg: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: 123 };
             console.log("[录音结束]")
             console.log(myVoiceChat)
+            that.socketSend(myVoiceChat,client);
             that.roomContentProcess(myVoiceChat, true);
           },
           fail: function(res) {
@@ -247,15 +206,12 @@ Page({
   addChatWithFlag: function (chatOjbect, scrolltopFlag) {
     chatListData.push(chatOjbect);
     var charlenght = chatListData.length;
-    console.log("[Console log]:Add message to chat list...");
     if (scrolltopFlag) {
-      console.log("[Console log]:Rolling to the top...");
       that.setData({
         chatList: chatListData,
         scrolltop: "roll" + charlenght,
       });
     } else {
-      console.log("[Console log]:Not rolling...");
       that.setData({
         chatList: chatListData,
       });

@@ -1,7 +1,6 @@
 package com.valueservice.djs.controller.socket;
 
 import com.alibaba.fastjson.JSON;
-import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.service.chat.RoomContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
