@@ -18,8 +18,8 @@
         <view id="roll{{index + 1}}" class="chat-left" wx:if="{{item.orientation == 'l'}}">
           <image class="avatar-img" src="{{item.avatarUrl}}"></image>
           <view class='chat-msg-title'>
-            <label>{{item.nickName}}  {{item.chatTime}}</label>
-            <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
+            <label>{{item.nickName}}  {{item.createTime}}</label>
+            <text wx:if="{{item.type == 'text'}}">{{item.content}}</text>
             <block wx:if="{{item.type == 'voice'}}">
               <view class='voice-row'>
                 <view class="{{isPlay?'voice-view-left-play':'voice-view-left'}}" bindtap='chatVoicePlay' data-url="{{item.url}}" data-chatid="{{item.chatid}}">
@@ -37,8 +37,8 @@
           <image class="avatar-img"></image>
           
          <view class='chat-msg-title-right'>
-            <label>{{item.nickName}}  {{item.chatTime}}</label>
-            <text wx:if="{{item.type == 'text'}}">{{item.text}}</text>
+            <label>{{item.nickName}}  {{item.createTime}}</label>
+            <text wx:if="{{item.type == 'text'}}">{{item.content}}</text>
             <block wx:if="{{item.type == 'voice'}}">
               <view class='voice-row'>
                 <view class='voice-duration'>
@@ -51,6 +51,7 @@
             </block>
           </view>
           <image class="avatar-img" src="{{item.avatarUrl}}"></image>
+          {{errorMsg}}
         </view>
       </block>
     </view>
@@ -58,7 +59,7 @@
     <view class="ask-input-word">
       <image class="text-video-img" src="/images/live/speak.png" hidden="{{keyboard}}" bindtap="switchInputType"></image>
       <image class="text-video-img" src="/images/live/keyboard.png" hidden="{{!keyboard}}" bindtap="switchInputType"></image>
-      <input class="input-big" hidden="{{keyboard}}" focus="{{!keyboard}}" placeholder="" confirm-type="send" name="ask_word" type="text" bindconfirm="sendChat" bindinput="Typing" value="{{askWord}}" />
+      <input class="input-big" hidden="{{keyboard}}" focus="{{!keyboard}}" placeholder="" confirm-type="send" name="ask_word" type="text" bindconfirm="sendChat" bindinput="Typing" value="{{askWord}}" bindblur='inputbindchange'/>
       <button hidden="{{!keyboard}}" bindtouchstart="touchdown" bindtouchend="touchup">按住 说话</button>
     </view>
 </view>

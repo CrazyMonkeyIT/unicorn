@@ -26,6 +26,7 @@ Page({
     speakerUrlSuffix: '.png',
     filePath: null,
     contactFlag: true,
+    errorMsg :'',
     imgUrls: [{
       id: 'tp10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
     },{
@@ -36,7 +37,6 @@ Page({
   onLoad: function (e) {
     that = this;
     roomId = e.roomId;
-    console.log("roomId:"+roomId)
     currentUser = userUtil.login();
     //获取用户登录信息
     wx.getSetting({
@@ -54,11 +54,8 @@ Page({
     client = socketUtil.stomClient();
     var destination = '/topic/notifications/' + roomId;
     client.connect({}, {}, function (sessionId) {
-      console.log('sessionId', sessionId)
       client.subscribe(destination, function (message) {
-        console.log('From MQ:', message.body);
         let chatContent = JSON.parse(message.body);
-        console.debug(chatContent);
         that.roomContentProcess(chatContent,true);
       });    
     })
@@ -76,8 +73,6 @@ Page({
     client.send("/chat", {}, JSON.stringify(chatContent));
   },
   onReady: function () {
-    console.log('00000000')
-    console.log(chatListData.length)
     var lastChatId = 0;
     if (chatListData.length != 0){
       lastChatId = chatListData[chatListData.length - 1].id;
@@ -91,7 +86,9 @@ Page({
       responseType: 'text',
       success: function(res) {
         res.data.forEach(function(data){
-          
+          data.createTime = util.formatTime(new Date(data.createTime));
+          console.log("==================");
+          console.log(data);
           that.roomContentProcess(data,false);
         });
       }
@@ -106,7 +103,6 @@ Page({
     if (chatContent.type == 'voice'){
       chatContent.voiceImg = '/images/live/audio_icon_3.png';
     }
-    console.log("chatopenid:" + chatContent.openId + ";openId:" + currentUser.openId);
     if (chatContent.openId == currentUser.openId){
       if (isRealTime == true) return;
       chatContent.orientation = "r";
@@ -121,16 +117,30 @@ Page({
       keyboard: !(this.data.keyboard),
     })
   },
+  inputbindchange : function(e){
+    console.log(e.detail);
+    that.sendChat(e);
+  },
   sendChat : function (e){
     var inputVal = e.detail.value;
-    if (!inputVal){
+    console.log(!inputVal.trim());
+    if (!inputVal || !inputVal.trim()){
       wx.showToast({
         title: '不能发送空内容!!!',
         icon: 'none',
-        duration: 0,
         mask: true
       })
+      return;
     }
+    var chatContent = { type: 'text', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r', content: inputVal };
+    that.addChatWithFlag(chatContent,true);
+    that.socketSend(chatContent, client);
+    e.detail.value = "";
+    wx.showToast({
+      title: '消息发送成功',
+      icon: 'none',
+      mask: true
+    })
   },
   // 监控输入框输入
   Typing: function (e) {
@@ -149,37 +159,32 @@ Page({
       isSpeaking: true,
     })
     that.speaking.call();
-    console.log("[Console log]:Touch down!Start recording!");
     wx.startRecord({
       'success': function (res) {
         var tempFilePath = res.tempFilePath;
-        
         that.data.filePath = tempFilePath;
-        wx.showToast({title: config.service.upUrl});
         wx.uploadFile({
           url: config.service.upUrl + roomId,
           filePath: tempFilePath,
           name: 'file',
           success: function(res) {
-            wx.showToast({ title: '文件上传成功，返回信息如下：' });
-            console.log('文件上传成功，返回信息如下：');
+            wx.showToast({ title: '语音发送成功' });
             let filePath = JSON.parse(res.data)[0].filePath;
-            console.log("[Console log]:Record success!File path:" + tempFilePath);
-            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId,userId:currentUser.id };
-            console.log("[录音结束]")
-            console.log(myVoiceChat)
+            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation:'r' };
             that.socketSend(myVoiceChat,client);
-            that.roomContentProcess(myVoiceChat, true);
+            that.addChatWithFlag(myVoiceChat, true);
           },
           fail: function(res) {
-            wx.showToast({ title: '文件上传失败，返回信息如下：' +res});
+            this.setData({
+              errorMsg :res.data
+            })
+            
           },
           complete: function(res) {},
         })
         
       },
       'fail': function () {
-        console.log("[Console log]:Record failed!");
         wx.showModal({
           title: '录音失败',
           content: '换根手指再试一次！',
@@ -193,7 +198,6 @@ Page({
   // 按钮松开
   touchup: function () {
     wx.stopRecord();
-    console.log("[Console log]:Touch up!Stop recording!");
     this.setData({
       isSpeaking: false,
       speakerUrl: '/images/live/speaker0.png',
@@ -226,7 +230,6 @@ Page({
   onShareAppMessage: function (res) {
     console.log("[Console log]:Sharing the app...");
     return {
-      desc: '智能聊',
       desc: '智能聊，比你还能聊~',
       path: 'pages/index/index',
       imageUrl: '/images/chat_logo.png',
@@ -250,7 +253,6 @@ Page({
       that.setData({
         speakerUrl: that.data.speakerUrlPrefix + i + that.data.speakerUrlSuffix,
       });
-      console.log("[Console log]:Speaker image changing...");
     }, 300);
     that.speakerSecInterval = setInterval(function(){
       k--;
@@ -278,7 +280,6 @@ Page({
   },
   //播放语音，查找到指定的语音节点并播放，展示播放动画
   chatVoicePlay :function(e){
-    console.log(e);
     var chatId = e.target.id,voiceObject = null;
     chatListData.forEach(function (chater) {//从对话列表中找出当前点击的语音记录，并执行播放操作
       if (chater.id == chatId) {
@@ -304,14 +305,14 @@ Page({
   voiceAnimatePlay: function (voiceObject) {
     voicePlaying = true;
     chartDetail = voiceObject;
-    console.log(voiceObject);
+    console.log(voiceObject.url)
     if (voiceObject.voiceTempFilepath == undefined || voiceObject.voiceTempFilepath == null){
       wx.downloadFile({
         url: voiceObject.url,
         header: {},
         success: function (res) {
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容 
-          console.log("--------downloadfile res------------")
+          console.log("download res")
           console.log(res)
           that.voiceOper(voiceObject, res.tempFilePath);         
         },
