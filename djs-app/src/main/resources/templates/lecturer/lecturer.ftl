@@ -160,6 +160,13 @@
                                 <input name="position" type="text"  />
                             </div>
                         </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">简介</label>
+                            <div class="col-sm-8">
+                                <textarea name="introduction" cols="23" rows="5">
+                                </textarea>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -343,6 +350,7 @@ function showUpdate(id){
                 $("#editForm").find("select[name='gradeId']").val(data.gradeId);
                 $("#editForm").find("input[name='company']").val(data.company);
                 $("#editForm").find("input[name='position']").val(data.position);
+                $("#editForm").find("textarea[name='introduction']").val(data.introduction);
                 $("#edit_modal").modal("show");
             }
         }

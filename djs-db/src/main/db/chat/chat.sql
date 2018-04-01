@@ -31,6 +31,7 @@ CREATE TABLE `t_b_room` (
   `members` text DEFAULT NULL COMMENT '房间人员ID',
   `status` int(11) DEFAULT NULL COMMENT '房间状态',
   `room_price` decimal DEFAULT null comment '房间价格',
+  `courseware` varchar(255) DEFAULT NULL COMMENT '课件URL',
   `prepare_live_begin_time` datetime DEFAULT NULL COMMENT '预计直播开始时间',
   `prepare_live_end_time` datetime DEFAULT NULL COMMENT '预计直播结束时间',
   `actual_live_begin_time` datetime default null comment '实际直播开始时间',
