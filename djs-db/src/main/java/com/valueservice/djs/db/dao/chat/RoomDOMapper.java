@@ -5,13 +5,13 @@ import com.valueservice.djs.db.entity.chat.RoomDO;
 import java.util.List;
 
 public interface RoomDOMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(RoomDO record);
 
     int insertSelective(RoomDO record);
 
-    RoomDO selectByPrimaryKey(Long id);
+    RoomDO selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(RoomDO record);
 
@@ -20,4 +20,6 @@ public interface RoomDOMapper {
     int updateByPrimaryKey(RoomDO record);
 
     List<RoomDO> selectAll();
+
+    List<RoomDO> selectLiveRoom();
 }

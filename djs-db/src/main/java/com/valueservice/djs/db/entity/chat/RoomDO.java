@@ -3,9 +3,9 @@ package com.valueservice.djs.db.entity.chat;
 import java.util.Date;
 
 public class RoomDO {
-    private Long id;
+    private Integer id;
 
-    private Long creatorId;
+    private Integer creatorId;
 
     private String name;
 
@@ -37,19 +37,40 @@ public class RoomDO {
 
     private String members;
 
-    public Long getId() {
+    //非数据库字端
+    private String lecturerName;
+
+    private String headPhotoFile;
+
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
+    }
+
+    public String getHeadPhotoFile() {
+        return headPhotoFile;
+    }
+
+    public void setHeadPhotoFile(String headPhotoFile) {
+        this.headPhotoFile = headPhotoFile;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getCreatorId() {
+    public Integer getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(Long creatorId) {
+    public void setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
     }
 

@@ -80,17 +80,4 @@ public class AdvertisementController {
         return true;
     }
 
-    @RequestMapping(value = "/mini/advertisement/list", method = RequestMethod.GET)
-    public @ResponseBody BaseResult getAdvertisementList(){
-        BaseResult result = new BaseResult(true);
-        try {
-            result.setObj(advertisementService.selectValidAdvertisement());
-        }catch (Exception ex){
-            LOGGER.error("", ex);
-            result.setResult(false);
-            result.setMessage(ex.getMessage());
-        }
-        return result;
-    }
-
 }

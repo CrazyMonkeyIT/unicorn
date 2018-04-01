@@ -29,10 +29,10 @@ CREATE TABLE `t_b_room` (
   `subject_id` int(11) NULL COMMENT '专题ID',
   `lecturer_id` int(11) NOT NULL COMMENT '讲师ID'，
   `room_desc` VARCHAR(500) NULL COMMENT '房间描述',
-  `type` int(11) DEFAULT NULL COMMENT '房间內型',
+  `type` int(11) DEFAULT NULL COMMENT '房间內型 0：VIP 1：路演',
   `count` int(11) DEFAULT NULL COMMENT '房间总人数',
   `members` text DEFAULT NULL COMMENT '房间人员ID',
-  `status` int(11) DEFAULT NULL COMMENT '房间状态',
+  `status` int(11) DEFAULT NULL COMMENT '房间状态 0：直播中 1：直播结束 -1：直播未开始',
   `room_price` decimal DEFAULT null comment '房间价格',
   `courseware` varchar(255) DEFAULT NULL COMMENT '课件URL',
   `prepare_live_begin_time` datetime DEFAULT NULL COMMENT '预计直播开始时间',

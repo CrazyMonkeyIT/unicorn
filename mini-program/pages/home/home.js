@@ -8,20 +8,15 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    imgUrls: [
-      'http://image.tupian114.com/20151104/10282395.jpg',
-      'http://image.tupian114.com/20120410/19234926.jpg'
-    ],
+    
     autoplay: true,
     interval: 3000,
     duration: 500,
     indicatorDots: false, 
-    roadShowImages: [
-      '../../images/home/test/1.jpg',
-      '../../images/home/test/2.jpg',
-      '../../images/home/test/3.jpg',
-      '../../images/home/test/4.jpg'],
-    chiefInfoList: []
+    roadShowList: [],
+    chiefList: [],
+    advertisementList: [],
+    liveList: []
   },
   //事件处理函数
   bindViewTap: function () {
@@ -32,17 +27,23 @@ Page({
   //初始化首页数据
   onLoad: function () {
     var that = this;
+    var serverPath = app.globalData.serverPath;
+    //首席列表
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/mini/chief/list',
-      method: 'POST',
+      url: serverPath + '/mini/home/list',
+      method: 'GET',
       dataType: 'json',
       success: function (result) {
         let obj = result.data.obj;
-        if(obj.length > 2){
-          obj = [obj[0], obj[1]];
-        }
         that.setData({
-          'chiefInfoList': obj
+          //广告数据
+          'advertisementList': obj.advertisementList,
+          //路演数据
+          // 'roadShowList': obj.roadShowList,
+          //直播数据
+          // 'liveList': obj.liveList,
+          //首席数据
+          'chiefList': obj.chiefList
         })
       }
     })

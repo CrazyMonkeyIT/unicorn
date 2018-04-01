@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    chiefInfoList: null
+    chiefList: []
   },
 
   /**
@@ -18,12 +18,12 @@ Page({
   onLoad: function (options) {
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/chief/list',
-      method: 'POST',
+      url: app.globalData.serverPath + '/mini/home/chief/list',
+      method: 'GET',
       dataType: 'json',
       success: function (result) {
         that.setData({
-          'chiefInfoList': result.data.obj
+          'chiefList': result.data.obj
         })
       }
     })

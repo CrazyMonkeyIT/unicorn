@@ -136,18 +136,4 @@ public class LecturerController extends BaseController{
         return result;
     }
 
-    @RequestMapping(value = "/mini/chief/list", method = RequestMethod.POST)
-    @ResponseBody
-    public BaseResult getChiefList(){
-        BaseResult result = new BaseResult(true);
-        try {
-            result.setObj(lecturerService.selectChiefList("YES"));
-            result.setResult(true);
-        }catch (Exception ex){
-            result.setMessage("首席讲师信息获取失败");
-            result.setResult(false);
-        }
-
-        return result;
-    }
 }
