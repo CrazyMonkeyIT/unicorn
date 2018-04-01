@@ -10,7 +10,7 @@ var config = {
 
   // 下面的地址配合云端 Demo 工作
   service: {
-    host,
+    host:host,
     //保存用户信息
     saveUser:host + '/minigram/saveUser',
     //获取用户加密信息的解密文档
