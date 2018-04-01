@@ -2,7 +2,9 @@
 const util = require('../../../global-js/util.js');
 const userUtil = require('../../../global-js/userUtil.js');
 const config = require('../../../config.js');
-const socketUtil = require("./socketUtil.js")
+const socketUtil = require("./socketUtil.js");
+const imageUtil = require("../../../global-js/imageUtil.js");
+const chatTool = require("./chat_tools.js")
 var app = getApp();
 var that, currentUser, speakerSec = 0,client = null,roomId;
 var chatListData = [];
@@ -26,7 +28,15 @@ Page({
     speakerUrlSuffix: '.png',
     filePath: null,
     contactFlag: true,
+    textvalue:'',
     errorMsg :'',
+    imagewidth :0,
+    toolsShow :true,
+    imageHeight :0,
+    animation: wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+    }),
     imgUrls: [{
       id: 'tp10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
     },{
@@ -56,12 +66,15 @@ Page({
     client.connect({}, {}, function (sessionId) {
       client.subscribe(destination, function (message) {
         let chatContent = JSON.parse(message.body);
+        console.log(chatContent);
         that.roomContentProcess(chatContent,true);
       });    
     })
 
     wx.onSocketClose(function (res) {
       console.log('WebSocket 已关闭！')
+      client = socketUtil.stomClient();
+
     });
 
     //远程取一次本聊天室所有的聊天记录做一次初始化
@@ -87,8 +100,6 @@ Page({
       success: function(res) {
         res.data.forEach(function(data){
           data.createTime = util.formatTime(new Date(data.createTime));
-          console.log("==================");
-          console.log(data);
           that.roomContentProcess(data,false);
         });
       }
@@ -139,8 +150,15 @@ Page({
     wx.showToast({
       title: '消息发送成功',
       icon: 'none',
-      mask: true
+      mask: true,
+      success: function (res) {
+        
+      },
     })
+
+    this.setData({
+      textvalue: ''
+    });
   },
   // 监控输入框输入
   Typing: function (e) {
@@ -170,9 +188,10 @@ Page({
           success: function(res) {
             wx.showToast({ title: '语音发送成功' });
             let filePath = JSON.parse(res.data)[0].filePath;
-            var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', voiceTempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation:'r' };
-            that.socketSend(myVoiceChat,client);
-            that.addChatWithFlag(myVoiceChat, true);
+           /* var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', tempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation:'r' };*/
+            let chatContnt = chatTool.chatContent('voice', currentUser, roomId, filePath, that.speakerSec, tempFilePath);
+            that.socketSend(filePath,client);
+            that.addChatWithFlag(chatContnt, true);
           },
           fail: function(res) {
             this.setData({
@@ -280,6 +299,7 @@ Page({
   },
   //播放语音，查找到指定的语音节点并播放，展示播放动画
   chatVoicePlay :function(e){
+    console.log(e.target.id);
     var chatId = e.target.id,voiceObject = null;
     chatListData.forEach(function (chater) {//从对话列表中找出当前点击的语音记录，并执行播放操作
       if (chater.id == chatId) {
@@ -305,8 +325,9 @@ Page({
   voiceAnimatePlay: function (voiceObject) {
     voicePlaying = true;
     chartDetail = voiceObject;
-    console.log(voiceObject.url)
-    if (voiceObject.voiceTempFilepath == undefined || voiceObject.voiceTempFilepath == null){
+    console.log(chartDetail)
+    if (voiceObject.tempFilepath == undefined || voiceObject.tempFilepath == null){
+      console.log(voiceObject);
       wx.downloadFile({
         url: voiceObject.url,
         header: {},
@@ -329,7 +350,8 @@ Page({
         }
       })
     }else {
-      that.voiceOper(voiceObject, voiceObject.voiceTempFilepath);
+      console.log("has tempFile")
+      that.voiceOper(voiceObject, voiceObject.tempFilepath);
     }
   },
 
@@ -375,6 +397,60 @@ Page({
     } else {
       that.voiceAnimatePlay(chatTo);
     }
+  },
+  showTools :function(){
+    this.setData({
+      toolsShow: !(this.data.toolsShow)
+    });
+  },
+  imageLoad: function (e) {
+    var imageSize = imageUtil.imageUtil(e)
+    this.setData({
+      imagewidth: imageSize.imageWidth,
+      imageheight: imageSize.imageHeight
+    })
+  } ,
+  sendImg : function (e){
+    wx.chooseImage({
+      count: 1,
+      success: function(res) {
+        wx.uploadFile({
+          url: config.service.upUrl + roomId,
+          filePath: res.tempFilePaths[0],
+          name: 'file',
+          success: function (res) {
+            wx.showToast({ title: '图片发送成功' });
+            let filePath = JSON.parse(res.data)[0].filePath;
+            var myVoiceChat = { url: filePath, type: 'picture', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r' };
+            that.socketSend(myVoiceChat, client);
+            that.addChatWithFlag(myVoiceChat, true);
+            that.showTools();
+          },
+          fail: function (res) {
+            this.setData({
+              errorMsg: res.data
+            })
+
+          }
+        })
+      },
+      
+    })
+  },
+  previewImg : function(e){
+    let imgId = e.target.id;
+    console.log(e.target);
+    let current_img = chatTool.getImg(imgId, chatListData),
+        imgs = chatTool.getImgs(chatListData);
+    console.log(current_img)
+    wx.previewImage({
+      current: current_img,
+      urls: imgs,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   }
+
   
 })
