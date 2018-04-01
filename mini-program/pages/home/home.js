@@ -15,13 +15,13 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 500,
-    indicatorDots: false,
+    indicatorDots: false, 
     roadShowImages: [
       '../../images/home/test/1.jpg',
       '../../images/home/test/2.jpg',
       '../../images/home/test/3.jpg',
       '../../images/home/test/4.jpg'],
-    chiefInfoList: null
+    chiefInfoList: []
   },
   //事件处理函数
   bindViewTap: function () {
@@ -33,7 +33,7 @@ Page({
   onLoad: function () {
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/chief/list',
+      url: app.globalData.serverPath + '/lecturer/mini/chief/list',
       method: 'POST',
       dataType: 'json',
       success: function (result) {

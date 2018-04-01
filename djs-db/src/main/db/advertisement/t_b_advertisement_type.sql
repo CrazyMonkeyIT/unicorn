@@ -28,9 +28,7 @@ CREATE TABLE `t_b_advertisement_type` (
 -- ----------------------------
 -- Records of t_b_advertisement_type
 -- ----------------------------
-INSERT INTO `t_b_advertisement_type` VALUES ('1', '超链接广告');
-INSERT INTO `t_b_advertisement_type` VALUES ('2', '路演主题广告');
-INSERT INTO `t_b_advertisement_type` VALUES ('3', '专题广告');
-INSERT INTO `t_b_advertisement_type` VALUES ('4', '讲师广告');
-INSERT INTO `t_b_advertisement_type` VALUES ('5', '指定路演广告');
-INSERT INTO `t_b_advertisement_type` VALUES ('6', 'VIP广告');
+INSERT INTO `t_b_advertisement_type` VALUES ('1', '专题广告');
+INSERT INTO `t_b_advertisement_type` VALUES ('2', '讲师广告');
+INSERT INTO `t_b_advertisement_type` VALUES ('3', '指定路演广告');
+INSERT INTO `t_b_advertisement_type` VALUES ('4', 'VIP广告');

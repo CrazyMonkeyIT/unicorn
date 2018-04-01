@@ -136,7 +136,7 @@ public class LecturerController extends BaseController{
         return result;
     }
 
-    @RequestMapping(value = "/chief/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/mini/chief/list", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult getChiefList(){
         BaseResult result = new BaseResult(true);

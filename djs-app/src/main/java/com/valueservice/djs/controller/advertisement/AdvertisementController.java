@@ -1,6 +1,7 @@
 package com.valueservice.djs.controller.advertisement;
 
 import com.github.pagehelper.PageInfo;
+import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;
@@ -77,6 +78,19 @@ public class AdvertisementController {
             return false;
         }
         return true;
+    }
+
+    @RequestMapping(value = "/mini/advertisement/list", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getAdvertisementList(){
+        BaseResult result = new BaseResult(true);
+        try {
+            result.setObj(advertisementService.selectValidAdvertisement());
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
     }
 
 }

@@ -27,6 +27,14 @@ public class RoomDO {
 
     private Date createTime;
 
+    private Integer subjectId;
+
+    private Integer lecturerId;
+
+    private String roomDesc;
+
+    private String courseware;
+
     private String members;
 
     public Long getId() {
@@ -123,6 +131,38 @@ public class RoomDO {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public Integer getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(Integer lecturerId) {
+        this.lecturerId = lecturerId;
+    }
+
+    public String getRoomDesc() {
+        return roomDesc;
+    }
+
+    public void setRoomDesc(String roomDesc) {
+        this.roomDesc = roomDesc == null ? null : roomDesc.trim();
+    }
+
+    public String getCourseware() {
+        return courseware;
+    }
+
+    public void setCourseware(String courseware) {
+        this.courseware = courseware == null ? null : courseware.trim();
     }
 
     public String getMembers() {
