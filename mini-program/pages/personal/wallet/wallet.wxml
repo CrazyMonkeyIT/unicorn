@@ -1,5 +1,5 @@
 <view class="globle_back_view">
-  <view class="top" style='background-image:url(../../../images/personal/wallet/back.jpg)'>
+  <view class="top" style='background-image:url({{serverPath}}/static/extranet/wallet_back.jpg)'>
     <view style="height:80rpx;"></view>
     <view class="money-wrp" style="flex-direction:row;" >
       <view class="money-item" bindtap="toIncome">
@@ -24,7 +24,7 @@
           </view>
         </navigator>
         <view class="navigator-bottom-border"></view>
-        <navigator class="navigator">
+        <navigator class="navigator" bindtap='toWithdraw'>
           <view class="navigator-icon"><image src="../../../images/personal/wallet/back_money.png"/></view>
           <view class="navigator-content">
             <view class="navigator-text">提现</view>

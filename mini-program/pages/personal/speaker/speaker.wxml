@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container globle_back_view" >
   <view class="page-body">
 
     <view hidden="{{applyDivDisplay}}">  
@@ -71,56 +71,132 @@
         </view>
       </form>
     </view>
-  </view>
+  
   
 
-  <view hidden="{{inviteCodeDiv}}">
-    <form bindsubmit="submitInvite">
-      <view class="btn-area">
-        <button type="primary" formType="submit">确认邀请码</button>
-        <button bindtap="returnRegister">返回注册</button>
+    <view hidden="{{inviteCodeDiv}}">
+      <form bindsubmit="submitInvite">
+        <view style="height:200rpx;"></view>
+        <view class="page-section">
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                  <input class="weui-input" name="inviteCode" placeholder="" />
+                </view>
+              </view>
+            </view>
+        </view>
+        <view class="btn-area">
+          <button type="primary" formType="submit">确认邀请码</button>
+          <button bindtap="returnRegister">返回注册</button>
+        </view>
+      </form>
+    </view>
+
+    <view hidden="{{inviteInfoDiv}}">
+      <view class="navigator-box navigator-box-show">
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >姓名</view>
+              <view class='navigator-righttext-grey'>
+                {{inviteInfo.lecturerName}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >手机号</view>
+              <view class='navigator-righttext-grey'>
+                {{inviteInfo.phone}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >公司</view>
+              <view class='navigator-righttext-grey'>
+                {{inviteInfo.company}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >职位</view>
+              <view class='navigator-righttext-grey'>
+                {{inviteInfo.position}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >讲师等级</view>
+              <view class='navigator-righttext-grey'>
+                {{inviteInfo.gradeName}}
+              </view>
+            </view>
+        </view>
       </view>
-    </form>
-  </view>
+     
+      <view class="btn-area">
+          <button type="primary" bindtap='sureInfo'>确认为本人</button>
+          <button bindtap="returnRegister">返回注册</button>
+      </view>
+    </view>
 
-  <view hidden="{{inviteInfoDiv}}">
-    <view>
-      姓名：{{inviteInfo.lecturerName}}
+    <view hidden="{{lecturerInfoDiv}}" >
+      <view style="background-image:url({{serverPath}}/static/extranet/speaker_back.jpg);padding:10rpx;width:100%;display:inline-flex;">
+        <view wx:if="{{lecturerInfo.headPhotoFile == null}}" class="userinfo-avatar" style='background-image:url({{serverPath}}/static/extranet/headPhoto01.jpg);height:160rpx;width:160rpx;border-radius:40rpx;background-size:100% 100%;flex:1;' >
+        </view>
+        <image wx:if="{{lecturerInfo.headPhotoFile != null}}" src='{{lecturerInfo.headPhotoFile}}' style="height:160rpx;width:160rpx;border-radius:40rpx;flex:1;"></image>
+        <view style="float:left;flex:3.5;color:#fff;padding-left:20rpx;">
+          <view style="height:80rpx;line-height:80rpx;">{{lecturerInfo.lecturerName}}</view>
+          <view style="height:80rpx;">{{lecturerInfo.gradeName}}</view>
+        </view>
+      </view>
+      
+      <view class="navigator-box navigator-box-show">
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >联系方式</view>
+              <view class='navigator-righttext-grey'>
+                {{lecturerInfo.phone}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >公司</view>
+              <view class='navigator-righttext-grey'>
+                {{lecturerInfo.company}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >职位</view>
+              <view class='navigator-righttext-grey'>
+                {{lecturerInfo.position}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content">
+              <view class="navigator-text" >个人简介</view>
+              <view class='navigator-righttext-grey'>
+                {{lecturerInfo.introduction}}
+              </view>
+            </view>
+        </view>
+      </view>
+     
     </view>
-    <view>
-      手机号：{{inviteInfo.phone}}
-    </view>
-    <view>
-      公司：{{inviteInfo.company}}
-    </view>
-    <view>
-      职位：{{inviteInfo.position}}
-    </view>
-    <view class="btn-area">
-        <button type="primary" bindtap='sureInfo'>确认为本人</button>
-        <button bindtap="returnRegister">返回注册</button>
-    </view>
-  </view>
 
-  <view hidden="{{lecturerInfoDiv}}">
-    <view>
-      <image src='{{lecturerInfo.headPhotoFile}}'></image>
-    </view>
-    <view>
-      姓名：{{lecturerInfo.lecturerName}}
-    </view>
-    <view>
-      手机号：{{lecturerInfo.phone}}
-    </view>
-    <view>
-      讲师等级：{{lecturerInfo.gradeName}}
-    </view>
-    <view>
-      公司：{{lecturerInfo.company}}
-    </view>
-    <view>
-      职位：{{lecturerInfo.position}}
-    </view>
   </view>
-
 </view>

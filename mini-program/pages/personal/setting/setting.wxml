@@ -11,7 +11,7 @@
     </view> 
     
     <view class="navigator-box navigator-box-show">
-        <navigator class="navigator">
+        <navigator class="navigator" bindtap='clearCache'>
           <view class="navigator-content">
             <view class="navigator-text">缓存清理</view>
             <view class="navigator-arrow"></view>
@@ -20,7 +20,7 @@
     </view> 
 
     <view class="navigator-box navigator-box-show">
-        <navigator class="navigator">
+        <navigator class="navigator" url="opinion-feedback/opinion-feedback">
           <view class="navigator-content">
             <view class="navigator-text">意见反馈</view>
             <view class="navigator-arrow"></view>
@@ -29,7 +29,7 @@
     </view> 
 
     <view class="navigator-box navigator-box-show">
-        <navigator class="navigator">
+        <navigator class="navigator" url="about/about">
           <view class="navigator-content">
             <view class="navigator-text">关于我们</view>
             <view class="navigator-arrow"></view>

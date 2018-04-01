@@ -1,6 +1,6 @@
 <view class="globle_back_view">
   
-  <view class="person_avart" style='background-image:url(../../../images/personal/vip/vip_back.jpg)'>
+  <view class="person_avart" style='background-image:url({{serverPath}}/static/extranet/vip_back.jpg)'>
     <view class="userinfo">
         <block>
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>

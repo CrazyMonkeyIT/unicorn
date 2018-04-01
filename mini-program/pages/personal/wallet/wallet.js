@@ -6,8 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     incomeAmount:"0.00",
-    shopingAmount:"0.00"
+    shopingAmount:"0.00",
+    withdrawCash:'0.00'
   },
 
   /**
@@ -20,6 +22,12 @@ Page({
     if(!!app.globalData.user){
       this.setData({
         shopingAmount: app.globalData.user.totalPayAmount
+      })
+    }
+
+    if (!!app.globalData.serverPath) {
+      this.setData({
+        serverPath: app.globalData.serverPath
       })
     }
   },
@@ -37,12 +45,14 @@ Page({
       success: function (res) {
         if (!!res.data) {
           that.setData({
-            incomeAmount: res.data.totalIncome + ".00"
+            incomeAmount: res.data.totalIncome + ".00",
+            withdrawCash: res.data.withdrawCash + ".00"
           })
         }
       }
     })
   },
+  //查看收益
   toIncome:function(){
     console.log(app.globalData.lecturerInfo);
     if (!app.globalData.lecturerInfo){
@@ -52,14 +62,22 @@ Page({
       url: 'detail/detail?openId=' + app.globalData.user.openId + '&lecturerId=' + app.globalData.lecturerInfo.id + '&type=1'
     })
   },
+  //查看支出
   toShopping:function(){
     wx.navigateTo({
       url: 'detail/detail?openId=' + app.globalData.user.openId + '&type=2'
     })
   },
+  //查看收支流水
   toAll:function(){
     wx.navigateTo({
       url: 'detail/detail?openId=' + app.globalData.user.openId + '&type=3'
+    })
+  },
+  //进入提现页面
+  toWithdraw:function(){
+    wx.navigateTo({
+      url: 'withdraw/withdraw?withdrawCash=' + this.data.withdrawCash
     })
   },
   /**

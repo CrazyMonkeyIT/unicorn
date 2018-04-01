@@ -1,6 +1,6 @@
 <!--pages/person/person.wxml-->
 <view class="globle_back_view">
-  <view class="person_avart" style='background-image:url(../../images/personal/personal_back.png)'>
+  <view class="person_avart" style='background-image:url({{serverPath}}/static/extranet/personal_back.png)'>
     <view class="userinfo">
         
           

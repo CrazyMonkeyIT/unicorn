@@ -1,0 +1,48 @@
+<view class="globle_back_view">
+  <form bindsubmit="submitForm" >
+    <view class="navigator-box navigator-box-show">
+      <view class="navigator" hover-class="none">
+          <view class="navigator-content">
+            <view class="navigator-text" >提现账户</view>
+            <view class='navigator-righttext-grey'>
+              <image src='../../../../images/personal/wallet/wechat_icon.png' style="height:45rpx;width:65rpx;"></image>
+            </view>
+            <view class='navigator-righttext-grey' >
+              微信零钱
+            </view>
+            <!--<view class="navigator-arrow"></view>-->
+          </view>
+      </view>
+      <view class="navigator-bottom-border"></view>
+      <view class="navigator" style="height:140rpx;" hover-class="none">
+            <view class="navigator-content">
+                <view style="display:inline-flex;width:100%;">
+                  <text style="flex:1;font-size:50rpx;">¥</text>
+                  <input style="flex:9;" class="weui-input" name="amount" value="{{amount}}" bindinput="inputKeyDown" 
+                       placeholder="请输入提现金额" type='digit'/>
+                </view>
+            </view>
+      </view>
+      <view class="navigator-bottom-border"></view>
+      <view class="navigator" hover-class="none" style="font-size:28rpx;color:#B1B1B1;">
+          <view class="navigator-content">
+            <view hidden="{{display1}}" class="navigator-text" >
+              可提现余额  ¥ {{withdrawCash}}，
+              <text style="color:#F46B30;" bindtap='allWithdraw'>全部提现</text>
+            </view>
+            <view hidden="{{display2}}" style="color:red;">
+              输入金额大于可提现余额
+            </view>
+          </view>
+      </view>
+    </view>
+
+    <view style="margin-top:100rpx;text-align:center;padding:0rpx 40rpx;">
+      <button type="primary" formType="submit" disabled="{{buttonDisabled}}">确认提交</button>
+      <view style="height:36rpx;"></view>
+      <text style="color:#F46B30;text-decoration:underline;" bindtap='lookWithdrawNotice'>查看提现说明</text>
+    </view>
+  
+  
+  </form>
+</view>

@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     hasUserInfo: false,
     userInfo: {},
     lecturerInfo:null,
@@ -45,6 +46,12 @@ Page({
       })
     }else{
       this.getLecturerInfo();
+    }
+
+    if(!!app.globalData.serverPath){
+      this.setData({
+        serverPath: app.globalData.serverPath
+      })
     }
   },
   //获取讲师信息

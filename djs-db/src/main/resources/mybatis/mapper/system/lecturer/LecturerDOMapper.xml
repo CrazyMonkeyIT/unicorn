@@ -50,8 +50,8 @@
   </delete>
 
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerDO">
-    <selectKey keyProperty="userId" resultType="java.lang.Integer">
-      select LAST_INSERT_ID() as user_id
+    <selectKey keyProperty="id" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as id
     </selectKey>
     insert into t_b_lecturer
     <trim prefix="(" suffix=")" suffixOverrides=",">

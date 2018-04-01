@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     tempFilePath: '',
     applyDivDisplay:true,
     inviteCodeDiv:true,
@@ -32,6 +33,11 @@ Page({
       })
     }
     
+    if (!!app.globalData.serverPath){
+      this.setData({
+        serverPath: app.globalData.serverPath
+      })
+    }
   },
 
   /**
@@ -102,15 +108,15 @@ Page({
   submitForm:function(e){
     
     wx.uploadFile({
-      url: app.globalData.serverPath + '/lecturer/register/saveHeadPhoto',
+      url: app.globalData.serverPath + '/import/up/lecturerHeadPhoto',
       filePath: this.data.tempFilePath,
-      name: 'file',
+      name: 'files',
       success: function (res) {
-        if(res.result){
+        if(!!res.data){
           wx.request({
             url: app.globalData.serverPath + '/lecturer/register/submit',
             data: {
-              headPhotoFile: res.obj,
+              headPhotoFile: res.data[0].filePath,
               lecturerName: e.detail.value.lecturerName,
               openId: getApp().globalData.user.openId,
               phone: e.detail.value.phone,
@@ -156,27 +162,28 @@ Page({
   },
   //提交邀请码
   submitInvite:function(e){
+    var that = this;
+    var invite = e.detail.value.inviteCode;
+    if (!invite){
+      app.alert("请输入邀请码");
+    }
     wx.request({
       url: app.globalData.serverPath + '/lecturer/invite/getLecturerByInviteCode',
       data: {
-        inviteCode: e.detail.value.inviteCode
+        inviteCode: invite
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
-            inviteInfo:res.obj,
+        if (res.data.result) {
+          that.setData({
+            inviteInfo:res.data.obj,
             inviteCodeDiv: true,
             inviteInfoDiv: false
           })
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res.data.message);
         }
       }
     })
@@ -191,28 +198,24 @@ Page({
   },
   //确认邀请信息
   sureInfo:function(){
-    
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/lecturer/invite/accept',
       data: {
-        inviteCode: this.data.inviteInfo.inviteCode,
+        inviteCode: that.data.inviteInfo.inviteCode,
         openId: getApp().globalData.user.openId
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
+        if (res.data.result) {
+          that.setData({
             inviteInfoDiv: true,
             lecturerInfoDiv:false
           })
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res.data.message);
         }
       }
     })

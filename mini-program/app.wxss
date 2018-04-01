@@ -3,7 +3,9 @@
   background-color: #EFEFF4;
   height :100%;
   font-size: 14px;
-  font-family:"微软雅黑","黑体","宋体";
+  /*font-family:"微软雅黑","黑体","宋体";*/
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  color:#5F615E;
 }
 
 .empty_tip{

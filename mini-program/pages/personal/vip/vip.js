@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     userInfo: {},
     vipList:null,
     isVipDiv:true,
@@ -27,7 +28,16 @@ Page({
         this.setData({ isVipDiv: false })
       }
     }
+
+    if (!!app.globalData.serverPath) {
+      this.setData({
+        serverPath: app.globalData.serverPath
+      })
+    }
+
     this.loadVipList();
+
+
   }, 
   //加载会员类型列表
   loadVipList:function(){

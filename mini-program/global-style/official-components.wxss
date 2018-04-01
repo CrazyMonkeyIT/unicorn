@@ -85,6 +85,12 @@
   text-align: right;
   color:#F76C1E;
 }
+.navigator-righttext-grey{
+  padding-right: 16rpx;
+  position: relative;
+  text-align: right;
+  color:#B1B1B1;
+}
 .navigator-arrow {
   padding-right: 26rpx;
   position: relative;

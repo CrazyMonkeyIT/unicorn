@@ -1,0 +1,4 @@
+/* pages/personal/wallet/withdraw/withdraw.wxss */
+button{
+  background-color: #F76A2B !important;
+}
