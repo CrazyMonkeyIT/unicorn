@@ -22,31 +22,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-       
-    if (!!app.globalData.user){
-      this.setData({
-        userInfo: app.globalData.user,
-        hasUserInfo:true
-      })
-      //判断该用户是否是vip
-      if (this.data.userInfo.isVip == 0){
-        console.log("该用户还未是vip");
-        this.setData({ noVip:false});
-      }else{
-        console.log("该用户已是vip");
-        this.setData({ alreadyVip: false });
-      }
-    }
-
-    if (!!app.globalData.lecturerInfo){
-      this.setData({
-        lecturerInfo: app.globalData.lecturerInfo,
-        noRegister: true,
-        alreadyRegister: false
-      })
-    }else{
-      this.getLecturerInfo();
-    }
+    var that = this;   
+    
 
     if(!!app.globalData.serverPath){
       this.setData({
@@ -60,21 +37,20 @@ Page({
     wx.request({
       url: app.globalData.serverPath + '/lecturer/getByOpenId',
       data: {
-        openId: getApp().globalData.user.openId
+        openId: app.globalData.user.openId
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
         if (res.data.result) {
+          app.globalData.lecturerInfo = res.data.obj;
           that.setData({
-            lecturerInfo: res.data.obj,
+            lecturerInfo: getApp().globalData.lecturerInfo,
             noRegister: true,
             alreadyRegister: false
-          })
-          app.globalData.lecturerInfo = res.data.obj;
+          });
         } else {
-          console.log("该用户还不是讲师");
           that.setData({
             noRegister: false
           })
@@ -93,7 +69,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (!!app.globalData.user) {
+      this.setData({
+        userInfo: app.globalData.user,
+        hasUserInfo: true
+      })
+      //判断该用户是否是vip
+      if (this.data.userInfo.isVip == 0) {
+        console.log("该用户还未是vip");
+        this.setData({ noVip: false });
+      } else {
+        console.log("该用户已是vip");
+        this.setData({ alreadyVip: false });
+      }
+    }
+
+    if (!!app.globalData.lecturerInfo) {
+      this.setData({
+        lecturerInfo: app.globalData.lecturerInfo,
+        noRegister: true,
+        alreadyRegister: false
+      })
+    } else {
+      this.getLecturerInfo();
+    }
   },
 
   /**

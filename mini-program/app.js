@@ -34,6 +34,13 @@ App({
       duration: 2000
     })
   },
+  alertSuccess:function(centent){
+    wx.showToast({
+      title: centent,
+      icon: 'success',
+      duration: 2000
+    })
+  },
   globalData: {
     //用户信息
     user:null,

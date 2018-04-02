@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -74,8 +76,9 @@ public class LecturerRegisterController extends BaseController{
      * @param lecturer
      * @return
      */
-    @PostMapping("/submit")
-    public BaseResult submit(LecturerRegisterDO lecturer){
+    @RequestMapping("/submit")
+    @ResponseBody
+    public BaseResult submit(@RequestBody LecturerRegisterDO lecturer){
         BaseResult result = new BaseResult();
         try{
             lecturerRegisterService.insertOrUpdate(lecturer);

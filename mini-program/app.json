@@ -21,7 +21,8 @@
     "pages/personal/wallet/withdraw-ok/withdraw-ok",
     "pages/personal/wallet/withdraw-notice/withdraw-notice",
     "pages/personal/setting/opinion-feedback/opinion-feedback",
-    "pages/personal/setting/about/about"
+    "pages/personal/setting/about/about",
+    "pages/personal/speaker/register-success/register-success"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

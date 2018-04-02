@@ -27,7 +27,7 @@ CREATE TABLE `t_b_room` (
   `creator_id` bigint(20) DEFAULT NULL COMMENT '创建者ID',
   `name` varchar(255) DEFAULT NULL COMMENT '房间名称',
   `subject_id` int(11) NULL COMMENT '专题ID',
-  `lecturer_id` int(11) NOT NULL COMMENT '讲师ID'，
+  `lecturer_id` int(11) NOT NULL COMMENT '讲师ID',
   `room_desc` VARCHAR(500) NULL COMMENT '房间描述',
   `type` int(11) DEFAULT NULL COMMENT '房间內型 0：VIP 1：路演',
   `count` int(11) DEFAULT NULL COMMENT '房间总人数',
