@@ -1,14 +1,62 @@
 
 const config = require("../config.js")
-const login = function(){
+
+const login = function(callback){
   var userData  = wx.getStorageSync('miniUser');//从本地缓存中读取用户信息
   if(!userData){//如果没有读取到用户信息，则进行授权
-    loginOper();
-    userData = wx.getStorageSync('miniUser');
+  loginOper(callback);
+  }else if(callback){
+    callback();
   }
   return userData;
 }
-const loginOper = function(){
+
+//异步方法
+const asynchronous = function (result, callback){
+  wx.request({
+    url: config.service.saveUser,
+    data: {
+      openId: result.data.openId,
+      gender: result.data.gender,
+      country: result.data.country,
+      avatarUrl: result.data.avatarUrl,
+      city: result.data.city,
+      province: result.data.province,
+      nickName: result.data.nickName
+    },
+    method: 'POST',
+    dataType: 'json',
+    responseType: 'text',
+    success: function (saveRes) {
+      if (saveRes.data.result == true) {
+        saveUserStorage(result, saveRes, callback);
+      }
+    }
+  })
+}
+//保存用户信息到缓存
+const saveUserStorage = function (result, saveRes, callback){
+  console.log(saveRes);
+  wx.setStorageSync('miniUser', {
+    id: saveRes.data.obj.id,
+    openId: result.data.openId,
+    gender: result.data.gender,
+    country: result.data.country,
+    avatarUrl: result.data.avatarUrl,
+    city: result.data.city,
+    province: result.data.province,
+    nickName: result.data.nickName,
+    isVip: saveRes.data.obj.isVip,
+    vipInvalidTime: saveRes.data.obj.vipInvalidTime,
+    vipInvalidDay: saveRes.data.obj.vipInvalidDay,
+    totalPayAmount: saveRes.data.obj.totalPayAmount
+  });
+  if(callback){
+    callback();
+  }
+}
+
+const loginOper = function(callback){
   wx.login({
     success: function (res) {
       if (res.code) {
@@ -25,38 +73,7 @@ const loginOper = function(){
               method: 'GET',
               dataType: 'json',
               success: function (result) {
-                wx.request({
-                  url: config.service.saveUser,
-                  data: {
-                    openId: result.data.openId,
-                    gender: result.data.gender,
-                    country: result.data.country,
-                    avatarUrl: result.data.avatarUrl,
-                    city: result.data.city,
-                    province: result.data.province,
-                    nickName: result.data.nickName
-                  },
-                  method: 'POST',
-                  dataType: 'json',
-                  responseType: 'text',
-                  success: function(saveRes) {
-                    if (saveRes.data.result == true){
-                      wx.setStorageSync('miniUser', {
-                        id: result.data.id,
-                        openId: result.data.openId,
-                        gender: result.data.gender,
-                        country: result.data.country,
-                        avatarUrl: result.data.avatarUrl,
-                        city: result.data.city,
-                        province: result.data.province,
-                        nickName: result.data.nickName,
-                        isVip: saveRes.data.obj.isVip,
-                        vipInvalidTime: saveRes.data.obj.vipInvalidTime,
-                        vipInvalidDay: saveRes.data.obj.vipInvalidDay
-                      });
-                    }
-                  }
-                })
+                asynchronous(result,callback);
               }
             })
           }

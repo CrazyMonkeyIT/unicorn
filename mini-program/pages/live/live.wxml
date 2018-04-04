@@ -10,8 +10,8 @@
     <!-- 我是哈哈 -->  
       <swiper-item> 
         <view> 
-          <navigator open-type="navigate" url="/pages/live/chat/chat">
-      <button size="mini"> 我的直播间 </button>
+          <navigator open-type="navigate" url="/pages/live/chat/chat?roomId=123">
+          <image src="{{testImg}}" mode="aspectFit" style="width: 100%;"></image>
     </navigator>
         </view>  
       </swiper-item>  

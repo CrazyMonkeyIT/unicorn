@@ -1,12 +1,14 @@
 // pages/personal/vip/vip.js
 const app = getApp();
 const paymentUtils = require("../../../global-js/paymentUtil.js");
+const userUtils = require("../../../global-js/userUtil.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     userInfo: {},
     vipList:null,
     isVipDiv:true,
@@ -26,7 +28,16 @@ Page({
         this.setData({ isVipDiv: false })
       }
     }
+
+    if (!!app.globalData.serverPath) {
+      this.setData({
+        serverPath: app.globalData.serverPath
+      })
+    }
+
     this.loadVipList();
+
+
   }, 
   //加载会员类型列表
   loadVipList:function(){
@@ -44,15 +55,17 @@ Page({
       }
     })
   },
-  //开通会员
+  //开通会员-开启支付
   openMember:function(e){
     var vipid = e.target.dataset.vipid;
     var money = e.target.dataset.money;
     paymentUtils.pay("开通VIP", (money * 100), function(){
-      saveOpenMemberRecord(vipid);
+      handleOpenMember(vipid);
     });
   },
-  saveOpenMemberRecord:function(vipId){
+  //处理用户开通会员
+  handleOpenMember:function(vipId){
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/vip/openMember',
       data:{
@@ -62,10 +75,16 @@ Page({
       success:function(res){
         if (res.data.result){
           //此处更新用户的信息
-          app.reloadUser();
-          wx.navigateBack({
-            delta: 0
-          })
+          app.reloadUser(function(){
+            that.setData({
+              userInfo: app.globalData.user
+            })
+            if (this.data.userInfo.isVip == 0) {
+              this.setData({ isNotVipDiv: false, isVipDiv:true })
+            } else {
+              this.setData({ isNotVipDiv: true, isVipDiv: false })
+            }
+          });
         }
       }
     })

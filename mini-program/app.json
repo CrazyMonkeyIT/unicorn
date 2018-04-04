@@ -14,7 +14,15 @@
     "pages/personal/wallet/wallet",
     "pages/personal/vip/vip",
     "pages/personal/account/account",
-    "pages/personal/speaker/speaker"
+    "pages/personal/speaker/speaker",
+    "pages/personal/wallet/detail/detail",
+    "pages/home/chief/chief",
+    "pages/personal/wallet/withdraw/withdraw",
+    "pages/personal/wallet/withdraw-ok/withdraw-ok",
+    "pages/personal/wallet/withdraw-notice/withdraw-notice",
+    "pages/personal/setting/opinion-feedback/opinion-feedback",
+    "pages/personal/setting/about/about",
+    "pages/personal/speaker/register-success/register-success"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
@@ -22,10 +30,11 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#EFEFF4",
     "enablePullDownRefresh": false,
-    "backgroundTextStyle": "dark"
+    "backgroundTextStyle": "dark",
+    "color": "#5F615E"
   },
   "tabBar": {
-    "color": "#000000",
+    "color": "#5F615E",
     "backgroundColor": "#FFFFFF",
     "selectedColor": "#1296DB",
     "borderStyle": "black",

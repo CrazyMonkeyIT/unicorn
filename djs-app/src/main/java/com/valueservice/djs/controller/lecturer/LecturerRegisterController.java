@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -70,42 +72,13 @@ public class LecturerRegisterController extends BaseController{
     }
 
     /**
-     * 上传头像
-     * @param file
-     * @return
-     */
-    @PostMapping("/saveHeadPhoto")
-    public BaseResult saveHeadPhoto(MultipartFile file){
-        BaseResult result = new BaseResult();
-        if(Objects.isNull(file)){
-            return result;
-        }
-        try {
-            File userFile = new File(String.format("%s/%s", filePath, "head"));
-            if (!userFile.exists() && !userFile.isDirectory()) {
-                userFile.mkdir();
-            }
-            String fileAllName = file.getOriginalFilename();
-            String suffixName = fileAllName.substring(fileAllName.indexOf("."), fileAllName.length());
-            String fileNewName = String.format("%s%s", System.currentTimeMillis(),suffixName);
-            String currentFilePath = String.format("%s/%s", userFile.getPath(), fileNewName);
-            File localFile = new File(currentFilePath);
-            file.transferTo(localFile);
-            result.setResult(true);
-            result.setObj(fileNewName);
-        }catch (Exception ex){
-            LOGGER.error("上传讲师头像异常",ex);
-        }
-        return result;
-    }
-
-    /**
      * 提交注册信息
      * @param lecturer
      * @return
      */
-    @PostMapping("/submit")
-    public BaseResult submit(LecturerRegisterDO lecturer){
+    @RequestMapping("/submit")
+    @ResponseBody
+    public BaseResult submit(@RequestBody LecturerRegisterDO lecturer){
         BaseResult result = new BaseResult();
         try{
             lecturerRegisterService.insertOrUpdate(lecturer);

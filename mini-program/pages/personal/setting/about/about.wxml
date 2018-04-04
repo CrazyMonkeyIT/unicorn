@@ -1,0 +1,7 @@
+<!--pages/personal/setting/about/about.wxml-->
+<view style="width:100%;text-align:center;padding-top:150rpx;">
+  <view ><text>独角兽智库</text></view>
+  <view><text>https://dujiaoshou.com</text></view>
+  <view style="color:#999;font-size:24rpx;position:absolute;bottom:20rpx;width:100%;"><text>Cpoyright© 2018 djs. All Rights Reserved.</text></view>
+</view>
+

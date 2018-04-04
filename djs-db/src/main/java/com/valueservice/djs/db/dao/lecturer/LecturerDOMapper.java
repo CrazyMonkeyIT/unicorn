@@ -19,4 +19,6 @@ public interface LecturerDOMapper {
     List<LecturerDO> selectAll();
 
     LecturerDO selectByOpenId(@Param("openId")String openId);
+
+    List<LecturerDO> selectByChief(@Param(value = "isChief") String isChief);
 }

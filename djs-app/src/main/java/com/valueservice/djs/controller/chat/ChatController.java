@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ChatController {
@@ -28,20 +27,6 @@ public class ChatController {
     public List<RoomContentShow> queryChatHistory(@RequestBody RoomContentDO roomContent){
         //Long roomId = params.get("roomId") != null?Long.parseLong(params.get("roomId").toString()):0L;
         return roomContentService.queryContentsByRoomId(roomContent.getRoomid(),roomContent.getId());
-    }
-
-    /**
-     * 临时用来测试聊天内容存储的Controller
-     * @param roomContentShow
-     * @return
-     */
-    @RequestMapping(value = "/minigram/contentTest", method = RequestMethod.POST)
-    @ResponseBody
-    public BaseResult savechatContentTest(@RequestBody RoomContentShow roomContentShow){
-        roomContentService.saveContent(roomContentShow);
-        BaseResult result = new BaseResult();
-        result.setResult(true);
-        return result;
     }
 
     @RequestMapping(value = "/minigram/checkUserPermission", method = RequestMethod.POST)

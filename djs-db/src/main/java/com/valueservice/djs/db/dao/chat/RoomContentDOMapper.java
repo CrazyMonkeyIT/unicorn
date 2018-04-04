@@ -17,7 +17,9 @@ public interface RoomContentDOMapper {
 
     int updateByPrimaryKeySelective(RoomContentDO record);
 
+    int updateByPrimaryKeyWithBLOBs(RoomContentDO record);
+
     int updateByPrimaryKey(RoomContentDO record);
 
-    List<RoomContentShow> selectContentShowByRoom(@Param("roomid") Integer roomid, @Param("id")Integer id);
+    List<RoomContentShow> selectContentShowByRoom(@Param("roomId") Integer roomId, @Param("id")Integer id);
 }

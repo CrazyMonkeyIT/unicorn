@@ -25,8 +25,17 @@ public class MiniUserService {
             return record;
         }else {
             record.setId(existsUser.getId());
+            if(existsUser.getIsVip() == 1){
+                int surplusDay = DateUtil.daysBetween(new Date(),existsUser.getVipInvalidTime());
+                if(surplusDay < 0){
+                    //表示该用户VIP已过期
+                    existsUser.setIsVip(0);
+                    record.setIsVip(0);
+                }
+
+                existsUser.setVipInvalidDay(surplusDay);
+            }
             miniUserDOMapper.updateByPrimaryKeySelective(record);
-            existsUser.setVipInvalidDay(DateUtil.daysBetween(existsUser.getVipInvalidTime(),new Date()));
             return existsUser;
         }
     }

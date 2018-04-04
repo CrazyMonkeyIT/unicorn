@@ -1,0 +1,20 @@
+<view class="globle_back_view" style="padding:24rpx;">
+  <view style="height:100rpx;"></view>
+  <view style="text-align:center;margin-bottom:50rpx;">
+    <text style="color:#F76A2B;">  ➜  </text>
+    <text style="font-size:30rpx;color:#000;">提现说明</text>
+    <text style="color:#F76A2B;">    </text>
+  </view>
+  <view>
+    目前只支持提现到微信零钱账户，暂不支持其他的提现方式。
+  </view>
+  <view style="height:100rpx;"></view>
+  <view style="text-align:center;margin-bottom:50rpx;">
+    <text style="color:#F76A2B;">  ➜  </text>
+    <text style="font-size:30rpx;color:#000;">到账时间</text>
+    <text style="color:#F76A2B;">    </text>
+  </view>
+  <view>
+    提现需后台审批，大约在1~2个工作日内完成，请耐心等待。
+  </view>
+</view>

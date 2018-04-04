@@ -1,0 +1,6 @@
+<view class="globle_back_view" style="padding:20rpx;">
+  <textarea auto-focus="true" style="height: 10em;width:100%;background-color:#fff;" placeholder="请提出您的宝贵意见..."/>
+  <view style="margin-top:60rpx;text-align:center;padding:0rpx 40rpx;">
+      <button type="primary" bindtap='submitOpinion' style='background-color: #F76A2B !important;'>提交</button>
+  </view>
+</view>

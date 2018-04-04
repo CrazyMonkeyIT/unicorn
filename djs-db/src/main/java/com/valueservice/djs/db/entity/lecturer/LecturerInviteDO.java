@@ -13,6 +13,8 @@ public class LecturerInviteDO {
 
     private Integer gradeId;
 
+    private String gradeName;
+
     private String phone;
 
     private String inviteCode;
@@ -24,6 +26,14 @@ public class LecturerInviteDO {
     private Date createTime;
 
     private Date updateTime;
+
+    public String getGradeName() {
+        return gradeName;
+    }
+
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
+    }
 
     public Integer getId() {
         return id;

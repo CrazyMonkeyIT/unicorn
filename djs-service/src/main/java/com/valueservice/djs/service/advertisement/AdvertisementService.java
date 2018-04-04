@@ -48,6 +48,10 @@ public class AdvertisementService {
         return pageInfo;
     }
 
+    public List<AdvertisementDO> selectValidAdvertisement(){
+        return advertisementDOMapper.selectAll();
+    }
+
     public void addAdvertisement(AdvertisementVO advertisementVO){
         AdvertisementDO advertisementDO = new AdvertisementDO();
         advertisementDO.setAdvertisementTypeId(advertisementVO.getAdvertisementTypeId());

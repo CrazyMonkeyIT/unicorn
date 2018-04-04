@@ -27,6 +27,8 @@ public class LecturerDO {
 
     private String position;
 
+    private String introduction;
+
     private String liveNumber;
 
     private String liveHours;
@@ -161,5 +163,13 @@ public class LecturerDO {
 
     public void setHeadPhotoFile(String headPhotoFile) {
         this.headPhotoFile = headPhotoFile;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

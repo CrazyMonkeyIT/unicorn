@@ -1,0 +1,32 @@
+<!--pages/personal/wallet/detail/detail.wxml-->
+<view style="display : inline-flex;width:100%;height:90rpx;font-weight:bold;padding-left:32rpx;line-height:90rpx;font-size:28rpx;">
+  <view style="flex:1;">金额</view>
+  <view style="flex:1;">描述</view>
+  <view style="flex:1;">创建时间</view>
+</view>
+<view class="navigator-bottom-border"></view>
+
+<view wx:if="{{list.length == 0}}">
+    <view style="width:100%;text-align:center;color:#999;font-size:28rpx;">暂无记录</view>
+</view>
+
+<view hidden="{{tradeRecordDiv}}" wx:for="{{list}}" wx:for-item="obj">
+  <view class="navigator" style="height:90rpx;" hover-class="none">
+        <view class="navigator-content" style="display : inline-flex;padding-left:20rpx;font-size:28rpx;">
+            <view style="flex:1;">{{obj.tradeAmount}}</view>
+            <view style="flex:1;">{{obj.tradeType}}</view>
+            <view style="flex:1;">{{obj.createTime}}</view>
+        </view>
+  </view>
+  <view class="navigator-bottom-border"></view>
+</view>
+<view hidden="{{incomeDiv}}" wx:for="{{list}}" wx:for-item="obj">
+  <view class="navigator" style="height:90rpx;" hover-class="none">
+        <view class="navigator-content" style="display : inline-flex;padding-left:20rpx;font-size:28rpx;">
+            <view style="flex:1;">{{obj.amount}}</view>
+            <view style="flex:1;">{{obj.incomeType}}</view>
+            <view style="flex:1;">{{obj.createTime}}</view>
+        </view>
+  </view>
+  <view class="navigator-bottom-border"></view>
+</view>

@@ -40,13 +40,14 @@
                             </td>
                             <td><#if data.createTime??>${(data.createTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                             <td>
-                                <#if data.status?? >
-                                <#else >
+                                <#if data.status == 'WAIT' >
                                     <div class="btn-overlap btn-group">
                                         <a onclick="examine(${data.id},'ALREADY')" class="btn btn-sm btn-white btn-primary" >
+                                            <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                                             通过
                                         </a>
                                         <a onclick="examine(${data.id},'REFUSE')" class="btn btn-sm btn-white btn-primary" >
+                                            <i class="ace-icon glyphicon glyphicon-remove blue"></i>
                                             拒绝
                                         </a>
                                     </div>

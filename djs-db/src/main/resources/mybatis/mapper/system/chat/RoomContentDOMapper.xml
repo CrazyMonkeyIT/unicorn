@@ -11,30 +11,37 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="active" jdbcType="INTEGER" property="active" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapExt" type="com.valueservice.djs.db.entity.chat.RoomContentShow">
-    <result column="avatarUrl" jdbcType="VARCHAR" property="avatarurl" />
-    <result column="openId" jdbcType="VARCHAR" property="openId" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomContentDO">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <resultMap extends="ResultMapWithBLOBs" id="ResultMapExt" type="com.valueservice.djs.db.entity.chat.RoomContentShow">
+    <result column="avatar_Url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, roomId, user_id, type, duration, url, create_time, active
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from t_b_room_content
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectContentShowByRoom" parameterType="java.lang.Integer" resultMap="ResultMapExt">
     select
-      a.id, a.roomId, a.user_id, a.type, a.duration, a.url, a.create_time, a.active,
-      b.avatarUrl,b.openId,b.nick_name
+    a.id, a.roomId, a.user_id, a.type, a.duration, a.url, a.create_time, a.active,
+    b.avatar_url,b.open_id,b.nick_name,a.content
     from t_b_room_content a inner join t_b_mini_user b on a.user_id = b.id
-    and a.roomId = #{roomid,jdbcType=INTEGER} and a.active = 1
+    and a.roomId = #{roomId,jdbcType=INTEGER} and a.active = 1
     and a.id > #{id,jdbcType=INTEGER}
     order by a.create_time ASC
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_b_room_content
     where id = #{id,jdbcType=INTEGER}
@@ -42,10 +49,12 @@
   <insert id="insert" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
     insert into t_b_room_content (id, roomId, user_id, 
       type, duration, url, 
-      create_time, active)
+      create_time, active, content
+      )
     values (#{id,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{type,jdbcType=VARCHAR}, #{duration,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{active,jdbcType=INTEGER})
+      #{createTime,jdbcType=TIMESTAMP}, #{active,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
     insert into t_b_room_content
@@ -74,6 +83,9 @@
       <if test="active != null">
         active,
       </if>
+      <if test="content != null">
+        content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -99,6 +111,9 @@
       </if>
       <if test="active != null">
         #{active,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -126,7 +141,22 @@
       <if test="active != null">
         active = #{active,jdbcType=INTEGER},
       </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">
+    update t_b_room_content
+    set roomId = #{roomid,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      duration = #{duration,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      active = #{active,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.RoomContentDO">

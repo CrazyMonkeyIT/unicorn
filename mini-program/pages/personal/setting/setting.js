@@ -14,7 +14,15 @@ Page({
   onLoad: function (options) {
   
   },
-
+  //清理缓存
+  clearCache:function(){
+    try {
+      wx.clearStorageSync();
+      getApp().alert("清理成功");
+    } catch (e) {
+      // Do something when catch error
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

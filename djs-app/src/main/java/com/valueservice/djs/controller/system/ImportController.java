@@ -57,6 +57,7 @@ public class ImportController {
                         prefixName += "(" + System.currentTimeMillis() + ")";
                         String currentFilePath = String.format("%s%s%s", userFilePath, prefixName, suffixName);
                         File localFile = new File(currentFilePath);
+                        localFile.setReadable(true);
                         file.transferTo(localFile);
                         String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefixName,suffixName);
                         map.put("filePath", httpPathForFile);

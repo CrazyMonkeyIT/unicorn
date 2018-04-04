@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 讲师邀请
@@ -67,7 +68,14 @@ public class LecturerInviteService {
      * @return
      */
     public LecturerInviteDO selectByInviteCode(Integer inviteCode){
-        return lecturerInviteDOMapper.selectByInviteCode(inviteCode);
+        LecturerInviteDO record = lecturerInviteDOMapper.selectByInviteCode(inviteCode);
+        if(!Objects.isNull(record)) {
+            LecturerGradeDO grade = lecturerGradeDOMapper.selectByPrimaryKey(record.getGradeId());
+            if(grade != null) {
+                record.setGradeName(grade.getGradeName());
+            }
+        }
+        return record;
     }
     /**
      * 接受邀请

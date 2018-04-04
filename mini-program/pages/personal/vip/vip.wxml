@@ -1,6 +1,6 @@
 <view class="globle_back_view">
   
-  <view class="person_avart" style='background-image:url(../../../images/personal/vip/vip_back.jpg)'>
+  <view class="person_avart" style='background-image:url({{serverPath}}/static/extranet/vip_back.jpg)'>
     <view class="userinfo">
         <block>
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -24,7 +24,7 @@
           <view class="navigator-content">
               <view class="navigator-text">您的VIP还有 <text style="color:#DFA863;">{{userInfo.vipInvalidDay}}</text> 天到期</view>
               <view class='navigator-righttext'>
-                <button class="mini-btn" type="primary" bindtap="openMember" size="mini">续费</button>
+                
               </view>
           </view>
     </view>

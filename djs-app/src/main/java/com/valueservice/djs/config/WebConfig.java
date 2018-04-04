@@ -176,8 +176,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/import/**", "anon");
         filterChainDefinitionMap.put("/minigram/**", "anon");
+        filterChainDefinitionMap.put("/mini/home/**", "anon");
         filterChainDefinitionMap.put("/lecturer/**", "anon");
         filterChainDefinitionMap.put("/vip/**", "anon");
+        filterChainDefinitionMap.put("/pay/**", "anon");
+        filterChainDefinitionMap.put("/wallet/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginSubmit", "anon");

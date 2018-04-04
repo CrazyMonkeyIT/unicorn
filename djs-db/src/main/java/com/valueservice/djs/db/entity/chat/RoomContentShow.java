@@ -22,8 +22,9 @@ public class RoomContentShow {
 
     private String openId;//用户openId
 
-    private String avatarurl;//用户头像链接
+    private String avatarUrl;//用户头像链接
 
+    private String content;//聊天内容
 
     private String nickName;//用户昵称
 
@@ -107,11 +108,19 @@ public class RoomContentShow {
         this.nickName = nickName;
     }
 
-    public String getAvatarurl() {
-        return avatarurl;
+    public String getContent() {
+        return content;
     }
 
-    public void setAvatarurl(String avatarurl) {
-        this.avatarurl = avatarurl;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

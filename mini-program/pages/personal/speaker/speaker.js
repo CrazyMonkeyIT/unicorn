@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serverPath:'',
     tempFilePath: '',
     applyDivDisplay:true,
     inviteCodeDiv:true,
@@ -32,6 +33,11 @@ Page({
       })
     }
     
+    if (!!app.globalData.serverPath){
+      this.setData({
+        serverPath: app.globalData.serverPath
+      })
+    }
   },
 
   /**
@@ -92,6 +98,7 @@ Page({
     wx.chooseImage({
       count: 1,
       success: function (res) {
+        console.log(res);
         that.setData({
           tempFilePath: res.tempFilePaths[0]
         })
@@ -100,48 +107,60 @@ Page({
   },
   //提交讲师申请
   submitForm:function(e){
-    
+    var lecturerName = e.detail.value.lecturerName;
+    var openId = app.globalData.user.openId;
+    var phone = e.detail.value.phone;
+    var company = e.detail.value.company;
+    var position = e.detail.value.position;
+    if (!lecturerName){
+      app.alert("讲师姓名必须填写");
+      return false;
+    }
+    if (!phone) {
+      app.alert("联系方式必须填写");
+      return false;
+    }
+    if (!company) {
+      app.alert("所在公司必须填写");
+      return false;
+    }
+    if (!position) {
+      app.alert("所在职位必须填写");
+      return false;
+    }
     wx.uploadFile({
-      url: app.globalData.serverPath + '/lecturer/register/saveHeadPhoto',
+      url: app.globalData.serverPath + '/import/up/lecturerHeadPhoto',
       filePath: this.data.tempFilePath,
-      name: 'file',
-      success: function (res) {
-        if(res.result){
+      name: 'files',
+      success: function (res1) {
+        console.log(res1);
+        if (!!res1.data){
           wx.request({
             url: app.globalData.serverPath + '/lecturer/register/submit',
             data: {
-              headPhotoFile: res.obj,
-              lecturerName: e.detail.value.lecturerName,
-              openId: getApp().globalData.user.openId,
-              phone: e.detail.value.phone,
-              company: e.detail.value.company,
-              position: e.detail.value.position
+              headPhotoFile: res1.data[0].filePath,
+              lecturerName: lecturerName,
+              openId: openId,
+              phone: phone,
+              company: company,
+              position: position
             },
+            method: 'POST',
             header: {
               'content-type': 'application/json'
             },
             success: function (res) {
-              if(res.result){
-                wx.showToast({
-                  title: '申请成功',
-                  icon: 'success',
-                  duration: 2000
+              if(res.data.result){
+                wx.redirectTo({
+                  url: 'register-success/register-success'
                 })
               }else{
-                wx.showToast({
-                  title: res.message,
-                  icon: 'success',
-                  duration: 2000
-                })
+                app.alert(res.data.message);
               }
             }
           })
         }else{
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res1.data.message);
         }
       }
     })
@@ -156,27 +175,28 @@ Page({
   },
   //提交邀请码
   submitInvite:function(e){
+    var that = this;
+    var invite = e.detail.value.inviteCode;
+    if (!invite){
+      app.alert("请输入邀请码");
+    }
     wx.request({
       url: app.globalData.serverPath + '/lecturer/invite/getLecturerByInviteCode',
       data: {
-        inviteCode: e.detail.value.inviteCode
+        inviteCode: invite
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
-            inviteInfo:res.obj,
+        if (res.data.result) {
+          that.setData({
+            inviteInfo:res.data.obj,
             inviteCodeDiv: true,
             inviteInfoDiv: false
           })
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res.data.message);
         }
       }
     })
@@ -191,55 +211,50 @@ Page({
   },
   //确认邀请信息
   sureInfo:function(){
-    
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/lecturer/invite/accept',
       data: {
-        inviteCode: this.data.inviteInfo.inviteCode,
+        inviteCode: that.data.inviteInfo.inviteCode,
         openId: getApp().globalData.user.openId
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
-            inviteInfoDiv: true,
-            lecturerInfoDiv:false
-          })
+        if (res.data.result) {
+          //重新获取讲师信息
+          that.getLecturerInfo(function(){
+            that.setData({
+              inviteInfoDiv: true,
+              lecturerInfoDiv: false,
+              lecturerInfo: app.globalData.lecturerInfo
+            })
+          });
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res.data.message);
         }
       }
     })
 
   },
   //获取讲师信息
-  getLecturerInfo:function(){
+  getLecturerInfo: function (callback) {
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/lecturer/getByOpenId',
       data: {
-        openId: getApp().globalData.user.openId
+        openId: app.globalData.user.openId
       },
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        if (res.result) {
-          this.setData({
-            lecturerInfo: res.obj
-          })
-          app.globalData.lecturerInfo = res.obj;
+        if (res.data.result) {
+          app.globalData.lecturerInfo = res.data.obj;
+          callback();
         } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'success',
-            duration: 2000
-          })
+          app.alert(res.data.message);
         }
       }
     })

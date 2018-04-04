@@ -63,7 +63,8 @@ public class LecturerInviteController extends BaseController {
      * @param inviteCode
      * @return
      */
-    @PostMapping("/getLecturerByInviteCode")
+    @RequestMapping("/getLecturerByInviteCode")
+    @ResponseBody
     public BaseResult getLecturerByInviteCode(Integer inviteCode){
         BaseResult result = new BaseResult();
         LecturerInviteDO record = lecturerInviteService.selectByInviteCode(inviteCode);

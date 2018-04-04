@@ -1,6 +1,7 @@
 package com.valueservice.djs.controller.advertisement;
 
 import com.github.pagehelper.PageInfo;
+import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;

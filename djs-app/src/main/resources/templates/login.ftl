@@ -61,7 +61,7 @@
     <div class='success'>
     </div>
     <div class='disclaimer' >
-        <p>欢迎登录中小企业商票信用风险测评预警系统</p>
+        <p>欢迎登录独角兽智库后台管理系统</p>
     </div>
 </div>
 <div class='authent'>

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -40,9 +41,21 @@ public class WithdrawExamineController extends BaseController {
     }
 
     /**
+     * 提交提现申请
+     * @param record
+     * @return
+     */
+    @RequestMapping("/submitWithdrawRequest")
+    @ResponseBody
+    public BaseResult saveWithdraw(WithdrawExamineDO record){
+        return withdrawExamineService.save(record);
+    }
+
+    /**
      * 处理
      */
     @RequestMapping("/examine")
+    @ResponseBody
     public BaseResult examine(Integer id, String handleResult){
         return withdrawExamineService.handle(id, handleResult);
     }

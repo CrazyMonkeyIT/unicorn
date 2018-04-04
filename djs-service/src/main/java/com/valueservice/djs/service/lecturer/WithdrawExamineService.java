@@ -9,7 +9,9 @@ import com.valueservice.djs.db.dao.lecturer.WithdrawExamineDOMapper;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.WithdrawExamineDO;
 import com.valueservice.djs.service.pay.EnterprisePayService;
+import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,6 +43,22 @@ public class WithdrawExamineService {
         return new PageInfo<WithdrawExamineDO>(list);
     }
 
+    /**
+     * 提交提现申请
+     * @param record
+     * @return
+     */
+
+    public BaseResult save(WithdrawExamineDO record){
+        BaseResult result = new BaseResult();
+        record.setStatus("WAIT");
+        record.setCreateTime(DateUtil.currentTimestamp());
+        int rows = withdrawExamineDOMapper.insertSelective(record);
+        if(rows > 0){
+            result.setResult(true);
+        }
+        return result;
+    }
     /**
      * 处理提现申请
      * @param id

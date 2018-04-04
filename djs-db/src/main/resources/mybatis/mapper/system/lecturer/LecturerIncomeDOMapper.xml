@@ -13,6 +13,14 @@
   <sql id="Base_Column_List">
     id, lecturer_id, amount, income_type, income_srouce, payment_ratio, create_time
   </sql>
+
+  <select id="selectListByLecturerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_lecturer_income
+    where lecturer_id = #{lecturerId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
