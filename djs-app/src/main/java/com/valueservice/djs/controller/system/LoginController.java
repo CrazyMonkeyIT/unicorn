@@ -6,7 +6,6 @@ import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.system.ResourceService;
 import com.valueservice.djs.service.system.UserInfoService;
 import com.valueservice.djs.util.Des3Util;
-import com.valueservice.djs.util.OfficeConvert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
