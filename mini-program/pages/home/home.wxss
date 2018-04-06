@@ -78,6 +78,30 @@
   flex-direction: row;
 }
 
+/**直播content列表样式*/
+.live-container{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 13px;
+}
+.live-container .left {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 10px;
+}
+.live-container .right {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+} 
+.live-container .right .tag {
+  display: flex;
+  flex-direction: row;
+}
+
 /**头部列表样式*/
 .head-container{
   display: flex;

@@ -2,14 +2,14 @@
  
 <view class = "index">
 
-<view class="weui-search-bar">
-    <view class="weui-search-bar__form">
-        <view class="weui-search-bar__box">
-            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{wxSearchData.value}}" bindconfirm='bindconfirm'  />
-        </view>
-    </view>
-</view>
+  <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+          <view class="weui-search-bar__box">
+              <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+              <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{wxSearchData.value}}" bindconfirm='bindconfirm'  />
+          </view>
+      </view>
+  </view>
 
   <!--广告-->
 	<view class = "index_advertisement">
@@ -43,12 +43,12 @@
   <view>
     <view class = "head-container">
       <view class="left">首席推荐</view>
-      <view class="right" bindtap='moreChiefInfo'>更多>></view>
+      <navigator url='chief/chief' class='right'>更多>></navigator>
     </view>
-    <view wx:for="{{chiefList}}" wx:key="chiefs" class="lecturer-container">
+    <view wx:for="{{chiefList}}" wx:key="chiefs" class="lecturer-container" bindtap='chiefLive'>
       <view class='left'>
         <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
-        <view>{{index}}---{{item.lecturerName}}</view>
+        <view>{{item.lecturerName}}</view>
       </view>
       <view class='right'>
         <view class='tag'>
@@ -61,9 +61,24 @@
   </view>
   
   <!--直播-->
-	<view class = "head-container">
-    <view class="left">直播列表</view>
-    <view class="right">更多>></view>
-	</view>
+	<view>
+    <view class = "head-container">
+      <view class="left">直播列表</view>
+      <navigator url='live/live' class='right'>更多>></navigator>
+    </view>
+    <view wx:for="{{liveList}}" wx:key="lives" class="live-container">
+      <view class='left'>
+        <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
+        <view>{{item.lecturerName}}</view>
+      </view>
+      <view class='right'>
+        <view class='tag'>
+          <view>{{item.roomName}}</view>
+          <view style='margin-left:10px;'>{{item.roomPersonCount}}</view>
+        </view>
+        <view style='font-size:13px;color:#616161'>{{item.roomDesc}}</view>
+      </view>
+    </view>
+  </view>
 
 </view>

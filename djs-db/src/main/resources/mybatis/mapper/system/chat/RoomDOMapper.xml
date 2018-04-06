@@ -20,6 +20,7 @@
     <result column="courseware" jdbcType="VARCHAR" property="courseware" />
     <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
     <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile" />
+    <result column="room_poster_path" jdbcType="VARCHAR" property="roomPosterPath" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
     <result column="members" jdbcType="LONGVARCHAR" property="members" />
@@ -27,7 +28,7 @@
   <sql id="Base_Column_List">
     id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
     actual_live_begin_time, actual_live_end_time, create_time, subject_id, lecturer_id, 
-    room_desc, courseware
+    room_desc, courseware, room_poster_path
   </sql>
   <sql id="Blob_Column_List">
     members
@@ -50,14 +51,15 @@
       room_price, prepare_live_begin_time, prepare_live_end_time, 
       actual_live_begin_time, actual_live_end_time, 
       create_time, subject_id, lecturer_id, 
-      room_desc, courseware, members
+      room_desc, courseware, members, room_poster_path
       )
     values (#{id,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{roomPrice,jdbcType=DECIMAL}, #{prepareLiveBeginTime,jdbcType=TIMESTAMP}, #{prepareLiveEndTime,jdbcType=TIMESTAMP}, 
       #{actualLiveBeginTime,jdbcType=TIMESTAMP}, #{actualLiveEndTime,jdbcType=TIMESTAMP}, 
       #{createTime,jdbcType=TIMESTAMP}, #{subjectId,jdbcType=INTEGER}, #{lecturerId,jdbcType=INTEGER}, 
-      #{roomDesc,jdbcType=VARCHAR}, #{courseware,jdbcType=VARCHAR}, #{members,jdbcType=LONGVARCHAR}
+      #{roomDesc,jdbcType=VARCHAR}, #{courseware,jdbcType=VARCHAR}, #{members,jdbcType=LONGVARCHAR},
+      #{roomPosterPath,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
@@ -114,6 +116,9 @@
       <if test="members != null">
         members,
       </if>
+      <if test="roomPosterPath != null" >
+        room_poster_path,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -166,6 +171,9 @@
       </if>
       <if test="members != null">
         #{members,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roomPosterPath != null" >
+        #{roomPosterPath,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -220,6 +228,9 @@
       <if test="members != null">
         members = #{members,jdbcType=LONGVARCHAR},
       </if>
+      <if test="roomPosterPath != null" >
+        room_poster_path = #{roomPosterPath,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -240,7 +251,8 @@
       lecturer_id = #{lecturerId,jdbcType=INTEGER},
       room_desc = #{roomDesc,jdbcType=VARCHAR},
       courseware = #{courseware,jdbcType=VARCHAR},
-      members = #{members,jdbcType=LONGVARCHAR}
+      members = #{members,jdbcType=LONGVARCHAR},
+      room_poster_path = #{roomPosterPath,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
@@ -259,7 +271,8 @@
       subject_id = #{subjectId,jdbcType=INTEGER},
       lecturer_id = #{lecturerId,jdbcType=INTEGER},
       room_desc = #{roomDesc,jdbcType=VARCHAR},
-      courseware = #{courseware,jdbcType=VARCHAR}
+      courseware = #{courseware,jdbcType=VARCHAR},
+      room_poster_path = #{roomPosterPath,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

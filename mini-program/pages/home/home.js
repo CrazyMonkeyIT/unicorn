@@ -41,7 +41,7 @@ Page({
           //路演数据
           // 'roadShowList': obj.roadShowList,
           //直播数据
-          // 'liveList': obj.liveList,
+          'liveList': obj.liveList,
           //首席数据
           'chiefList': obj.chiefList
         })
@@ -62,5 +62,9 @@ Page({
       title: '搜索小哥正在快马加鞭的查找，请稍后!',
       icon: 'none'
     })
+  },
+  //首页跳转首席讲师直播
+  chiefLive: function(e){
+    console.log(e.detail);
   }
 });

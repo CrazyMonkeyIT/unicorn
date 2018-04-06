@@ -81,4 +81,17 @@ public class HomeController {
         return result;
     }
 
+    @RequestMapping(value = "/live/list", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getLiveList(){
+        BaseResult result = new BaseResult(true);
+        try {
+            result.setObj(roomService.selectLiveRoom());
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
 }

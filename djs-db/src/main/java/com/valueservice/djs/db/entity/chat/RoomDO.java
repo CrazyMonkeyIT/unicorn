@@ -37,10 +37,20 @@ public class RoomDO {
 
     private String members;
 
+    private String roomPosterPath;
+
     //非数据库字端
     private String lecturerName;
 
     private String headPhotoFile;
+
+    public String getRoomPosterPath() {
+        return roomPosterPath;
+    }
+
+    public void setRoomPosterPath(String roomPosterPath) {
+        this.roomPosterPath = roomPosterPath;
+    }
 
     public String getLecturerName() {
         return lecturerName;
