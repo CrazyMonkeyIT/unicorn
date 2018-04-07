@@ -30,6 +30,8 @@ public class ChatSocketController {
     @MessageMapping("/chat")
     public void handleChat(@RequestBody RoomContentShow contentVO){
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
+
+        //TODO 消息考虑事件  退出房间 进入房间  房间禁言  踢人....
         String destination = "/topic/notifications/%s";
         try {
             RoomContentDO roomContentDO = new RoomContentDO();

@@ -3,39 +3,41 @@ package com.valueservice.djs.db.entity.chat;
 import java.util.Date;
 
 public class RoomDO {
-    private Integer id;
+    private Long id;
 
-    private Integer creatorId;
+    private Long creatorId;//创建者ID
 
-    private String name;
+    private String name;//房间名称
 
-    private Integer type;
+    private Integer type;//房间內型  0:VIP 1:路演
 
-    private Integer count;
+    private Integer count;//房间总人数
 
-    private Integer status;
+    private Integer status;//房间状态 0:直播中 -1:直播未开始 1:直播结束
 
-    private Long roomPrice;
+    private Long roomPrice;//房间价格
 
-    private Date prepareLiveBeginTime;
+    private Date prepareLiveBeginTime;//预计直播开始时间
 
-    private Date prepareLiveEndTime;
+    private Date prepareLiveEndTime;//预计直播结束时间
 
-    private Date actualLiveBeginTime;
+    private Date actualLiveBeginTime;//实际直播开始时间
 
-    private Date actualLiveEndTime;
+    private Date actualLiveEndTime;//实际直播结束时间
 
-    private Date createTime;
+    private Date createTime;//记录创建时间
 
-    private Integer subjectId;
+    private Integer subjectId;//专题ID
 
-    private Integer lecturerId;
+    private Integer lecturerId;//讲师ID
 
-    private String roomDesc;
+    private String roomDesc;//房间描述
 
-    private String courseware;
+    //TODO 课件以表的形式存储
+    private String courseware;//上传课件地址
 
-    private String members;
+    private String splitCourseware;//分割上传课件地址
+
 
     private String roomPosterPath;
 
@@ -43,6 +45,22 @@ public class RoomDO {
     private String lecturerName;
 
     private String headPhotoFile;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSplitCourseware() {
+        return splitCourseware;
+    }
+
+    public void setSplitCourseware(String splitCourseware) {
+        this.splitCourseware = splitCourseware;
+    }
 
     public String getRoomPosterPath() {
         return roomPosterPath;
@@ -68,19 +86,12 @@ public class RoomDO {
         this.headPhotoFile = headPhotoFile;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(Integer creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -194,13 +205,5 @@ public class RoomDO {
 
     public void setCourseware(String courseware) {
         this.courseware = courseware == null ? null : courseware.trim();
-    }
-
-    public String getMembers() {
-        return members;
-    }
-
-    public void setMembers(String members) {
-        this.members = members == null ? null : members.trim();
     }
 }

@@ -50,9 +50,11 @@ public class OfficeConvert {
      *TEST
      */
     public static void main(String[] args) {
-        OPENOFFICE_HOME = "C:/Program Files (x86)/OpenOffice 4/";
-        OPENOFFICE_COMMAND = "program/soffice.exe -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;";
-        docToPdf("C:\\Users\\Administrator\\Desktop\\财经直播小程序需求文档.docx", "C:\\Users\\Administrator\\Desktop/file/logback.pdf");
+
+        OPENOFFICE_HOME = "cd /Applications/OpenOffice.app/Contents/program";
+        OPENOFFICE_COMMAND = "./soffice -headless -accept=socket,host=127.0.0.1,port=8100;urp; -nofirststartwizard";
+        docToPdf("/Users/Bill/Desktop/座位图.pptx",
+                "/Users/Bill/Desktop/file/logback.pdf");
 //        pdfToIamge(1.2f,"C:/Users/biao.chen/Desktop/file/logback.pdf", "C:/Users/biao.chen/Desktop/file/");
     }
 
