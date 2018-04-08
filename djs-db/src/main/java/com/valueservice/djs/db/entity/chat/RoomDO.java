@@ -33,11 +33,7 @@ public class RoomDO {
 
     private String roomDesc;//房间描述
 
-    //TODO 课件以表的形式存储
-    private String courseware;//上传课件地址
-
-    private String splitCourseware;//分割上传课件地址
-
+    private Long coursewareId;//上传课件id
 
     private String roomPosterPath;
 
@@ -45,6 +41,8 @@ public class RoomDO {
     private String lecturerName;
 
     private String headPhotoFile;
+
+
 
     public Long getId() {
         return id;
@@ -54,12 +52,12 @@ public class RoomDO {
         this.id = id;
     }
 
-    public String getSplitCourseware() {
-        return splitCourseware;
+    public Long getCoursewareId() {
+        return coursewareId;
     }
 
-    public void setSplitCourseware(String splitCourseware) {
-        this.splitCourseware = splitCourseware;
+    public void setCoursewareId(Long coursewareId) {
+        this.coursewareId = coursewareId;
     }
 
     public String getRoomPosterPath() {
@@ -197,13 +195,5 @@ public class RoomDO {
 
     public void setRoomDesc(String roomDesc) {
         this.roomDesc = roomDesc == null ? null : roomDesc.trim();
-    }
-
-    public String getCourseware() {
-        return courseware;
-    }
-
-    public void setCourseware(String courseware) {
-        this.courseware = courseware == null ? null : courseware.trim();
     }
 }

@@ -24,7 +24,7 @@ public class RoomService {
         List<RoomDO> roomDOList = roomDOMapper.selectLiveRoom();
         for(RoomDO roomDO : roomDOList){
             HomeLiveVO homeLiveVO = new HomeLiveVO();
-            homeLiveVO.setRoomId(roomDO.getId());
+            homeLiveVO.setRoomId(roomDO.getId().intValue());
             homeLiveVO.setRoomName(roomDO.getName());
             homeLiveVO.setRoomDesc(roomDO.getRoomDesc());
             homeLiveVO.setRoomPersonCount(roomDO.getCount());

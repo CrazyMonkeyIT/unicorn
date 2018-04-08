@@ -1,8 +1,4 @@
 
-
-
-
-
 DROP TABLE IF EXISTS `t_b_room_content`;
 CREATE TABLE `t_b_room_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,23 +22,26 @@ CREATE TABLE `t_b_room` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `creator_id` bigint(20) DEFAULT NULL COMMENT '创建者ID',
   `name` varchar(255) DEFAULT NULL COMMENT '房间名称',
-  `subject_id` int(11) NULL COMMENT '专题ID',
+  `subject_id` int(11) DEFAULT NULL COMMENT '专题ID',
   `lecturer_id` int(11) NOT NULL COMMENT '讲师ID',
-  `room_desc` VARCHAR(500) NULL COMMENT '房间描述',
-  `room_poster_path` VARCHAR(255) NOT NULL COMMENT '房间海报地址',
+  `room_desc` varchar(500) DEFAULT NULL COMMENT '房间描述',
+  `room_poster_path` varchar(255) NOT NULL COMMENT '房间海报地址',
   `type` int(11) DEFAULT NULL COMMENT '房间內型 0：VIP 1：路演',
   `count` int(11) DEFAULT NULL COMMENT '房间总人数',
-  `members` text DEFAULT NULL COMMENT '房间人员ID',
+  `members` text COMMENT '房间人员ID',
   `status` int(11) DEFAULT NULL COMMENT '房间状态 0：直播中 1：直播结束 -1：直播未开始',
-  `room_price` decimal DEFAULT null comment '房间价格',
-  `courseware` varchar(255) DEFAULT NULL COMMENT '课件URL',
+  `room_price` decimal(10,0) DEFAULT NULL COMMENT '房间价格',
+  `courseware_id` bigint(255) DEFAULT NULL COMMENT '课件文件id',
   `prepare_live_begin_time` datetime DEFAULT NULL COMMENT '预计直播开始时间',
   `prepare_live_end_time` datetime DEFAULT NULL COMMENT '预计直播结束时间',
-  `actual_live_begin_time` datetime default null comment '实际直播开始时间',
-  `actual_live_end_time` datetime default null comment '实际直播结束时间',
+  `actual_live_begin_time` datetime DEFAULT NULL COMMENT '实际直播开始时间',
+  `actual_live_end_time` datetime DEFAULT NULL COMMENT '实际直播结束时间',
   `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `courseware_id` (`courseware_id`),
+  CONSTRAINT `outindex_courseware_id` FOREIGN KEY (`courseware_id`)
+  REFERENCES `t_b_up_file_record` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
