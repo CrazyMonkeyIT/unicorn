@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.chat.RoomDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.chat.RoomDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="room_price" jdbcType="DECIMAL" property="roomPrice" />
+    <result column="prepare_live_begin_time" jdbcType="TIMESTAMP" property="prepareLiveBeginTime" />
+    <result column="prepare_live_end_time" jdbcType="TIMESTAMP" property="prepareLiveEndTime" />
+    <result column="actual_live_begin_time" jdbcType="TIMESTAMP" property="actualLiveBeginTime" />
+    <result column="actual_live_end_time" jdbcType="TIMESTAMP" property="actualLiveEndTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+    <result column="lecturer_id" jdbcType="INTEGER" property="lecturerId" />
+    <result column="room_desc" jdbcType="VARCHAR" property="roomDesc" />
+    <result column="courseware_id" jdbcType="INTEGER" property="coursewareId" />
+    <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
+    <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile" />
+    <result column="room_poster_path" jdbcType="VARCHAR" property="roomPosterPath" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
+    actual_live_begin_time, actual_live_end_time, create_time, subject_id, lecturer_id, 
+    room_desc, courseware, room_poster_path,courseware_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    from t_b_room
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_b_room
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    insert into t_b_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="roomPrice != null">
+        room_price,
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        prepare_live_begin_time,
+      </if>
+      <if test="prepareLiveEndTime != null">
+        prepare_live_end_time,
+      </if>
+      <if test="actualLiveBeginTime != null">
+        actual_live_begin_time,
+      </if>
+      <if test="actualLiveEndTime != null">
+        actual_live_end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="lecturerId != null">
+        lecturer_id,
+      </if>
+      <if test="roomDesc != null">
+        room_desc,
+      </if>
+      <if test="courseware != null">
+        courseware,
+      </if>
+      <if test="roomPosterPath != null" >
+        room_poster_path,
+      </if>
+      <if test="coursewareId != null" >
+        courseware_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roomPrice != null">
+        #{roomPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepareLiveEndTime != null">
+        #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveBeginTime != null">
+        #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveEndTime != null">
+        #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="lecturerId != null">
+        #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="roomDesc != null">
+        #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseware != null">
+        #{courseware,jdbcType=VARCHAR},
+      </if>
+      <if test="roomPosterPath != null" >
+        #{roomPosterPath,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareId != null" >
+        #{coursewareId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    update t_b_room
+    <set>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roomPrice != null">
+        room_price = #{roomPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="prepareLiveBeginTime != null">
+        prepare_live_begin_time = #{prepareLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepareLiveEndTime != null">
+        prepare_live_end_time = #{prepareLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveBeginTime != null">
+        actual_live_begin_time = #{actualLiveBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualLiveEndTime != null">
+        actual_live_end_time = #{actualLiveEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="lecturerId != null">
+        lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="roomDesc != null">
+        room_desc = #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseware != null">
+        courseware = #{courseware,jdbcType=VARCHAR},
+      </if>
+      <if test="roomPosterPath != null" >
+        room_poster_path = #{roomPosterPath,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareId != null" >
+        courseware_id = #{coursewareId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
+    select * from t_b_room
+  </select>
+
+  <select id="selectLiveRoom" resultMap="ResultMapWithBLOBs" >
+    select
+    b.id lecturer_id,b.lecturer_name,b.head_photo_file,
+    a.id,a.name,a.count,a.room_desc
+    from t_b_room a
+    inner join t_b_lecturer b on a.lecturer_id = b.id
+    where a.status = 0
+  </select>
+
+</mapper>

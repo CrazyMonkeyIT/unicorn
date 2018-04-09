@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.lecturer.LecturerIncomeDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.lecturer.LecturerIncomeDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lecturer_id" jdbcType="INTEGER" property="lecturerId" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="income_type" jdbcType="VARCHAR" property="incomeType" />
+    <result column="income_srouce" jdbcType="VARCHAR" property="incomeSrouce" />
+    <result column="payment_ratio" jdbcType="INTEGER" property="paymentRatio" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, lecturer_id, amount, income_type, income_srouce, payment_ratio, create_time
+  </sql>
+
+  <select id="selectListByLecturerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_b_lecturer_income
+    where lecturer_id = #{lecturerId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_b_lecturer_income
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_b_lecturer_income
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerIncomeDO">
+    insert into t_b_lecturer_income (id, lecturer_id, amount, 
+      income_type, income_srouce, payment_ratio, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{lecturerId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+      #{incomeType,jdbcType=VARCHAR}, #{incomeSrouce,jdbcType=VARCHAR}, #{paymentRatio,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerIncomeDO">
+    insert into t_b_lecturer_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lecturerId != null">
+        lecturer_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="incomeType != null">
+        income_type,
+      </if>
+      <if test="incomeSrouce != null">
+        income_srouce,
+      </if>
+      <if test="paymentRatio != null">
+        payment_ratio,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lecturerId != null">
+        #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeType != null">
+        #{incomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeSrouce != null">
+        #{incomeSrouce,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentRatio != null">
+        #{paymentRatio,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerIncomeDO">
+    update t_b_lecturer_income
+    <set>
+      <if test="lecturerId != null">
+        lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeType != null">
+        income_type = #{incomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeSrouce != null">
+        income_srouce = #{incomeSrouce,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentRatio != null">
+        payment_ratio = #{paymentRatio,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerIncomeDO">
+    update t_b_lecturer_income
+    set lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      income_type = #{incomeType,jdbcType=VARCHAR},
+      income_srouce = #{incomeSrouce,jdbcType=VARCHAR},
+      payment_ratio = #{paymentRatio,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
