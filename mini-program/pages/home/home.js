@@ -39,7 +39,7 @@ Page({
           //广告数据
           'advertisementList': obj.advertisementList,
           //路演数据
-          // 'roadShowList': obj.roadShowList,
+          'roadShowList': obj.roadShowList,
           //直播数据
           'liveList': obj.liveList,
           //首席数据

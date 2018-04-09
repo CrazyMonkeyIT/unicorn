@@ -118,3 +118,8 @@
 .head-container .right{
   color: #f46b30;
 }
+
+.empty-info{
+  text-align: center;
+  font-size: 13px;
+}

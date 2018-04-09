@@ -23,4 +23,6 @@ public interface RoomDOMapper {
     List<RoomDO> selectAll();
 
     List<RoomDO> selectLiveRoom();
+
+    List<RoomDO> selectRoadShowData();
 }

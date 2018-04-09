@@ -44,7 +44,7 @@ public class HomeController {
         try {
             map.put(advertisement_key, advertisementService.selectValidAdvertisement());
             map.put(chief_key, lecturerService.selectChiefList(is_chief));
-            map.put(road_show_key, null);
+            map.put(road_show_key, roomService.selectRoadShowInfo());
             map.put(live_key, roomService.selectLiveRoom());
             result.setObj(map);
         }catch (Exception ex){
@@ -86,6 +86,19 @@ public class HomeController {
         BaseResult result = new BaseResult(true);
         try {
             result.setObj(roomService.selectLiveRoom());
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/roadshow/list", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getRadshowList(){
+        BaseResult result = new BaseResult(true);
+        try {
+            result.setObj(roomService.selectRoadShowInfo());
         }catch (Exception ex){
             LOGGER.error("", ex);
             result.setResult(false);

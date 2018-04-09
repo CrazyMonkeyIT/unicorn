@@ -23,7 +23,8 @@
     "pages/personal/setting/opinion-feedback/opinion-feedback",
     "pages/personal/setting/about/about",
     "pages/personal/speaker/register-success/register-success",
-    "pages/home/live/live"
+    "pages/home/live/live",
+    "pages/home/roadshow/roadshow"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

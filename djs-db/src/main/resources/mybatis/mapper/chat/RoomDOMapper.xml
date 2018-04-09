@@ -21,6 +21,8 @@
     <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
     <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile" />
     <result column="room_poster_path" jdbcType="VARCHAR" property="roomPosterPath" />
+    <result column="road_show_time_str" jdbcType="VARCHAR" property="roadShowTimeStr" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
   </resultMap>
@@ -228,6 +230,16 @@
     from t_b_room a
     inner join t_b_lecturer b on a.lecturer_id = b.id
     where a.status = 0
+  </select>
+
+  <select id="selectRoadShowData" resultMap="ResultMapWithBLOBs" >
+    select a.id,a.`name`,a.room_desc,a.count,
+    date_format(a.prepare_live_begin_time,'%m-%d %H:%i') road_show_time_str,
+    a.room_poster_path,
+    b.lecturer_name,b.company
+    from t_b_room a
+    inner join t_b_lecturer b on a.lecturer_id = b.id
+    where a.type = 1 and a.status = -1
   </select>
 
 </mapper>

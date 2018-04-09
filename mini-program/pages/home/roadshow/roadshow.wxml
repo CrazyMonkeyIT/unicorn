@@ -1,0 +1,14 @@
+<view class='road-show-container' wx:for="{{roadShowList}}" wx:key="roadShows">
+  <view class='left'>
+    <view class='time' style='text-align:center'>{{item.roadShowTime}}</view>
+    <view >
+      <image class='img' src="{{item.roomPosterPath}}" mode="scaleToFill"></image>
+    </view>
+  </view>
+  
+  <view class='right'>
+    <view>{{item.roadShowDesc}}</view>
+    <view>{{item.lecturerName}}</view>
+    <view>{{item.company}}</view>
+  </view>
+</view>

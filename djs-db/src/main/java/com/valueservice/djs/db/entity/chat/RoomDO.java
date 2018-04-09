@@ -39,10 +39,28 @@ public class RoomDO {
 
     //非数据库字端
     private String lecturerName;
-
+    //公司
+    private String company;
+    //讲师头像地址
     private String headPhotoFile;
+    //路演时间
+    private String roadShowTimeStr;
 
+    public String getCompany() {
+        return company;
+    }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getRoadShowTimeStr() {
+        return roadShowTimeStr;
+    }
+
+    public void setRoadShowTimeStr(String roadShowTimeStr) {
+        this.roadShowTimeStr = roadShowTimeStr;
+    }
 
     public Long getId() {
         return id;
