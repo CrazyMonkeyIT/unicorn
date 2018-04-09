@@ -39,18 +39,19 @@ public class ChatSocketController {
     private MsgEvevtService msgEvevtService;
 
     @MessageMapping("/chat")
-    public void chathandle(@RequestBody MsgTypeBaseVO msgTypeBaseVO){
+    public void chatHandle(@RequestBody MsgTypeBaseVO msgTypeBaseVO){
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
         String chatType = msgTypeBaseVO.getChatType();
         RoomContentVO contentVO = msgTypeBaseVO.getRoomContentVO();
         MsgEventVO msgEventVO = msgTypeBaseVO.getMsgEventVO();
-        if(Objects.isNull(contentVO)
-                && Objects.isNull(msgEventVO)){
-            throw new NullPointerException("this vo can't is null");
-        }
-        Integer roomId = Objects.isNull(contentVO)?contentVO.getRoomid():msgEventVO.getRoomId();
+        Integer roomId = null;
         try {
+            if(Objects.isNull(contentVO)
+                    && Objects.isNull(msgEventVO)){
+                throw new NullPointerException("this vo can't is null");
+            }
+            roomId = Objects.isNull(contentVO)?contentVO.getRoomid():msgEventVO.getRoomId();
             if(chatType.equals(ChatEnum.socketType.msg.toString())){
                 RoomContentDO roomContentDO = new RoomContentDO();
                 BeanUtils.copyNotNullFields(contentVO,roomContentDO);
