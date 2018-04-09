@@ -14,7 +14,7 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomContentDO">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
-  <resultMap extends="ResultMapWithBLOBs" id="ResultMapExt" type="com.valueservice.djs.db.entity.chat.RoomContentShow">
+  <resultMap extends="ResultMapWithBLOBs" id="ResultMapExt" type="com.valueservice.djs.bean.RoomContentVO">
     <result column="avatar_Url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />

@@ -13,7 +13,7 @@ public class RoomDO {
 
     private Integer count;//房间总人数
 
-    private Integer status;//房间状态 0:直播中 -1:直播未开始 1:直播结束
+    private Integer status;//房间状态 0:直播中 -1:直播未开始 -2:禁言中 1:直播结束
 
     private Long roomPrice;//房间价格
 

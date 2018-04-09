@@ -1,8 +1,8 @@
-package com.valueservice.djs.db.entity.chat;
+package com.valueservice.djs.bean;
 
 import java.util.Date;
 
-public class RoomContentShow {
+public class RoomContentVO extends MsgTypeBaseVO{
 
     private Integer id;
 
