@@ -191,7 +191,7 @@ public class ImportController {
     }
 
     /**
-     * 维护用户确定房间的预告文件
+     * 用户设置房间的预告文件
      * @param id
      * @param jsonSplitStr
      * @return
@@ -205,6 +205,11 @@ public class ImportController {
     }
 
 
+    /**
+     * 获取房间下设置为预告的图片地址
+     * @param id
+     * @return
+     */
     @PostMapping("/courseware/getpic/{id}")
     public @ResponseBody List<String> getPicPath(@PathVariable Long id){
         UpfileRecordDO upfileRecordDO = upfileRecordDOMapper.selectByPrimaryKey(id);

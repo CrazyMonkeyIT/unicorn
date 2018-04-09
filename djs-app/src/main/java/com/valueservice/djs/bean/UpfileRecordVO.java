@@ -15,7 +15,7 @@ public class UpfileRecordVO {
 
     private Long id;
 
-    private String actualFilePath;
+    private transient String actualFilePath;
 
     private String httpFilePath;
 
