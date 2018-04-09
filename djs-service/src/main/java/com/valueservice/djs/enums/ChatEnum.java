@@ -72,4 +72,45 @@ public class ChatEnum {
             this.roomStatusDesc = roomStatusDesc;
         }
     }
+
+    /**
+     * socket类型
+     */
+    public enum socketType{
+        msg,event
+    }
+
+    /**
+     * 消息事件类型
+     */
+    public enum EventType{
+        QUIT("quit","退出房间"),
+        INTO("into","进入房间"),
+        DISABLE_SENDMSG("disable sendMsg","房间禁言"),
+        KICK_OUT("kick out","提出房间");
+
+        private String eventCode;
+        private String eventDesc;
+
+        EventType(String eventCode,String eventDesc){
+            this.eventCode = eventCode;
+            this.eventDesc = eventDesc;
+        }
+
+        public String getEventCode() {
+            return eventCode;
+        }
+
+        public void setEventCode(String eventCode) {
+            this.eventCode = eventCode;
+        }
+
+        public String getEventDesc() {
+            return eventDesc;
+        }
+
+        public void setEventDesc(String eventDesc) {
+            this.eventDesc = eventDesc;
+        }
+    }
 }
