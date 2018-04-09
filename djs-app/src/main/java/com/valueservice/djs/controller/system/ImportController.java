@@ -1,4 +1,8 @@
 package com.valueservice.djs.controller.system;
+import com.valueservice.djs.db.entity.system.FileParsingRepBean;
+import com.valueservice.djs.db.entity.system.SplitFileBean;
+import com.valueservice.djs.db.dao.system.UpfileRecordDOMapper;
+import com.valueservice.djs.db.entity.system.UpfileRecordDO;
 import com.valueservice.djs.util.OfficeConvert;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -7,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -23,6 +29,10 @@ public class ImportController {
 
     @Value("${context.path}")
     private String contextPath;
+
+    @Resource
+    private UpfileRecordDOMapper upfileRecordDOMapper;
+
 
     private final static String SPLIT_FILE_PATH_KEY = "splitFilePath";
     private final static String IS_FORESHOW_KEY = "isForeshow";
@@ -56,8 +66,10 @@ public class ImportController {
                 userFile.mkdir();
             }
             String userFilePath = String.format("%s%s",userFile.getPath(),"/");
-
-            return processFile(rootId, files,userFilePath,toConvertPic);
+            List<FileParsingRepBean> fileParsingRepBeans = processFile(rootId, files,userFilePath,toConvertPic);
+            //保存文件上传记录
+            saveToFileRecord(fileParsingRepBeans);
+            return fileParsingRepBeans;
 
         }catch (Exception e){
             logger.error("",e);
@@ -65,6 +77,24 @@ public class ImportController {
         return null;
     }
 
+    /**
+     * 维护文件记录表
+     * @param fileParsingRepBeans 文件解析返回对象
+     */
+    private void saveToFileRecord(List<FileParsingRepBean> fileParsingRepBeans) {
+        fileParsingRepBeans.forEach(x->{
+            UpfileRecordDO upfileRecordDO = new UpfileRecordDO();
+            upfileRecordDO.setActualFilePath(x.getActualFilePath());
+            upfileRecordDO.setHttpFilePath(x.getFilePath());
+            if(x.getSplitFileList() != null && !x.getSplitFileList().isEmpty()){
+                upfileRecordDO.setSplitFiles(x.getSplitFileList());
+            }
+            upfileRecordDO.setCreatorId(-1);
+            upfileRecordDO.setCreateTime(new Date());
+            upfileRecordDO.setRemark("小程序用户上传");
+            upfileRecordDOMapper.insertSelective(upfileRecordDO);
+        });
+    }
 
 
     /**
@@ -170,68 +200,5 @@ public class ImportController {
             }
         }
         return vecFile;
-    }
-
-    /**
-     * 分割文件解析的返回对象
-     */
-    class SplitFileBean{
-        private String splitFilePath;
-        private transient String actualSplitFilePath;
-        private Boolean isForeshow;
-
-        public String getSplitFilePath() {
-            return splitFilePath;
-        }
-
-        public void setSplitFilePath(String splitFilePath) {
-            this.splitFilePath = splitFilePath;
-        }
-
-        public String getActualSplitFilePath() {
-            return actualSplitFilePath;
-        }
-
-        public void setActualSplitFilePath(String actualSplitFilePath) {
-            this.actualSplitFilePath = actualSplitFilePath;
-        }
-
-        public Boolean getForeshow() {
-            return isForeshow;
-        }
-
-        public void setForeshow(Boolean foreshow) {
-            isForeshow = foreshow;
-        }
-    }
-    class FileParsingRepBean {
-
-        private String filePath;
-        private transient String actualFilePath;
-        private List<SplitFileBean> splitFileList;
-
-        public String getFilePath() {
-            return filePath;
-        }
-
-        public String getActualFilePath() {
-            return actualFilePath;
-        }
-
-        public void setActualFilePath(String actualFilePath) {
-            this.actualFilePath = actualFilePath;
-        }
-
-        public void setFilePath(String filePath) {
-            this.filePath = filePath;
-        }
-
-        public List<SplitFileBean> getSplitFileList() {
-            return splitFileList;
-        }
-
-        public void setSplitFileList(List<SplitFileBean> splitFileList) {
-            this.splitFileList = splitFileList;
-        }
     }
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.valueservice.djs.db.dao.system.UpfileRecordDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.system.UpfileRecordDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="actual_file_path" jdbcType="VARCHAR" property="actualFilePath" />
+    <result column="http_file_path" jdbcType="VARCHAR" property="httpFilePath" />
+    <result column="split_files" property="splitFiles"
+            typeHandler="com.valueservice.djs.db.config.mybatis.JsonTypeHandler" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, actual_file_path, http_file_path, split_files, creator_id, create_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_b_up_file_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.system.UpfileRecordDO">
+    insert into t_b_up_file_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="actualFilePath != null">
+        actual_file_path,
+      </if>
+      <if test="httpFilePath != null">
+        http_file_path,
+      </if>
+      <if test="splitFiles != null">
+        split_files,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="actualFilePath != null">
+        #{actualFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="httpFilePath != null">
+        #{httpFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="splitFiles != null">
+        #{splitFiles,jdbcType=VARCHAR,typeHandler=com.valueservice.djs.db.config.mybatis.JsonTypeHandler},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.system.UpfileRecordDO">
+    update t_b_up_file_record
+    <set>
+      <if test="actualFilePath != null">
+        actual_file_path = #{actualFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="httpFilePath != null">
+        http_file_path = #{httpFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="splitFiles != null">
+        split_files = #{splitFiles,jdbcType=VARCHAR,typeHandler=com.valueservice.djs.db.config.mybatis.JsonTypeHandler},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
