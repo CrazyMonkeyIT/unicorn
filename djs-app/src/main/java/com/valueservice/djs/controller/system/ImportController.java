@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -25,7 +24,6 @@ public class ImportController {
     @Value("${context.path}")
     private String contextPath;
 
-    private final static String FILE_PATH_KEY = "filePath";
     private final static String SPLIT_FILE_PATH_KEY = "splitFilePath";
     private final static String IS_FORESHOW_KEY = "isForeshow";
 
@@ -69,36 +67,6 @@ public class ImportController {
 
 
 
-    class FileParsingRep{
-        private String filePath;
-        private String splitFilePath;
-        private Boolean isForeshow;
-
-        public String getFilePath() {
-            return filePath;
-        }
-
-        public void setFilePath(String filePath) {
-            this.filePath = filePath;
-        }
-
-        public String getSplitFilePath() {
-            return splitFilePath;
-        }
-
-        public void setSplitFilePath(String splitFilePath) {
-            this.splitFilePath = splitFilePath;
-        }
-
-        public Boolean getForeshow() {
-            return isForeshow;
-        }
-
-        public void setForeshow(Boolean foreshow) {
-            isForeshow = foreshow;
-        }
-    }
-
     /**
      * 将文件转换为pdf,再利用openoffice转为为图片，返回http访问地址
      * @param userFilePath
@@ -121,12 +89,16 @@ public class ImportController {
         List<String> pics = OfficeConvert.pdfToIamge(1.2f,
                                 pdfFilePath,String.format("%s%s",userFilePath,prefix));
 
+        List<Map<String,?>> spiltMaps = new ArrayList<>();
         for(int i = 0;i<pics.size();i++){
+            Map<String,Object> map = new HashMap<>();
             if(i == 0){
-                fileParsingRep.setForeshow(true);
+                map.put(IS_FORESHOW_KEY,true);
             }
             String httpPathForFile = String.format("%s/%s/%s",httpPathForRoot,prefix,pics.get(i));
-            fileParsingRep.setSplitFilePath(httpPathForFile);
+            map.put(SPLIT_FILE_PATH_KEY,httpPathForFile);
+            spiltMaps.add(map);
+            fileParsingRep.setSplitFileList(spiltMaps);
         }
     }
 
@@ -193,5 +165,38 @@ public class ImportController {
             }
         }
         return vecFile;
+    }
+
+    /**
+     * 文件上传解析的返回对象
+     */
+    class FileParsingRep{
+        private String filePath;
+        private List<Map<String,?>> splitFileList;
+        private Boolean isForeshow;
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        public List<Map<String, ?>> getSplitFileList() {
+            return splitFileList;
+        }
+
+        public void setSplitFileList(List<Map<String, ?>> splitFileList) {
+            this.splitFileList = splitFileList;
+        }
+
+        public Boolean getForeshow() {
+            return isForeshow;
+        }
+
+        public void setForeshow(Boolean foreshow) {
+            isForeshow = foreshow;
+        }
     }
 }
