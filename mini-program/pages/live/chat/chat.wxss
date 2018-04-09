@@ -139,7 +139,7 @@ page {
   border-radius: 11rpx;
   word-break: break-all;
   height :70rpx;
-  line-height: 7rpx;
+  line-height: 70rpx;
 }
 
 .avatar-img {

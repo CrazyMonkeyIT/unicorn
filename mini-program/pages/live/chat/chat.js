@@ -13,6 +13,7 @@ var chartDetail,voicePlaying = false;
 
 Page({
   data: {
+    levelRoom:false,
     isPlay : false,
     sendButtDisable: true,
     userInfo: {},
@@ -66,19 +67,22 @@ Page({
     client.connect({}, {}, function (sessionId) {
       client.subscribe(destination, function (message) {
         let chatContent = JSON.parse(message.body);
-        console.log(chatContent);
-        that.roomContentProcess(chatContent,true);
+        if(chatContent.chatType == 'msg'){
+          that.roomContentProcess(chatContent, true);
+        } else if (chatContent.chatType == 'event'){
+
+        }
       });    
     })
 
     wx.onSocketClose(function (res) {
       console.log('WebSocket 已关闭！')
-      client = socketUtil.stomClient();
-
+      if (!this.data.levelRoom){
+        client = socketUtil.stomClient();
+      }
     });
 
     //远程取一次本聊天室所有的聊天记录做一次初始化
-    //todo
     this.setData({ chatList: chatListData});
   },
   //发送socket消息
@@ -104,8 +108,23 @@ Page({
         });
       }
     })
-    
+    //进入房间事件
+    let chatEvent = chatTool.chatEvent('into', currentUser, roomId);
+    that.socketSend(chatEvent, client);
   }, 
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    this.setData({
+      levelRoom : true
+    },function(){
+      //退出房间事件
+      let chatEvent = chatTool.chatEvent('quit', currentUser,roomId);
+      that.socketSend(chatEvent, client);
+      wx.closeSocket();
+    })
+  },
   //接收后台传来的聊天内容的处理
   //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的
   //isRealTime是否实时聊天产生的标识，如果实时聊天产生，判断是当前用户的聊天直接抛弃，
@@ -143,10 +162,10 @@ Page({
       })
       return;
     }
-    var chatContent = { type: 'text', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r', content: inputVal };
+    let chatContent = chatTool.chatContent('text', currentUser, roomId, null, null, null, inputVal);
+    /*var chatContent = { type: 'text', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r', content: inputVal };*/
     that.addChatWithFlag(chatContent,true);
     that.socketSend(chatContent, client);
-    e.detail.value = "";
     wx.showToast({
       title: '消息发送成功',
       icon: 'none',
@@ -189,7 +208,7 @@ Page({
             wx.showToast({ title: '语音发送成功' });
             let filePath = JSON.parse(res.data)[0].filePath;
            /* var myVoiceChat = { url: filePath, type: 'voice', duration: that.speakerSec, voiceImg: '/images/live/audio_icon_3.png', tempFilepath: tempFilePath, avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation:'r' };*/
-            let chatContnt = chatTool.chatContent('voice', currentUser, roomId, filePath, that.speakerSec, tempFilePath);
+            let chatContnt = chatTool.chatContent('voice', currentUser, roomId, filePath, that.speakerSec, tempFilePath,null);
             that.socketSend(filePath,client);
             that.addChatWithFlag(chatContnt, true);
           },
@@ -421,9 +440,10 @@ Page({
           success: function (res) {
             wx.showToast({ title: '图片发送成功' });
             let filePath = JSON.parse(res.data)[0].filePath;
-            var myVoiceChat = { url: filePath, type: 'picture', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r' };
-            that.socketSend(myVoiceChat, client);
-            that.addChatWithFlag(myVoiceChat, true);
+            /*var myVoiceChat = { url: filePath, type: 'picture', avatarUrl: currentUser.avatarUrl, nickName: currentUser.nickName, openId: currentUser.openId, roomid: roomId, userId: currentUser.id, orientation: 'r' };*/
+            let chatContnt = chatTool.chatContent('picture', currentUser, roomId, filePath, null, tempFilePath, null);
+            that.socketSend(chatContnt, client);
+            that.addChatWithFlag(chatContnt, true);
             that.showTools();
           },
           fail: function (res) {

@@ -2,6 +2,7 @@ package com.valueservice.djs.service.chat;
 
 import com.valueservice.djs.db.dao.chat.RoomContentDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
+import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class RoomContentService {
     public void saveMessage(RoomContentDO roomContentDO) {
         roomContentDOMapper.insertSelective(roomContentDO);
     }
-    public List<RoomContentDO> queryContentsByRoomId(Integer roomId, Integer id){
+    public List<RoomContentShow> queryContentsByRoomId(Integer roomId, Integer id){
         return roomContentDOMapper.selectContentShowByRoom(roomId,id);
     }
 }

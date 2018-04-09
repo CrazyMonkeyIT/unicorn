@@ -4,7 +4,7 @@
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
 var host = 'http://localhost:9090/unicorn';
-var wsshost = 'wss://dujiaoshouzhiku.com/unicorn/websocket/endpointChat';//'ws://localhost:9090/unicorn/websocket/endpointChat';
+var wsshost = 'ws://localhost:9090/unicorn/websocket/endpointChat'; //'wss://dujiaoshouzhiku.com/unicorn/websocket/endpointChat';//
 
 var config = {
 

@@ -10,6 +10,7 @@ import com.valueservice.djs.enums.ChatEnum;
 import com.valueservice.djs.service.chat.MsgEvevtService;
 import com.valueservice.djs.service.chat.RoomContentService;
 import com.valueservice.djs.util.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.MessagingException;
@@ -43,9 +44,26 @@ public class ChatSocketController {
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
         String chatType = msgTypeBaseVO.getChatType();
-        RoomContentVO contentVO = msgTypeBaseVO.getRoomContentVO();
-        MsgEventVO msgEventVO = msgTypeBaseVO.getMsgEventVO();
-        Integer roomId = null;
+        Long roomId = null;
+
+        if(StringUtils.equals(chatType,"msg")){
+            RoomContentDO roomContentDO = new RoomContentDO();
+            BeanUtils.copyNotNullFields(msgTypeBaseVO,roomContentDO);
+            roomContentDO.setCreateTime(new Date());
+            roomContentDO.setId(null);
+            roomId = roomContentDO.getRoomid().longValue();
+            roomContentService.saveMessage(roomContentDO);
+        }else if(StringUtils.equals(chatType,"event")){
+            MsgEventDO msgEventDO = new MsgEventDO();
+            BeanUtils.copyNotNullFields(msgTypeBaseVO,msgEventDO);
+            roomId = msgEventDO.getRoomId();
+            msgEvevtService.saveMsgEvent(msgEventDO);
+        }
+
+
+//        RoomContentVO contentVO = msgTypeBaseVO.getRoomContentVO();
+//        MsgEventVO msgEventVO = msgTypeBaseVO.getMsgEventVO();
+        /*Integer roomId = null;
         try {
             if(Objects.isNull(contentVO)
                     && Objects.isNull(msgEventVO)){
@@ -67,9 +85,10 @@ public class ChatSocketController {
             messageingTemplate.convertAndSend(String.format(destination, roomId),
                     "null");
            logger.error("socket消息发送异常",e);
-        }
+        }*/
+
         messageingTemplate.convertAndSend(String.format(destination, roomId),
-                JSON.toJSONString(Objects.isNull(contentVO)?msgEventVO:contentVO));
+                JSON.toJSONString(msgTypeBaseVO));
     }
 
     @RequestMapping("/chatDemo")

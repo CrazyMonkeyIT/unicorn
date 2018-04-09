@@ -1,41 +1,21 @@
-package com.valueservice.djs.bean;
+package com.valueservice.djs.db.entity.chat;
 
 import java.util.Date;
 
-/**
- * @Desc:
- * @Author: Bill
- * @Date: created in 20:11 2018/4/9
- * @Modified by:
- */
-public class MsgTypeBaseVO {
-
-    private String chatType; //msg | event
-
-//    private MsgEventVO msgEventVO;
-//
-//    private RoomContentVO roomContentVO;
-
-
-    private String eventType;
-
-    private Long executor;
-
-    private Long beexecuted;
-
-    private Date createTime;
+public class RoomContentShow {
+    private Integer id;
 
     private Integer roomid;
 
     private Integer userId;
-
-    private Integer roomId;
 
     private String type;
 
     private Integer duration;
 
     private String url;
+
+    private Date createTime;
 
     private Integer active;
 
@@ -47,60 +27,12 @@ public class MsgTypeBaseVO {
 
     private String nickName;//用户昵称
 
-    public String getChatType() {
-        return chatType;
+    public Integer getId() {
+        return id;
     }
 
-    public void setChatType(String chatType) {
-        this.chatType = chatType;
-    }
-
-//    public MsgEventVO getMsgEventVO() {
-//        return msgEventVO;
-//    }
-//
-//    public void setMsgEventVO(MsgEventVO msgEventVO) {
-//        this.msgEventVO = msgEventVO;
-//    }
-//
-//    public RoomContentVO getRoomContentVO() {
-//        return roomContentVO;
-//    }
-//
-//    public void setRoomContentVO(RoomContentVO roomContentVO) {
-//        this.roomContentVO = roomContentVO;
-//    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public Long getExecutor() {
-        return executor;
-    }
-
-    public void setExecutor(Long executor) {
-        this.executor = executor;
-    }
-
-    public Long getBeexecuted() {
-        return beexecuted;
-    }
-
-    public void setBeexecuted(Long beexecuted) {
-        this.beexecuted = beexecuted;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getRoomid() {
@@ -143,6 +75,14 @@ public class MsgTypeBaseVO {
         this.url = url;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getActive() {
         return active;
     }
@@ -181,13 +121,5 @@ public class MsgTypeBaseVO {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public Integer getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
     }
 }

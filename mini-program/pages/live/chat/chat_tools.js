@@ -21,22 +21,31 @@ const getImg = (id, chatListData) => {
   }
   return img;
 }
-const chatContent = (type, currentUser, roomId, url, duration,tempFilepath) => {
-  let content = {
+
+/**聊天内容 */
+const chatContent = (type, currentUser, roomId, url, duration,tempFilepath,content) => {
+  let cont = {
     id: util.uuid(roomId),type: type, avatarUrl: currentUser.avatarUrl, 
     nickName: currentUser.nickName, openId: currentUser.openId, 
     roomid: roomId, userId: currentUser.id, url: url, duration: duration,orientation: 'r',
-    tempFilepath :tempFilepath };
+    tempFilepath: tempFilepath, chatType: 'msg', content: content };
   if(type == 'voice'){
-    content.voiceImg = '/images/live/audio_icon_3.png';
+    cont.voiceImg = '/images/live/audio_icon_3.png';
+  } 
+  return cont;
+}
+/**房间事件内容 */
+const chatEvent = (eventType,currentUser,roomId) => {
+  let eventContent = {
+    id: util.uuid(roomId), chatType: 'event', eventType: eventType, executor: currentUser.id, roomId: roomId
   }
-
-  return content;
+  return eventContent;
 }
 
 
 module.exports = {
   getImgs: getImgs,
   getImg: getImg,
-  chatContent: chatContent
+  chatContent: chatContent,
+  chatEvent: chatEvent
 }
