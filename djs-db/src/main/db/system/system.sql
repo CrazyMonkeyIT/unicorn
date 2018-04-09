@@ -17,7 +17,7 @@ CREATE TABLE `t_b_resources` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `t_b_resources` WRITE;
-INSERT INTO `t_b_resources` VALUES ('1','系统管理','system','#','system_manager',NULL,NULL,0,0,1,'2018-02-08 10:15:30','2018-02-08 10:15:30'),(2,'资源管理','resource','/system/resource/list','system_resource',NULL,NULL,1,0,1,'2018-02-08 10:14:32','2018-02-08 10:14:35');
+INSERT INTO `t_b_resources` VALUES ('1','系统管理','system','#','system_manager',NULL,NULL,0,0,1,'2018-02-08 10:15:30','2018-02-08 10:15:30');
 INSERT INTO `t_b_resources` VALUES ('2', '资源管理', 'resource', '/system/resource/list', 'system_resource', null, null, '1', '0', '1', '2018-02-08 10:14:32', '2018-02-08 10:14:35');
 INSERT INTO `t_b_resources` VALUES ('5', '用户管理', '', '/system/user/list', '', '', '3', '1', '0', '1', '2018-03-05 22:33:06', null);
 INSERT INTO `t_b_resources` VALUES ('6', '讲师管理', '#', '#', '', '', '1', '0', '0', '1', '2018-03-11 16:45:56', null);
@@ -72,7 +72,7 @@ CREATE TABLE `t_b_up_file_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文件记录主键',
   `actual_file_path` varchar(255) DEFAULT NULL COMMENT '实际文件地址',
   `split_file_path` varchar(255) DEFAULT NULL COMMENT '分割后的文件存储地址',
-  `http_json_path` json DEFAULT NULL COMMENT 'http直接访问的地址，例如[{filepath:http://..../.jpg,isForeshow:true},{....}]',
+  `http_json_path` text DEFAULT NULL COMMENT 'http直接访问的地址，例如[{filepath:http://..../.jpg,isForeshow:true},{....}]',
   `creator_id` int(255) DEFAULT NULL COMMENT '上传作者',
   `create_time` datetime DEFAULT NULL COMMENT '上传时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
