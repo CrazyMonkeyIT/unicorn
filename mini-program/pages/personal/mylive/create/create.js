@@ -5,11 +5,15 @@ Page({
     })
   },
   data: {
-    tempFilePath: '',
-    savedFilePath: '',
-    dialog: {
-      hidden: true
-    }
+    roomPosterTemp: '',
+    subjectArray: ['中国', '美国', '巴西', '日本'],
+    subjectIndex:0,
+    roomTypeArray:['VIP','路演'],
+    roomTypeIndex:0,
+    beginDate:'2018-01-01',
+    endDate:'2018-12-31',
+    beginTime:'00:00',
+    endTime:'23:59'
   },
   chooseImage: function () {
     var that = this
@@ -17,51 +21,39 @@ Page({
       count: 1,
       success: function (res) {
         that.setData({
-          tempFilePath: res.tempFilePaths[0]
+          roomPosterTemp: res.tempFilePaths[0]
         })
       }
     })
   },
-  saveFile: function () {
-    if (this.data.tempFilePath.length > 0) {
-      var that = this
-      wx.saveFile({
-        tempFilePath: this.data.tempFilePath,
-        success: function (res) {
-          that.setData({
-            savedFilePath: res.savedFilePath
-          })
-          wx.setStorageSync('savedFilePath', res.savedFilePath)
-          that.setData({
-            dialog: {
-              title: '保存成功',
-              content: '下次进入应用时，此文件仍可用',
-              hidden: false
-            }
-          })
-        },
-        fail: function (res) {
-          that.setData({
-            dialog: {
-              title: '保存失败',
-              content: '应该是有 bug 吧',
-              hidden: false
-            }
-          })
-        }
-      })
-    }
-  },
-  clear: function () {
-    wx.setStorageSync('savedFilePath', '')
+  bindSubjectChange: function (e) {
     this.setData({
-      tempFilePath: '',
-      savedFilePath: ''
+      subjectIndex: e.detail.value
     })
   },
-  confirm: function () {
+  bindRoomTypeChange: function (e) {
     this.setData({
-      'dialog.hidden': true
+      roomTypeIndex: e.detail.value
+    })
+  },
+  bindBeginDateChange:function (e){
+    this.setData({
+      beginDate: e.detail.value
+    })
+  },
+  bindEndDateChange: function (e) {
+    this.setData({
+      endDate: e.detail.value
+    })
+  },
+  bindBeginTimeChange: function (e) {
+    this.setData({
+      beginTime: e.detail.value
+    })
+  },
+  bindEndTimeChange: function (e) {
+    this.setData({
+      endTime: e.detail.value
     })
   },
   /** 取消 */

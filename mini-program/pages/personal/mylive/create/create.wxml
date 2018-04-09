@@ -1,14 +1,12 @@
-<view class="container">
+<view class="container globle_back_view" >
   <view class="page-body">
     <view class="page-section">
+      
       <view class="page-body-info">
-        <block wx:if="{{tempFilePath != ''}}">
-          <image src="{{tempFilePath}}" class="image" mode="aspectFit"></image>
+        <block wx:if="{{roomPosterTemp != ''}}">
+          <image src="{{roomPosterTemp}}" class="image" mode="aspectFit"></image>
         </block>
-        <block wx:if="{{tempFilePath === '' && savedFilePath != ''}}">
-          <image src="{{savedFilePath}}" class="image" mode="aspectFit"></image>
-        </block>
-        <block wx:if="{{tempFilePath === '' && savedFilePath === ''}}">
+        <block wx:if="{{roomPosterTemp === ''}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImage">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
@@ -17,46 +15,130 @@
         </block>
       </view>
 
-      <view class="page-section">
-        <view class="page-section-title">主题</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-              <input class="weui-input" name="input" placeholder="" />
+      <view class="navigator-box navigator-box-show">
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">标题</text>
+                <input style="flex:4;" class="weui-input" name="lecturerName" placeholder="" />
             </view>
           </view>
         </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">专题</text>
+                <picker style="flex:4;" bindchange="bindSubjectChange" value="{{subjectIndex}}" range="{{subjectArray}}">
+                  <view class="weui-input">{{subjectArray[subjectIndex]}}</view>
+                </picker>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">类型</text>
+                <picker style="flex:4;" bindchange="bindRoomTypeChange" value="{{roomTypeIndex}}" range="{{roomTypeArray}}">
+                  <view class="weui-input">{{roomTypeArray[roomTypeIndex]}}</view>
+                </picker>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">价格</text>
+                <input style="flex:4;" class="weui-input" name="roomPrice" placeholder="" />
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">开始时间</text>
+                <view style="flex:4;">
+                    <picker style="float:left;margin-right:20rpx;" mode="date" value="{{beginDate}}" start="2015-09-01" end="2019-09-01" bindchange="bindBeginDateChange">
+                      <view class="weui-input">{{beginDate}}</view>
+                    </picker>
+                    <picker style="float:left;" mode="time" value="{{beginTime}}" start="09:01" end="21:01" bindchange="bindBeginTimeChange">
+                      <view class="weui-input">{{beginTime}}</view>
+                    </picker>
+                </view>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">结束时间</text>
+                <view style="flex:4;">
+                    <picker style="float:left;margin-right:20rpx;" mode="date" value="{{endDate}}" start="2015-09-01" end="2019-09-01" bindchange="bindEndDateChange">
+                      <view class="weui-input">{{endDate}}</view>
+                    </picker>
+                    <picker style="float:left;" mode="time" value="{{endTime}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
+                      <view class="weui-input">{{endTime}}</view>
+                    </picker>
+                </view>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">课件</text>
+                <view style="flex:4;">
+                   <text>暂无课件</text>
+                </view>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">描述</text>
+                <view style="flex:4;">
+                   <input class="weui-input" name="roomPrice" placeholder="" />
+                </view>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">邀请码</text>
+                <view style="flex:4;">
+                  <text class="reload-code">325965</text>
+                  <image class="reload-code-image" src="../../../../images/personal/reload.png" />
+                </view>
+            </view>
+          </view>
+        </view>
+
       </view>
 
-      <view class="page-section">
-        <view class="page-section-title">简介</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-              <textarea class="weui-textarea" rows="3"></textarea>
-            </view>
-          </view>
-        </view>
-      </view>
-
-      <view class="page-section">
-        <view class="page-section-title">邀请码</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-                <text class="reload-code">325965</text>
-                <image class="reload-code-image" src="../../../../images/personal/reload.png" />
-            </view>
-          </view>
-        </view>
-      </view>
+     
 
       <view class="btn-area">
-        <button type="primary" bindtap="saveFile">确定</button>
+        <button type="primary" bindtap="">确定</button>
         <button bindtap="clean">取消</button>
       </view>
     </view>
   </view>
-
-  <modal title="{{dialog.title}}" hidden="{{dialog.hidden}}" no-cancel bindconfirm="confirm">{{dialog.content}}</modal>
 </view>
