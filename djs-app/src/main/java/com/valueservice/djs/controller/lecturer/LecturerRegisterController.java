@@ -3,25 +3,20 @@ package com.valueservice.djs.controller.lecturer;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.controller.BaseController;
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerRegisterDO;
-import com.valueservice.djs.service.grade.LecturerGradeService;
+import com.valueservice.djs.service.lecturer.LecturerGradeService;
 import com.valueservice.djs.service.lecturer.LecturerRegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
-import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 讲师审核

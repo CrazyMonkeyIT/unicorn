@@ -5,13 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.LecturerStatus;
-import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
+import com.valueservice.djs.db.dao.lecturer.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerRegisterDOMapper;
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerRegisterDO;
 import org.springframework.stereotype.Service;
 

@@ -3,20 +3,17 @@ package com.valueservice.djs.controller.lecturer;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.controller.BaseController;
-import com.valueservice.djs.controller.system.LoginController;
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
-import com.valueservice.djs.service.grade.LecturerGradeService;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
+import com.valueservice.djs.service.lecturer.LecturerGradeService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import java.util.List;
 

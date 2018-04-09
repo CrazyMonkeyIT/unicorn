@@ -6,20 +6,14 @@ import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.LecturerStatus;
 import com.valueservice.djs.bean.chief.ChiefListVO;
-import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
-import com.valueservice.djs.db.dao.lecturer.LecturerInviteDOMapper;
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
+import com.valueservice.djs.db.dao.lecturer.LecturerGradeDOMapper;
 import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
-import com.valueservice.djs.db.entity.lecturer.LecturerInviteDO;
-import com.valueservice.djs.util.DateUtil;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +32,7 @@ public class LecturerService {
     LecturerAccountDOMapper lecturerAccountDOMapper;
 
     @Resource
-    LecturerGradeDOMapper  lecturerGradeDOMapper;
+    LecturerGradeDOMapper lecturerGradeDOMapper;
 
     public List<LecturerDO> selectAll(){
         return lecturerDOMapper.selectAll();

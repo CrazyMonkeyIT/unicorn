@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +31,6 @@ public class ImportController {
 
     @Resource
     private UpfileRecordDOMapper upfileRecordDOMapper;
-
-
-    private final static String SPLIT_FILE_PATH_KEY = "splitFilePath";
-    private final static String IS_FORESHOW_KEY = "isForeshow";
 
     @GetMapping("/toUp")
     public String toUp(){
@@ -93,6 +88,10 @@ public class ImportController {
             upfileRecordDO.setCreateTime(new Date());
             upfileRecordDO.setRemark("小程序用户上传");
             upfileRecordDOMapper.insertSelective(upfileRecordDO);
+            UpfileRecordDO a = upfileRecordDOMapper.selectByPrimaryKey(4L);
+            a.getSplitFiles().forEach(v->{
+                System.out.println(v.getSplitFilePath());
+            });
         });
     }
 
