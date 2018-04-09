@@ -45,7 +45,6 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(ModelAndView mv){
-		//OfficeConvert.docToPdf("C:\\Users\\Administrator\\Desktop\\财经直播小程序需求文档.docx", "C:\\Users\\Administrator\\Desktop/file/logback.pdf");
 		mv.addObject("DES_SECRET_KEY", Des3Util.SECRET_KEY);
 		mv.setViewName("login");
 		return mv;

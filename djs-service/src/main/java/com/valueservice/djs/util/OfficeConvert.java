@@ -15,10 +15,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
  * @desc:利用openoffice将word、ppt、excel等转化为pdf,再而转化为图片
@@ -52,8 +50,8 @@ public class OfficeConvert {
     public static void main(String[] args) {
 
         OPENOFFICE_HOME = "cd /Applications/OpenOffice.app/Contents/program";
-        OPENOFFICE_COMMAND = "./soffice -headless -accept=socket,host=127.0.0.1,port=8100;urp; -nofirststartwizard";
-        docToPdf("/Users/Bill/Desktop/座位图.pptx",
+        OPENOFFICE_COMMAND = "./soffice -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;\" -nofirststartwizard";
+        officeToPdf("/Users/Bill/Desktop/座位图.pptx",
                 "/Users/Bill/Desktop/file/logback.pdf");
 //        pdfToIamge(1.2f,"C:/Users/biao.chen/Desktop/file/logback.pdf", "C:/Users/biao.chen/Desktop/file/");
     }
@@ -80,9 +78,11 @@ public class OfficeConvert {
                 //添加水印
                 //bfimage = setGraphics(bfimage);
                 RenderedImage rendImage = bfimage;
-                ImageIO.write(rendImage, "png", new File(outputFile+i+".png"));
+                String fileName = String.format("%s%s",i+1,".png");
+                String filePath = String.format("%s%s%s",outputFile,"/",fileName);
+                ImageIO.write(rendImage, "png", new File(filePath));
                 bfimage.flush();
-                list.add(outputFile+i+".png");
+                list.add(fileName);
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +94,7 @@ public class OfficeConvert {
         return list;
     }
 
-    public static String docToPdf(String inputFilePath, String outputFilePath){
+    public static String officeToPdf(String inputFilePath, String outputFilePath){
         if(StringUtils.isEmpty(inputFilePath) || StringUtils.isEmpty(outputFilePath)){
             logger.error("Parameters cannot be empty!");
             return null;

@@ -17,6 +17,8 @@
 </script>
 <body>
 <form id="upForm" action="${request.contextPath}/import/up/12" enctype="multipart/form-data" method='post'>
+
+    <input type="text" name="toConvertPic" value="true">
     <div id="upDiv">
         File to upload: <input type="file" name="file" multiple="multiple"><br />
     </div>
