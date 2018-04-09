@@ -63,10 +63,10 @@ public class OfficeConvert {
      * @param outputFile 生成缩略图的放置路径
      */
     public static List<String> pdfToIamge(float zoom, String inputFile, String outputFile) {
-        List<String> list = null;
+        List<String> actualPathList = null;
         Document document = null;
         try {
-            list = new ArrayList(0);
+            actualPathList = new ArrayList(0);
             document = new Document();
             document.setFile(inputFile);
             float rotation = 0;
@@ -82,7 +82,7 @@ public class OfficeConvert {
                 String filePath = String.format("%s%s%s",outputFile,"/",fileName);
                 ImageIO.write(rendImage, "png", new File(filePath));
                 bfimage.flush();
-                list.add(fileName);
+                actualPathList.add(filePath);
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class OfficeConvert {
         if(document!=null){
             document.dispose();
         }
-        return list;
+        return actualPathList;
     }
 
     public static String officeToPdf(String inputFilePath, String outputFilePath){

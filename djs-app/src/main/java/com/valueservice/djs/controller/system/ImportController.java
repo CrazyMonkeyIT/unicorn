@@ -34,14 +34,14 @@ public class ImportController {
 
     /**
      * 上传文件使用,其中minifile映射为静态资源地址
-     * toConvertPic = true 将文件转化相应图片
-     * @param rootId 跟目录
+     * TODO 出现异常回滚硬盘生成的文件或文件夹
+     * @param toConvertPic 将文件转化相应图片开关
+     * @param rootId 根目录
      * @param files 文件组
-     * @param files 文件组
-     * @return 资源服务器http地址 return->[{filePath:'http://localhost:8080/minifile/login.jpg'}]
+     * @return 资源服务器http地址
      */
     @PostMapping("/up/{rootId}")
-    public @ResponseBody List<FileParsingRep> up(
+    public @ResponseBody List<FileParsingRepBean> up(
                                         @PathVariable String rootId,
                                         @RequestParam("file") MultipartFile[] files,
                                         @RequestParam(required=false) Boolean toConvertPic){
@@ -73,7 +73,7 @@ public class ImportController {
      * @return
      */
     private void processSplitFile(String httpPathForRoot,File localFile,
-                                  String userFilePath,FileParsingRep fileParsingRep) {
+                                  String userFilePath,FileParsingRepBean fileParsingRepBean) {
 
         String fileName = localFile.getName();
         String suffix = fileName.substring(fileName.indexOf("."));
@@ -89,16 +89,19 @@ public class ImportController {
         List<String> pics = OfficeConvert.pdfToIamge(1.2f,
                                 pdfFilePath,String.format("%s%s",userFilePath,prefix));
 
-        List<Map<String,?>> spiltMaps = new ArrayList<>();
+        List<SplitFileBean> spiltFiles = new ArrayList<>();
         for(int i = 0;i<pics.size();i++){
-            Map<String,Object> map = new HashMap<>();
+            SplitFileBean splitFileBean = new SplitFileBean();
             if(i == 0){
-                map.put(IS_FORESHOW_KEY,true);
+                splitFileBean.setForeshow(true);
             }
-            String httpPathForFile = String.format("%s/%s/%s",httpPathForRoot,prefix,pics.get(i));
-            map.put(SPLIT_FILE_PATH_KEY,httpPathForFile);
-            spiltMaps.add(map);
-            fileParsingRep.setSplitFileList(spiltMaps);
+            String acturlPicPath = pics.get(i);
+            String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefix,
+                    acturlPicPath.substring(acturlPicPath.lastIndexOf("/"),acturlPicPath.length()));
+            splitFileBean.setSplitFilePath(httpPathForFile);
+            splitFileBean.setActualSplitFilePath(acturlPicPath);
+            spiltFiles.add(splitFileBean);
+            fileParsingRepBean.setSplitFileList(spiltFiles);
         }
     }
 
@@ -108,16 +111,17 @@ public class ImportController {
      * @param files
      * @param userFilePath
      */
-    private List<FileParsingRep> processFile(
+    private List<FileParsingRepBean> processFile(
             String rootId,MultipartFile[] files,String userFilePath,Boolean toConvertPic) {
 
-        List<FileParsingRep> lists = new ArrayList<>();
+
+        List<FileParsingRepBean> lists = new ArrayList<>();
         String httpPathForRoot  = String.format("%s%s%s",contextPath,"minifile/",rootId);
         Stream.of(files).forEach(file->{
             if (file != null) {
                 String myFileName = file.getOriginalFilename();
                 if (StringUtils.isNotBlank(myFileName.trim())) {
-                    FileParsingRep fileParsingRep = new FileParsingRep();
+                    FileParsingRepBean fileParsingRepBean = new FileParsingRepBean();
                     String fileAllName = file.getOriginalFilename();
                     String prefixName = fileAllName.substring(0, fileAllName.indexOf("."));
                     String suffixName = fileAllName.substring(fileAllName.indexOf("."), fileAllName.length());
@@ -131,11 +135,12 @@ public class ImportController {
                         logger.error("转换失败",e);
                     }
                     String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefixName,suffixName);
-                    fileParsingRep.setFilePath(httpPathForFile);
+                    fileParsingRepBean.setFilePath(httpPathForFile);
+                    fileParsingRepBean.setActualFilePath(currentFilePath);
                     if(toConvertPic){
-                        processSplitFile(httpPathForRoot,localFile,userFilePath,fileParsingRep);
+                        processSplitFile(httpPathForRoot,localFile,userFilePath, fileParsingRepBean);
                     }
-                    lists.add(fileParsingRep);
+                    lists.add(fileParsingRepBean);
                 }
             }
         });
@@ -168,27 +173,27 @@ public class ImportController {
     }
 
     /**
-     * 文件上传解析的返回对象
+     * 分割文件解析的返回对象
      */
-    class FileParsingRep{
-        private String filePath;
-        private List<Map<String,?>> splitFileList;
+    class SplitFileBean{
+        private String splitFilePath;
+        private transient String actualSplitFilePath;
         private Boolean isForeshow;
 
-        public String getFilePath() {
-            return filePath;
+        public String getSplitFilePath() {
+            return splitFilePath;
         }
 
-        public void setFilePath(String filePath) {
-            this.filePath = filePath;
+        public void setSplitFilePath(String splitFilePath) {
+            this.splitFilePath = splitFilePath;
         }
 
-        public List<Map<String, ?>> getSplitFileList() {
-            return splitFileList;
+        public String getActualSplitFilePath() {
+            return actualSplitFilePath;
         }
 
-        public void setSplitFileList(List<Map<String, ?>> splitFileList) {
-            this.splitFileList = splitFileList;
+        public void setActualSplitFilePath(String actualSplitFilePath) {
+            this.actualSplitFilePath = actualSplitFilePath;
         }
 
         public Boolean getForeshow() {
@@ -197,6 +202,36 @@ public class ImportController {
 
         public void setForeshow(Boolean foreshow) {
             isForeshow = foreshow;
+        }
+    }
+    class FileParsingRepBean {
+
+        private String filePath;
+        private transient String actualFilePath;
+        private List<SplitFileBean> splitFileList;
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public String getActualFilePath() {
+            return actualFilePath;
+        }
+
+        public void setActualFilePath(String actualFilePath) {
+            this.actualFilePath = actualFilePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        public List<SplitFileBean> getSplitFileList() {
+            return splitFileList;
+        }
+
+        public void setSplitFileList(List<SplitFileBean> splitFileList) {
+            this.splitFileList = splitFileList;
         }
     }
 }
