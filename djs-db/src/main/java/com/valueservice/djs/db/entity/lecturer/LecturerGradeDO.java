@@ -1,4 +1,4 @@
-package com.valueservice.djs.db.entity.grade;
+package com.valueservice.djs.db.entity.lecturer;
 
 import java.util.Date;
 

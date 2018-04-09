@@ -1,6 +1,6 @@
-package com.valueservice.djs.db.dao.grade;
+package com.valueservice.djs.db.dao.lecturer;
 
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
 
 import java.util.List;
 

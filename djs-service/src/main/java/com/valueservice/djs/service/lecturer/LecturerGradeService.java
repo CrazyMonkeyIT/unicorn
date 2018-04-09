@@ -1,15 +1,16 @@
-package com.valueservice.djs.service.grade;
+package com.valueservice.djs.service.lecturer;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.CommonConst;
-import com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper;
-import com.valueservice.djs.db.entity.grade.LecturerGradeDO;
+import com.valueservice.djs.db.dao.lecturer.LecturerGradeDOMapper;
+import com.valueservice.djs.db.entity.lecturer.LecturerGradeDO;
 import com.valueservice.djs.util.DateUtil;
 import com.valueservice.djs.util.UnicornUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 

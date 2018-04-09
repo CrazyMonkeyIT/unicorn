@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.valueservice.djs.db.dao.grade.LecturerGradeDOMapper">
-  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.grade.LecturerGradeDO">
+<mapper namespace="com.valueservice.djs.db.dao.lecturer.LecturerGradeDOMapper">
+  <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.lecturer.LecturerGradeDO">
     <id column="lecturer_grade_id" jdbcType="INTEGER" property="lecturerGradeId" />
     <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
     <result column="payment_ratio" jdbcType="INTEGER" property="paymentRatio" />
@@ -22,7 +22,7 @@
     delete from t_b_lecturer_grade
     where lecturer_grade_id = #{lecturerGradeId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.grade.LecturerGradeDO">
+  <insert id="insert" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerGradeDO">
     insert into t_b_lecturer_grade (lecturer_grade_id, grade_name, payment_ratio, 
       is_valid, create_time, update_time
       )
@@ -30,7 +30,7 @@
       #{isValid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.grade.LecturerGradeDO">
+  <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerGradeDO">
     insert into t_b_lecturer_grade
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="lecturerGradeId != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.grade.LecturerGradeDO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerGradeDO">
     update t_b_lecturer_grade
     <set>
       <if test="gradeName != null">
@@ -94,7 +94,7 @@
     </set>
     where lecturer_grade_id = #{lecturerGradeId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.grade.LecturerGradeDO">
+  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerGradeDO">
     update t_b_lecturer_grade
     set grade_name = #{gradeName,jdbcType=VARCHAR},
       payment_ratio = #{paymentRatio,jdbcType=INTEGER},
