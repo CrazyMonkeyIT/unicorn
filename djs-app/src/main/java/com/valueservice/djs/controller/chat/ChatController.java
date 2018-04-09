@@ -23,7 +23,7 @@ public class ChatController {
      */
     @RequestMapping(value = "/minigram/roomHistory", method = RequestMethod.POST)
     @ResponseBody
-    public List<RoomContentVO> queryChatHistory(@RequestBody RoomContentDO roomContent){
+    public List<RoomContentDO> queryChatHistory(@RequestBody RoomContentDO roomContent){
         //Long roomId = params.get("roomId") != null?Long.parseLong(params.get("roomId").toString()):0L;
         return roomContentService.queryContentsByRoomId(roomContent.getRoomid(),roomContent.getId());
     }

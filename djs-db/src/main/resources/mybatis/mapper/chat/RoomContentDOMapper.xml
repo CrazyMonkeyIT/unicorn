@@ -10,15 +10,15 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="active" jdbcType="INTEGER" property="active" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomContentDO">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
-  </resultMap>
-  <resultMap extends="ResultMapWithBLOBs" id="ResultMapExt" type="com.valueservice.djs.bean.RoomContentVO">
+
     <result column="avatar_Url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomContentDO">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, roomId, user_id, type, duration, url, create_time, active
   </sql>
@@ -33,7 +33,7 @@
     from t_b_room_content
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectContentShowByRoom" parameterType="java.lang.Integer" resultMap="ResultMapExt">
+  <select id="selectContentShowByRoom" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select
     a.id, a.roomId, a.user_id, a.type, a.duration, a.url, a.create_time, a.active,
     b.avatar_url,b.open_id,b.nick_name,a.content
