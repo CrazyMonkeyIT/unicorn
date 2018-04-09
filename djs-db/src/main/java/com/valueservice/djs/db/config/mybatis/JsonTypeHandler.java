@@ -12,6 +12,7 @@ import java.sql.SQLException;
 /**
  * 完成数据库json字符串的转换
  */
+@Deprecated
 public class JsonTypeHandler extends BaseTypeHandler<Object> {
 
     @Override

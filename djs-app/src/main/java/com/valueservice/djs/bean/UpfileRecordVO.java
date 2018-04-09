@@ -1,8 +1,17 @@
-package com.valueservice.djs.db.entity.system;
+package com.valueservice.djs.bean;
+
+import com.valueservice.djs.db.entity.system.SplitFileBean;
 
 import java.util.Date;
+import java.util.List;
 
-public class UpfileRecordDO {
+/**
+ * @Desc:
+ * @Author: Bill
+ * @Date: created in 16:55 2018/4/9
+ * @Modified by:
+ */
+public class UpfileRecordVO {
 
     private Long id;
 
@@ -10,7 +19,7 @@ public class UpfileRecordDO {
 
     private String httpFilePath;
 
-    private String splitFiles;
+    private List<SplitFileBean> splitFiles;
 
     private Integer creatorId;
 
@@ -31,7 +40,7 @@ public class UpfileRecordDO {
     }
 
     public void setActualFilePath(String actualFilePath) {
-        this.actualFilePath = actualFilePath == null ? null : actualFilePath.trim();
+        this.actualFilePath = actualFilePath;
     }
 
     public String getHttpFilePath() {
@@ -39,14 +48,14 @@ public class UpfileRecordDO {
     }
 
     public void setHttpFilePath(String httpFilePath) {
-        this.httpFilePath = httpFilePath == null ? null : httpFilePath.trim();
+        this.httpFilePath = httpFilePath;
     }
 
-    public String getSplitFiles() {
+    public List<SplitFileBean> getSplitFiles() {
         return splitFiles;
     }
 
-    public void setSplitFiles(String splitFiles) {
+    public void setSplitFiles(List<SplitFileBean> splitFiles) {
         this.splitFiles = splitFiles;
     }
 
@@ -71,6 +80,6 @@ public class UpfileRecordDO {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
     }
 }

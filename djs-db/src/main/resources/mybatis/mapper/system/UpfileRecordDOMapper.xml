@@ -5,8 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="actual_file_path" jdbcType="VARCHAR" property="actualFilePath" />
     <result column="http_file_path" jdbcType="VARCHAR" property="httpFilePath" />
-    <result column="split_files" property="splitFiles"
-            typeHandler="com.valueservice.djs.db.config.mybatis.JsonTypeHandler" />
+    <result column="split_files" jdbcType="VARCHAR" property="splitFiles"  />
     <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -57,7 +56,7 @@
         #{httpFilePath,jdbcType=VARCHAR},
       </if>
       <if test="splitFiles != null">
-        #{splitFiles,jdbcType=VARCHAR,typeHandler=com.valueservice.djs.db.config.mybatis.JsonTypeHandler},
+        #{splitFiles,jdbcType=VARCHAR},
       </if>
       <if test="creatorId != null">
         #{creatorId,jdbcType=INTEGER},
@@ -80,7 +79,7 @@
         http_file_path = #{httpFilePath,jdbcType=VARCHAR},
       </if>
       <if test="splitFiles != null">
-        split_files = #{splitFiles,jdbcType=VARCHAR,typeHandler=com.valueservice.djs.db.config.mybatis.JsonTypeHandler},
+        split_files = #{splitFiles,jdbcType=VARCHAR},
       </if>
       <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=INTEGER},

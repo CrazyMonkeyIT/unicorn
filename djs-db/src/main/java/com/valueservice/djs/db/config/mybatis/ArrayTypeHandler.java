@@ -9,6 +9,7 @@ import java.sql.*;
  * 完成数据库json数组转换
  * 注意:继承自BaseTypeHandler<Object[]> 使用时传入的参数一定要是Object[]，例如 int[]是 Object, 不是Object[]，所以传入int[] 会报错的
  */
+@Deprecated
 public class ArrayTypeHandler extends BaseTypeHandler<Object[]> {
 
     private static final String TYPE_NAME_VARCHAR = "varchar";

@@ -1,8 +1,12 @@
 package com.valueservice.djs.controller.system;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.valueservice.djs.bean.UpfileRecordVO;
 import com.valueservice.djs.db.entity.system.FileParsingRepBean;
 import com.valueservice.djs.db.entity.system.SplitFileBean;
 import com.valueservice.djs.db.dao.system.UpfileRecordDOMapper;
 import com.valueservice.djs.db.entity.system.UpfileRecordDO;
+import com.valueservice.djs.util.BeanUtils;
 import com.valueservice.djs.util.OfficeConvert;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -82,19 +86,14 @@ public class ImportController {
             upfileRecordDO.setActualFilePath(x.getActualFilePath());
             upfileRecordDO.setHttpFilePath(x.getFilePath());
             if(x.getSplitFileList() != null && !x.getSplitFileList().isEmpty()){
-                upfileRecordDO.setSplitFiles(x.getSplitFileList());
+                upfileRecordDO.setSplitFiles(JSON.toJSONString(x.getSplitFileList()));
             }
             upfileRecordDO.setCreatorId(-1);
             upfileRecordDO.setCreateTime(new Date());
             upfileRecordDO.setRemark("小程序用户上传");
             upfileRecordDOMapper.insertSelective(upfileRecordDO);
-            UpfileRecordDO a = upfileRecordDOMapper.selectByPrimaryKey(4L);
-            a.getSplitFiles().forEach(v->{
-                System.out.println(v.getSplitFilePath());
-            });
         });
     }
-
 
     /**
      * 将文件转换为pdf,再利用openoffice转为为图片，返回http访问地址
@@ -121,9 +120,7 @@ public class ImportController {
         List<SplitFileBean> spiltFiles = new ArrayList<>();
         for(int i = 0;i<pics.size();i++){
             SplitFileBean splitFileBean = new SplitFileBean();
-            if(i == 0){
-                splitFileBean.setForeshow(true);
-            }
+            splitFileBean.setForeshow(false);
             String acturlPicPath = pics.get(i);
             String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefix,
                     acturlPicPath.substring(acturlPicPath.lastIndexOf("/"),acturlPicPath.length()));
@@ -176,28 +173,48 @@ public class ImportController {
         return lists;
     }
 
-    public static void main(String[] args) {
-        Boolean r = null;
-        if(r){
-            System.out.println(1);
+    /**
+     * 根据ID获取上传后的结果
+     * @param id
+     * @return
+     */
+    @PostMapping("/fileRecord/get/{id}")
+    public @ResponseBody UpfileRecordVO getFileRecord(@PathVariable Long id){
+        UpfileRecordVO upfileRecordVO = new UpfileRecordVO();
+        UpfileRecordDO upfileRecordDO = upfileRecordDOMapper.selectByPrimaryKey(id);
+        BeanUtils.copyNotNullFields(upfileRecordDO,upfileRecordVO);
+        String jsonStr = upfileRecordDO.getSplitFiles();
+        if(!jsonStr.isEmpty()){
+            upfileRecordVO.setSplitFiles(JSON.parseArray(jsonStr,SplitFileBean.class));
         }
+        return upfileRecordVO;
     }
 
-    @PostMapping("/getFileList/{roomId}")
-    public @ResponseBody Vector<String> getFileList(@PathVariable String roomId){
-        File file = new File(String.format("%s/%s", filePath,roomId));
-        Vector<String> vecFile = new Vector<>();
-        File[] tempList = file.listFiles();
-        if(tempList != null){
-            for (int i = 0; i < tempList.length; i++) {
-                if (tempList[i].isFile()) {
-                    if(tempList[i].getName().equals(".DS_Store")){
-                        continue;
-                    }
-                    vecFile.add(tempList[i].getName());
-                }
+    /**
+     * 维护用户确定房间的预告文件
+     * @param id
+     * @param jsonSplitStr
+     * @return
+     */
+    @PostMapping("/fileRecord/update/{id}")
+    public @ResponseBody boolean updateFileRecord(@PathVariable Long id,@RequestParam String jsonSplitStr){
+        UpfileRecordDO upfileRecordDO = new UpfileRecordDO();
+        upfileRecordDO.setId(id);
+        upfileRecordDO.setSplitFiles(jsonSplitStr);
+        return upfileRecordDOMapper.updateByPrimaryKeySelective(upfileRecordDO)>0?true:false;
+    }
+
+
+    @PostMapping("/courseware/getpic/{id}")
+    public @ResponseBody List<String> getPicPath(@PathVariable Long id){
+        UpfileRecordDO upfileRecordDO = upfileRecordDOMapper.selectByPrimaryKey(id);
+        List<SplitFileBean> list = (JSON.parseArray(upfileRecordDO.getSplitFiles(),SplitFileBean.class));
+        List<String> picpaths = new ArrayList<>();
+        list.forEach(x->{
+            if(x.getForeshow()){
+                picpaths.add(x.getSplitFilePath());
             }
-        }
-        return vecFile;
+        });
+        return picpaths;
     }
 }
