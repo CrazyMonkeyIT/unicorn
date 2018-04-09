@@ -12,6 +12,7 @@ import com.valueservice.djs.service.chat.RoomContentService;
 import com.valueservice.djs.util.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -38,29 +39,36 @@ public class ChatSocketController {
     private MsgEvevtService msgEvevtService;
 
     @MessageMapping("/chat")
-    public void chathandle(@PathVariable String msgType,@RequestBody MsgTypeBaseVO msgTypeBaseVO){
+    public void chathandle(@RequestBody MsgTypeBaseVO msgTypeBaseVO){
         //直接持久化到MySQL,后期如果用户量增大,使用异步消息存储在缓存中再持久化到MySQL
         String destination = "/topic/notifications/%s";
-        if(msgType.equals(ChatEnum.socketType.msg.toString())){
-            RoomContentVO contentVO = msgTypeBaseVO.getRoomContentVO();
-            if(Objects.isNull(contentVO)){
-                throw new NullPointerException("'contentvo' can't is null");
-            }
-            RoomContentDO roomContentDO = new RoomContentDO();
-            BeanUtils.copyNotNullFields(contentVO,roomContentDO);
-            roomContentDO.setCreateTime(new Date());
-            roomContentDO.setId(null);
-            roomContentService.saveMessage(roomContentDO);
-            messageingTemplate.convertAndSend(String.format(destination, contentVO.getRoomid()),
-                    JSON.toJSONString(roomContentDO));
-        }else if(msgType.equals(ChatEnum.socketType.event.toString())){
-            MsgEventVO msgEventVO = msgTypeBaseVO.getMsgEventVO();
-            MsgEventDO msgEventDO = new MsgEventDO();
-            BeanUtils.copyNotNullFields(msgEventVO,msgEventDO);
-            msgEvevtService.saveMsgEvent(msgEventDO);
-            messageingTemplate.convertAndSend(String.format(destination, msgEventVO.getRoomId()),
-                    JSON.toJSONString(msgEventVO));
+        String chatType = msgTypeBaseVO.getChatType();
+        RoomContentVO contentVO = msgTypeBaseVO.getRoomContentVO();
+        MsgEventVO msgEventVO = msgTypeBaseVO.getMsgEventVO();
+        if(Objects.isNull(contentVO)
+                && Objects.isNull(msgEventVO)){
+            throw new NullPointerException("this vo can't is null");
         }
+        Integer roomId = Objects.isNull(contentVO)?contentVO.getRoomid():msgEventVO.getRoomId();
+        try {
+            if(chatType.equals(ChatEnum.socketType.msg.toString())){
+                RoomContentDO roomContentDO = new RoomContentDO();
+                BeanUtils.copyNotNullFields(contentVO,roomContentDO);
+                roomContentDO.setCreateTime(new Date());
+                roomContentDO.setId(null);
+                roomContentService.saveMessage(roomContentDO);
+            }else if(chatType.equals(ChatEnum.socketType.event.toString())){
+                MsgEventDO msgEventDO = new MsgEventDO();
+                BeanUtils.copyNotNullFields(msgEventVO,msgEventDO);
+                msgEvevtService.saveMsgEvent(msgEventDO);
+            }
+        } catch (Exception e) {
+            messageingTemplate.convertAndSend(String.format(destination, roomId),
+                    "null");
+           logger.error("socket消息发送异常",e);
+        }
+        messageingTemplate.convertAndSend(String.format(destination, roomId),
+                JSON.toJSONString(Objects.isNull(contentVO)?msgEventVO:contentVO));
     }
 
     @RequestMapping("/chatDemo")

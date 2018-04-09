@@ -1,7 +1,9 @@
 package com.valueservice.djs.service.chat;
 
 import com.valueservice.djs.db.dao.chat.MsgEventDOMapper;
+import com.valueservice.djs.db.dao.chat.RoomDOMapper;
 import com.valueservice.djs.db.entity.chat.MsgEventDO;
+import com.valueservice.djs.enums.ChatEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +21,19 @@ public class MsgEvevtService {
     @Resource
     private MsgEventDOMapper msgEventDOMapper;
 
+    @Resource
+    private RoomDOMapper roomDOMapper;
 
+    /**
+     * 保存事件类消息,房间禁言维护房间状态
+     * @param msgEventDO
+     */
     @Transactional
     public void saveMsgEvent(MsgEventDO msgEventDO){
         msgEventDOMapper.insertSelective(msgEventDO);
+        if(msgEventDO.getEventType().equals(ChatEnum.EventType.DISABLE_SENDMSG)){
+            roomDOMapper.updateStatus(msgEventDO.getRoomId(),
+                    ChatEnum.RoomStatus.DISABLE_SENDMSG.getRoomStatusCode());
+        }
     }
 }

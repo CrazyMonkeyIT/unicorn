@@ -1,6 +1,7 @@
 package com.valueservice.djs.db.dao.chat;
 
 import com.valueservice.djs.db.entity.chat.RoomDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface RoomDOMapper {
 
     int updateByPrimaryKeySelective(RoomDO record);
 
-    int updateByPrimaryKeyWithBLOBs(RoomDO record);
+    int updateStatus(@Param("roomId") Long roomId,@Param("status") Integer status);
 
     int updateByPrimaryKey(RoomDO record);
 

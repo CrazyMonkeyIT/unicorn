@@ -212,6 +212,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
+  <update id="updateStatus">
+    update t_b_room set status = #{status} where id = #{roomId}
+  </update>
+
   <select id="selectAll" resultMap="ResultMapWithBLOBs" >
     select * from t_b_room
   </select>

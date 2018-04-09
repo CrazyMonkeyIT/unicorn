@@ -5,7 +5,7 @@ import java.util.Date;
 public class MsgEventVO extends MsgTypeBaseVO{
     private Long id;
 
-    private Long roomId;
+    private Integer roomId;
 
     private String eventType;
 
@@ -23,11 +23,11 @@ public class MsgEventVO extends MsgTypeBaseVO{
         this.id = id;
     }
 
-    public Long getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Long roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 

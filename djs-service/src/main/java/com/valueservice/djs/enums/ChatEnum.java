@@ -46,7 +46,8 @@ public class ChatEnum {
     public enum RoomStatus {
         LIVING(0, "living"),//直播中
         LIVESTARTED(-1, "live broadcast"),//直播未开始
-        LIVEEND(1, "live end");//直播结束
+        LIVEEND(1, "live end"),//直播结束
+        DISABLE_SENDMSG(-2,"disable sendMsg");
 
         private int roomStatusCode;
         private String roomStatusDesc;
