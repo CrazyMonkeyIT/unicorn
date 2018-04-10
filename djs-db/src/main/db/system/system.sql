@@ -71,10 +71,10 @@ DROP TABLE IF EXISTS `t_b_up_file_record`;
 CREATE TABLE `t_b_up_file_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文件记录主键',
   `actual_file_path` varchar(255) DEFAULT NULL COMMENT '实际文件地址',
-  `split_file_path` varchar(255) DEFAULT NULL COMMENT '分割后的文件存储地址',
-  `http_json_path` text DEFAULT NULL COMMENT 'http直接访问的地址，例如[{filepath:http://..../.jpg,isForeshow:true},{....}]',
+  `http_file_path` varchar(255) DEFAULT NULL,
+  `split_files` text COMMENT 'http直接访问的地址，例如[{filepath:http://..../.jpg,isForeshow:true},{....}]',
   `creator_id` int(255) DEFAULT NULL COMMENT '上传作者',
   `create_time` datetime DEFAULT NULL COMMENT '上传时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
