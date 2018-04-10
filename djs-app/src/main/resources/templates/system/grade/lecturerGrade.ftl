@@ -13,7 +13,7 @@
     <table class="table table-striped table-bordered table-hover dataTable no-footer" >
         <thead class="thin-border-bottom">
         <tr >
-            <th >序号a</th>
+            <th >序号</th>
             <th >等级名称</th>
             <th >分成比例</th>
             <th >操作</th>
