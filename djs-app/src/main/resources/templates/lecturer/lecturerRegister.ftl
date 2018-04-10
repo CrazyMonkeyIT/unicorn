@@ -32,8 +32,11 @@
                             <td>${data.company!''}</td>
                             <td>${data.position!''}</td>
                             <td>
+                                <#if data.status == 'WAIT'>
+                                    <span class="label label-yellow label-white middle">等待审核</span>
+                                </#if>
                                 <#if data.status == 'FAILURE'>
-                                    <span class="label label-yellow label-white middle">未通过</span>
+                                    <span class="label label-white middle">未通过</span>
                                 </#if>
                                 <#if data.status == 'SUCCESS'>
                                     <span class="label label-success label-white middle">已通过</span>
@@ -41,7 +44,7 @@
                             </td>
                             <td><#if data.createTime??>${(data.createTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                             <td>
-                                <#if data.status?? >
+                                <#if data.status != 'WAIT' >
                                 <#else >
                                     <div class="btn-overlap btn-group">
                                         <a onclick="showSuccess(${data.id})" class="btn btn-sm btn-white btn-primary" >
