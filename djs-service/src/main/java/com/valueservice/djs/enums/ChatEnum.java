@@ -44,10 +44,10 @@ public class ChatEnum {
      * 房间状态
      */
     public enum RoomStatus {
-        LIVING(0, "living"),//直播中
+        LIVING(0, "living"),//正常直播中
         LIVESTARTED(-1, "live broadcast"),//直播未开始
         LIVEEND(1, "live end"),//直播结束
-        DISABLE_SENDMSG(-2,"disable sendMsg");
+        DISABLE_SENDMSG(-2,"disable sendMsg");//禁言直播中
 
         private int roomStatusCode;
         private String roomStatusDesc;
@@ -88,6 +88,7 @@ public class ChatEnum {
         QUIT("quit","退出房间"),
         INTO("into","进入房间"),
         DISABLE_SENDMSG("disable sendMsg","房间禁言"),
+        ENABLE_SENDMSG("enable sendMsg","解除禁言"),
         KICK_OUT("kick out","提出房间");
 
         private String eventCode;

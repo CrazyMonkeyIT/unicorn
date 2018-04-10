@@ -10,7 +10,7 @@ CREATE TABLE `t_b_room` (
   `type` int(11) DEFAULT NULL COMMENT '房间內型 0：VIP 1：路演',
   `count` int(11) DEFAULT NULL COMMENT '房间总人数',
   `members` text COMMENT '房间人员ID',
-  `status` int(11) DEFAULT NULL COMMENT '房间状态 0：直播中 1：直播结束 -1：直播未开始 -2:禁言中',
+  `status` int(11) DEFAULT NULL COMMENT '房间状态 0：正常直播中 1：直播结束 -1：直播未开始 -2:禁言直播中',
   `room_price` decimal(10,0) DEFAULT NULL COMMENT '房间价格',
   `courseware_id` bigint(255) DEFAULT NULL COMMENT '课件文件id',
   `prepare_live_begin_time` datetime DEFAULT NULL COMMENT '预计直播开始时间',

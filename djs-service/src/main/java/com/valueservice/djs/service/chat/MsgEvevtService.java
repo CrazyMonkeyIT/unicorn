@@ -31,9 +31,14 @@ public class MsgEvevtService {
     @Transactional
     public void saveMsgEvent(MsgEventDO msgEventDO){
         msgEventDOMapper.insertSelective(msgEventDO);
+        //处理事件
         if(msgEventDO.getEventType().equals(ChatEnum.EventType.DISABLE_SENDMSG)){
             roomDOMapper.updateStatus(msgEventDO.getRoomId(),
                     ChatEnum.RoomStatus.DISABLE_SENDMSG.getRoomStatusCode());
+        }
+        if(msgEventDO.getEventType().equals(ChatEnum.EventType.ENABLE_SENDMSG)){
+            roomDOMapper.updateStatus(msgEventDO.getRoomId(),
+                    ChatEnum.RoomStatus.LIVING.getRoomStatusCode());
         }
     }
 }
