@@ -4,26 +4,18 @@ $(function () {
    $("#advertisementType").click(function () {
        var type = $('#advertisementType option:selected').val();
        if(type == 1){
-           $("#urlDiv").show();
+           $("#urlDiv").hide();
            $("#roomDiv").hide();
            $("#lecturerDiv").hide();
        }else if(type == 2){
            $("#urlDiv").hide();
            $("#roomDiv").hide();
-           $("#lecturerDiv").hide();
-       }else if(type == 3){
-           $("#urlDiv").hide();
-           $("#roomDiv").hide();
-           $("#lecturerDiv").hide();
-       }else if(type == 4){
-           $("#urlDiv").hide();
-           $("#roomDiv").hide();
            $("#lecturerDiv").show();
-       }else if(type == 5){
+       }else if(type == 3){
            $("#urlDiv").hide();
            $("#roomDiv").show();
            $("#lecturerDiv").hide();
-       }else if(type == 6){
+       }else if(type == 4){
            $("#urlDiv").hide();
            $("#roomDiv").hide();
            $("#lecturerDiv").hide();
@@ -45,8 +37,9 @@ function saveAdvertisementInfo(){
         alert("广告描述不能为空！");
         return;
     }
-    var invalidDate = $("#editForm").find("input[name='invalidDate']").val();
-    if(!invalidDate){
+    debugger;
+    var invalidDateStr = $("#editForm").find("input[name='invalidDateStr']").val();
+    if(!invalidDateStr){
         alert("广告到期时间不能为空！");
         return;
     }
@@ -54,26 +47,19 @@ function saveAdvertisementInfo(){
     if(type == -1){
         alert("请选择广告类型！");
         return;
-    }else if(type == 1){
-        var advertisementUrl = $("#editForm").find("input[name='advertisementUrl']").val();
-        if(!advertisementUrl){
-            alert("请填写广告链接地址！");
-            return;
-        }
-    }else if(type == 4){
+    }else if(type == 2){
         var lecturer = $('#lecturer option:selected').val();
         if(lecturer == -1){
             alert("请选择需要关联的讲师！");
             return;
         }
-    }else if(type == 5){
+    }else if(type == 3){
         var room = $('#room option:selected').val();
         if(room == -1){
             alert("请选择需要关联的房间！");
             return;
         }
     }
-    debugger;
     $("#advertisementTypeId").val(type);
     $.ajax({
         url : $("#editForm").attr("action"),

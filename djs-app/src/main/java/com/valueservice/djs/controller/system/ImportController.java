@@ -53,6 +53,7 @@ public class ImportController {
                                         @PathVariable String rootId,
                                         @RequestParam("file") MultipartFile[] files,
                                         @RequestParam(required=false) Boolean toConvertPic){
+        toConvertPic = null == toConvertPic ? false : toConvertPic;
 
         if(Objects.isNull(rootId) || Objects.isNull(files)){
             logger.error("The required parameter is null..");

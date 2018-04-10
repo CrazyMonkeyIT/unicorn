@@ -1,6 +1,8 @@
 <@ui.layout >
 <script src="${request.contextPath}/static/js/jquery-1.11.0.js"></script>
 <script src="${request.contextPath}/static/js/jquery.form.js" type="text/javascript"></script>
+<!-- My97 -->
+<script src="${request.contextPath}/static/My97DatePicker/WdatePicker.js"></script>
 <script src="${request.contextPath}/static/advertisement/advertisement.js" ></script>
 
 <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
@@ -112,7 +114,7 @@
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">到期时间</label>
                             <div class="col-sm-8">
-                                <input name="invalidDate" type="text"  />
+                                <input name="invalidDateStr" type="text" onclick="WdatePicker()" />
                             </div>
                         </div>
                         <div class="form-group ">

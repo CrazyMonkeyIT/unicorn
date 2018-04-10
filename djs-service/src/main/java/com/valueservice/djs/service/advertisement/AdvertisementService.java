@@ -11,7 +11,11 @@ import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;
 import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Lee
@@ -63,6 +67,15 @@ public class AdvertisementService {
         advertisementDO.setAdvertisementDesc(advertisementVO.getAdvertisementDesc());
         advertisementDO.setCreateTime(DateUtil.currentDate());
         advertisementDO.setStatus(CommonConst.ADVERTISEMENT_STATUS_NORMAL);
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            String invalidDateStr = String.format("%s %s", advertisementVO.getInvalidDateStr(), "23:59:59");
+            Date invalidDate = sf.parse(invalidDateStr);
+            advertisementDO.setInvalidDate(invalidDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            //TODO log
+        }
         advertisementDOMapper.insertSelective(advertisementDO);
         //Integer primaryKeyValue = advertisementDO.getAdvertisementId();
     }
