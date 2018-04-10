@@ -31,6 +31,7 @@ CREATE TABLE `t_b_lecturer` (
   `status_desc` varchar(200) DEFAULT NULL COMMENT '状态描述',
   `company` varchar(100) DEFAULT NULL COMMENT '公司',
   `position` varchar(100) DEFAULT NULL COMMENT '职位',
+  `introduction` varchar(500) DEFAULT NULL COMMENT '简介',
   `live_number` varchar(10) DEFAULT NULL COMMENT '直播场次',
   `live_hours` varchar(10) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT NULL,

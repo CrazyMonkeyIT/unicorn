@@ -23,13 +23,15 @@
     <result column="room_poster_path" jdbcType="VARCHAR" property="roomPosterPath" />
     <result column="road_show_time_str" jdbcType="VARCHAR" property="roadShowTimeStr" />
     <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="herald_path" jdbcType="VARCHAR" property="heraldPath" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
   </resultMap>
   <sql id="Base_Column_List">
     id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
     actual_live_begin_time, actual_live_end_time, create_time, subject_id, lecturer_id, 
-    room_desc, courseware, room_poster_path,courseware_id
+    room_desc, courseware, room_poster_path,courseware_id, herald_path, invite_code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -98,6 +100,12 @@
       <if test="coursewareId != null" >
         courseware_id,
       </if>
+      <if test="heraldPath != null">
+        herald_path,
+      </if>
+      <if test="inviteCode != null">
+        invite_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -154,6 +162,12 @@
       <if test="coursewareId != null" >
         #{coursewareId,jdbcType=INTEGER},
       </if>
+      <if test="heraldPath != null">
+        #{heraldPath,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
@@ -209,6 +223,12 @@
       </if>
       <if test="coursewareId != null" >
         courseware_id = #{coursewareId,jdbcType=INTEGER},
+      </if>
+      <if test="heraldPath != null">
+        herald_path = #{heraldPath,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

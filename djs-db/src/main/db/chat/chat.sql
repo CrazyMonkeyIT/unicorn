@@ -18,6 +18,8 @@ CREATE TABLE `t_b_room` (
   `actual_live_begin_time` datetime DEFAULT NULL COMMENT '实际直播开始时间',
   `actual_live_end_time` datetime DEFAULT NULL COMMENT '实际直播结束时间',
   `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
+  `herald_path` varchar(255) DEFAULT NULL COMMENT '预告封面地址',
+  `invite_code` varchar(10) DEFAULT NULL COMMENT '邀请码',
   PRIMARY KEY (`id`),
   KEY `courseware_id` (`courseware_id`),
   CONSTRAINT `outindex_courseware_id` FOREIGN KEY (`courseware_id`)

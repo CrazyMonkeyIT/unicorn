@@ -35,7 +35,11 @@ public class RoomDO {
 
     private Long coursewareId;//上传课件id
 
-    private String roomPosterPath;
+    private String roomPosterPath; //海报图片
+
+    private String heraldPath;  //预告图片
+
+    private String inviteCode; //邀请码
 
     //非数据库字端
     private String lecturerName;
@@ -213,5 +217,21 @@ public class RoomDO {
 
     public void setRoomDesc(String roomDesc) {
         this.roomDesc = roomDesc == null ? null : roomDesc.trim();
+    }
+
+    public String getHeraldPath() {
+        return heraldPath;
+    }
+
+    public void setHeraldPath(String heraldPath) {
+        this.heraldPath = heraldPath;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
     }
 }
