@@ -53,8 +53,6 @@ public class ImportController {
                                         @PathVariable String rootId,
                                         @RequestParam("file") MultipartFile[] files,
                                         @RequestParam(required=false) Boolean toConvertPic){
-        toConvertPic = null == toConvertPic ? false : toConvertPic;
-
         if(Objects.isNull(rootId) || Objects.isNull(files)){
             logger.error("The required parameter is null..");
             return null;
@@ -163,7 +161,7 @@ public class ImportController {
                     String httpPathForFile = String.format("%s/%s%s",httpPathForRoot,prefixName,suffixName);
                     fileParsingRepBean.setFilePath(httpPathForFile);
                     fileParsingRepBean.setActualFilePath(currentFilePath);
-                    if(toConvertPic){
+                    if(Objects.nonNull(toConvertPic) && toConvertPic){
                         processSplitFile(httpPathForRoot,localFile,userFilePath, fileParsingRepBean);
                     }
                     lists.add(fileParsingRepBean);
