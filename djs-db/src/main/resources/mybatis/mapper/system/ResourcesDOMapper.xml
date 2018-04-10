@@ -27,7 +27,7 @@
   </select>
 
   <select id="selectLasrOrderNo" parameterType="java.lang.Long" resultType="java.lang.Integer">
-    select max(order_no) from T_B_RESOURCES
+    select max(order_no) from t_b_resources
     where parent_id = #{parentId,jdbcType=BIGINT}
     order by order_no desc
   </select>
