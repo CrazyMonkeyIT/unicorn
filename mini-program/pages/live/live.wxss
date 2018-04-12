@@ -1,18 +1,29 @@
 /* pages/livelist/livelist.wxss */
-.swiper-tab{  
-    width: 100%;  
-    border-bottom: 2rpx solid #777777;  
-    text-align: center;  
-    line-height: 80rpx;}  
-.swiper-tab-list{  font-size: 30rpx;  
-    display: inline-block;  
-    width: 33.33%;  
-    color: #777777;  
+page{  
+  display: flex;  
+  flex-direction: column;  
 }  
-.on{ color: #da7c0c;  
-    border-bottom: 5rpx solid #da7c0c;}  
-  
-.swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }  
-.swiper-box view{  
-    text-align: center;  
-} 
+.navbar{  
+  flex: none;  
+  display: flex;  
+  background: #fff;  
+}  
+.navbar .item{  
+  position: relative;  
+  flex: auto;  
+  text-align: center;  
+  line-height: 80rpx;  
+}  
+.navbar .item.active{  
+  color: darkgray;  
+}  
+.navbar .item.active:after{  
+  content: "";  
+  display: block;  
+  position: absolute;  
+  bottom: 0;  
+  left: 0;  
+  right: 0;  
+  height: 4rpx;  
+  background: #777777;  
+}  

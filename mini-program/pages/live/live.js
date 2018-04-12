@@ -1,17 +1,23 @@
 // pages/livelist/livelist.js
+
+//获取应用实例
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    winWidth: 0,
-    winHeight: 0,
-    // tab切换  
+    navbar: ['路演', 'VIP', '专题'],
     currentTab: 0,
-    testImg:'../../images/home/test/1.jpg'
+    roadShowList: []
   },
-
+  navbarTap: function (e) {
+    this.setData({
+      currentTab: e.currentTarget.dataset.idx
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -26,8 +32,8 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
-          winWidth: res.windowWidth,
-          winHeight: res.windowHeight
+          //winWidth: res.windowWidth,
+          //winHeight: res.windowHeight
         });
       }
 
@@ -45,7 +51,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/mini/home/roadshow/list',
+      method: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        that.setData({
+          'roadShowList': result.data.obj
+        })
+      }
+    })
   },
 
   /**

@@ -25,7 +25,7 @@ Page({
     })
   },
   //初始化首页数据
-  onLoad: function () {
+  onShow: function() {
     var that = this;
     var serverPath = app.globalData.serverPath;
     //首席列表
@@ -47,6 +47,9 @@ Page({
         })
       }
     })
+  },
+  onLoad: function () {
+    
   },
 
   //更多首席
