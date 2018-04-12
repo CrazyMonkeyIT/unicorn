@@ -1,5 +1,8 @@
 package com.valueservice.djs.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.valueservice.djs.shiro.ShiroAuthorizingRealm;
 import com.valueservice.djs.shiro.tags.ShiroTags;
 import freemarker.template.TemplateException;
@@ -20,6 +23,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -28,10 +32,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * created by Bill
@@ -56,6 +57,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/minifile/**").
                 addResourceLocations(String.format("file:%s",filePath));
+        super.addResourceHandlers(registry);
     }
 
     @Override
@@ -194,5 +196,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return shiroFilterFactoryBean;
     }
 
-
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+        /**
+         * 1.需要定义一个convert转换消息的对象
+         * 2.创建配置信息，加入配置信息：比如是否需要格式化返回的json
+         * 3.converter中添加配置信息
+         * 4.convert添加到converters当中
+         */
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
+        converters.add(fastJsonHttpMessageConverter);
+    }
 }

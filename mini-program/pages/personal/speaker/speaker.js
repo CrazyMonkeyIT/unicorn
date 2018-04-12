@@ -128,19 +128,20 @@ Page({
       app.alert("所在职位必须填写");
       return false;
     }
+    console.log(this.data.tempFilePath);
     //上传讲师头像
     wx.uploadFile({
       url: app.globalData.serverPath + '/import/up/lecturerHeadPhoto',
       filePath: this.data.tempFilePath,
-      name: 'files',
+      name: 'file',
       success: function (res1) {
-        console.log(res1);
+        var headPhotoFile = JSON.parse(res1.data)[0].filePath;
         if (!!res1.data){
           //提交讲师注册信息
           wx.request({
             url: app.globalData.serverPath + '/lecturer/register/noauth/submit',
             data: {
-              headPhotoFile: res1.data[0].filePath,
+              headPhotoFile: headPhotoFile,
               lecturerName: lecturerName,
               openId: openId,
               phone: phone,

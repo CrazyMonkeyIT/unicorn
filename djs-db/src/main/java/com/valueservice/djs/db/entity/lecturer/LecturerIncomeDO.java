@@ -1,5 +1,7 @@
 package com.valueservice.djs.db.entity.lecturer;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class LecturerIncomeDO {
 
     private Integer paymentRatio;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     public Integer getId() {

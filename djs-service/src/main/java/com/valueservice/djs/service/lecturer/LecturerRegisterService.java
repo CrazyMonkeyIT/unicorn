@@ -85,6 +85,7 @@ public class LecturerRegisterService {
             lecturer.setGradeId(lecturerRegister.getGradeId());
             lecturer.setCompany(lecturerRegister.getCompany());
             lecturer.setPosition(lecturerRegister.getPosition());
+            lecturer.setHeadPhotoFile(lecturerRegister.getHeadPhotoFile());
             lecturer.setIsChief("NO");
             lecturer.setStatus(LecturerStatus.NORMAL.getCode());
             lecturer.setStatusDesc("首次激活");

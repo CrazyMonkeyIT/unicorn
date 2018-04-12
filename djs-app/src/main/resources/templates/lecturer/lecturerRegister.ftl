@@ -143,6 +143,7 @@
                 gradeId:$("#gradeId").val()
             },
             success : function(data) {
+                console.log(data);
                 if(data.result){
                     $("#form1").submit();
                 }else{

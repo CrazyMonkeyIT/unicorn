@@ -1,6 +1,9 @@
 package com.valueservice.djs.db.entity.mini;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class UserTradeRecordDO {
@@ -12,7 +15,8 @@ public class UserTradeRecordDO {
 
     private Integer tradeType;
 
-    private Date createTime;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Timestamp createTime;
 
     public Integer getId() {
         return id;
@@ -46,11 +50,11 @@ public class UserTradeRecordDO {
         this.tradeType = tradeType;
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 }

@@ -44,6 +44,8 @@ Page({
       },
       success: function (res) {
         if (res.data.result) {
+          console.log("讲师信息");
+          console.log(res.data.obj);
           //设置全局讲师信息
           app.globalData.lecturerInfo = res.data.obj;
           that.setData({
@@ -138,12 +140,12 @@ Page({
     let already = wx.getStorageSync('already_submit_lecturer_register');
     if (!!already){
       //如果已经提交讲师注册，则进入等待页
-      wx.redirectTo({
+      wx.navigateTo({
         url: 'speaker/register-success/register-success'
       })
     }else{
       //如果未提交讲师注册，则仍可以提交注册
-      wx.redirectTo({
+      wx.navigateTo({
         url: 'speaker/speaker'
       })
     }

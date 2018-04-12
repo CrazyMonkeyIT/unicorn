@@ -1,5 +1,7 @@
 package com.valueservice.djs.db.entity.mini;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class UserVipRecordDO {
@@ -11,6 +13,7 @@ public class UserVipRecordDO {
 
     private String openMoney;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     public Integer getId() {

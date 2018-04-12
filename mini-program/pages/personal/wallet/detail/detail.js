@@ -43,7 +43,7 @@ Page({
         if (!!res.data) {
           for (var i = 0; i < res.data.length; i++) {
             console.log(res.data[i].createTime);
-            res.data[i].createTime = res.data[i].createTime.substring(8, 21);
+            res.data[i].createTime = res.data[i].createTime.substring(5, res.data[i].createTime.length);
             if (res.data[i].incomeType == 'live'){
               res.data[i].incomeType = '直播';
             }
@@ -72,7 +72,7 @@ Page({
         console.log(res.data);
         if (!!res.data) {
           for(var i = 0 ;i < res.data.length ;i ++){
-            res.data[i].createTime = res.data[i].createTime.substring(8,21);
+            res.data[i].createTime = res.data[i].createTime.substring(5, res.data[i].createTime.length);
             if (res.data[i].tradeType == 0) {
               res.data[i].tradeType = '收入';
               res.data[i].tradeAmount = '+'+res.data[i].tradeAmount;
@@ -103,7 +103,7 @@ Page({
       success: function (res) {
         if (!!res.data) {
           for (var i = 0; i < res.data.length; i++) {
-            res.data[i].createTime = res.data[i].createTime.substring(8, 21);
+            res.data[i].createTime = res.data[i].createTime.substring(5, res.data[i].createTime.length);
             if (res.data[i].tradeType == 0) {
               res.data[i].tradeType = '收入';
               res.data[i].tradeAmount = '+' + res.data[i].tradeAmount;

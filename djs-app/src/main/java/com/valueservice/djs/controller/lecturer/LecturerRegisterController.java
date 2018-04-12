@@ -62,6 +62,7 @@ public class LecturerRegisterController extends BaseController{
      * @return
      */
     @RequestMapping("/examine")
+    @ResponseBody
     public BaseResult examine(Integer id,String examineResult,Integer gradeId){
         return lecturerRegisterService.examineLecturer(id,examineResult,gradeId);
     }
