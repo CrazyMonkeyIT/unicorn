@@ -46,14 +46,14 @@ public class ChatSocketController {
         String chatType = msgTypeBaseVO.getChatType();
         Long roomId = null;
 
-        if(StringUtils.equals(chatType,"msg")){
+        if(chatType.equals(ChatEnum.socketType.msg.toString())){
             RoomContentDO roomContentDO = new RoomContentDO();
             BeanUtils.copyNotNullFields(msgTypeBaseVO,roomContentDO);
             roomContentDO.setCreateTime(new Date());
             roomContentDO.setId(null);
             roomId = roomContentDO.getRoomid().longValue();
             roomContentService.saveMessage(roomContentDO);
-        }else if(StringUtils.equals(chatType,"event")){
+        }else if(chatType.equals(ChatEnum.socketType.event.toString())){
             MsgEventDO msgEventDO = new MsgEventDO();
             BeanUtils.copyNotNullFields(msgTypeBaseVO,msgEventDO);
             roomId = msgEventDO.getRoomId();

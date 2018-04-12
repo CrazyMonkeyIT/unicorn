@@ -13,6 +13,7 @@ var chartDetail,voicePlaying = false;
 
 Page({
   data: {
+    silent :false, //是否开启禁言模式
     levelRoom:false,
     isPlay : false,
     sendButtDisable: true,
@@ -123,7 +124,17 @@ Page({
       let chatEvent = chatTool.chatEvent('quit', currentUser,roomId);
       that.socketSend(chatEvent, client);
       wx.closeSocket();
-    })
+    });
+
+    //判断页面栈里面的页面数是否大于2
+    if (getCurrentPages().length > 2) {
+      //获取页面栈
+      let pages = getCurrentPages()
+      //给上一个页面设置状态
+      let curPage = pages[pages.length - 2];
+      let data = curPage.data;
+      curPage.setData({ 'isBack': true });
+    }
   },
   //接收后台传来的聊天内容的处理
   //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的
@@ -143,9 +154,11 @@ Page({
   },
   // 切换语音输入和文字输入
   switchInputType: function () {
-    this.setData({
-      keyboard: !(this.data.keyboard),
-    })
+    if (!this.data.silent){
+      this.setData({
+        keyboard: !(this.data.keyboard),
+      })
+    }
   },
   inputbindchange : function(e){
     console.log(e.detail);

@@ -3,8 +3,8 @@
 </view>
 
 <view hidden="{{currentTab!==0}}">  
-  <view wx:for="{{roadShowList}}" wx:key="roadShows">
-    <navigator open-type="navigate" url="/pages/live/chat/chat?roomId={{item.roomId}}">
+  <view wx:for="{{roadShowList}}" wx:key="item">
+    <navigator open-type="navigate" url="/pages/live/startlive/startlive?roomId={{item.roomId}}">
       <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
     </navigator>
   </view>

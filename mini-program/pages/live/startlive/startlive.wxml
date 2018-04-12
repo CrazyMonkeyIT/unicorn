@@ -1,5 +1,16 @@
 <!--live.wxml-->
 <view class="container">
- <live-pusher url="rtmp://47.96.184.236:1935/live/test" mode="RTC" autopush bindstatechange="statechange" style="width: 300px; height: 5px;" />
 
+  <view class="buy_view" hidden='{{!need_buy}}'>
+    
+    <view>进入本房间需要支付<label class="money-label"> ￥239元</label></view>
+    <view class='opera_btn'>
+      <button type='primary'>微信支付</button>
+      
+      <button type='normal' style='margin-left:20rpx;' bindtap='inviteModel'>我有邀请码</button>
+    </view>
+  </view>
+  <modal hidden="{{hiddenmodalput}}" title="请输入邀请码" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="inviteConfirm">  
+    <input type='text' placeholder="请输入邀请码" bindinput="inviteCodeTyping"/>  
+</modal>
 </view>

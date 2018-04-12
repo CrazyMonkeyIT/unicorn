@@ -25,19 +25,28 @@
     <result column="company" jdbcType="VARCHAR" property="company" />
     <result column="herald_path" jdbcType="VARCHAR" property="heraldPath" />
     <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="creatorOpenId" jdbcType="VARCHAR" property="creatorOpenId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
   </resultMap>
   <sql id="Base_Column_List">
     id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
     actual_live_begin_time, actual_live_end_time, create_time, subject_id, lecturer_id, 
-    room_desc, courseware, room_poster_path,courseware_id, herald_path, invite_code
+    room_desc, room_poster_path,courseware_id, herald_path, invite_code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     from t_b_room
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectRoomExt" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    a.id, a.creator_id, a.name, a.type, a.count, a.status, a.room_price, a.prepare_live_begin_time, a.prepare_live_end_time,
+    a.actual_live_begin_time, a.actual_live_end_time, a.create_time, a.subject_id, a.lecturer_id,
+    a.room_desc, a.courseware, a.room_poster_path,a.courseware_id, a.herald_path, a.invite_code ,b.open_id as creatorOpenId
+    from t_b_room a inner join t_b_mini_user b on a.creator_id = b.id
+    where a.id = #{roomId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_b_room

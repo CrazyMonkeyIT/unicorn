@@ -49,6 +49,8 @@ public class RoomDO {
     private String headPhotoFile;
     //路演时间
     private String roadShowTimeStr;
+    //房主的openId
+    private String creatorOpenId;
 
     public String getCompany() {
         return company;
@@ -233,5 +235,13 @@ public class RoomDO {
 
     public void setInviteCode(String inviteCode) {
         this.inviteCode = inviteCode;
+    }
+
+    public String getCreatorOpenId() {
+        return creatorOpenId;
+    }
+
+    public void setCreatorOpenId(String creatorOpenId) {
+        this.creatorOpenId = creatorOpenId;
     }
 }

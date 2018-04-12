@@ -3,10 +3,14 @@ package com.valueservice.djs.service.chat;
 import com.valueservice.djs.bean.live.HomeLiveVO;
 import com.valueservice.djs.bean.live.HomeRoadShowVO;
 import com.valueservice.djs.db.dao.chat.RoomDOMapper;
+import com.valueservice.djs.db.dao.chat.RoomUserDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomDO;
+import com.valueservice.djs.db.entity.chat.RoomUserDO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +18,9 @@ public class RoomService {
 
     @Resource
     private RoomDOMapper roomDOMapper;
+
+    @Resource
+    private RoomUserDOMapper roomUserDOMapper;
 
     public List<RoomDO> selectAll(){
         return roomDOMapper.selectAll();
@@ -53,6 +60,29 @@ public class RoomService {
         }
 
         return roadShowVOList;
+    }
+
+    /**
+     * 验证用户输入的邀请码是否正确
+     * 正确：添加用户邀请码记录并返回 true
+     * 错误：返回false
+     * @param roomId
+     * @param inviteCode
+     * @return
+     */
+    public Boolean checkInvite(Integer roomId,String inviteCode,Integer userId){
+        RoomDO room = roomDOMapper.selectByPrimaryKey(roomId);
+        if(StringUtils.equals(inviteCode,room.getInviteCode())){
+            RoomUserDO roomUserDO = new RoomUserDO();
+            roomUserDO.setActive(1);
+            roomUserDO.setUserId(userId);
+            roomUserDO.setRoomId(roomId);
+            roomUserDO.setPayType(0);
+            roomUserDO.setCreateTime(new Date());
+            roomUserDOMapper.insertSelective(roomUserDO);
+            return true;
+        }
+        return false;
     }
 
 }

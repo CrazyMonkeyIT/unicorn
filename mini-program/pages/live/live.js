@@ -11,7 +11,7 @@ Page({
   data: {
     navbar: ['路演', 'VIP', '专题'],
     currentTab: 0,
-    roadShowList: []
+    roadShowList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}]
   },
   navbarTap: function (e) {
     this.setData({
@@ -52,7 +52,7 @@ Page({
    */
   onShow: function () {
     var that = this;
-    wx.request({
+    /*wx.request({
       url: app.globalData.serverPath + '/mini/home/roadshow/list',
       method: 'GET',
       dataType: 'json',
@@ -61,7 +61,7 @@ Page({
           'roadShowList': result.data.obj
         })
       }
-    })
+    })*/
   },
 
   /**

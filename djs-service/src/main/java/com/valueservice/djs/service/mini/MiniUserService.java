@@ -48,4 +48,6 @@ public class MiniUserService {
     public MiniUserDO selectByOpenId(String openId){
         return miniUserDOMapper.selectByOpenId(openId);
     }
+
+
 }
