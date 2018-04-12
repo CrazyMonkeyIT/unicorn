@@ -71,7 +71,7 @@ public class LecturerRegisterController extends BaseController{
      * @param lecturer
      * @return
      */
-    @RequestMapping("/submit")
+    @RequestMapping({"/submit", "/noauth/submit"})
     @ResponseBody
     public BaseResult submit(@RequestBody LecturerRegisterDO lecturer){
         BaseResult result = new BaseResult();

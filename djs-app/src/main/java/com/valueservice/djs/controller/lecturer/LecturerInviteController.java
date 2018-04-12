@@ -52,7 +52,7 @@ public class LecturerInviteController extends BaseController {
      * @param inviteCode
      * @return
      */
-    @RequestMapping("/accept")
+    @RequestMapping({"/accept", "/noauth/accept"})
     @ResponseBody
     public BaseResult accept(Integer inviteCode,String openId){
         return lecturerInviteService.replyLecturerInvite(inviteCode,openId);
@@ -62,7 +62,7 @@ public class LecturerInviteController extends BaseController {
      * @param inviteCode
      * @return
      */
-    @RequestMapping("/getLecturerByInviteCode")
+    @RequestMapping({"/getLecturerByInviteCode", "/noauth/getLecturerByInviteCode"})
     @ResponseBody
     public BaseResult getLecturerByInviteCode(Integer inviteCode){
         BaseResult result = new BaseResult();

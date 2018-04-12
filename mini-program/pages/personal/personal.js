@@ -35,7 +35,7 @@ Page({
   getLecturerInfo: function () {
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/getByOpenId',
+      url: app.globalData.serverPath + '/lecturer/noauth/getByOpenId',
       data: {
         openId: app.globalData.user.openId
       },
@@ -44,12 +44,15 @@ Page({
       },
       success: function (res) {
         if (res.data.result) {
+          //设置全局讲师信息
           app.globalData.lecturerInfo = res.data.obj;
           that.setData({
             lecturerInfo: getApp().globalData.lecturerInfo,
             noRegister: true,
             alreadyRegister: false
           });
+          //已经成为讲师，删除提交注册标识
+          wx.removeStorageSync("already_submit_lecturer_register");
         } else {
           that.setData({
             noRegister: false
@@ -128,6 +131,21 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  /** 前往讲师注册页 */
+  toRegisterLecturer:function(){
+    let already = wx.getStorageSync('already_submit_lecturer_register');
+    if (!!already){
+      //如果已经提交讲师注册，则进入等待页
+      wx.redirectTo({
+        url: 'speaker/register-success/register-success'
+      })
+    }else{
+      //如果未提交讲师注册，则仍可以提交注册
+      wx.redirectTo({
+        url: 'speaker/speaker'
+      })
+    }
   },
   /** 前往我的直播 */
   toMylive:function(e){

@@ -26,7 +26,7 @@
   </view>
   <view class='empty_tip'>
     <view hidden="{{noRegister}}" class="navigator-box navigator-box-show">
-        <navigator class="navigator" url="speaker/speaker">
+        <navigator class="navigator" bindtap="toRegisterLecturer" >
           <view class="navigator-icon"><image src="../../images/personal/person_info.png"/></view>
           <view class="navigator-content">
             <view class="navigator-text">申请为讲师</view>

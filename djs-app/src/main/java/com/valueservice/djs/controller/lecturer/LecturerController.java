@@ -108,7 +108,7 @@ public class LecturerController extends BaseController{
     /**
      * 获取讲师账户信息
      */
-    @RequestMapping("/account")
+    @RequestMapping({"/account","/noauth/account"})
     @ResponseBody
     public LecturerAccountDO account(Integer lecturerId){
         return lecturerService.selectLecturerAccount(lecturerId);
@@ -119,7 +119,7 @@ public class LecturerController extends BaseController{
      * @param openId
      * @return
      */
-    @RequestMapping("/getByOpenId")
+    @RequestMapping({"/getByOpenId", "/noauth/getByOpenId"})
     @ResponseBody
     public BaseResult getByOpenId(String openId){
         BaseResult result = new BaseResult();

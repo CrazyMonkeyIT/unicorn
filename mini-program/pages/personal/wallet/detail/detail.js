@@ -35,6 +35,7 @@ Page({
       data: {
         lecturerId: lecturerInfo
       },
+      dataType:'json',
       header: {
         'content-type': 'application/json'
       },
@@ -63,6 +64,7 @@ Page({
       data: {
         openId: openId
       },
+      dataType: 'json',
       header: {
         'content-type': 'application/json'
       },
@@ -94,6 +96,7 @@ Page({
       data: {
         openId: openId
       },
+      dataType: 'json',
       header: {
         'content-type': 'application/json'
       },

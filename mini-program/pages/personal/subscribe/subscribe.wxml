@@ -8,13 +8,13 @@
       <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">  
         <swiper-item>  
           <view>
-           123
+           暂无关注
           </view>  
         </swiper-item>  
             
         <swiper-item>  
           <view>
-          456
+           暂无关注
           </view>  
         </swiper-item>  
           

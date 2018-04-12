@@ -56,7 +56,7 @@ Page({
       return false;
     }
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/withdraw/submitWithdrawRequest',
+      url: app.globalData.serverPath + '/lecturer/withdraw/noauth/submitWithdrawRequest',
       data: {
         lecturerId: app.globalData.lecturerInfo.id,
         lecturerName: app.globalData.lecturerInfo.lecturerName,

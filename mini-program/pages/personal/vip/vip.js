@@ -43,7 +43,7 @@ Page({
   loadVipList:function(){
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/vip/all',
+      url: app.globalData.serverPath + '/vip/noauth/all',
       success: function (res) {
         if (res.data.result) {
           that.setData({
@@ -67,7 +67,7 @@ Page({
   handleOpenMember:function(vipId){
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/vip/openMember',
+      url: app.globalData.serverPath + '/vip/noauth/openMember',
       data:{
         vipId: vipId,
         openId: app.globalData.user.openId

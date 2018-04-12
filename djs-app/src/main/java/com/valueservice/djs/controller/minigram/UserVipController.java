@@ -29,7 +29,7 @@ public class UserVipController {
      * 获取全部vip列表
      * @return
      */
-    @RequestMapping("/all")
+    @RequestMapping("/noauth/all")
     @ResponseBody
     public BaseResult getAll(){
         BaseResult result = new BaseResult();
@@ -47,7 +47,7 @@ public class UserVipController {
      * @param openId
      * @return
      */
-    @PostMapping("/openMember")
+    @PostMapping("/noauth/openMember")
     public @ResponseBody BaseResult openMember(Integer vipId, String openId){
         BaseResult result = new BaseResult();
         try{

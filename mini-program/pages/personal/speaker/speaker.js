@@ -128,6 +128,7 @@ Page({
       app.alert("所在职位必须填写");
       return false;
     }
+    //上传讲师头像
     wx.uploadFile({
       url: app.globalData.serverPath + '/import/up/lecturerHeadPhoto',
       filePath: this.data.tempFilePath,
@@ -135,8 +136,9 @@ Page({
       success: function (res1) {
         console.log(res1);
         if (!!res1.data){
+          //提交讲师注册信息
           wx.request({
-            url: app.globalData.serverPath + '/lecturer/register/submit',
+            url: app.globalData.serverPath + '/lecturer/register/noauth/submit',
             data: {
               headPhotoFile: res1.data[0].filePath,
               lecturerName: lecturerName,
@@ -151,6 +153,8 @@ Page({
             },
             success: function (res) {
               if(res.data.result){
+                //已注册成功
+                wx.setStorageSync('already_submit_lecturer_register','true');
                 wx.redirectTo({
                   url: 'register-success/register-success'
                 })
@@ -181,7 +185,7 @@ Page({
       app.alert("请输入邀请码");
     }
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/invite/getLecturerByInviteCode',
+      url: app.globalData.serverPath + '/lecturer/invite/noauth/getLecturerByInviteCode',
       data: {
         inviteCode: invite
       },
@@ -213,7 +217,7 @@ Page({
   sureInfo:function(){
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/invite/accept',
+      url: app.globalData.serverPath + '/lecturer/invite/noauth/accept',
       data: {
         inviteCode: that.data.inviteInfo.inviteCode,
         openId: getApp().globalData.user.openId
@@ -242,7 +246,7 @@ Page({
   getLecturerInfo: function (callback) {
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/lecturer/getByOpenId',
+      url: app.globalData.serverPath + '/lecturer/noauth/getByOpenId',
       data: {
         openId: app.globalData.user.openId
       },

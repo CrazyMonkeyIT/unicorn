@@ -45,7 +45,7 @@ public class WithdrawExamineController extends BaseController {
      * @param record
      * @return
      */
-    @RequestMapping("/submitWithdrawRequest")
+    @RequestMapping({"/submitWithdrawRequest", "/noauth/submitWithdrawRequest"})
     @ResponseBody
     public BaseResult saveWithdraw(WithdrawExamineDO record){
         return withdrawExamineService.save(record);
