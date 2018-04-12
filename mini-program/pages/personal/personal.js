@@ -92,7 +92,8 @@ Page({
         lecturerInfo: app.globalData.lecturerInfo,
         noRegister: true,
         alreadyRegister: false
-      })
+      });
+      wx.removeStorageSync("already_submit_lecturer_register");
     } else {
       this.getLecturerInfo();
     }
