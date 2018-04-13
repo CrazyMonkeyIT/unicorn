@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.valueservice.djs.bean.MsgTypeBaseVO;
 import com.valueservice.djs.db.entity.chat.MsgEventDO;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
+import com.valueservice.djs.enums.ChatEnum;
 import com.valueservice.djs.service.room.MsgEvevtService;
 import com.valueservice.djs.service.room.RoomContentService;
 import com.valueservice.djs.util.BeanUtils;
