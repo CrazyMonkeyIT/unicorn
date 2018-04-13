@@ -1,5 +1,7 @@
-package com.valueservice.djs.service.chat;
+package com.valueservice.djs.service.room;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.live.HomeLiveVO;
 import com.valueservice.djs.bean.live.HomeRoadShowVO;
 import com.valueservice.djs.db.dao.chat.RoomDOMapper;
@@ -84,5 +86,14 @@ public class RoomService {
         }
         return false;
     }
+
+    public PageInfo<RoomDO> findAll(String page,String size){
+        page = (page==null || StringUtils.isBlank(page))?"1":page;
+        size = (size==null || StringUtils.isBlank(size))?"10":size;
+        PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(size));
+        List<RoomDO> list = roomDOMapper.selectAll();
+        return new PageInfo<>(list);
+    }
+
 
 }

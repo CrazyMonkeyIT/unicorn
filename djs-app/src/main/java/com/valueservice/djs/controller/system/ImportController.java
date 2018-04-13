@@ -211,7 +211,7 @@ public class ImportController {
     @PostMapping("/courseware/getpic/{id}")
     public @ResponseBody List<String> getPicPath(@PathVariable Long id){
         UpfileRecordDO upfileRecordDO = upfileRecordDOMapper.selectByPrimaryKey(id);
-        List<SplitFileBean> list = (JSON.parseArray(upfileRecordDO.getSplitFiles(),SplitFileBean.class));
+        List<SplitFileBean> list = JSON.parseArray(upfileRecordDO.getSplitFiles(),SplitFileBean.class);
         List<String> picpaths = new ArrayList<>();
         list.forEach(x->{
             if(x.getForeshow()){

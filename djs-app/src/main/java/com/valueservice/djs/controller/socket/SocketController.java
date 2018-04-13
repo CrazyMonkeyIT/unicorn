@@ -1,34 +1,28 @@
 package com.valueservice.djs.controller.socket;
 
 import com.alibaba.fastjson.JSON;
-import com.valueservice.djs.bean.MsgEventVO;
 import com.valueservice.djs.bean.MsgTypeBaseVO;
 import com.valueservice.djs.db.entity.chat.MsgEventDO;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
-import com.valueservice.djs.bean.RoomContentVO;
-import com.valueservice.djs.enums.ChatEnum;
-import com.valueservice.djs.service.chat.MsgEvevtService;
-import com.valueservice.djs.service.chat.RoomContentService;
+import com.valueservice.djs.service.room.MsgEvevtService;
+import com.valueservice.djs.service.room.RoomContentService;
 import com.valueservice.djs.util.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.Objects;
 
 @Controller
-public class ChatSocketController {
+public class SocketController {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatSocketController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SocketController.class);
 
     @Resource
     private SimpMessagingTemplate messageingTemplate;

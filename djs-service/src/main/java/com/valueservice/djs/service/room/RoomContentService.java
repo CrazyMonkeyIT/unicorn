@@ -1,4 +1,4 @@
-package com.valueservice.djs.service.chat;
+package com.valueservice.djs.service.room;
 
 import com.valueservice.djs.db.dao.chat.RoomContentDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
@@ -20,6 +20,7 @@ public class RoomContentService {
     public void saveMessage(RoomContentDO roomContentDO) {
         roomContentDOMapper.insertSelective(roomContentDO);
     }
+
     public List<RoomContentShow> queryContentsByRoomId(Integer roomId, Integer id){
         return roomContentDOMapper.selectContentShowByRoom(roomId,id);
     }

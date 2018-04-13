@@ -2,7 +2,7 @@ package com.valueservice.djs.controller.minigram;
 
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
-import com.valueservice.djs.service.chat.RoomService;
+import com.valueservice.djs.service.room.RoomService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

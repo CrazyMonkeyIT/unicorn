@@ -1,4 +1,4 @@
-package com.valueservice.djs.service.chat;
+package com.valueservice.djs.service.room;
 
 import com.valueservice.djs.db.dao.chat.SubjectDOMapper;
 import com.valueservice.djs.db.entity.chat.SubjectDO;

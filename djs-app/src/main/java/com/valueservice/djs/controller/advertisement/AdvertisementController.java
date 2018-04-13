@@ -1,14 +1,13 @@
 package com.valueservice.djs.controller.advertisement;
 
 import com.github.pagehelper.PageInfo;
-import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.advertisement.AdvertisementVO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementDO;
 import com.valueservice.djs.db.entity.advertisement.AdvertisementTypeDO;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
-import com.valueservice.djs.service.chat.RoomService;
+import com.valueservice.djs.service.room.RoomService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

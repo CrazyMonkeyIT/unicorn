@@ -1,22 +1,30 @@
 package com.valueservice.djs.controller.chat;
 
+import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CheckInviteCodeVo;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.db.entity.chat.RoomContentShow;
+import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
-import com.valueservice.djs.service.chat.RoomContentService;
-import com.valueservice.djs.service.chat.RoomService;
 import com.valueservice.djs.service.mini.MiniUserService;
+import com.valueservice.djs.service.room.RoomContentService;
+import com.valueservice.djs.service.room.RoomService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class ChatController {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
     @Resource
     private RoomContentService roomContentService;
@@ -84,5 +92,23 @@ public class ChatController {
         }
 
         return result;
+    }
+
+    /**
+     * 获取所有直播间信息
+     */
+    @GetMapping("/room/get/info")
+    public String findAll(
+            @RequestParam(required = false) String page,
+            @RequestParam(required = false) String size,ModelMap modelMap){
+
+        PageInfo<RoomDO> pageInfo = null;
+        try{
+            pageInfo = roomService.findAll(page,size);
+        }catch(Exception e){
+            logger.error("获取用户列表异常",e);
+        }
+        modelMap.addAttribute("page",pageInfo);
+        return "room/list";
     }
 }
