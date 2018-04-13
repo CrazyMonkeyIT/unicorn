@@ -1,6 +1,8 @@
 package com.valueservice.djs.controller.room;
 
 import com.github.pagehelper.PageInfo;
+import com.valueservice.djs.bean.BaseResult;
+import com.valueservice.djs.bean.CheckInviteCodeVo;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
 import com.valueservice.djs.controller.system.UserController;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
@@ -9,6 +11,7 @@ import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.room.RoomContentService;
 import com.valueservice.djs.service.room.RoomService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -49,5 +52,58 @@ public class RoomController {
         return null;
     }
 
+    /**
+     * 获取所有直播间信息
+     */
+    @GetMapping("/room/get/info")
+    public String findAll(
+            @RequestParam(required = false) String page,
+            @RequestParam(required = false) String size,ModelMap modelMap){
+
+        PageInfo<RoomDO> pageInfo = null;
+        try{
+            pageInfo = roomService.findAll(page,size);
+        }catch(Exception e){
+            logger.error("获取用户列表异常",e);
+        }
+        modelMap.addAttribute("page",pageInfo);
+        return "room/list";
+    }
+
+    /**
+     * 验证用户输入的邀请码是否正确
+     * 正确：添加用户邀请码记录并通知小程序进入直播间
+     * 错误：提示用户邀请码不正确
+     * @param checkInviteCodeVo
+     * @return
+     */
+    @RequestMapping(value = "/minigram/checkInviteCode", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult checkInviteCode(@RequestBody CheckInviteCodeVo checkInviteCodeVo){
+        BaseResult result = new BaseResult();
+        if(StringUtils.isBlank(checkInviteCodeVo.getInviteCode())){
+            result.setMessage("请输入邀请码");
+            return result;
+        }
+        if(checkInviteCodeVo.getUserId() == null || checkInviteCodeVo.getUserId() == 0){
+            result.setMessage("未获取到用户信息，请清空小程序缓存后再试试");
+            return result;
+        }
+        if(checkInviteCodeVo.getRoomId() == null || checkInviteCodeVo.getRoomId()  == 0){
+            result.setMessage("未获取到直播间信息，请清空小程序缓存后再试试");
+            return result;
+        }
+
+        if(!roomService.checkInvite(checkInviteCodeVo.getRoomId(),checkInviteCodeVo.getInviteCode(),
+                checkInviteCodeVo.getUserId())){
+            result.setMessage("您输入的邀请码不正确，请校验后再试");
+            return result;
+        }else{
+            result.setResult(true);
+            result.setMessage("邀请码验证成功");
+        }
+
+        return result;
+    }
 
 }
