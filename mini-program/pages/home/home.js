@@ -69,5 +69,30 @@ Page({
   //首页跳转首席讲师直播
   chiefLive: function(e){
     console.log(e.detail);
+  },
+  //首页广告分析/跳转
+  advertisementLink: function(e){
+    let info = e.target.dataset.item;
+    if (1 == info.advertisementTypeId){
+      
+    } else if (2 == info.advertisementTypeId){
+      
+    } else if (3 == info.advertisementTypeId){
+      if (info.roomId == undefined){
+        wx.showToast({
+          title: '房间不存在',
+          icon: 'none'
+        })
+        return;
+      }
+      //指定路演广告
+      wx.navigateTo({
+        url: '/pages/live/chat/chat?roomId=' + info.roomId
+      })
+    } else if (4 == info.advertisementTypeId){
+      
+    }else{
+      console.log("未知类型");
+    }
   }
 });

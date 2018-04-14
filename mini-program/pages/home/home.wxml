@@ -11,12 +11,12 @@
   </view>
 
   <!--广告-->
-	<view class = "index_advertisement">
+	<view>
     <swiper indicator-dots="{{indicatorDots}}"
       autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{advertisementList}}" wx:key="imgs">
         <swiper-item>
-          <image src="{{item.advertisementImgPath}}" class="slide-image" width="355" height="150"/>
+          <image src="{{item.advertisementImgPath}}" data-item='{{item}}' bindtap='advertisementLink' class="slide-image"/>
         </swiper-item>
       </block>
     </swiper>
@@ -33,7 +33,7 @@
         <scroll-view scroll-x="true" style=" white-space: nowrap; display: flex">  
           <view class="content_image" wx:for="{{roadShowList}}" wx:key="roadShows" >  
             <view style='text-align:center'>{{item.roadShowTime}}</view>
-            <image src="{{item.roomPosterPath}}" mode="aspectFit" style="width: 150px;height: 100px;"></image>
+            <image src="{{item.roomPosterPath}}" mode="scaleToFill" style="width: 300rpx;height: 250rpx;"></image>
           </view>  
         </scroll-view> 
       </view>
@@ -54,7 +54,7 @@
     <block wx:if="{{chiefList.length > 0}}">
       <view wx:for="{{chiefList}}" wx:key="chiefs" class="lecturer-container" bindtap='chiefLive'>
         <view class='left'>
-          <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
+          <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:100rpx;height:100rpx;border-radius:50%"></image> </view>
           <view>{{item.lecturerName}}</view>
         </view>
         <view class='right'>
