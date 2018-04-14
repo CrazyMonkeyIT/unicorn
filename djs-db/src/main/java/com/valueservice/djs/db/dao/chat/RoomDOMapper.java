@@ -29,4 +29,6 @@ public interface RoomDOMapper {
 
     RoomDO selectRoomExt(@Param("roomId") Long roomId);
 
+
+    List<RoomDO> selectByLecturerId(@Param(value = "lecturerId") Integer lecturerId);
 }

@@ -26,7 +26,7 @@
 	<view>
     <view class='head-container'>
       <view class="left">路演预告</view>
-      <navigator url='roadshow/roadshow' class='right'>更多 ></navigator>
+      <navigator open-type='switchTab' url='../live/live' class='right'>更多 ></navigator>
     </view> 
     <block wx:if="{{roadShowList.length > 0}}">
       <view class="content">
@@ -57,13 +57,16 @@
           <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:100rpx;height:100rpx;border-radius:50%"></image> </view>
           <view>{{item.lecturerName}}</view>
         </view>
-        <view class='right'>
-          <view class='tag'>
-            <view>{{item.company}}</view>
-            <view style='margin-left:10px;'>{{item.position}}</view>
-          </view>
-          <view style='font-size:13px;color:#616161'>{{item.introduction}}</view>
-        </view> 
+        <navigator url='chief/detail/detail?chiefId={{item.lecturerId}}' class='right'>
+          <view class='right'>
+            <view class='tag'>
+              <view>{{item.company}}</view>
+              <view style='margin-left:10px;'>{{item.position}}</view>
+            </view>
+            <view style='font-size:13px;color:#616161'>{{item.introduction}}</view>
+          </view> 
+        </navigator>
+        
       </view>
     </block>
     <block wx:else>

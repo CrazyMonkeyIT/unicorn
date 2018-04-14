@@ -135,4 +135,8 @@ public class RoomService {
     }
 
 
+    public List<RoomDO> selectByLecturerId(Integer lecturerId){
+        return roomDOMapper.selectByLecturerId(lecturerId);
+    }
+
 }

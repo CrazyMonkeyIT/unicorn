@@ -1,17 +1,21 @@
 package com.valueservice.djs.controller.minigram;
 
 import com.valueservice.djs.bean.BaseResult;
+import com.valueservice.djs.db.entity.chat.RoomDO;
+import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
 import com.valueservice.djs.service.room.RoomService;
 import com.valueservice.djs.service.lecturer.LecturerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,6 +77,24 @@ public class HomeController {
         BaseResult result = new BaseResult(true);
         try {
             result.setObj(lecturerService.selectChiefList(is_chief));
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/chief/{lecturerId}/detail", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getChiefDetail(@PathVariable Integer lecturerId){
+        BaseResult result = new BaseResult(true);
+        try {
+            LecturerDO lecturerDO = lecturerService.selectById(lecturerId);
+            List<RoomDO> roomDOList = roomService.selectByLecturerId(lecturerId);
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("lecturerInfo", lecturerDO);
+            resultMap.put("roomInfo", roomDOList);
+            result.setObj(resultMap);
         }catch (Exception ex){
             LOGGER.error("", ex);
             result.setResult(false);

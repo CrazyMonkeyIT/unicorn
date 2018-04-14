@@ -24,7 +24,8 @@
     "pages/personal/setting/about/about",
     "pages/personal/speaker/register-success/register-success",
     "pages/home/live/live",
-    "pages/home/roadshow/roadshow"
+    "pages/home/roadshow/roadshow",
+    "pages/home/chief/detail/detail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
