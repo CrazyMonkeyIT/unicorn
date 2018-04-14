@@ -1,0 +1,10 @@
+<view class="globle_back_view">
+  <view style="width:100%;text-align:center;">
+    <image src="../../../../images/personal/ok.png" style='margin:150rpx 0px 50rpx 0rpx;height:100rpx;width:100rpx;'></image>
+  </view>
+  <view style="width:100%;text-align:center;">直播已创建成功</view>
+  <view style="margin-top:100rpx;text-align:center;padding:0rpx 40rpx;">
+      <button type="primary" bindtap='close' >确定</button>
+  </view>
+</view>
+

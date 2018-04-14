@@ -128,7 +128,6 @@ Page({
       app.alert("所在职位必须填写");
       return false;
     }
-    console.log(this.data.tempFilePath);
     //上传讲师头像
     wx.uploadFile({
       url: app.globalData.serverPath + '/import/up/lecturerHeadPhoto',

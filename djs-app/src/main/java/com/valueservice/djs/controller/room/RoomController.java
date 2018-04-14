@@ -4,14 +4,17 @@ import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CheckInviteCodeVo;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
+import com.valueservice.djs.controller.BaseController;
 import com.valueservice.djs.controller.system.UserController;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.db.entity.chat.RoomContentShow;
+import com.valueservice.djs.db.entity.chat.RoomCoursewareDO;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.mini.UserVipDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.service.mini.UserVipService;
 import com.valueservice.djs.service.room.RoomContentService;
+import com.valueservice.djs.service.room.RoomCoursewareService;
 import com.valueservice.djs.service.room.RoomService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,7 +27,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-public class RoomController {
+public class RoomController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
@@ -36,8 +39,7 @@ public class RoomController {
     private RoomService roomService;
 
     @Resource
-    private UserVipService userVipService;
-
+	private UserVipService userVipService;
     /**
      * 根据房间号获取房间的历史聊天记录
      * @param
@@ -52,16 +54,15 @@ public class RoomController {
 
     @RequestMapping(value = "/minigram/checkUserPermission", method = RequestMethod.POST)
     @ResponseBody
-    public CheckUserPermissionResult checkUserPermission(@RequestBody CheckUserPermissionResult result){
+    public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult result){
 
         return roomService.checkUserPermission(result);
     }
 
     @RequestMapping(value = "/minigram/allVip", method = RequestMethod.POST)
-    @ResponseBody
-    public List<UserVipDO> selectAllVip(){
-
-        return userVipService.selectAllVipList();
+	@ResponseBody
+	public List<UserVipDO> selectAllVip(){
+        	return userVipService.selectAllVipList();
     }
 
     /**
@@ -117,5 +118,22 @@ public class RoomController {
 
         return result;
     }
+
+    /**
+     * 保存直播房间 信息
+     * @param room
+     * @return
+     */
+    @RequestMapping("/minigram/saveRoomInfo")
+    public @ResponseBody BaseResult saveRoomInfo(@RequestBody RoomDO room){
+        BaseResult result = new BaseResult();
+        try{
+            result = roomService.updateRoomInfo(room, 1L);
+        }catch(Exception ex){
+            logger.error("保存直播房间异常",ex);
+        }
+        return result;
+    }
+
 
 }

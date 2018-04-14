@@ -152,9 +152,13 @@ Page({
   },
   /** 前往我的直播 */
   toMylive:function(e){
-    wx.navigateTo({
-      url: 'mylive/mylive',
-    })
+    if (!!this.data.lecturerInfo){
+      wx.navigateTo({
+        url: 'mylive/mylive',
+      })
+    }else{
+      app.alert("抱歉，您还不是讲师");
+    }
   },
   /** 前往我的订阅 */
   toMySubscribe: function (e) {

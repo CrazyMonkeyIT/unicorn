@@ -75,6 +75,19 @@ INSERT INTO `t_b_live_type` VALUES ('2', '专场');
 INSERT INTO `t_b_live_type` VALUES ('3', 'VIP');
 
 
+-- ----------------------------
+-- Table structure for t_b_room_courseware
+-- ----------------------------
+DROP TABLE IF EXISTS `t_b_room_courseware`;
+CREATE TABLE `t_b_room_courseware` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT ,
+  `courseware_id` bigint(20) DEFAULT NULL COMMENT '课件ID',
+  `herald_path` varchar(255) DEFAULT NULL COMMENT '预告封面',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

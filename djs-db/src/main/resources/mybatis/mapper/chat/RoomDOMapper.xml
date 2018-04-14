@@ -44,7 +44,7 @@
     select
     a.id, a.creator_id, a.name, a.type, a.count, a.status, a.room_price, a.prepare_live_begin_time, a.prepare_live_end_time,
     a.actual_live_begin_time, a.actual_live_end_time, a.create_time, a.subject_id, a.lecturer_id,
-    a.room_desc, a.courseware, a.room_poster_path,a.courseware_id, a.herald_path, a.invite_code ,b.open_id as creatorOpenId
+    a.room_desc, a.room_poster_path,a.courseware_id, a.herald_path, a.invite_code ,b.open_id as creatorOpenId
     from t_b_room a inner join t_b_mini_user b on a.creator_id = b.id
     where a.id = #{roomId}
   </select>
@@ -100,8 +100,8 @@
       <if test="roomDesc != null">
         room_desc,
       </if>
-      <if test="courseware != null">
-        courseware,
+      <if test="coursewareId != null">
+        courseware_id,
       </if>
       <if test="roomPosterPath != null" >
         room_poster_path,
@@ -162,8 +162,8 @@
       <if test="roomDesc != null">
         #{roomDesc,jdbcType=VARCHAR},
       </if>
-      <if test="courseware != null">
-        #{courseware,jdbcType=VARCHAR},
+      <if test="coursewareId != null">
+        #{coursewareId,jdbcType=VARCHAR},
       </if>
       <if test="roomPosterPath != null" >
         #{roomPosterPath,jdbcType=VARCHAR},
@@ -224,8 +224,8 @@
       <if test="roomDesc != null">
         room_desc = #{roomDesc,jdbcType=VARCHAR},
       </if>
-      <if test="courseware != null">
-        courseware = #{courseware,jdbcType=VARCHAR},
+      <if test="coursewareId != null">
+        courseware_id = #{coursewareId,jdbcType=VARCHAR},
       </if>
       <if test="roomPosterPath != null" >
         room_poster_path = #{roomPosterPath,jdbcType=VARCHAR},

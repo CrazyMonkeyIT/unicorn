@@ -2,6 +2,7 @@ package com.valueservice.djs.service.room;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
 import com.valueservice.djs.bean.live.HomeLiveVO;
 import com.valueservice.djs.bean.live.HomeRoadShowVO;
@@ -11,12 +12,15 @@ import com.valueservice.djs.db.dao.mini.MiniUserDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.chat.RoomUserDO;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
+import com.valueservice.djs.enums.ChatEnum;
+import com.valueservice.djs.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RoomService {
@@ -28,7 +32,7 @@ public class RoomService {
     private RoomUserDOMapper roomUserDOMapper;
 
     @Resource
-    private MiniUserDOMapper miniUserDOMapper;
+	private MiniUserDOMapper miniUserDOMapper;
 
     public List<RoomDO> selectAll(){
         return roomDOMapper.selectAll();
@@ -100,7 +104,6 @@ public class RoomService {
         List<RoomDO> list = roomDOMapper.selectAll();
         return new PageInfo<>(list);
     }
-
     public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult param){
         RoomUserDO roomUser = roomUserDOMapper.selectByRoomUser(param.getRoomId(),param.getUserId());
         param.setResult(true);
@@ -138,5 +141,21 @@ public class RoomService {
     public List<RoomDO> selectByLecturerId(Integer lecturerId){
         return roomDOMapper.selectByLecturerId(lecturerId);
     }
-
+    /**
+     * 保存房间信息
+     * @return
+     */
+    public BaseResult updateRoomInfo(RoomDO room, Long creatorId){
+        BaseResult result = new BaseResult();
+        if(Objects.isNull(room.getId())) {
+            room.setCreatorId(creatorId);
+            room.setStatus(ChatEnum.RoomStatus.LIVESTARTED.getRoomStatusCode());
+            room.setCreateTime(DateUtil.currentTimestamp());
+            roomDOMapper.insertSelective(room);
+        }else{
+            roomDOMapper.updateByPrimaryKey(room);
+        }
+        result.setResult(true);
+        return result;
+    }
 }

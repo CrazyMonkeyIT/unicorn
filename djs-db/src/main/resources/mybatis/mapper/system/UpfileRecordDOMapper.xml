@@ -21,6 +21,9 @@
   </select>
 
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.system.UpfileRecordDO">
+    <selectKey keyProperty="id" resultType="java.lang.Long">
+      select LAST_INSERT_ID() as id
+    </selectKey>
     insert into t_b_up_file_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
