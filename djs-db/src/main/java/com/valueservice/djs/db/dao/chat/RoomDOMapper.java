@@ -1,5 +1,6 @@
 package com.valueservice.djs.db.dao.chat;
 
+import com.valueservice.djs.db.bean.CheckUserPermissionDO;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,5 @@ public interface RoomDOMapper {
     List<RoomDO> selectRoadShowData();
 
     RoomDO selectRoomExt(@Param("roomId") Long roomId);
+
 }

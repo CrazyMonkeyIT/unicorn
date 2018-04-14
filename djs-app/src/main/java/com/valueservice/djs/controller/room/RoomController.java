@@ -8,7 +8,9 @@ import com.valueservice.djs.controller.system.UserController;
 import com.valueservice.djs.db.entity.chat.RoomContentDO;
 import com.valueservice.djs.db.entity.chat.RoomContentShow;
 import com.valueservice.djs.db.entity.chat.RoomDO;
+import com.valueservice.djs.db.entity.mini.UserVipDO;
 import com.valueservice.djs.db.entity.system.UserInfoDO;
+import com.valueservice.djs.service.mini.UserVipService;
 import com.valueservice.djs.service.room.RoomContentService;
 import com.valueservice.djs.service.room.RoomService;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +35,9 @@ public class RoomController {
     @Resource
     private RoomService roomService;
 
+    @Resource
+    private UserVipService userVipService;
+
     /**
      * 根据房间号获取房间的历史聊天记录
      * @param
@@ -47,9 +52,16 @@ public class RoomController {
 
     @RequestMapping(value = "/minigram/checkUserPermission", method = RequestMethod.POST)
     @ResponseBody
-    public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult result){
+    public CheckUserPermissionResult checkUserPermission(@RequestBody CheckUserPermissionResult result){
 
-        return null;
+        return roomService.checkUserPermission(result);
+    }
+
+    @RequestMapping(value = "/minigram/allVip", method = RequestMethod.POST)
+    @ResponseBody
+    public List<UserVipDO> selectAllVip(){
+
+        return userVipService.selectAllVipList();
     }
 
     /**

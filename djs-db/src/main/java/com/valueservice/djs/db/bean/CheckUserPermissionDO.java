@@ -1,14 +1,12 @@
-package com.valueservice.djs.bean;
+package com.valueservice.djs.db.bean;
 
-public class CheckUserPermissionResult extends BaseResult{
-
-    private Integer userId; //用户id
+public class CheckUserPermissionDO {
 
     private String openId;//openid
 
     private Integer roomId;//房间id
 
-    private boolean isVip = false;//是否VIP
+    private boolean isVip;//是否VIP
 
     private boolean hasPayRoom;//是否支付房间费用
 
@@ -16,17 +14,7 @@ public class CheckUserPermissionResult extends BaseResult{
 
     private String roomStatus;//房间状态  pre_live : 直接预告；live :直播中；after_live :直播结束
 
-    private boolean isRoomOwner = false;//是否房主
-
-    private boolean isVipRoom = false; //是否是VIP直播间
-
-    public boolean isRoomOwner() {
-        return isRoomOwner;
-    }
-
-    public void setRoomOwner(boolean roomOwner) {
-        isRoomOwner = roomOwner;
-    }
+    private boolean isRoomOwner;//是否房主
 
     public String getOpenId() {
         return openId;
@@ -76,19 +64,11 @@ public class CheckUserPermissionResult extends BaseResult{
         this.roomStatus = roomStatus;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public boolean isRoomOwner() {
+        return isRoomOwner;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public boolean isVipRoom() {
-        return isVipRoom;
-    }
-
-    public void setVipRoom(boolean vipRoom) {
-        isVipRoom = vipRoom;
+    public void setRoomOwner(boolean roomOwner) {
+        isRoomOwner = roomOwner;
     }
 }

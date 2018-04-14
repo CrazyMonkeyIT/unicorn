@@ -2,12 +2,15 @@ package com.valueservice.djs.service.room;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.valueservice.djs.bean.CheckUserPermissionResult;
 import com.valueservice.djs.bean.live.HomeLiveVO;
 import com.valueservice.djs.bean.live.HomeRoadShowVO;
 import com.valueservice.djs.db.dao.chat.RoomDOMapper;
 import com.valueservice.djs.db.dao.chat.RoomUserDOMapper;
+import com.valueservice.djs.db.dao.mini.MiniUserDOMapper;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.chat.RoomUserDO;
+import com.valueservice.djs.db.entity.mini.MiniUserDO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -23,6 +26,9 @@ public class RoomService {
 
     @Resource
     private RoomUserDOMapper roomUserDOMapper;
+
+    @Resource
+    private MiniUserDOMapper miniUserDOMapper;
 
     public List<RoomDO> selectAll(){
         return roomDOMapper.selectAll();
@@ -93,6 +99,39 @@ public class RoomService {
         PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(size));
         List<RoomDO> list = roomDOMapper.selectAll();
         return new PageInfo<>(list);
+    }
+
+    public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult param){
+        RoomUserDO roomUser = roomUserDOMapper.selectByRoomUser(param.getRoomId(),param.getUserId());
+        param.setResult(true);
+
+        //如果进入房间的人就是房主，则不再做其他的判断
+        RoomDO room = roomDOMapper.selectByPrimaryKey(param.getRoomId());
+        if(room.getCreatorId() == param.getUserId().longValue()){
+            param.setRoomOwner(true);
+            return param;
+        }
+
+        param.setVipRoom(room.getType() == 0);
+
+        if(param.isVipRoom()){
+            MiniUserDO miniUser = miniUserDOMapper.selectByPrimaryKey(param.getUserId());
+            if(miniUser.getIsVip() == 1 && miniUser.getVipInvalidTime() != null
+                    && new Date().getTime() < miniUser.getVipInvalidTime().getTime()){
+                param.setVip(true);
+            }
+        }
+
+        if(roomUser == null){
+            param.setPayInviteCode(false);
+            param.setHasPayRoom(false);
+        }else{
+            param.setPayInviteCode(roomUser.getPayType() == 0);
+            param.setHasPayRoom(roomUser.getPayType() == 1);
+        }
+
+
+        return param;
     }
 
 

@@ -2,13 +2,31 @@
 <view class="container">
 
   <view class="buy_view" hidden='{{!need_buy}}'>
-    
-    <view>进入本房间需要支付<label class="money-label"> ￥239元</label></view>
-    <view class='opera_btn'>
-      <button type='primary'>微信支付</button>
-      
-      <button type='normal' style='margin-left:20rpx;' bindtap='inviteModel'>我有邀请码</button>
+    <view class='room-post-view'>
+      <image src='{{roomPostPic}}' mode='widthFix' style='width:100%;'></image>
     </view>
+    
+    <view class='buy-pay-view' hidden='{{!needBuy}}'>
+      <view>进入本房间需要支付<label class="money-label"> ￥239元</label></view>
+      <view class='opera_btn'>
+        <button type='primary'>微信支付</button>
+        <button type='normal' style='margin-left:20rpx;' bindtap='inviteModel'>我有邀请码</button>
+      </view>
+    </view>
+    <scroll-view scroll-x="true" class="vip-buy-view" scroll-left = '0' scroll-into-view="tp19234926" hidden='{{!needBuyVip}}'>
+    <block wx:for="{{userViplist}}" wx:key="item">
+        <view class='vip-item-view'>
+          <view class='vip-item-detail-view'>
+            <image src="../../../images/live/vip_title.png" mode='widthFix' style='width:120rpx;'/>
+            <text style='margin:20rpx;'>{{item.vipName}}</text>
+            <text> ￥ {{item.openMoney}} 元</text>
+            <button type='primary' size='mini'>微信支付</button>
+          </view>
+        </view>
+    </block>
+  </scroll-view>
+
+    
   </view>
   <modal hidden="{{hiddenmodalput}}" title="请输入邀请码" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="inviteConfirm">  
     <input type='text' placeholder="请输入邀请码" bindinput="inviteCodeTyping"/>  
