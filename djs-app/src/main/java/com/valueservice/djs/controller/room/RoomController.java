@@ -135,5 +135,14 @@ public class RoomController extends BaseController{
         return result;
     }
 
-
+    /**
+     * 获取该讲师的直播间列表
+     * @param lecturerId 讲师ID
+     * @return
+     */
+    @RequestMapping("/minigram/getLecturerRooms")
+    public @ResponseBody List<RoomDO> getLecturerRooms(Integer lecturerId){
+        List<RoomDO> list = roomService.selectByLecturerId(lecturerId);
+        return list;
+    }
 }

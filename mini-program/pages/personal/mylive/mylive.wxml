@@ -2,10 +2,32 @@
 <view class="globle_back_view" style='background-color: #D8D8D8;'>
   <view class="empty_tip" >
     
-    <view class="no-date">
+    <view wx:if="{{ rooms.length == 0}}" class="no-date">
       <image class="image" src="../../../images/personal/audio.png"></image>
       <view class="page-head-line"></view>
       <view class="text">暂无直播</view>
+    </view>
+    
+    <view style="margin:20rpx 0rpx;">
+      <view wx:if="{{ rooms.length > 0}}" wx:for="{{rooms}}" >
+        
+        <navigator bindtap="gotoLive" data-id="{{item.id}}" class="navigator" style="height:200rpx;margin-left:20rpx;margin-right:20rpx;padding:10rpx;background:#fff;">
+          <view style="float:left;width:38%;">
+            <image src='{{item.roomPosterPath}}' style="width:260rpx;height:200rpx;"></image>
+          </view>
+          <view style="float:left;width:58%;padding-left:10rpx;">
+            <view style="font-size:29rpx;color:#F76A2B;height:70rpx;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.name}}</view>
+            <view style="font-size:24rpx;">开始时间：{{item.prepareLiveBeginTime}}</view>
+            <view style="font-size:24rpx;">结束时间：{{item.prepareLiveEndTime}}</view>
+            <view style="font-size:24rpx;color:#999;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.roomDesc}}</view>
+          </view>
+        </navigator>
+        <view wx:if="{{index != (rooms.length - 1) }}" style="margin-left:20rpx;margin-right:20rpx;border-bottom:1px solid #ccc;"></view>
+
+      </view>
+
+      
+
     </view>
 
     <navigator class="bottom-botton" url="create/create">

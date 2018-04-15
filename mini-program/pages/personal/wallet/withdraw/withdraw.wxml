@@ -19,7 +19,7 @@
                 <view style="display:inline-flex;width:100%;">
                   <text style="flex:1;font-size:50rpx;">¥</text>
                   <input style="flex:9;" class="weui-input" name="amount" value="{{amount}}" bindinput="inputKeyDown" 
-                       placeholder="请输入提现金额" type='digit'/>
+                       placeholder="请输入提现金额" type='digit'  focus='{{focus}}'/>
                 </view>
             </view>
       </view>

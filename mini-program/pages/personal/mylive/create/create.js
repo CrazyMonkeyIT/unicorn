@@ -7,6 +7,14 @@ Page({
     var n = this.randomNum();
     this.setData({
       randomNum:n
+    });
+    var currDate = this.getNowFormatDate(new Date());
+    var nextHourDate = this.getNowFormatDate(new Date(new Date().getTime() + 1000 * 60 * 60));
+    this.setData({
+      beginDate: currDate.substring(0, 10),
+      beginTime: currDate.substring(11, 16),
+      endDate: nextHourDate.substring(0, 10),
+      endTime: nextHourDate.substring(11, 16)
     })
   },
   data: {
@@ -16,7 +24,7 @@ Page({
     roomTypeArray:[{"id":0,"name":'VIP'},{"id":0,"name":'路演'}],
     roomTypeIndex:0,
     beginDate:'2018-01-01',
-    endDate:'2018-12-31',
+    endDate:'2018-01-02',
     beginTime:'00:00',
     endTime:'23:59',
     randomNum:123456,
@@ -109,6 +117,28 @@ Page({
     var prepareLiveEndTime = this.data.endDate + ' ' + this.data.endTime;
     var heraldPath = '';
     var inviteCode = this.data.randomNum;
+
+    if (!this.data.roomPosterTemp){
+      app.alert("还未选择直播海报");
+      return false;
+    }
+    if (!name){
+      app.alert("请输入直播标题");
+      return false;
+    }
+    if (!roomPrice){
+      app.alert("请输入房间金额");
+      return false;
+    }
+    if (!prepareLiveBeginTime){
+      app.alert("请选择预计开始时间");
+      return false;
+    }
+    if (!prepareLiveEndTime){
+      app.alert("请选择预计结束时间");
+      return false;
+    }
+
     var room = {
       name: name,
       subjectId: subjectId,
@@ -210,6 +240,10 @@ Page({
                 })
               } else {
                 app.alert(res.data.message);
+                that.setData({
+                  submitText: '提交',
+                  submitLoading: false
+                })
               }
             }
           })
@@ -218,6 +252,22 @@ Page({
         }
       }
     })
+  },
+  getNowFormatDate : function (date) {
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if(month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+    + " " + date.getHours() + seperator2 + date.getMinutes()
+    + seperator2 + date.getSeconds();
+    return currentdate;
   },
   /** 取消 */
   clean:function(){

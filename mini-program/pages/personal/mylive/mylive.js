@@ -1,18 +1,19 @@
 // pages/personal/mylive/mylive.js
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    rooms:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**
@@ -26,7 +27,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.loadLecturerRooms();
   },
 
   /**
@@ -62,5 +63,32 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  //加载讲师直播列表
+  loadLecturerRooms: function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/minigram/getLecturerRooms',
+      header: {
+        'content-type': 'application/json'
+      },
+      data:{
+        lecturerId:app.globalData.lecturerInfo.id
+      },
+      success: function (res) {
+        if (!!res.data) {
+          that.setData({
+            rooms : res.data
+          });
+        }
+      }
+    })
+  },
+  //前往直播
+  gotoLive:function(e){
+    var roomid = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../../live/startlive/startlive?roomId=' + roomid
+    })
   }
 })

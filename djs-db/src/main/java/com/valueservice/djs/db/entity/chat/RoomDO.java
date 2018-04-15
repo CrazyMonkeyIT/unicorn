@@ -1,5 +1,7 @@
 package com.valueservice.djs.db.entity.chat;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class RoomDO {
@@ -17,8 +19,10 @@ public class RoomDO {
 
     private Long roomPrice;//房间价格
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date prepareLiveBeginTime;//预计直播开始时间
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date prepareLiveEndTime;//预计直播结束时间
 
     private Date actualLiveBeginTime;//实际直播开始时间

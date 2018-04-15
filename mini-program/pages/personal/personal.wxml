@@ -5,10 +5,16 @@
         
           
           <image bindtap="toAccount" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-          <text bindtap="toAccount" class="userinfo-nickname">{{userInfo.nickName}}</text>
-          
+          <view hidden="{{noVip}}">
+            <text bindtap="toAccount" class="userinfo-nickname">{{userInfo.nickName}}</text>
+          </view>
+          <view hidden="{{alreadyVip}}">
+            <text bindtap="toAccount" class="userinfo-nickname" >{{userInfo.nickName}}</text>
+            <image src="../../images/personal/crown.png" style="height:40rpx;width:40rpx;"></image>
+          </view>
+
           <view class="follow_div">
-           
+              <view class="gradeIconSpan">{{lecturerInfo.gradeName}}</view>
           </view>
         
     </view>
@@ -39,7 +45,7 @@
           <view class="navigator-icon"><image src="../../images/personal/person_info.png"/></view>
           <view class="navigator-content">
             <view class="navigator-text">讲师信息</view>
-            <view class='navigator-righttext'>{{lecturerInfo.gradeName}}</view>
+            <view class='navigator-righttext'></view>
             <view class="navigator-arrow"></view>
           </view>
         </navigator>

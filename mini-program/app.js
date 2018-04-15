@@ -20,7 +20,7 @@ App({
     console.log("reloadUser");
     var that = this;
     that.callback = callback;
-    userUtil.login(function (callback) {
+    userUtil.login_realtime(function (callback) {
       that.globalData.user = wx.getStorageSync('miniUser');
       console.log("已获取到用户信息");
       that.callback();

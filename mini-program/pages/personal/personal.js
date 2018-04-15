@@ -74,20 +74,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!!app.globalData.user) {
-      this.setData({
-        userInfo: app.globalData.user,
-        hasUserInfo: true
-      })
-      //判断该用户是否是vip
-      if (this.data.userInfo.isVip == 0) {
-        console.log("该用户还未是vip");
-        this.setData({ noVip: false });
-      } else {
-        console.log("该用户已是vip");
-        this.setData({ alreadyVip: false });
+    var that = this;
+    app.reloadUser(function(){
+        if (!!app.globalData.user) {
+          that.setData({
+            userInfo: app.globalData.user,
+            hasUserInfo: true
+          })
+          //判断该用户是否是vip
+          if (that.data.userInfo.isVip == 0) {
+            console.log("该用户还未是vip");
+            that.setData({ noVip: false });
+          } else {
+            console.log("该用户已是vip");
+            that.setData({ alreadyVip: false });
+          }
+        }
       }
-    }
+    );
 
     if (!!app.globalData.lecturerInfo) {
       this.setData({

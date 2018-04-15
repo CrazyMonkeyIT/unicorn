@@ -11,6 +11,10 @@ const login = function(callback){
   return userData;
 }
 
+const login_realtime = function (callback) {
+  loginOper(callback);
+}
+
 //异步方法
 const asynchronous = function (result, callback){
   wx.request({
@@ -36,7 +40,6 @@ const asynchronous = function (result, callback){
 }
 //保存用户信息到缓存
 const saveUserStorage = function (result, saveRes, callback){
-  console.log(saveRes);
   wx.setStorageSync('miniUser', {
     id: saveRes.data.obj.id,
     openId: result.data.openId,
@@ -86,5 +89,6 @@ const loginOper = function(callback){
 }
 
 module.exports = {
-  login: login
+  login: login,
+  login_realtime: login_realtime
 }

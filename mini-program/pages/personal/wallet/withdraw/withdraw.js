@@ -10,7 +10,8 @@ Page({
     amount:null,
     buttonDisabled:false,
     display1:false,
-    display2:true
+    display2:true,
+    focus:false
   },
 
   /**
@@ -51,6 +52,13 @@ Page({
   submitForm:function(e){
     var amount = parseFloat(e.detail.value.amount);
     var withdrawCash = parseFloat(this.data.withdrawCash);
+    if (!amount){
+      app.alert("请先输入提现金额");
+      this.setData({
+        focus:true
+      })
+      return false;
+    }
     if (amount > withdrawCash){
       app.alert("输入金额不可大于可提现金额");
       return false;
@@ -78,7 +86,7 @@ Page({
   },
   //查看提现说明
   lookWithdrawNotice:function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../withdraw-notice/withdraw-notice'
     })
   },
