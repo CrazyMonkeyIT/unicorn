@@ -93,7 +93,7 @@ public class HomeController {
             List<RoomDO> roomDOList = roomService.selectByLecturerId(lecturerId);
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("lecturerInfo", lecturerDO);
-            resultMap.put("roomInfo", roomDOList);
+            resultMap.put("roomList", roomDOList);
             result.setObj(resultMap);
         }catch (Exception ex){
             LOGGER.error("", ex);

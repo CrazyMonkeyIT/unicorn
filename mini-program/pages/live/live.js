@@ -51,6 +51,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      'currentTab': app.currentTab
+    })
     var that = this;
     /*wx.request({
       url: app.globalData.serverPath + '/mini/home/roadshow/list',

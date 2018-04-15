@@ -40,9 +40,10 @@
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from t_b_lecturer
-    where id = #{id,jdbcType=INTEGER}
+    a.id, a.lecturer_name, a.open_id, a.phone, a.grade_id, a.head_photo_file, a.is_chief, a.status,
+    a.status_desc, a.company, position,     a.introduction, a.live_number, a.live_hours, a.create_time, a.update_time    ,b.grade_name
+    from t_b_lecturer a inner join t_b_lecturer_grade b on b.lecturer_grade_id = a.grade_id
+    where a.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_b_lecturer

@@ -48,5 +48,6 @@ App({
     serverPath:null,
     //讲师信息
     lecturerInfo:null
-  }
+  },
+  currentTab: 0
 })

@@ -56,6 +56,46 @@ public class RoomDO {
     //房主的openId
     private String creatorOpenId;
 
+    private String prepareLiveBeginTimeStr;//预计直播开始时间
+
+    private String prepareLiveEndTimeStr;//预计直播结束时间
+
+    private String actualLiveBeginTimeStr;//实际直播开始时间
+
+    private String actualLiveEndTimeStr;//实际直播结束时间
+
+    public String getPrepareLiveBeginTimeStr() {
+        return prepareLiveBeginTimeStr;
+    }
+
+    public void setPrepareLiveBeginTimeStr(String prepareLiveBeginTimeStr) {
+        this.prepareLiveBeginTimeStr = prepareLiveBeginTimeStr;
+    }
+
+    public String getPrepareLiveEndTimeStr() {
+        return prepareLiveEndTimeStr;
+    }
+
+    public void setPrepareLiveEndTimeStr(String prepareLiveEndTimeStr) {
+        this.prepareLiveEndTimeStr = prepareLiveEndTimeStr;
+    }
+
+    public String getActualLiveBeginTimeStr() {
+        return actualLiveBeginTimeStr;
+    }
+
+    public void setActualLiveBeginTimeStr(String actualLiveBeginTimeStr) {
+        this.actualLiveBeginTimeStr = actualLiveBeginTimeStr;
+    }
+
+    public String getActualLiveEndTimeStr() {
+        return actualLiveEndTimeStr;
+    }
+
+    public void setActualLiveEndTimeStr(String actualLiveEndTimeStr) {
+        this.actualLiveEndTimeStr = actualLiveEndTimeStr;
+    }
+
     public String getCompany() {
         return company;
     }

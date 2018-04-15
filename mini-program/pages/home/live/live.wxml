@@ -3,11 +3,13 @@
     <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
     <view>{{item.lecturerName}}</view>
   </view>
-  <view class='right'>
-    <view class='tag'>
-      <view>{{item.roomName}}</view>
-      <view style='margin-left:10px;'>{{item.roomPersonCount}}</view>
+  <navigator url='/pages/live/chat/chat?roomId={{item.roomId}}' class='right'>
+    <view class='right'>
+      <view class='tag'>
+        <view>{{item.roomName}}</view>
+        <view style='margin-left:10px;'>{{item.roomPersonCount}}</view>
+      </view>
+      <view style='font-size:13px;color:#616161'>{{item.roomDesc}}</view>
     </view>
-    <view style='font-size:13px;color:#616161'>{{item.roomDesc}}</view>
-  </view>
+  </navigator>
 </view>

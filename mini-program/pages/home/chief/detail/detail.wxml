@@ -1,2 +1,22 @@
-<!--pages/home/chief/detail/detail.wxml-->
-<text>pages/home/chief/detail/detail.wxml</text>
+<view class="lecturer-container" >
+  <view class='left'>
+    <view><image src="{{lecturerInfo.headPhotoFile}}" mode="aspectFit" style="width:100rpx;height:100rpx;border-radius:50%"></image> </view>
+    <view>{{lecturerInfo.lecturerName}}</view>
+  </view>
+  <view class='right'>
+    <view class='tag'>
+      <view>公司：{{lecturerInfo.company}}</view>
+      <view style='margin-left:10px;'>职位：{{lecturerInfo.position}}</view>
+    </view>
+    <view>等级：{{lecturerInfo.gradeName}}</view>
+    <view>直播场次：{{lecturerInfo.liveNumber}}</view>
+    <view style='font-size:13px;color:#616161'>简介：{{lecturerInfo.introduction}}</view>
+  </view> 
+</view>
+
+<view class='room-container' wx:for='{{roomList}}' wx:key='rooms'>
+  <navigator url='/pages/live/chat/chat?roomId={{item.id}}'>
+    <view>时间：{{item.prepareLiveBeginTimeStr}} 至 {{item.prepareLiveEndTimeStr}}</view>
+    <image src='{{item.roomPosterPath}}'></image>
+  </navigator>
+</view>

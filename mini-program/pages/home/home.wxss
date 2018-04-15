@@ -72,6 +72,7 @@
   flex-direction: column;
   margin-top: 10rpx;
   margin-left: 25rpx;
+  width: 100%;
 } 
 .lecturer-container .right .tag {
   display: flex;
@@ -98,6 +99,7 @@
   flex-direction: column;
   margin-top: 10rpx;
   margin-left: 25rpx;
+  width: 100%;
 } 
 .live-container .right .tag {
   display: flex;

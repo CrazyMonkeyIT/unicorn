@@ -74,9 +74,23 @@ Page({
   advertisementLink: function(e){
     let info = e.target.dataset.item;
     if (1 == info.advertisementTypeId){
-      
+      app.currentTab = 2;
+      //VIP直播列表
+      wx.switchTab({
+        url: '/pages/live/live'
+      })
     } else if (2 == info.advertisementTypeId){
-      
+      if (info.lecturerId == undefined) {
+        wx.showToast({
+          title: '讲师不存在',
+          icon: 'none'
+        })
+        return;
+      }
+      //讲师详情
+      wx.navigateTo({
+        url: 'chief/detail/detail?chiefId=' + info.lecturerId
+      })
     } else if (3 == info.advertisementTypeId){
       if (info.roomId == undefined){
         wx.showToast({
@@ -90,7 +104,12 @@ Page({
         url: '/pages/live/chat/chat?roomId=' + info.roomId
       })
     } else if (4 == info.advertisementTypeId){
-      
+      app.currentTab = 1;
+      console.log(app.currentTab);
+      //VIP直播列表
+      wx.switchTab({
+        url: '/pages/live/live'
+      })
     }else{
       console.log("未知类型");
     }

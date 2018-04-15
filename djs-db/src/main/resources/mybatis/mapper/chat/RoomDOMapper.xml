@@ -26,6 +26,10 @@
     <result column="herald_path" jdbcType="VARCHAR" property="heraldPath" />
     <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
     <result column="creatorOpenId" jdbcType="VARCHAR" property="creatorOpenId" />
+    <result column="prepare_live_begin_time_str" jdbcType="VARCHAR" property="prepareLiveBeginTimeStr" />
+    <result column="prepare_live_end_time_str" jdbcType="VARCHAR" property="prepareLiveEndTimeStr" />
+    <result column="actual_live_begin_time_str" jdbcType="VARCHAR" property="actualLiveBeginTimeStr" />
+    <result column="actual_live_end_time_str" jdbcType="VARCHAR" property="actualLiveEndTimeStr" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
   </resultMap>
@@ -272,7 +276,12 @@
   </select>
 
   <select id="selectByLecturerId" resultMap="ResultMapWithBLOBs" >
-    select * from t_b_room a where a.lecturer_id = #{lecturerId}
+    select a.*,
+    date_format(a.prepare_live_begin_time,'%Y-%m-%d %H:%m:%s') prepareLiveBeginTimeStr,
+    date_format(a.prepare_live_end_time,'%Y-%m-%d %H:%m:%s') prepareLiveEndTimeStr,
+    date_format(a.actual_live_begin_time,'%Y-%m-%d %H:%m:%s') actualLiveBeginTimeStr,
+    date_format(a.actual_live_end_time,'%Y-%m-%d %H:%m:%s') actualLiveEndTimeStr
+    from t_b_room a where a.lecturer_id = #{lecturerId}
   </select>
 
 </mapper>

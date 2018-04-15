@@ -1,18 +1,34 @@
 // pages/home/chief/detail/detail.js
+
+//获取应用实例
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    lecturerInfo: {},
+    roomList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.chiefId);
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/mini/home/chief/' + options.chiefId+'/detail',
+      method: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        that.setData({
+          'lecturerInfo': result.data.obj.lecturerInfo,
+          'roomList': result.data.obj.roomList
+        })
+      }
+    })
   },
 
   /**
