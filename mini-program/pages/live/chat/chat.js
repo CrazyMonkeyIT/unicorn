@@ -14,6 +14,7 @@ var chartDetail,voicePlaying = false;
 Page({
   data: {
     silent :false, //是否开启禁言模式
+    silentClick :'unclick',
     levelRoom:false,
     isPlay : false,
     sendButtDisable: true,
@@ -135,6 +136,10 @@ Page({
       let data = curPage.data;
       curPage.setData({ 'isBack': true });
     }
+  },
+  //全体禁言按钮被触发
+  silent :function(){
+
   },
   //接收后台传来的聊天内容的处理
   //chatContent 接收到的内容，可能是初次进入房间时拉的，可能是实时聊天时socket通信的

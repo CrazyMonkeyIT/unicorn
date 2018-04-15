@@ -63,26 +63,49 @@
     </view>
   </scroll-view> 
     <view class="ask-input-word">
-      <image class="text-video-img" src="/images/live/speak.png" hidden="{{keyboard}}"  bindtap="switchInputType"></image>
-      <image class="text-video-img" src="/images/live/keyboard.png" hidden="{{!keyboard}}" bindtap="switchInputType"></image>
-      <input class="input-big" disabled='{{!silent}}' hidden="{{keyboard}}" focus="{{!keyboard}}" placeholder="" confirm-type="send" name="ask_word" type="text" bindconfirm="sendChat" bindinput="Typing" value="{{textvalue}}"/>
-      <button hidden="{{!keyboard}}" disabled='{{!silent}}' bindtouchstart="touchdown" bindtouchend="touchup">按住 说话</button>
-      <image class="text-video-img" src="/images/live/tool_jia.png" bindtap="showTools"></image>
+      <view class='ask-tools-main-view'>
+        <image class="text-video-img" src="/images/live/speak.png" hidden="{{keyboard}}"  bindtap="switchInputType"></image>
+        <image class="text-video-img" src="/images/live/keyboard.png" hidden="{{!keyboard}}" bindtap="switchInputType"></image>
+        <input class="input-big" disabled='{{silent}}' hidden="{{keyboard}}" focus="{{!keyboard}}" placeholder="" confirm-type="send" name="ask_word" type="text" bindconfirm="sendChat" bindinput="Typing" value="{{textvalue}}"/>
+        <button hidden="{{!keyboard}}" disabled='{{silent}}' bindtouchstart="touchdown" bindtouchend="touchup">按住 说话</button>
+        <image class="text-video-img" src="/images/live/tool_jia.png" bindtap="showTools"></image>
+      </view>
+      <view class='ask-tools-function-area' hidden="{{toolsShow}}">
+          <view class='tool-icon-view' bindtap='sendImg'>
+            <view>
+              <image src='../../../images/live/image.png' class='tools-img'></image>
+            </view>
+            <text>图片</text>
+          </view>
+          <view class='tool-icon-view' sytle="margin-right:-10px" bindtap="silent">
+            <view>
+              <image src='../../../images/live/silent_{{silentClick}}.png' class='tools-img'></image>
+            </view>
+            <text>收起</text>
+          </view>
+          <view class='tools-view-lx'></view>
+      </view>
     </view>
 </view>
 <view class='speaker-view' hidden="{{!isSpeaking}}">
   <image class="speaker" hidden="{{!isSpeaking}}" src="{{speakerUrl}}"></image>
   <label class='{{speakerSecondCls}}'>{{speakerSecond}}''</label>
 </view>
-<view hidden="{{toolsShow}}" class='tools-view' animation="{{animation}}">
+<view hidden="true" class='tools-view' animation="{{animation}}">
   <view class='tool-icon-view' bindtap='sendImg'>
     <view>
        <image src='../../../images/live/image.png' class='tools-img'></image>
+    </view>
+    <view>
+      图片
     </view>
   </view>
   <view class='tool-icon-view' sytle="margin-right:-10px" bindtap="showTools">
     <view>
        <image src='../../../images/live/closable.png' class='tools-img'></image>
+    </view>
+    <view>
+      收起
     </view>
   </view>
   <view class='tools-view-lx'></view>

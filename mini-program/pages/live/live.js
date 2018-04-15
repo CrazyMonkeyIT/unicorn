@@ -52,7 +52,7 @@ Page({
    */
   onShow: function () {
     var that = this;
-    wx.request({
+    /*wx.request({
       url: app.globalData.serverPath + '/mini/home/roadshow/list',
       method: 'GET',
       dataType: 'json',
@@ -61,7 +61,7 @@ Page({
           'roadShowList': result.data.obj
         })
       }
-    })
+    })*/
   },
 
   /**

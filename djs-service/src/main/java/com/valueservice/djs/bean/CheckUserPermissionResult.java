@@ -16,6 +16,8 @@ public class CheckUserPermissionResult extends BaseResult{
 
     private String roomStatus;//房间状态  pre_live : 直接预告；live :直播中；after_live :直播结束
 
+    private String roomPostPic ;//房间海报图片地址
+
     private boolean isRoomOwner = false;//是否房主
 
     private boolean isVipRoom = false; //是否是VIP直播间
@@ -90,5 +92,13 @@ public class CheckUserPermissionResult extends BaseResult{
 
     public void setVipRoom(boolean vipRoom) {
         isVipRoom = vipRoom;
+    }
+
+    public String getRoomPostPic() {
+        return roomPostPic;
+    }
+
+    public void setRoomPostPic(String roomPostPic) {
+        this.roomPostPic = roomPostPic;
     }
 }

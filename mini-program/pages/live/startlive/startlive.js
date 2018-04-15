@@ -11,7 +11,7 @@ Page({
     hiddenmodalput :true,
     inviteCode : null,
     isBack :false,
-    roomPostPic :'../../../images/live/tmp_post.jpg',
+    roomPostPic :'',
     userInfo: {},
     userViplist: [], //VIP充值可选项列表
     needBuy :false,
@@ -47,11 +47,24 @@ Page({
       responseType: 'text',
       success: function(res) {
         let result = res.data;
+        console.log(result);
+        that.setData({
+          roomPostPic : result.roomPostPic
+        });
+        
         if(result.result == true){
           if (result.roomOwner == true){
             that.interRoom();
-          }
-          if (result.payInviteCode == true || result.hasPayRoom == true){
+          } else if (result.vipRoom == true) {//如果是VIP房间
+            if (result.vip == true) {//如果用户是VIP则直接进入房间
+              that.interRoom();
+            } else {//如果用户不是VIP，提示用户进行VIP购买
+              that.viplist();//查询可购买VIP列表
+              that.setData({
+                needBuyVip: true
+              })
+            }
+          }else if (result.payInviteCode == true || result.hasPayRoom == true){
             that.interRoom();
           }else{
             that.setData({
@@ -59,16 +72,7 @@ Page({
             })
           }
 
-          if (result.isVipRoom == true){//如果是VIP房间
-            if (result.isVip == true){//如果用户是VIP则直接进入房间
-              that.interRoom();
-            }else{//如果用户不是VIP，提示用户进行VIP购买
-              that.viplist();//查询可购买VIP列表
-              that.setData({
-                needBuyVip : true
-              })
-            }
-          }
+          
         }
       },
       fail: function(res) {},
@@ -76,9 +80,9 @@ Page({
     })
   },
   interRoom : function(){
-    /*wx.navigateTo({
+    wx.navigateTo({
       url: '/pages/live/chat/chat?roomId=' + roomId,
-    })*/
+    })
   },
   viplist : function(){
     wx.request({

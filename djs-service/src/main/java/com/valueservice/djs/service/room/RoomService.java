@@ -110,6 +110,7 @@ public class RoomService {
 
         //如果进入房间的人就是房主，则不再做其他的判断
         RoomDO room = roomDOMapper.selectByPrimaryKey(param.getRoomId());
+        param.setRoomPostPic(room.getRoomPosterPath());
         if(room.getCreatorId() == param.getUserId().longValue()){
             param.setRoomOwner(true);
             return param;
