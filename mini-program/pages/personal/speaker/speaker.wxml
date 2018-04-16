@@ -153,7 +153,7 @@
         <image wx:if="{{lecturerInfo.headPhotoFile != null}}" src='{{lecturerInfo.headPhotoFile}}' style="height:160rpx;width:160rpx;border-radius:40rpx;flex:1;"></image>
         <view style="float:left;flex:3.5;color:#fff;padding-left:20rpx;">
           <view style="height:80rpx;line-height:80rpx;">{{lecturerInfo.lecturerName}}</view>
-          <view style="height:80rpx;">{{lecturerInfo.gradeName}}</view>
+          <view style="height:80rpx;"><view class="gradeIconSpan">{{lecturerInfo.gradeName}}</view></view>
         </view>
       </view>
       

@@ -65,3 +65,18 @@ textarea{
   height: 4rpx;
   transform: translate(-50%, -50%);
 }
+
+
+.gradeIconSpan {
+    background-image: linear-gradient(49deg,#ff9700,#f76b1c);
+    border-radius: 2px;
+    height: 16px;
+    display: inline-block;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    color: #fff;
+    line-height: 16px;
+    text-align: center;
+    margin-left: 5px;
+	padding:3px 5px;
+}

@@ -14,7 +14,7 @@
           </view>
 
           <view class="follow_div">
-              <view class="gradeIconSpan">{{lecturerInfo.gradeName}}</view>
+              <view wx:if="{{lecturerInfo != null}}" class="gradeIconSpan">{{lecturerInfo.gradeName}}</view>
           </view>
         
     </view>
