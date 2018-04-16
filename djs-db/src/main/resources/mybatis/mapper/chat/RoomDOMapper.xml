@@ -110,9 +110,6 @@
       <if test="roomPosterPath != null" >
         room_poster_path,
       </if>
-      <if test="coursewareId != null" >
-        courseware_id,
-      </if>
       <if test="heraldPath != null">
         herald_path,
       </if>
@@ -167,13 +164,10 @@
         #{roomDesc,jdbcType=VARCHAR},
       </if>
       <if test="coursewareId != null">
-        #{coursewareId,jdbcType=VARCHAR},
+        #{coursewareId,jdbcType=INTEGER},
       </if>
       <if test="roomPosterPath != null" >
         #{roomPosterPath,jdbcType=VARCHAR},
-      </if>
-      <if test="coursewareId != null" >
-        #{coursewareId,jdbcType=INTEGER},
       </if>
       <if test="heraldPath != null">
         #{heraldPath,jdbcType=VARCHAR},
@@ -227,9 +221,6 @@
       </if>
       <if test="roomDesc != null">
         room_desc = #{roomDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="coursewareId != null">
-        courseware_id = #{coursewareId,jdbcType=VARCHAR},
       </if>
       <if test="roomPosterPath != null" >
         room_poster_path = #{roomPosterPath,jdbcType=VARCHAR},

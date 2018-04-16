@@ -1,6 +1,7 @@
-var app = getApp();
+var app = getApp(),that = null;
 Page({
   onLoad: function () {
+    that = this;
     this.loadSubjectList();
   },
   onShow:function(){
@@ -31,10 +32,13 @@ Page({
     submitText:'提交',
     submitLoading:false,
     roomCoursewareId:null,
-    interval:null
+    interval:null,
+    textareaFocus:false,
+    roomDesc:'',
+    roomDescView:true,
+    roomDescInpt:false
   },
   chooseImage: function () {
-    var that = this
     wx.chooseImage({
       count: 1,
       success: function (res) {
@@ -75,7 +79,6 @@ Page({
     })
   },
   loadSubjectList:function(){
-    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/subject/noauth/getAllSubject',
       header: {
@@ -102,7 +105,6 @@ Page({
   },
   //提交
   submit:function(e){
-    var that = this;
 
     var name =  e.detail.value.name;
     var subjectId = this.data.subjectArray[this.data.subjectIndex].subjectId;
@@ -113,8 +115,8 @@ Page({
     var type1 = this.data.roomTypeArray[this.data.roomTypeIndex].id;
     var roomPrice = e.detail.value.roomPrice;
     var coursewareId = '';
-    var prepareLiveBeginTime = this.data.beginDate + ' ' + this.data.beginTime;
-    var prepareLiveEndTime = this.data.endDate + ' ' + this.data.endTime;
+    var prepareLiveBeginTime = this.data.beginDate + ' ' + this.data.beginTime + ':00';
+    var prepareLiveEndTime = this.data.endDate + ' ' + this.data.endTime + ':00';
     var heraldPath = '';
     var inviteCode = this.data.randomNum;
 
@@ -187,7 +189,6 @@ Page({
   },
   //轮询，查询课件是否已上传完毕
   selectCoursewareFinish:function(){
-    var that = this;
     console.log("roomCoursewareId：" + that.data.roomCoursewareId);
     console.log("开始轮询，查询课件是否上传");
     wx.request({
@@ -201,7 +202,7 @@ Page({
           var room = that.data.room;
           room['coursewareId'] = res.data.obj.coursewareId;
           room['heraldPath'] = res.data.obj.heraldPath;
-          this.setData({
+          that.setData({
             room:room
           });
           //可以提交信息了
@@ -258,16 +259,54 @@ Page({
     var seperator2 = ":";
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var ss = date.getSeconds();
     if(month >= 1 && month <= 9) {
       month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
       strDate = "0" + strDate;
     }
+    if (hour >= 0 && hour <= 9) {
+      hour = "0" + hour;
+    }
+    if (min >= 0 && min <= 9) {
+      min = "0" + min;
+    }
+    if (ss >= 0 && ss <= 9) {
+      ss = "0" + ss;
+    }
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-    + " " + date.getHours() + seperator2 + date.getMinutes()
-    + seperator2 + date.getSeconds();
+      + " " + hour + seperator2 + min
+      + seperator2 + ss;
     return currentdate;
+  },
+  clickTextarea:function(){
+    this.setData({
+      textareaFocus:true
+    });
+  },
+  inputRoomDesc:function(e){
+    this.setData({
+      roomDesc:e.detail.value
+    });
+  },
+  closeRoomDescInput:function(){
+    this.setData({
+      roomDescView: false,
+      roomDescInpt: true
+    });
+  },
+  clickRoomDescView:function(){
+    this.setData({
+      roomDescView: true,
+      roomDescInpt: false,
+      textareaFocus: true
+    });
+    this.setData({
+      textareaFocus: true
+    })
   },
   /** 取消 */
   clean:function(){

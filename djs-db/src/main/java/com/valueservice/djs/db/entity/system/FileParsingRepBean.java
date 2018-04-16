@@ -12,6 +12,7 @@ public class FileParsingRepBean {
     private String filePath;
     private transient String actualFilePath;
     private List<SplitFileBean> splitFileList;
+    private Long insertId;
 
     public String getFilePath() {
         return filePath;
@@ -31,6 +32,14 @@ public class FileParsingRepBean {
 
     public List<SplitFileBean> getSplitFileList() {
         return splitFileList;
+    }
+
+    public Long getInsertId() {
+        return insertId;
+    }
+
+    public void setInsertId(Long insertId) {
+        this.insertId = insertId;
     }
 
     public void setSplitFileList(List<SplitFileBean> splitFileList) {

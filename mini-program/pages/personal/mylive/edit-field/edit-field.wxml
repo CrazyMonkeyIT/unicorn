@@ -1,0 +1,6 @@
+<view class="globle_back_view" style="padding:20rpx;">
+  <textarea auto-focus="true"  style="height: 10em;width:100%;background-color:#fff;" placeholder=""/>
+  <view style="margin-top:60rpx;text-align:center;padding:0rpx 40rpx;">
+      <button type="primary" bindtap='submit' style='background-color: #F76A2B !important;'>保存</button>
+  </view>
+</view>

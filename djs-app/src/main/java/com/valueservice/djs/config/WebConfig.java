@@ -216,5 +216,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         converters.add(responseBodyConverter());
+        converters.add(fastJsonHttpMessageConverter);
     }
 }

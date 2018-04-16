@@ -90,6 +90,7 @@ public class ImportController {
             upfileRecordDO.setCreateTime(new Date());
             upfileRecordDO.setRemark("小程序用户上传");
             upfileRecordDOMapper.insertSelective(upfileRecordDO);
+            x.setInsertId(upfileRecordDO.getId());
         });
     }
 

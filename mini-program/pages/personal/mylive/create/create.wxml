@@ -1,5 +1,5 @@
 <view class="container globle_back_view" >
-  <view class="page-body">
+  <view class="page-body" >
     <form bindsubmit="submit" >
     <view class="page-section">
       
@@ -106,7 +106,10 @@
             <view class="navigator-text" style="display:inline-flex;width:100%;height:150rpx;">
                 <text style="flex:1;height:150rpx;line-height:150rpx;text-align:right;padding-right:20rpx;color:#000;">描述</text>
                 <view style="flex:4;padding-right:30rpx;">
-                   <textarea name="roomDesc" placeholder="" style="height: 3em;width:100%;"/>
+                   <view style="position:fixed;width:70%;">
+                   <view hidden="{{roomDescView}}" bindtap="clickRoomDescView" style="height: 140rpx;width:100%;border:1px solid #ccc;">{{roomDesc}}</view>
+                   <textarea hidden="{{roomDescInpt}}" name="roomDesc" placeholder="" style="height: 140rpx;width:100%;border:1px solid #ccc;" bindtap="clickTextarea" focus='{{textareaFocus}}' fixed bindinput="inputRoomDesc" bindconfirm="closeRoomDescInput"/>
+                   </view>
                 </view>
             </view>
           </view>
@@ -117,7 +120,7 @@
           <view class="navigator-content" style="padding:6rpx;">
             <view class="navigator-text" style="display:inline-flex;width:100%;">
                 <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">邀请码</text>
-                <view style="flex:4;padding-right:30rpx;">
+                <view style="flex:4;padding-right:30rpx;line-height:90rpx;">
                   <text class="reload-code">{{randomNum}}</text>
                   <!--<image class="reload-code-image" src="../../../../images/personal/reload.png" />-->
                 </view>
@@ -130,7 +133,7 @@
      
 
       <view class="btn-area">
-        <button type="primary" formType="submit" loading="{{submitLoading}}">{{submitText}}</button>
+        <button type="primary" formType="submit" loading="{{submitLoading}}" style='background-color: #F76A2B !important;'>{{submitText}}</button>
         <button bindtap="clean">取消</button>
       </view>
     </view>

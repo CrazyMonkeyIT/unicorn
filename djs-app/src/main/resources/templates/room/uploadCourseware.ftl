@@ -117,6 +117,7 @@
             var formData = new FormData();
             formData.append("file",$("#file")[0].files[0]);
             formData.append("toConvertPic",true);
+            loading_begin();
             $.ajax({
                 url:basePath+"/import/up/courseware",
                 type:"post",
@@ -126,45 +127,34 @@
                 success:function(data){
                     if(!!data){
                         console.log(data);
-                        $.ajax({
-                            url: basePath + "/minigram/saveCoursewareInfo",
-                            type: "post",
-                            dataType:'json',
-                            data: {
-                                actualFilePath:data.actualFilePath,
-                                splitFiles: JSON.stringify(data.splitFiles)
-                            },
-                            success: function (data2) {
-                                console.log(data2);
-                                if(data2.result){
-                                    $("#coursewareId").val(data2.obj);
-                                    $("#sureFinish").show();
-                                    var html = "";
-                                    $.each(data.splitFileList,function(index,obj){
-                                        var display = 'display:none;';
-                                        if(index == 0){
-                                            display = "";
-                                            heraldPath = obj.splitFilePath;
-                                        }
-                                        html += '<li  style="height:200px;width:200px;border:solid 1px #000000;cursor:pointer;">'+
-                                                '<a  data-rel="colorbox">'+
-                                                '<img id="img_tag_" width="200"  height="200" alt="200x200" src="'+obj.splitFilePath+'" >'+
-                                                '<div class="text" onclick="okselli('+index+',\''+obj.splitFilePath+'\')">'+
-                                                '<div class="inner">设置为预告封面</div>'+
-                                                '</div>'+
-                                                '<div class="text2 selok_image" id="selok_image_'+index+'" style="font-size:36px;'+display+'">'+
-                                                '<div class="inner2 icon-ok">预告</div>'+
-                                                '</div>'+
-                                                '</a>'+
-                                                '</li>';
-                                    });
-                                    $("#preDiv").html(html);
-                                }
+                        $("#coursewareId").val(data[0].insertId);
+                        $("#sureFinish").show();
+                        var html = "";
+                        $.each(data[0].splitFileList,function(index,obj){
+                            var display = 'display:none;';
+                            if(index == 0){
+                                display = "";
+                                heraldPath = obj.splitFilePath;
                             }
+                            html += '<li  style="height:200px;width:200px;border:solid 1px #000000;cursor:pointer;">'+
+                                    '<a  data-rel="colorbox">'+
+                                    '<img id="img_tag_" width="200"  height="200" alt="200x200" src="'+obj.splitFilePath+'" >'+
+                                    '<div class="text" onclick="okselli('+index+',\''+obj.splitFilePath+'\')">'+
+                                    '<div class="inner">设置为预告封面</div>'+
+                                    '</div>'+
+                                    '<div class="text2 selok_image" id="selok_image_'+index+'" style="font-size:36px;'+display+'">'+
+                                    '<div class="inner2 icon-ok">预告</div>'+
+                                    '</div>'+
+                                    '</a>'+
+                                    '</li>';
                         });
+                        $("#preDiv").html(html);
                     }else{
                         alert("上传异常");
                     }
+                    loading_end();
+                },error:function(){
+                    loading_end();
                 }
             });
 
@@ -188,7 +178,7 @@
                 success: function (data) {
                     if(data.result){
                         $("#uploadDiv").hide();
-                        $("#finishDiv").hide();
+                        $("#finishDiv").show();
                     }else{
                         alert(data.message);
                     }

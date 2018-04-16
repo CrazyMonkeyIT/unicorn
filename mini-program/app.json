@@ -26,7 +26,8 @@
     "pages/home/live/live",
     "pages/home/roadshow/roadshow",
     "pages/home/chief/detail/detail",
-    "pages/personal/mylive/create-success/create-success"
+    "pages/personal/mylive/create-success/create-success",
+    "pages/personal/mylive/edit-field/edit-field"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
