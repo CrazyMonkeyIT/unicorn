@@ -104,11 +104,19 @@ public class ImportController {
         String fileName = localFile.getName();
         String suffix = fileName.substring(fileName.indexOf("."));
         String prefix = fileName.substring(0, fileName.length() - suffix.length());
-        String pdfFileName = fileName.replace(suffix,".pdf");
-        String pdfFilePath = String.format("%s%s/%s",userFilePath,prefix,pdfFileName);
-        String sourceFilePath = String.format("%s%s",userFilePath,fileName);
-        OfficeConvert.officeToPdf(sourceFilePath,pdfFilePath);
-        File pdfFile = new File(pdfFilePath);
+
+        File pdfFile;
+        String pdfFilePath;
+        if(suffix.equals(".pdf")){
+            pdfFilePath = localFile.getPath();
+            pdfFile = new File(pdfFilePath);
+        }else{
+            String pdfFileName = fileName.replace(suffix,".pdf");
+            pdfFilePath = String.format("%s%s/%s",userFilePath,prefix,pdfFileName);
+            String sourceFilePath = String.format("%s%s",userFilePath,fileName);
+            OfficeConvert.officeToPdf(sourceFilePath,pdfFilePath);
+            pdfFile = new File(pdfFilePath);
+        }
         if(!pdfFile.isFile()){
             throw new RuntimeException("Not a PDF file.");
         }

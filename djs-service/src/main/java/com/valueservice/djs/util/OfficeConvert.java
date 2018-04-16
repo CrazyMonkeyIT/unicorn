@@ -60,9 +60,9 @@ public class OfficeConvert {
      * 生成pdf的缩略图
      * @param zoom  缩略图显示倍数，1表示不缩放，0.5表示缩小到50%
      * @param inputFile  需要生成缩略图的书籍的完整路径
-     * @param outputFile 生成缩略图的放置路径
+     * @param outputFilePath 生成缩略图的放置路径
      */
-    public static List<String> pdfToIamge(float zoom, String inputFile, String outputFile) {
+    public static List<String> pdfToIamge(float zoom, String inputFile, String outputFilePath) {
         List<String> actualPathList = null;
         Document document = null;
         try {
@@ -79,7 +79,11 @@ public class OfficeConvert {
                 //bfimage = setGraphics(bfimage);
                 RenderedImage rendImage = bfimage;
                 String fileName = String.format("%s%s",i+1,".png");
-                String filePath = String.format("%s%s%s",outputFile,"/",fileName);
+                File outputFile = new File(outputFilePath);
+                if(!outputFile.isDirectory()){
+                    outputFile.mkdir();
+                }
+                String filePath = String.format("%s%s%s",outputFile.getPath(),"/",fileName);
                 ImageIO.write(rendImage, "png", new File(filePath));
                 bfimage.flush();
                 actualPathList.add(filePath);

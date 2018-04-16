@@ -12,7 +12,7 @@
         <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
             <div class="row">
                 <input id="pageIndex" name="pageIndex" value="${page.pageNum}" type="hidden" />
-                <span>房间状态</span>
+                <span>&nbsp;&nbsp;房间状态</span>
                 :<select name="carlist">
                     <option value ="0">正常直播中</option>
                     <option value ="-2">禁言直播中</option>
@@ -29,22 +29,18 @@
                         </button>
                     </span>
                 </div>
-
-                &nbsp;
-                <a onclick="" class="btn btn-white btn-info">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    创建直播间
-                </a>
             </div>
             <table class="table table-striped table-bordered table-hover dataTable no-footer" >
                 <thead class="thin-border-bottom">
                 <tr >
                     <th>序号</th>
+                    <th>讲师</th>
                     <th>房间名称</th>
                     <th>房间类型</th>
                     <th><i class="normal-icon ace-icon fa fa-clock-o"></i>开始时间</th>
                     <th><i class="normal-icon ace-icon fa fa-clock-o"></i>结束时间</th>
                     <th>房间状态</th>
+                    <th>房间人数</th>
                     <th><i class="ace-icon fa fa-wrench"></i>操作</th>
                 </tr>
                 </thead>
@@ -52,15 +48,33 @@
                     <#if page.list?? && (page.list?size > 0)>
                         <#list page.list as data>
                         <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
+                            <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
+                            <td><span class="blue">${data.lecturerId!''}</span></td>
+                            <td>${data.name!''}</td>
+                            <td>
+                                <#if (data.type==0)>
+                                    <span class="label label-success label-white middle">VIP</span>
+                                <#elseif (data.type==1)>
+                                    <span class="label label-yellow label-white middle">路演</span>
+                                </#if>
+                            </td>
+                            <td><#if data.prepareLiveBeginTime??>${(data.prepareLiveBeginTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
+                            <td><#if data.prepareLiveEndTime??>${(data.prepareLiveEndTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
+                            <td>
+                                <#if (data.status==0)>
+                                    <span class="label label-success label-white middle">正常直播中</span>
+                                <#elseif (data.status==1)>
+                                    <span class="label label-yellow label-white middle">直播结束</span>
+                                <#elseif (data.status==-1)>
+                                    <span class="label label-white middle">直播未开始</span>
+                                <#elseif (data.status==-2)>
+                                    <span class="label label-success label-white middle">禁言直播中</span>
+                                </#if>
+                            </td>
                             <td>1</td>
                             <td>
                                 <div class="btn-overlap btn-group">
-                                    <a onclick="" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
+                                    <a onclick="showEditModal(1)" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                                         <i class="fa fa-pencil bigger-110 green" ></i>
                                     </a>
                                     <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="详情" title="详情">
@@ -93,14 +107,12 @@
         <div class="modal-content"  >
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
-                <h4 class="blue"><i class="fa fa-pencil"></i>&nbsp;编辑用户</h4>
+                <h4 class="blue"><i class="fa fa-pencil"></i>&nbsp;编辑直播间信息</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="" method="post">
-                    <div class="form-horizontal">
-                        <!-- 用户ID -->
-                        <input type="hidden" name="userId" />
-
+                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
+                 <div class="form-horizontal">
+                    <div id="edit_div_l" style="float: left;width: 50%">
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">姓名</label>
                             <div class="col-sm-8">
@@ -113,22 +125,19 @@
                                 <input name="loginName" type="text"  />
                             </div>
                         </div>
+                    </div>
+                    <div class="form-horizontal" id="edit_div_r" style="float: left;width: 40%">
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">失效时间</label>
+                            <label class="col-sm-4 control-label">姓名</label>
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    <input type="text" name="loginInvalidDate" onclick="WdatePicker()" style="width: 142px;cursor: pointer;"/>
-                                </div>
+                                <input name="userName" type="text"  />
                             </div>
                         </div>
-
                     </div>
-                </form>
+              </form>
             </div>
-            <div class="modal-footer">
+            </div>
+            <div class="modal-footer" style="margin-top: 90px">
                 <a onclick="updateUser()" class="btn btn-white btn-info btn-bold">
                     <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                     保存
@@ -145,5 +154,12 @@
     jQuery(function($) {
         $('[data-rel=tooltip]').tooltip();
     });
+
+    /**
+     * 获取直播间信息
+     */
+    function showEditModal(loginName){
+        $("#edit_user_modal").modal("show");
+    }
 </script>
 </@ui.layout>
