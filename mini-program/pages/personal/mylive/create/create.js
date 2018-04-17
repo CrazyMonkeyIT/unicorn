@@ -1,4 +1,5 @@
 var app = getApp(),that = null;
+const util = require("../../../../global-js/util.js");
 Page({
   onLoad: function () {
     that = this;
@@ -9,8 +10,8 @@ Page({
     this.setData({
       randomNum:n
     });
-    var currDate = this.getNowFormatDate(new Date());
-    var nextHourDate = this.getNowFormatDate(new Date(new Date().getTime() + 1000 * 60 * 60));
+    var currDate = util.getNowFormatDate(new Date());
+    var nextHourDate = util.getNowFormatDate(new Date(new Date().getTime() + 1000 * 60 * 60));
     this.setData({
       beginDate: currDate.substring(0, 10),
       beginTime: currDate.substring(11, 16),
@@ -167,11 +168,22 @@ Page({
       success: function (res) {
         if(res.data.result){
           var roomCoursewareId =  res.data.obj;
-          wx.showModal({
-            content: "请用电脑端打开如下地址上传课件：" + app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId,
-            showCancel: false,
-            confirmText: "确定"
-          })
+          if (app.globalData.serverPath.indexOf('localhost') == -1){
+            util.getShortLink(app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId,function(link){
+              wx.showModal({
+                content: "请用电脑端打开如下地址上传课件：\n   \n" + link,
+                showCancel: false,
+                confirmText: "确定"
+              })
+            });
+          }else{
+            wx.showModal({
+              content: "请用电脑端打开如下地址上传课件：\n  \n" + app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId,
+              showCancel: false,
+              confirmText: "确定"
+            })
+          }
+          //开始轮询
           var interval = setInterval(that.selectCoursewareFinish, 3000);
 
           that.setData({
@@ -254,34 +266,7 @@ Page({
       }
     })
   },
-  getNowFormatDate : function (date) {
-    var seperator1 = "-";
-    var seperator2 = ":";
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    var hour = date.getHours();
-    var min = date.getMinutes();
-    var ss = date.getSeconds();
-    if(month >= 1 && month <= 9) {
-      month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-      strDate = "0" + strDate;
-    }
-    if (hour >= 0 && hour <= 9) {
-      hour = "0" + hour;
-    }
-    if (min >= 0 && min <= 9) {
-      min = "0" + min;
-    }
-    if (ss >= 0 && ss <= 9) {
-      ss = "0" + ss;
-    }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-      + " " + hour + seperator2 + min
-      + seperator2 + ss;
-    return currentdate;
-  },
+  
   clickTextarea:function(){
     this.setData({
       textareaFocus:true
