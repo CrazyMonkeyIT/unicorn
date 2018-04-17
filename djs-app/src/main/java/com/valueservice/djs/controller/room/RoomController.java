@@ -54,7 +54,7 @@ public class RoomController extends BaseController{
 
     @RequestMapping(value = "/minigram/checkUserPermission", method = RequestMethod.POST)
     @ResponseBody
-    public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult result){
+    public CheckUserPermissionResult checkUserPermission(@RequestBody CheckUserPermissionResult result){
 
         return roomService.checkUserPermission(result);
     }

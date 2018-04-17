@@ -101,7 +101,7 @@ Page({
       }
       //指定路演广告
       wx.navigateTo({
-        url: '/pages/live/chat/chat?roomId=' + info.roomId
+        url: '/pages/live/startlive/startlive?roomId=' + info.roomId
       })
     } else if (4 == info.advertisementTypeId){
       app.currentTab = 1;
