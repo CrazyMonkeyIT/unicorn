@@ -273,6 +273,7 @@
     date_format(a.actual_live_begin_time,'%Y-%m-%d %H:%m:%s') actualLiveBeginTimeStr,
     date_format(a.actual_live_end_time,'%Y-%m-%d %H:%m:%s') actualLiveEndTimeStr
     from t_b_room a where a.lecturer_id = #{lecturerId}
+    order by create_time desc
   </select>
 
 </mapper>

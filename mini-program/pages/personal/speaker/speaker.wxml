@@ -152,7 +152,7 @@
         </view>
         <image wx:if="{{lecturerInfo.headPhotoFile != null}}" src='{{lecturerInfo.headPhotoFile}}' style="height:160rpx;width:160rpx;border-radius:40rpx;flex:1;"></image>
         <view style="float:left;flex:3.5;color:#fff;padding-left:20rpx;">
-          <view style="height:80rpx;line-height:80rpx;">{{lecturerInfo.lecturerName}}</view>
+          <view style="height:80rpx;line-height:80rpx;padding-left:10rpx;">{{lecturerInfo.lecturerName}}</view>
           <view style="height:80rpx;"><view class="gradeIconSpan">{{lecturerInfo.gradeName}}</view></view>
         </view>
       </view>
@@ -186,15 +186,19 @@
         </view>
         <view class="navigator-bottom-border"></view>
         <view class="navigator" hover-class="none">
-            <view class="navigator-content">
-              <view class="navigator-text" >个人简介</view>
-              <view class='navigator-righttext-grey'>
+            <view class="navigator-content" style="align-items:stretch;">
+              <view class="navigator-text" style="width:50rpx;">
+                个人简介
+              </view>
+              <view class='navigator-righttext-grey' style="width:500rpx;height:auto;text-align:left;">
                 {{lecturerInfo.introduction}}
               </view>
             </view>
         </view>
+
+        
       </view>
-     
+
     </view>
 
   </view>
