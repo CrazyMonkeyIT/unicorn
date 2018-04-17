@@ -77,9 +77,6 @@
                                     <a onclick="showEditModal(1)" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
                                         <i class="fa fa-pencil bigger-110 green" ></i>
                                     </a>
-                                    <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="详情" title="详情">
-                                        <i class="fa fa-list bigger-110 grey"></i>
-                                    </a>
                             </td>
                         </tr>
                         </#list>
@@ -110,34 +107,100 @@
                 <h4 class="blue"><i class="fa fa-pencil"></i>&nbsp;编辑直播间信息</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="${request.getContextPath()}/system/user/updateUser" method="post">
+                <form id="editForm" action="" method="post">
                  <div class="form-horizontal">
-                    <div id="edit_div_l" style="float: left;width: 50%">
+                    <div style="float: left;width: 50%">
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">姓名</label>
+                            <label class="col-sm-4 control-label">房间名称</label>
                             <div class="col-sm-8">
                                 <input name="userName" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">登录名</label>
+                            <label class="col-sm-4 control-label">讲师</label>
+                            <div class="col-sm-8">
+                                <input name="userName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">专题名</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">房间海报</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">价格</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">预计开始</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">预计结束</label>
                             <div class="col-sm-8">
                                 <input name="loginName" type="text"  />
                             </div>
                         </div>
                     </div>
-                    <div class="form-horizontal" id="edit_div_r" style="float: left;width: 40%">
+                    <div class="form-horizontal" style="float: left;width: 40%">
                         <div class="form-group ">
-                            <label class="col-sm-4 control-label">姓名</label>
+                            <label class="col-sm-4 control-label">总人数</label>
                             <div class="col-sm-8">
                                 <input name="userName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">类型</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">状态</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">预告封面</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">邀请码</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">实际开始</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">实际结束</label>
+                            <div class="col-sm-8">
+                                <input name="loginName" type="text"  />
                             </div>
                         </div>
                     </div>
               </form>
             </div>
             </div>
-            <div class="modal-footer" style="margin-top: 90px">
+            <div class="modal-footer" style="margin-top: 50%">
                 <a onclick="updateUser()" class="btn btn-white btn-info btn-bold">
                     <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                     保存
