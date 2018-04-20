@@ -17,7 +17,6 @@
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
     <result column="lecturer_id" jdbcType="INTEGER" property="lecturerId" />
     <result column="room_desc" jdbcType="VARCHAR" property="roomDesc" />
-    <result column="courseware_id" jdbcType="INTEGER" property="coursewareId" />
     <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
     <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile" />
     <result column="room_poster_path" jdbcType="VARCHAR" property="roomPosterPath" />
@@ -31,24 +30,31 @@
     <result column="actual_live_begin_time_str" jdbcType="VARCHAR" property="actualLiveBeginTimeStr" />
     <result column="actual_live_end_time_str" jdbcType="VARCHAR" property="actualLiveEndTimeStr" />
   </resultMap>
+
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.valueservice.djs.db.entity.chat.RoomDO">
+    <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="lecturer_name" jdbcType="VARCHAR" property="lecturerName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, creator_id, name, type, count, status, room_price, prepare_live_begin_time, prepare_live_end_time, 
     actual_live_begin_time, actual_live_end_time, create_time, subject_id, lecturer_id, 
-    room_desc, room_poster_path,courseware_id, herald_path, invite_code,type
+    room_desc, room_poster_path, herald_path, invite_code,type
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
-    <include refid="Base_Column_List" />
-    from t_b_room
-    where id = #{id,jdbcType=INTEGER}
+    a.*,b.lecturer_name,c.subject_name
+    from t_b_room a
+    LEFT join t_b_lecturer b on a.lecturer_id = b.id
+    LEFT join t_b_subject c on a.subject_id = c.subject_id
+    where a.id = #{id,jdbcType=INTEGER}
   </select>
+
   <select id="selectRoomExt" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select
     a.id, a.creator_id, a.name, a.type, a.count, a.status, a.room_price, a.prepare_live_begin_time, a.prepare_live_end_time,
     a.actual_live_begin_time, a.actual_live_end_time, a.create_time, a.subject_id, a.lecturer_id,
-    a.room_desc, a.room_poster_path,a.courseware_id, a.herald_path, a.invite_code ,b.open_id as creatorOpenId
+    a.room_desc, a.room_poster_path, a.herald_path, a.invite_code ,b.open_id as creatorOpenId
     from t_b_room a inner join t_b_mini_user b on a.creator_id = b.id
     where a.id = #{roomId}
   </select>
@@ -103,9 +109,6 @@
       </if>
       <if test="roomDesc != null">
         room_desc,
-      </if>
-      <if test="coursewareId != null">
-        courseware_id,
       </if>
       <if test="roomPosterPath != null" >
         room_poster_path,
@@ -225,9 +228,6 @@
       <if test="roomPosterPath != null" >
         room_poster_path = #{roomPosterPath,jdbcType=VARCHAR},
       </if>
-      <if test="coursewareId != null" >
-        courseware_id = #{coursewareId,jdbcType=INTEGER},
-      </if>
       <if test="heraldPath != null">
         herald_path = #{heraldPath,jdbcType=VARCHAR},
       </if>
@@ -243,8 +243,18 @@
     update t_b_room set status = #{status} where id = #{roomId}
   </update>
 
-  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
-    select * from t_b_room
+  <select id="selectRoomInfo" resultMap="ResultMapWithBLOBs" >
+    select a.*,b.lecturer_name,c.subject_name from t_b_room a
+    LEFT join t_b_lecturer b on a.lecturer_id = b.id
+    LEFT join t_b_subject c on a.subject_id = c.subject_id
+    where 1=1
+    <if test="status != null">
+      and a.status = #{status}
+    </if>
+    <if test="strName != null and strName != ''">
+      and c.subject_name like concat(concat('%',#{strName}),'%')
+      or b.lecturer_name like concat(concat('%',#{strName}),'%')
+    </if>
   </select>
 
   <select id="selectLiveRoom" resultMap="ResultMapWithBLOBs" >

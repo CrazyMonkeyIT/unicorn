@@ -11,24 +11,27 @@
     <div>
         <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
             <div class="row">
-                <input id="pageIndex" name="pageIndex" value="${page.pageNum}" type="hidden" />
-                <span>&nbsp;&nbsp;房间状态</span>
-                :<select name="carlist">
-                    <option value ="0">正常直播中</option>
-                    <option value ="-2">禁言直播中</option>
-                    <option value="1">直播结束</option>
-                    <option value="-1">直播未开始</option>
-                </select>
+                <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/room/get/info" method="get">
+                    <input id="pageIndex" name="pageIndex" value="${page.pageNum}" type="hidden" />
+                    <span>&nbsp;&nbsp;房间状态</span>
+                    :<select name="parStatus" id="statusSelect">
+                        <option value ="999">全部</option>
+                        <option value ="0">正常直播中</option>
+                        <option value ="-2">禁言直播中</option>
+                        <option value="1">直播结束</option>
+                        <option value="-1">直播未开始</option>
+                    </select>
 
-                <div class="input-group">
-                    <input type="text" name="roomName" value="${roomName!}" class="form-control search-query" placeholder="直播间名称/讲师名称">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-white btn-info">
-                            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-                            查询
-                        </button>
-                    </span>
-                </div>
+                    <div class="input-group">
+                        <input type="text" name="parStrName" value="${parStrName!}" class="form-control search-query" placeholder="直播间名称/讲师名称">
+                        <span class="input-group-btn">
+                            <button type="submit"  class="btn btn-white btn-info">
+                                <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                查询
+                            </button>
+                        </span>
+                    </div>
+                </form>
             </div>
             <table class="table table-striped table-bordered table-hover dataTable no-footer" >
                 <thead class="thin-border-bottom">
@@ -49,7 +52,7 @@
                         <#list page.list as data>
                         <tr>
                             <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
-                            <td><span class="blue">${data.lecturerId!''}</span></td>
+                            <td><span class="blue">${data.lecturerName!''}</span></td>
                             <td>${data.name!''}</td>
                             <td>
                                 <#if (data.type==0)>
@@ -71,18 +74,26 @@
                                     <span class="label label-success label-white middle">禁言直播中</span>
                                 </#if>
                             </td>
-                            <td>1</td>
+                            <td>${data.count!''}</td>
                             <td>
                                 <div class="btn-overlap btn-group">
-                                    <a onclick="showEditModal(1)" class="btn btn-white btn-primary btn-bold"  data-rel="tooltip" title="" data-original-title="修改" title="修改">
-                                        <i class="fa fa-pencil bigger-110 green" ></i>
+                                    <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="关闭" title="关闭">
+                                        <i class="fa fa-trash-o bigger-110 red"></i>
+                                    </a>
+                                    <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="禁言" title="禁言">
+                                        <i class="fa fa-lock bigger-115 orange"></i>
+                                    </a>
+                                    <a onclick="showEditModal(${data.id})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title=""
+                                       data-original-title="详情"
+                                       title="详情">
+                                        <i class="fa fa-list bigger-110 grey"></i>
                                     </a>
                             </td>
                         </tr>
                         </#list>
                     <#else>
                     <tr style="text-align:center;">
-                        <td colspan="8"><h4 class="green">暂无数据</h4></td>
+                        <td colspan=9><h4 class="green">暂无数据</h4></td>
                     </tr>
                     </#if>
                 </tbody>
@@ -113,43 +124,43 @@
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">房间名称</label>
                             <div class="col-sm-8">
-                                <input name="userName" type="text"  />
+                                <input name="name" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">讲师</label>
                             <div class="col-sm-8">
-                                <input name="userName" type="text"  />
+                                <input name="lecturerName" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">专题名</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="subjectName" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">房间海报</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="roomPosterPath" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">价格</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="roomPrice" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">预计开始</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="prepareLiveBeginTime" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">预计结束</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="prepareLiveEndTime" type="text"  />
                             </div>
                         </div>
                     </div>
@@ -157,43 +168,43 @@
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">总人数</label>
                             <div class="col-sm-8">
-                                <input name="userName" type="text"  />
+                                <input name="count" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">类型</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="type" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">状态</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="status" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">预告封面</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="heraldPath" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">邀请码</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="inviteCode" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">实际开始</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="actualLiveBeginTime" type="text"  />
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-4 control-label">实际结束</label>
                             <div class="col-sm-8">
-                                <input name="loginName" type="text"  />
+                                <input name="actualLiveEndTime" type="text"  />
                             </div>
                         </div>
                     </div>
@@ -201,10 +212,6 @@
             </div>
             </div>
             <div class="modal-footer" style="margin-top: 50%">
-                <a onclick="updateUser()" class="btn btn-white btn-info btn-bold">
-                    <i class="ace-icon glyphicon glyphicon-ok blue"></i>
-                    保存
-                </a>
                 <a class="btn btn-white btn-info btn-bold" data-dismiss="modal">
                     <i class="ace-icon glyphicon glyphicon-remove blue"></i>
                     取消
@@ -216,13 +223,46 @@
 <script>
     jQuery(function($) {
         $('[data-rel=tooltip]').tooltip();
+        $("#editForm").find('input').attr('disabled',true);
+        var parStatus = ${parStatus};
+        $('#statusSelect').find("option[value = '"+parStatus+"']").attr('selected','selected');
     });
 
     /**
      * 获取直播间信息
      */
-    function showEditModal(loginName){
-        $("#edit_user_modal").modal("show");
+    function showEditModal(roomId){
+        $.ajax({
+            url : basePath+"/room/get/"+roomId,
+            type : 'get',
+            success : function(data) {
+                $("#editForm").find("input[name='name']").val(data.name);
+                $("#editForm").find("input[name='type']").val(data.type===0?'VIP':'路演');
+                $("#editForm").find("input[name='count']").val(data.count);
+                var status = data.status;
+                if(status === 0){
+                    status = '正常直播中';
+                }else if(status === 1){
+                    status = '直播结束';
+                }else if(status === -1){
+                    status = '直播未开始';
+                }else if(status === -2){
+                    status = '禁言直播中';
+                }
+                $("#editForm").find("input[name='status']").val(status);
+                $("#editForm").find("input[name='roomPrice']").val(data.roomPrice);
+                $("#editForm").find("input[name='prepareLiveBeginTime']").val(data.prepareLiveBeginTime);
+                $("#editForm").find("input[name='prepareLiveEndTime']").val(data.prepareLiveEndTime);
+                $("#editForm").find("input[name='actualLiveBeginTime']").val(data.actualLiveBeginTime);
+                $("#editForm").find("input[name='actualLiveEndTime']").val(data.actualLiveEndTime);
+                $("#editForm").find("input[name='subjectName']").val(data.subjectName);
+                $("#editForm").find("input[name='lecturerName']").val(data.lecturerName);
+                $("#editForm").find("input[name='roomPosterPath']").val(data.roomPosterPath);
+                $("#editForm").find("input[name='heraldPath']").val(data.heraldPath);
+                $("#editForm").find("input[name='inviteCode']").val(data.inviteCode);
+                $("#edit_user_modal").modal("show");
+            }
+        });
     }
 </script>
 </@ui.layout>

@@ -1,6 +1,5 @@
 package com.valueservice.djs.db.dao.chat;
 
-import com.valueservice.djs.db.bean.CheckUserPermissionDO;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +20,8 @@ public interface RoomDOMapper {
 
     int updateByPrimaryKey(RoomDO record);
 
-    List<RoomDO> selectAll();
+    List<RoomDO> selectRoomInfo(@Param("status") Integer status,
+                                @Param("strName") String strName);
 
     List<RoomDO> selectLiveRoom();
 

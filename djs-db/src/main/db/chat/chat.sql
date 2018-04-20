@@ -11,7 +11,6 @@ CREATE TABLE `t_b_room` (
   `count` int(11) DEFAULT NULL COMMENT '房间总人数',
   `status` int(11) DEFAULT NULL COMMENT '房间状态 0：正常直播中 1：直播结束 -1：直播未开始 -2:禁言直播中',
   `room_price` decimal(10,0) DEFAULT NULL COMMENT '房间价格',
-  `courseware_id` bigint(255) DEFAULT NULL COMMENT '课件文件id',
   `prepare_live_begin_time` datetime DEFAULT NULL COMMENT '预计直播开始时间',
   `prepare_live_end_time` datetime DEFAULT NULL COMMENT '预计直播结束时间',
   `actual_live_begin_time` datetime DEFAULT NULL COMMENT '实际直播开始时间',
@@ -20,8 +19,6 @@ CREATE TABLE `t_b_room` (
   `herald_path` varchar(255) DEFAULT NULL COMMENT '预告封面地址',
   `invite_code` varchar(10) DEFAULT NULL COMMENT '邀请码',
   PRIMARY KEY (`id`),
-  KEY `courseware_id` (`courseware_id`),
-  CONSTRAINT `outindex_courseware_id` FOREIGN KEY (`courseware_id`)
   REFERENCES `t_b_up_file_record` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

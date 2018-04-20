@@ -71,16 +71,27 @@ public class RoomController extends BaseController{
     @GetMapping("/room/get/info")
     public String findAll(
             @RequestParam(required = false) String page,
-            @RequestParam(required = false) String size,ModelMap modelMap){
+            @RequestParam(required = false) String size,
+            @RequestParam(required = false) Integer parStatus,
+            @RequestParam(required = false) String parStrName,
+            ModelMap modelMap){
 
         PageInfo<RoomDO> pageInfo = null;
         try{
-            pageInfo = roomService.findAll(page,size);
+            pageInfo = roomService.findAll(page,size,parStatus,parStrName);
         }catch(Exception e){
             logger.error("获取用户列表异常",e);
         }
         modelMap.addAttribute("page",pageInfo);
+        modelMap.addAttribute("parStrName",parStrName);
+        modelMap.addAttribute("parStatus",parStatus);
         return "room/list";
+    }
+
+    @GetMapping("/room/get/{roomId}")
+    @ResponseBody
+    public RoomDO findByRoomId(@PathVariable Integer roomId){
+        return roomService.getRoomInfo(roomId);
     }
 
     /**

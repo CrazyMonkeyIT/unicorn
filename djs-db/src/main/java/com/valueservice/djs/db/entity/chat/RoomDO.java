@@ -1,7 +1,9 @@
 package com.valueservice.djs.db.entity.chat;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class RoomDO {
@@ -17,7 +19,7 @@ public class RoomDO {
 
     private Integer status;//房间状态 0:直播中 -1:直播未开始 -2:禁言中 1:直播结束
 
-    private Long roomPrice;//房间价格
+    private BigDecimal roomPrice;//房间价格
 
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date prepareLiveBeginTime;//预计直播开始时间
@@ -25,8 +27,10 @@ public class RoomDO {
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date prepareLiveEndTime;//预计直播结束时间
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date actualLiveBeginTime;//实际直播开始时间
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date actualLiveEndTime;//实际直播结束时间
 
     private Date createTime;//记录创建时间
@@ -37,8 +41,6 @@ public class RoomDO {
 
     private String roomDesc;//房间描述
 
-    private Long coursewareId;//上传课件id
-
     private String roomPosterPath; //海报图片
 
     private String heraldPath;  //预告图片
@@ -47,6 +49,8 @@ public class RoomDO {
 
     //非数据库字端
     private String lecturerName;
+    //主题名称
+    private String subjectName;
     //公司
     private String company;
     //讲师头像地址
@@ -96,6 +100,14 @@ public class RoomDO {
         this.actualLiveEndTimeStr = actualLiveEndTimeStr;
     }
 
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
     public String getCompany() {
         return company;
     }
@@ -118,14 +130,6 @@ public class RoomDO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCoursewareId() {
-        return coursewareId;
-    }
-
-    public void setCoursewareId(Long coursewareId) {
-        this.coursewareId = coursewareId;
     }
 
     public String getRoomPosterPath() {
@@ -193,11 +197,11 @@ public class RoomDO {
         this.status = status;
     }
 
-    public Long getRoomPrice() {
+    public BigDecimal getRoomPrice() {
         return roomPrice;
     }
 
-    public void setRoomPrice(Long roomPrice) {
+    public void setRoomPrice(BigDecimal roomPrice) {
         this.roomPrice = roomPrice;
     }
 

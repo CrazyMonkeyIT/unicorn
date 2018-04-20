@@ -41,7 +41,7 @@ public class AdvertisementController {
         ModelAndView modelAndView = new ModelAndView();
         List<AdvertisementTypeDO> advertisementTypeList =  advertisementService.selectAllAdvertisementType();
         List<LecturerDO> lecturerDOList = lecturerService.selectAll();
-        List<RoomDO> roomList = roomService.selectAll();
+        List<RoomDO> roomList = roomService.selectAll(null,null);
         PageInfo<AdvertisementDO> pageInfo =  advertisementService.selectValidAdvertisement(1, 10);
         modelAndView.addObject("lecturerList", lecturerDOList);
         modelAndView.addObject("typeList", advertisementTypeList);

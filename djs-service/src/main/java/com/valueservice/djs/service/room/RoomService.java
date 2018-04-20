@@ -34,8 +34,8 @@ public class RoomService {
     @Resource
 	private MiniUserDOMapper miniUserDOMapper;
 
-    public List<RoomDO> selectAll(){
-        return roomDOMapper.selectAll();
+    public List<RoomDO> selectAll(Integer status,String name){
+        return roomDOMapper.selectRoomInfo(status,name);
     }
 
     public List<HomeLiveVO> selectLiveRoom(){
@@ -97,13 +97,32 @@ public class RoomService {
         return false;
     }
 
-    public PageInfo<RoomDO> findAll(String page,String size){
+    /**
+     * 分页查询直播间信息
+     * @param page
+     * @param size
+     * @return
+     */
+    public PageInfo<RoomDO> findAll(String page,String size,Integer status,String name){
         page = (page==null || StringUtils.isBlank(page))?"1":page;
         size = (size==null || StringUtils.isBlank(size))?"10":size;
         PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(size));
-        List<RoomDO> list = roomDOMapper.selectAll();
+        if(status != null && status == 999){
+            status = null;
+        }
+        List<RoomDO> list = roomDOMapper.selectRoomInfo(status,name);
         return new PageInfo<>(list);
     }
+
+    /**
+     * 查询单个直播间信息
+     * @param roomId
+     * @return
+     */
+    public RoomDO getRoomInfo(Integer roomId){
+        return roomDOMapper.selectByPrimaryKey(roomId);
+    }
+
     public CheckUserPermissionResult checkUserPermission(CheckUserPermissionResult param){
         RoomUserDO roomUser = roomUserDOMapper.selectByRoomUser(param.getRoomId(),param.getUserId());
         param.setResult(true);
