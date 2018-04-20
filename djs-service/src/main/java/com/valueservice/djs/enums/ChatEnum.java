@@ -89,7 +89,8 @@ public class ChatEnum {
         INTO("into","进入房间"),
         DISABLE_SENDMSG("disable sendMsg","房间禁言"),
         ENABLE_SENDMSG("enable sendMsg","解除禁言"),
-        KICK_OUT("kick out","提出房间");
+        KICK_OUT("kick out","提出房间"),
+        FORCE_CLOSE_ROOM("force close the room","管理员强制关闭房间");
 
         private String eventCode;
         private String eventDesc;

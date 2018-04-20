@@ -43,7 +43,7 @@ COMMIT;
 
 DROP TABLE IF EXISTS `t_b_msg_event`;
 CREATE TABLE `t_b_msg_event` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `room_id` bigint(11) DEFAULT NULL COMMENT '房间号',
   `event_type` varchar(255) DEFAULT NULL COMMENT '事件类型  quit:退出房间  into:进入房间  disable sendMsg:房间禁言  kick out：踢出房间',
   `executor` bigint(255) DEFAULT NULL COMMENT '执行者',

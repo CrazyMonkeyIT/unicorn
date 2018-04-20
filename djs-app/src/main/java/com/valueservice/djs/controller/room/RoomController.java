@@ -5,25 +5,21 @@ import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CheckInviteCodeVo;
 import com.valueservice.djs.bean.CheckUserPermissionResult;
 import com.valueservice.djs.controller.BaseController;
-import com.valueservice.djs.controller.system.UserController;
-import com.valueservice.djs.db.entity.chat.RoomContentDO;
-import com.valueservice.djs.db.entity.chat.RoomContentShow;
-import com.valueservice.djs.db.entity.chat.RoomCoursewareDO;
-import com.valueservice.djs.db.entity.chat.RoomDO;
+import com.valueservice.djs.db.entity.chat.*;
 import com.valueservice.djs.db.entity.mini.UserVipDO;
-import com.valueservice.djs.db.entity.system.UserInfoDO;
+import com.valueservice.djs.enums.ChatEnum;
 import com.valueservice.djs.service.mini.UserVipService;
 import com.valueservice.djs.service.room.RoomContentService;
-import com.valueservice.djs.service.room.RoomCoursewareService;
 import com.valueservice.djs.service.room.RoomService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,15 +27,13 @@ public class RoomController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
-
     @Resource
     private RoomContentService roomContentService;
-
     @Resource
     private RoomService roomService;
-
     @Resource
 	private UserVipService userVipService;
+
     /**
      * 根据房间号获取房间的历史聊天记录
      * @param
@@ -84,8 +78,31 @@ public class RoomController extends BaseController{
         }
         modelMap.addAttribute("page",pageInfo);
         modelMap.addAttribute("parStrName",parStrName);
-        modelMap.addAttribute("parStatus",parStatus);
+        modelMap.addAttribute("parStatus",parStatus==null?999:parStatus);
         return "room/list";
+    }
+
+
+    /**
+     * 修改直播间信息&保存事件发送记录
+     * @param roomId
+     * @return
+     */
+    @PostMapping("/room/update/{roomId}")
+    @ResponseBody
+    public Boolean updateRoom(@PathVariable Long roomId){
+        //强制关闭直播间，发送消息
+        try {
+            RoomDO roomDO = new RoomDO();
+            roomDO.setId(roomId);
+            roomDO.setStatus(ChatEnum.RoomStatus.LIVEEND.getRoomStatusCode());
+            roomDO.setActualLiveEndTime(new Date());
+            roomService.updateRoom(roomDO,getCurrentUser());
+        } catch (MessagingException e) {
+            logger.error("",e);
+            return false;
+        }
+        return true;
     }
 
     @GetMapping("/room/get/{roomId}")

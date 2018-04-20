@@ -8,7 +8,6 @@ import com.valueservice.djs.enums.ChatEnum;
 import com.valueservice.djs.service.room.MsgEvevtService;
 import com.valueservice.djs.service.room.RoomContentService;
 import com.valueservice.djs.util.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;

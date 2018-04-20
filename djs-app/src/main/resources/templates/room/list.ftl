@@ -13,6 +13,7 @@
             <div class="row">
                 <form class="form-inline" id="form1" role="form" action="${request.getContextPath()}/room/get/info" method="get">
                     <input id="pageIndex" name="pageIndex" value="${page.pageNum}" type="hidden" />
+                    <input id="parStatus" value="${parStatus}" type="hidden" />
                     <span>&nbsp;&nbsp;房间状态</span>
                     :<select name="parStatus" id="statusSelect">
                         <option value ="999">全部</option>
@@ -77,12 +78,11 @@
                             <td>${data.count!''}</td>
                             <td>
                                 <div class="btn-overlap btn-group">
-                                    <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="关闭" title="关闭">
-                                        <i class="fa fa-trash-o bigger-110 red"></i>
-                                    </a>
-                                    <a onclick="" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="禁言" title="禁言">
-                                        <i class="fa fa-lock bigger-115 orange"></i>
-                                    </a>
+                                    <#if (data.status==0) || (data.status==-2)>
+                                        <a onclick="closeRoom(${data.id})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title="" data-original-title="关闭" title="关闭">
+                                            <i class="fa fa-lock bigger-115 orange"></i>
+                                        </a>
+                                    </#if>
                                     <a onclick="showEditModal(${data.id})" class="btn btn-white btn-primary btn-bold" data-rel="tooltip" title=""
                                        data-original-title="详情"
                                        title="详情">
@@ -224,9 +224,26 @@
     jQuery(function($) {
         $('[data-rel=tooltip]').tooltip();
         $("#editForm").find('input').attr('disabled',true);
-        var parStatus = ${parStatus};
+        var parStatus = $('#parStatus').val();
         $('#statusSelect').find("option[value = '"+parStatus+"']").attr('selected','selected');
     });
+
+
+    /**
+     * 关闭直播间
+     */
+    function closeRoom(roomId){
+        if(confirm("确认强制关闭直播间吗？")){
+            $.ajax({
+                url : basePath+"/room/update/"+roomId,
+                type : 'post',
+                success : function(data) {
+                    window.location.reload();
+                    alert(data?'操作成功！':'操作失败！');
+                }
+            });
+        }
+    }
 
     /**
      * 获取直播间信息

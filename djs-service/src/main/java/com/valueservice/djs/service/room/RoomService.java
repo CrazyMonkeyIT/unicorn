@@ -1,5 +1,6 @@
 package com.valueservice.djs.service.room;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
@@ -9,13 +10,18 @@ import com.valueservice.djs.bean.live.HomeRoadShowVO;
 import com.valueservice.djs.db.dao.chat.RoomDOMapper;
 import com.valueservice.djs.db.dao.chat.RoomUserDOMapper;
 import com.valueservice.djs.db.dao.mini.MiniUserDOMapper;
+import com.valueservice.djs.db.entity.chat.MsgEventDO;
 import com.valueservice.djs.db.entity.chat.RoomDO;
 import com.valueservice.djs.db.entity.chat.RoomUserDO;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
+import com.valueservice.djs.db.entity.system.UserInfoDO;
 import com.valueservice.djs.enums.ChatEnum;
 import com.valueservice.djs.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +39,13 @@ public class RoomService {
 
     @Resource
 	private MiniUserDOMapper miniUserDOMapper;
+    @Resource
+    private MsgEvevtService msgEvevtService;
+    @Resource
+    private SimpMessagingTemplate messageingTemplate;
+
+
+
 
     public List<RoomDO> selectAll(Integer status,String name){
         return roomDOMapper.selectRoomInfo(status,name);
@@ -112,6 +125,25 @@ public class RoomService {
         }
         List<RoomDO> list = roomDOMapper.selectRoomInfo(status,name);
         return new PageInfo<>(list);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateRoom(RoomDO roomDO, UserInfoDO userInfoDO){
+        Long roomId = roomDO.getId();
+        roomDOMapper.updateByPrimaryKeySelective(roomDO);
+
+        MsgEventDO msgEventDO = new MsgEventDO();
+        msgEventDO.setEventType(ChatEnum.EventType.FORCE_CLOSE_ROOM.getEventCode());
+        msgEventDO.setExecutor(userInfoDO.getUserId());
+        msgEventDO.setBeexecuted(roomId);
+        msgEventDO.setRoomId(roomId);
+        msgEventDO.setCreateTime(new Date());
+        msgEvevtService.saveMsgEvent(msgEventDO);
+
+        //发送消息
+        String destination = "/topic/notifications/%s";
+        messageingTemplate.convertAndSend(String.format(destination, roomId),
+                JSON.toJSONString(msgEventDO));
     }
 
     /**
