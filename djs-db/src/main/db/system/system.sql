@@ -26,6 +26,8 @@ INSERT INTO `t_b_resources` VALUES ('8', '邀请讲师', '#', '/lecturer/invite/
 INSERT INTO `t_b_resources` VALUES ('9', '讲师等级', '#', '/lecturer/grade/list', '', '', '3', '4', '0', '1', '2018-03-17 15:11:04', null);
 INSERT INTO `t_b_resources` VALUES ('10', '提现审核', '#', '/lecturer/withdraw/list', '', '', '5', '4', '0', '1', '2018-03-17 18:27:57', null);
 INSERT INTO `t_b_resources` VALUES ('11', '讲师审核', '#', '/lecturer/register/list', '', '', '4', '4', '0', '1', '2018-03-17 18:28:37', null);
+INSERT INTO `t_b_resources` VALUES ('7', '直播间管理', 'room_manager', '#', '', '', '2', '0', '0', '1', '2018-04-20 17:13:39', '2018-04-20 17:14:16'),
+INSERT INTO `t_b_resources` VALUES ('9', '直播间列表', 'room_list', '/room/get/info', '', '', '1', '7', '0', '1', '2018-04-20 17:15:41', null);
 UNLOCK TABLES;
 
 
