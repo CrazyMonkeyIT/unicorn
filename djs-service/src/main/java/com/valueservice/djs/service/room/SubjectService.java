@@ -20,4 +20,13 @@ public class SubjectService {
     public List<SubjectDO> selectList(){
         return SubjectDOMapper.selectList();
     }
+
+    /**
+     * 在主题有效期内的主题
+     * @return
+     */
+    public List<SubjectDO> selectValidList(){
+        return SubjectDOMapper.selectValidList();
+    }
+
 }

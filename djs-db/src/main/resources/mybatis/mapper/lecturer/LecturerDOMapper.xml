@@ -230,4 +230,13 @@
     </if>
     and a.status != 2
   </select>
+
+  <select id="searchLecturerByName" resultMap="BaseResultMap" >
+    select
+    a.id,a.lecturer_name,a.company,a.position,a.head_photo_file,a.live_number,b.grade_name,a.introduction
+    from t_b_lecturer a
+    inner join t_b_lecturer_grade b on a.grade_id = b.lecturer_grade_id
+    where a.status != 2
+    and a.lecturer_name like #{lecturerName}
+  </select>
 </mapper>

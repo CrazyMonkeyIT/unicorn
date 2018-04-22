@@ -6,6 +6,7 @@ import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.service.advertisement.AdvertisementService;
 import com.valueservice.djs.service.room.RoomService;
 import com.valueservice.djs.service.lecturer.LecturerService;
+import com.valueservice.djs.service.room.SubjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,11 +36,13 @@ public class HomeController {
     private static final int home_data_list_size = 5;
 
     @Resource
-    LecturerService lecturerService;
+    private LecturerService lecturerService;
     @Resource
     private AdvertisementService advertisementService;
     @Resource
     private RoomService roomService;
+    @Resource
+    private SubjectService subjectService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody BaseResult getHomeList(){
@@ -128,5 +131,50 @@ public class HomeController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/subject/{subjectId}/rooms", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getSubjectRooms(@PathVariable Integer subjectId){
+        BaseResult result = new BaseResult(true);
+        try {
+            result.setObj(roomService.selectBySubjectId(subjectId));
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/subject/list", method = RequestMethod.GET)
+    public @ResponseBody BaseResult getSubjectList(){
+        BaseResult result = new BaseResult(true);
+        try {
+            result.setObj(subjectService.selectValidList());
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/search/{inputValue}", method = RequestMethod.GET)
+    public @ResponseBody BaseResult search(@PathVariable String inputValue){
+        BaseResult result = new BaseResult(true);
+        try {
+            Map<String, Object> map = new HashMap<>();
+            List<RoomDO> roomDOList = roomService.searchRoomByName(inputValue);
+            List<LecturerDO> lecturerDOList = lecturerService.searchLecturerByName(inputValue);
+            map.put("roomList", roomDOList);
+            map.put("lecturerList", lecturerDOList);
+            result.setObj(map);
+        }catch (Exception ex){
+            LOGGER.error("", ex);
+            result.setResult(false);
+            result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
 
 }

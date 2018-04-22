@@ -11,15 +11,10 @@ Page({
   data: {
     navbar: ['路演', 'VIP', '专题'],
     currentTab: 0,
-    roomList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}]
+    roomList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}],
+    subjectList: []
   },
-  //页面顶部tab切换事件
-  navbarTap: function (e) {
-    this.setData({
-      currentTab: e.currentTarget.dataset.idx
-    });
-    this.roomList()
-  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -48,17 +43,40 @@ Page({
   
   },
   
+  /**
+   * 页面顶部tab切换事件
+   */
+  navbarTap: function (e) {
+    this.setData({
+      currentTab: e.currentTarget.dataset.idx
+    });
+    this.roomList()
+  },
+
+  /**
+   * 获取直播列表数据事件
+   */
   roomList: function(){
+    var that = this;
     let roomType;
     if (this.data.currentTab == 0) {
       roomType = 1;
     } else if (this.data.currentTab == 1) {
       roomType = 0;
     } else {
-      //未知类型
+      //未知类型,当作主题tab来处理
       roomType = -1;
+      wx.request({
+        url: app.globalData.serverPath +'/mini/home/subject/list',
+        method: 'GET',
+        dataType: 'json',
+        success: function (result) {
+          that.setData({
+            'subjectList': result.data.obj
+          })
+        }
+      })
     }
-    var that = this;
     wx.request({
       url: app.globalData.serverPath + '/mini/home/room/' + roomType + '/list',
       method: 'GET',
@@ -114,15 +132,6 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-  /** 
-     * 滑动切换tab 
-     */
-  bindChange: function (e) {
-
-    var that = this;
-    that.setData({ currentTab: e.detail.current });
-
   }
 
 })

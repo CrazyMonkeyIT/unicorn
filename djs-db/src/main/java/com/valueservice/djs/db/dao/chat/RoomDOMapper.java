@@ -31,4 +31,8 @@ public interface RoomDOMapper {
 
 
     List<RoomDO> selectByLecturerId(@Param(value = "lecturerId") Integer lecturerId);
+
+    List<RoomDO> selectBySubjectId(@Param(value = "subjectId") Integer subjectId);
+
+    List<RoomDO> searchRoomByName(@Param(value = "roomName") String roomName);
 }

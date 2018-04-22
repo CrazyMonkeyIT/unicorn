@@ -3,21 +3,19 @@
 </view>
 
 <view hidden="{{currentTab!==0}}">  
-  <view wx:for="{{roomList}}" wx:key="item">
-    <navigator open-type="navigate" url="/pages/live/startlive/startlive?roomId={{item.roomId}}">
-      <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
-    </navigator>
-  </view>
+  <navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
+    <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+  </navigator>
 </view>  
   
 <view hidden="{{currentTab!==1}}">  
-  <view wx:for="{{roomList}}" wx:key="item">
-    <navigator open-type="navigate" url="/pages/live/startlive/startlive?roomId={{item.roomId}}">
-      <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
-    </navigator>
-  </view>
+  <navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
+    <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+  </navigator>
 </view>  
   
 <view hidden="{{currentTab!==2}}">  
-  专题
+  <navigator wx:for="{{subjectList}}" wx:key="item" url="/pages/live/subjectroom/subjectroom?subjectId={{item.subjectId}}" open-type="navigate">
+    <image src="{{item.subjectPoster}}" style='width:100%' mode="scaleToFill"></image>
+  </navigator>
 </view>

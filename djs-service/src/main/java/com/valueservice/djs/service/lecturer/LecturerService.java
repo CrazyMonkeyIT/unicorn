@@ -39,6 +39,16 @@ public class LecturerService {
     }
 
     /**
+     * 模糊匹配讲师信息
+     * @param lecturerName  搜索值
+     * @return
+     */
+    public List<LecturerDO> searchLecturerByName(String lecturerName){
+        lecturerName = String.format("%s%s%s", "%", lecturerName, "%");
+        return lecturerDOMapper.searchLecturerByName(lecturerName);
+    }
+
+    /**
      * 查询讲师列表
      * @param lecturerName
      * @param phone

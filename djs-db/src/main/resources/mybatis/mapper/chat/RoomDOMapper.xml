@@ -291,4 +291,25 @@
     order by create_time desc
   </select>
 
+  <select id="selectBySubjectId" resultMap="ResultMapWithBLOBs" >
+    select a.*,
+    date_format(a.prepare_live_begin_time,'%Y-%m-%d %H:%m:%s') prepareLiveBeginTimeStr,
+    date_format(a.prepare_live_end_time,'%Y-%m-%d %H:%m:%s') prepareLiveEndTimeStr,
+    date_format(a.actual_live_begin_time,'%Y-%m-%d %H:%m:%s') actualLiveBeginTimeStr,
+    date_format(a.actual_live_end_time,'%Y-%m-%d %H:%m:%s') actualLiveEndTimeStr
+    from t_b_room a where a.subject_id = #{subjectId}
+    order by create_time desc
+  </select>
+
+  <select id="searchRoomByName" resultMap="ResultMapWithBLOBs" >
+    select
+    b.id lecturer_id,b.lecturer_name,b.head_photo_file,
+    a.id,a.name,a.count,a.room_desc
+    from t_b_room a
+    inner join t_b_lecturer b on a.lecturer_id = b.id
+    where a.status = 0
+    and a.name like #{roomName}
+    order by a.create_time desc
+  </select>
+
 </mapper>

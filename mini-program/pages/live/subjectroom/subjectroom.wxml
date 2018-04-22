@@ -1,0 +1,3 @@
+<navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
+  <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+</navigator>

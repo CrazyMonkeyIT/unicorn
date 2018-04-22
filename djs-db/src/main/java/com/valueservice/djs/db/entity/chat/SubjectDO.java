@@ -13,6 +13,8 @@ public class SubjectDO {
 
     private Date createTime;
 
+    private String subjectPoster;
+
     public Integer getSubjectId() {
         return subjectId;
     }
@@ -51,5 +53,13 @@ public class SubjectDO {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSubjectPoster() {
+        return subjectPoster;
+    }
+
+    public void setSubjectPoster(String subjectPoster) {
+        this.subjectPoster = subjectPoster == null ? null : subjectPoster.trim();
     }
 }

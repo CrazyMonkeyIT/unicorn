@@ -21,4 +21,6 @@ public interface LecturerDOMapper {
     LecturerDO selectByOpenId(@Param("openId")String openId);
 
     List<LecturerDO> selectByChief(@Param(value = "isChief") String isChief);
+
+    List<LecturerDO> searchLecturerByName(@Param(value = "lecturerName") String lecturerName);
 }

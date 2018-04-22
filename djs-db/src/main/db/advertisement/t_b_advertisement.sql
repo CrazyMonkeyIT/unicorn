@@ -57,6 +57,7 @@ DROP TABLE IF EXISTS `t_b_subject`;
 CREATE TABLE `t_b_subject` (
   `subject_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_name` varchar(255) DEFAULT NULL,
+  `subject_poster` varchar(255) NOT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,

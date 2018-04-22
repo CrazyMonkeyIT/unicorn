@@ -7,15 +7,23 @@
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="subject_poster" jdbcType="VARCHAR" property="subjectPoster" />
   </resultMap>
   <sql id="Base_Column_List">
-    subject_id, subject_name, start_time, end_time, create_time
+    subject_id, subject_name, start_time, end_time, create_time, subject_poster
   </sql>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_b_subject
+  </select>
+
+  <select id="selectValidList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_b_subject
+    where now() between start_time and end_time
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -28,7 +36,14 @@
     delete from t_b_subject
     where subject_id = #{subjectId,jdbcType=INTEGER}
   </delete>
-
+  <insert id="insert" parameterType="com.valueservice.djs.db.entity.chat.SubjectDO">
+    insert into t_b_subject (subject_id, subject_name, start_time, 
+      end_time, create_time, subject_poster
+      )
+    values (#{subjectId,jdbcType=INTEGER}, #{subjectName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{subjectPoster,jdbcType=VARCHAR}
+      )
+  </insert>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.SubjectDO">
     insert into t_b_subject
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -47,6 +62,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="subjectPoster != null">
+        subject_poster,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="subjectId != null">
@@ -63,6 +81,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectPoster != null">
+        #{subjectPoster,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -81,8 +102,19 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="subjectPoster != null">
+        subject_poster = #{subjectPoster,jdbcType=VARCHAR},
+      </if>
     </set>
     where subject_id = #{subjectId,jdbcType=INTEGER}
   </update>
-
+  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.chat.SubjectDO">
+    update t_b_subject
+    set subject_name = #{subjectName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      subject_poster = #{subjectPoster,jdbcType=VARCHAR}
+    where subject_id = #{subjectId,jdbcType=INTEGER}
+  </update>
 </mapper>

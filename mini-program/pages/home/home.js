@@ -61,9 +61,12 @@ Page({
 
   //键盘完成按钮时触发(用来搜索)
   bindconfirm: function(event){
-    wx.showToast({
-      title: '搜索小哥正在快马加鞭的查找，请稍后!',
-      icon: 'none'
+    var inputValue = event.detail.value;
+    if (!inputValue){
+      return;
+    }
+    wx.navigateTo({
+      url: 'search/result/result?inputValue=' + inputValue
     })
   },
   //首页广告分析/跳转

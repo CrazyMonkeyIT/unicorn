@@ -33,10 +33,8 @@ public class RoomService {
 
     @Resource
     private RoomDOMapper roomDOMapper;
-
     @Resource
     private RoomUserDOMapper roomUserDOMapper;
-
     @Resource
 	private MiniUserDOMapper miniUserDOMapper;
     @Resource
@@ -44,28 +42,22 @@ public class RoomService {
     @Resource
     private SimpMessagingTemplate messageingTemplate;
 
-
-
-
     public List<RoomDO> selectAll(Integer status,String name){
         return roomDOMapper.selectRoomInfo(status,name);
     }
 
-    public List<HomeLiveVO> selectLiveRoom(){
-        List<HomeLiveVO> homeLiveVOList = new ArrayList<>();
-        List<RoomDO> roomDOList = roomDOMapper.selectLiveRoom();
-        for(RoomDO roomDO : roomDOList){
-            HomeLiveVO homeLiveVO = new HomeLiveVO();
-            homeLiveVO.setRoomId(roomDO.getId().intValue());
-            homeLiveVO.setRoomName(roomDO.getName());
-            homeLiveVO.setRoomDesc(roomDO.getRoomDesc());
-            homeLiveVO.setRoomPersonCount(roomDO.getCount());
-            homeLiveVO.setLecturerId(roomDO.getLecturerId());
-            homeLiveVO.setLecturerName(roomDO.getLecturerName());
-            homeLiveVO.setHeadPhotoFile(roomDO.getHeadPhotoFile());
-            homeLiveVOList.add(homeLiveVO);
-        }
-        return homeLiveVOList;
+    public List<RoomDO> selectLiveRoom(){
+        return roomDOMapper.selectLiveRoom();
+    }
+
+    /**
+     * 模糊匹配房间信息
+     * @param roomName 搜索值
+     * @return
+     */
+    public List<RoomDO> searchRoomByName(String roomName){
+        roomName = String.format("%s%s%s", "%", roomName, "%");
+        return roomDOMapper.searchRoomByName(roomName);
     }
 
     /**
@@ -75,6 +67,15 @@ public class RoomService {
      */
     public List<RoomDO> selectByType(Integer type){
         return roomDOMapper.selectByType(type);
+    }
+
+    /**
+     * 获取当前主题下相关的直播信息
+     * @param subjectId 主题ID
+     * @return
+     */
+    public List<RoomDO> selectBySubjectId(Integer subjectId){
+        return roomDOMapper.selectBySubjectId(subjectId);
     }
 
     /**
