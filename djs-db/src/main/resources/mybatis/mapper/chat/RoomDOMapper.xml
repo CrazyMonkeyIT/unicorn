@@ -252,8 +252,10 @@
       and a.status = #{status}
     </if>
     <if test="strName != null and strName != ''">
-      and c.subject_name like concat(concat('%',#{strName}),'%')
-      or b.lecturer_name like concat(concat('%',#{strName}),'%')
+      and (
+        c.subject_name like concat(concat('%',#{strName}),'%')
+        or b.lecturer_name like concat(concat('%',#{strName}),'%')
+      )
     </if>
   </select>
 
