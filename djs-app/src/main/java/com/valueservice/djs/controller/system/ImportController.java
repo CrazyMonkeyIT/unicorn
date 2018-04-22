@@ -199,10 +199,12 @@ public class ImportController {
 
     /**
      * 用户设置房间的预告文件
+     * import 记录不应该跟房间有耦合行为，设置未过期
      * @param id
      * @param jsonSplitStr
      * @return
      */
+    @Deprecated
     @PostMapping("/fileRecord/update/{id}")
     public @ResponseBody boolean updateFileRecord(@PathVariable Long id,@RequestParam String jsonSplitStr){
         UpfileRecordDO upfileRecordDO = new UpfileRecordDO();
@@ -214,9 +216,11 @@ public class ImportController {
 
     /**
      * 获取房间下设置为预告的图片地址
+     * import 记录不应该跟房间有耦合行为，设置未过期
      * @param id
      * @return
      */
+    @Deprecated
     @PostMapping("/courseware/getpic/{id}")
     public @ResponseBody List<String> getPicPath(@PathVariable Long id){
         UpfileRecordDO upfileRecordDO = upfileRecordDOMapper.selectByPrimaryKey(id);
