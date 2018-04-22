@@ -63,6 +63,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.chat.RoomDO">
+    <selectKey keyProperty="id" resultType="java.lang.Long">
+      select LAST_INSERT_ID() as id
+    </selectKey>
     insert into t_b_room
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -165,9 +168,6 @@
       </if>
       <if test="roomDesc != null">
         #{roomDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="coursewareId != null">
-        #{coursewareId,jdbcType=INTEGER},
       </if>
       <if test="roomPosterPath != null" >
         #{roomPosterPath,jdbcType=VARCHAR},

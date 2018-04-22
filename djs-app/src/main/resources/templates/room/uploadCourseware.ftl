@@ -38,55 +38,77 @@
     <script src="${request.contextPath}/static/layui/layui.js" type="text/javascript"></script>
     <!-- 自定义confirm -->
     <script src="${request.contextPath}/static/assets/Ewin.js" type="text/javascript"></script>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="${request.contextPath}/static/assets/css/colorbox.min.css" />
+    <script src="${request.contextPath}/static/assets/js/jquery.colorbox.min.js"></script>
+
     <style>
         .text2{
             position: absolute;
-            top: 0%;
-            left: 0%;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            z-index:11001;
-            -moz-opacity: 0.7;
-            opacity:.70;
-            filter: alpha(opacity=70);
-            text-align:center;
-            color:white;
-            line-height:150px;
+            top: -5px;
+            right: 20px;
+            width: 50px;
+            height: 20px;
+            line-height:20px;
         }
     </style>
 </head>
 
-<body class="no-skin">
-    <div id="uploadDiv" style="width:100%;min-height:200px;margin:150px 0px;border:1px solid #ccc;text-align: center;">
+<body class="no-skin" style="background: #FFFFFF;">
+<div class="panel panel-default" style="width:50%;min-height:200px;margin:150px auto;border:1px solid #d5e3ef;text-align: center;">
+    <div id="uploadDiv" class="panel-body" >
         <#if rcid??>
             <div id="selectDiv">
-            <input type="hidden" id="roomCoursewareId" value="${rcid}"/>
-            <input type="hidden" id="coursewareId" />
-            <input type="file" id="file" onchange="uploadFile()" style="display:none;"/>
-            <button onclick="showUpload()" class="btn btn-white btn-info">
-                <span class="ace-icon fa fa-folder-o icon-on-right bigger-110"></span>
-                点击上传课件
-            </button>
+                <input type="hidden" id="roomCoursewareId" value="${rcid}"/>
+                <input type="hidden" id="coursewareId" />
+                <input type="hidden" id="splitFiles"/>
+
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="ace-icon fa fa-times"></i>
+                    </button>
+                    <table style="margin:0px auto;width:600px;">
+                        <tr>
+                            <td style="text-align: right;"><strong>课件目前支持格式：</strong></td>
+                            <td style="text-align: left;">.doc  .docx  .docm  .xlsx  .pptx  .htm  .html  .pdf  .txt  .wps  .xml  .csv</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><strong>课件大小：</strong></td>
+                            <td style="text-align: left;">50M 以内</td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- 上传文件域begin -->
+                <label class="ace-file-input ace-file-multiple">
+                    <input multiple="" id="file" type="file" >
+                </label>
+                <!-- 上传文件域end -->
             </div>
-            <div  style="width:100%;height:auto;overflow-x: auto;position:relative;">
+            <div id="sureFinish" style="display: none;margin-bottom:10px;margin-top:10px;">
+                <button onclick="finish()" class="btn btn-white btn-warning btn-bold">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    我已完成课件上传
+                </button>
+            </div>
+            <div  style="width:100%;height:auto;overflow-x: auto;position:relative;padding:0px 50px;">
                 <ul id="preDiv" class="ace-thumbnails clearfix" >
 
                 </ul>
             </div>
-            <div id="sureFinish" style="display: none;">
-                <button onclick="finish()" class="btn btn-white btn-info">
-                    <span class="glyphicon glyphicon-ok"></span>
-                    确认完成
-                </button>
-            </div>
         <#else>
-            <h1>抱歉，该课件上传地址有误，请确认后输入</h1>
+            <div style="width:100%;height:200px;margin:150px 0px;text-align: center;">
+                <div style="font-size:40px;margin:0px auto;"><i class="ace-icon fa fa-globe red"></i></div>
+                <h3 class="red">抱歉，该课件上传地址有误，请确认后输入</h3>
+            </div>
         </#if>
     </div>
 
-    <div id="finishDiv" style="width:100%;height:200px;margin:150px 0px;border:1px solid #ccc;text-align: center;display:none;">
-        <h1>恭喜你，上传完成</h1>
+    <div id="finishDiv" style="width:100%;height:200px;margin:150px 0px;text-align: center;display:none;">
+        <div style="font-size:40px;margin:0px auto 20px auto;"><span class="glyphicon glyphicon-ok green"></span></div>
+        <h3 class="green">恭喜你，上传完成</h3>
+        <p>&nbsp;</p>
+        <p class="green">您的直播已创建</p>
     </div>
 
 
@@ -98,24 +120,50 @@
         var basePath  = '${request.getContextPath()}';
 
         var heraldPath = '';
+
+        var $overflow = '';
+
+        var colorbox_params = {};
+
+        $(function () {
+
+
+
+            $('#file').ace_file_input({
+                style: 'well',
+                btn_choose: '点击上传课件',
+                btn_change: null,
+                showRemove: false,
+                no_icon: 'ace-icon ace-icon fa fa-cloud-upload',
+                droppable: true,
+                thumbnail: 'small',//large | fit
+                allowExt: ['.doc','.docx','.docm','.xlsx','.pptx','.htm','.html','.pdf','.txt','.wps','.xml','.csv'],
+                preview_error: function (filename, error_code) {
+
+                }
+            }).on('change', function () {
+                uploadFile();
+            });
+        });
         //选中图片
         function okselli(index,heraldPath){
             $(".selok_image").hide();
             $("#selok_image_"+index).show();
             this.heraldPath = heraldPath;
         }
-        /*
-         * 选择文件
-         */
-        function showUpload(){
-            $("#file").trigger("click");
-        }
+
         /**
          * 上传文件
          */
         function uploadFile(){
             var formData = new FormData();
-            formData.append("file",$("#file")[0].files[0]);
+            var file = $("#file")[0].files[0];
+            if(file.size > (50 * 1024 * 1024)){
+                alert("上传的文件大小不可超过50M");
+                return false;
+            }
+
+            formData.append("file",file);
             formData.append("toConvertPic",true);
             loading_begin();
             $.ajax({
@@ -128,6 +176,7 @@
                     if(!!data){
                         console.log(data);
                         $("#coursewareId").val(data[0].insertId);
+                        $("#splitFiles").val(JSON.stringify(data[0].splitFileList));
                         $("#sureFinish").show();
                         var html = "";
                         $.each(data[0].splitFileList,function(index,obj){
@@ -137,18 +186,23 @@
                                 heraldPath = obj.splitFilePath;
                             }
                             html += '<li  style="height:200px;width:200px;border:solid 1px #000000;cursor:pointer;">'+
-                                    '<a  data-rel="colorbox">'+
-                                    '<img id="img_tag_" width="200"  height="200" alt="200x200" src="'+obj.splitFilePath+'" >'+
-                                    '<div class="text" onclick="okselli('+index+',\''+obj.splitFilePath+'\')">'+
-                                    '<div class="inner">设置为预告封面</div>'+
+                                    '<a  href="'+obj.splitFilePath+'" data-rel="colorbox">'+
+                                    '<img width="200"  height="200" alt="200x200" src="'+obj.splitFilePath+'" >'+
+                                    '<div class="text2 selok_image" id="selok_image_'+index+'" style="font-size:32px;'+display+'">'+
+                                    '<span class="label label-success arrowed-in">' +
+                                    '  预告封面  ' +
+                                    '</span>'+
                                     '</div>'+
-                                    '<div class="text2 selok_image" id="selok_image_'+index+'" style="font-size:36px;'+display+'">'+
-                                    '<div class="inner2 icon-ok">预告</div>'+
+                                    '<div class="tools tools-bottom" style="padding-top:5px;line-height:16px;">'+
+                                    '<a href="#" onclick="okselli('+index+',\''+obj.splitFilePath+'\')">'+
+                                    '<font style="font-size:14px;">&nbsp;设置为预告封面</font>'+
+                                    '</a>'+
                                     '</div>'+
                                     '</a>'+
                                     '</li>';
                         });
                         $("#preDiv").html(html);
+                        $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
                     }else{
                         alert("上传异常");
                     }
@@ -165,6 +219,7 @@
         function finish(){
             var roomCoursewareId = $("#roomCoursewareId").val();
             var coursewareId = $("#coursewareId").val();
+            var splitFiles = $("#splitFiles").val();
 
             $.ajax({
                 url: basePath + "/minigram/updateRoomCourseware",
@@ -173,7 +228,8 @@
                 data: {
                     id:roomCoursewareId,
                     coursewareId: coursewareId,
-                    heraldPath: heraldPath
+                    heraldPath: heraldPath,
+                    splitFiles: splitFiles
                 },
                 success: function (data) {
                     if(data.result){
@@ -228,6 +284,37 @@
         }
 
     </script>
+    <script type="text/javascript">
+        jQuery(function($) {
+            colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
 
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+            $(document).one('ajaxloadstart.page', function(e) {
+                $('#colorbox, #cboxOverlay').remove();
+            });
+        })
+    </script>
+</div>
 </body>
 </html>

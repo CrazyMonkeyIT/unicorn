@@ -168,17 +168,23 @@ Page({
       success: function (res) {
         if(res.data.result){
           var roomCoursewareId =  res.data.obj;
+          var sourceUrl = app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId;
           if (app.globalData.serverPath.indexOf('localhost') == -1){
-            util.getShortLink(app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId,function(link){
+            //获取短链接
+            util.getShortLink(sourceUrl,function(link){
+              //复制到粘贴板
+              wx.setClipboardData({data: link});
               wx.showModal({
-                content: "请用电脑端打开如下地址上传课件：\n   \n" + link,
+                content: "请用电脑端打开如下地址上传课件：\n   \n" + link + '（已复制到粘贴板）',
                 showCancel: false,
                 confirmText: "确定"
-              })
+              });
             });
           }else{
+            //复制到粘贴板
+            wx.setClipboardData({ data: sourceUrl });
             wx.showModal({
-              content: "请用电脑端打开如下地址上传课件：\n  \n" + app.globalData.serverPath + "/minigram/intoRoomCourseware/" + roomCoursewareId,
+              content: "请用电脑端打开如下地址上传课件：\n  \n" + sourceUrl + '（已复制到粘贴板）',
               showCancel: false,
               confirmText: "确定"
             })
@@ -212,7 +218,6 @@ Page({
       success: function (res) {
         if (res.data.result) {
           var room = that.data.room;
-          room['coursewareId'] = res.data.obj.coursewareId;
           room['heraldPath'] = res.data.obj.heraldPath;
           that.setData({
             room:room
@@ -248,6 +253,7 @@ Page({
             success: function (res) {
               if (res.data.result) {
                 //已提交成功
+                that.saveRoomCoursewareRelative(res.data.obj);
                 wx.redirectTo({
                   url: '../create-success/create-success'
                 })
@@ -266,7 +272,26 @@ Page({
       }
     })
   },
-  
+  //保存房间与课件关系
+  saveRoomCoursewareRelative:function(roomId){
+    console.log("roomId:" + roomId);
+    console.log("roomCoursewareId：" + that.data.roomCoursewareId);
+    wx.request({
+      url: app.globalData.serverPath + '/minigram/updateRoomCourseware',
+      data: {
+        id: that.data.roomCoursewareId,
+        roomId: roomId
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log("保存房间与课件关系完成");
+        
+      }
+    });
+  },
   clickTextarea:function(){
     this.setData({
       textareaFocus:true

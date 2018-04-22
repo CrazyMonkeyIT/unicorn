@@ -198,6 +198,7 @@ public class RoomService {
             roomDOMapper.updateByPrimaryKey(room);
         }
         result.setResult(true);
+        result.setObj(room.getId());
         return result;
     }
 }

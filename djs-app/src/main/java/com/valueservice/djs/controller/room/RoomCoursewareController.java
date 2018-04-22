@@ -59,7 +59,7 @@ public class RoomCoursewareController extends BaseController{
     public String uploadRoomCourseware(ModelMap modelMap, @PathVariable Long roomCoursewareId){
         try {
             RoomCoursewareDO record = roomCoursewareService.selectByPrimaryKey(roomCoursewareId);
-            if(!Objects.isNull(record)){
+            if(!Objects.isNull(record) && Objects.isNull(record.getCoursewareId())){
                 modelMap.addAttribute("rcid", roomCoursewareId);
             }
         }catch (Exception ex){
