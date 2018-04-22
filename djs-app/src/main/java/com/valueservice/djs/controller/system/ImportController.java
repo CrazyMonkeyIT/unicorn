@@ -200,6 +200,7 @@ public class ImportController {
     /**
      * 用户设置房间的预告文件
      * import 记录不应该跟房间有耦合行为，设置未过期
+     * @use  联系夏鑫
      * @param id
      * @param jsonSplitStr
      * @return
@@ -217,6 +218,7 @@ public class ImportController {
     /**
      * 获取房间下设置为预告的图片地址
      * import 记录不应该跟房间有耦合行为，设置未过期
+     * @use  联系夏鑫
      * @param id
      * @return
      */
