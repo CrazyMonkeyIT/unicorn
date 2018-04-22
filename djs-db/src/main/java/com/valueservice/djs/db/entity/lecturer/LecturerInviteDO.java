@@ -17,6 +17,10 @@ public class LecturerInviteDO {
 
     private String phone;
 
+    private String headPhotoFile;
+
+    private String introduction;
+
     private String inviteCode;
 
     private String status;
@@ -49,6 +53,22 @@ public class LecturerInviteDO {
 
     public void setLecturerName(String lecturerName) {
         this.lecturerName = lecturerName == null ? null : lecturerName.trim();
+    }
+
+    public String getHeadPhotoFile() {
+        return headPhotoFile;
+    }
+
+    public void setHeadPhotoFile(String headPhotoFile) {
+        this.headPhotoFile = headPhotoFile;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getCompany() {

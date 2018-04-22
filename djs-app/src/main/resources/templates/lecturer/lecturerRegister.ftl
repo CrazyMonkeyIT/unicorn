@@ -13,6 +13,7 @@
                 <thead class="thin-border-bottom">
                 <tr >
                     <th >序号</th>
+                    <th>头像</th>
                     <th >讲师姓名</th>
                     <th >手机号</th>
                     <th >公司</th>
@@ -27,6 +28,12 @@
                         <#list page.list as data>
                         <tr>
                             <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
+                            <td>
+                                <#if data.headPhotoFile??><img src="${data.headPhotoFile!''}" style="width:60px;height:60px;border-radius:12px;"/>
+                                <#else>
+                                    <i class="ace-icon ace-icon fa fa-picture-o" style="width:60px;height:60px;border-radius:12px;font-size:56px;color:#ccc;"></i>
+                                </#if>
+                            </td>
                             <td>${data.lecturerName!''}</td>
                             <td>${data.phone!''}</td>
                             <td>${data.company!''}</td>
@@ -44,16 +51,21 @@
                             </td>
                             <td><#if data.createTime??>${(data.createTime?string('yyyy-MM-dd HH:mm:ss'))}</#if></td>
                             <td>
+                                <a onclick="getInfo(${data.id})" class="btn btn-white btn-info btn-sm">
+                                    <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                    查看
+                                </a>
                                 <#if data.status != 'WAIT' >
                                 <#else >
-                                    <div class="btn-overlap btn-group">
+
                                         <a onclick="showSuccess(${data.id})" class="btn btn-sm btn-white btn-primary" >
+                                            <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                                             通过
                                         </a>
                                         <a onclick="failure(${data.id})" class="btn btn-sm btn-white btn-primary" >
+                                            <i class="ace-icon glyphicon glyphicon-remove blue"></i>
                                             拒绝
                                         </a>
-                                    </div>
                                 </#if>
                             </td>
                         </tr>
@@ -103,6 +115,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+
                 <a onclick="success()" class="btn btn-white btn-info btn-bold">
                     <i class="ace-icon glyphicon glyphicon-ok blue"></i>
                     确定
@@ -116,6 +129,68 @@
     </div>
 </div>
 <!-- 审核通过end -->
+<!-- 预览信息begin -->
+<div id="preview_modal" class="modal fade" style="display: none; " data-backdrop="static" role="dialog" tabindex="-1" class="modal fade in exam_newbox">
+    <div class="modal-dialog">
+        <div class="modal-content"  >
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h4 class="blue"><i class="fa fa-pencil"></i>&nbsp;讲师信息</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label"></label>
+                            <div class="col-sm-8" style="padding-left:50px;">
+                                <div id="editImgDiv" style="width:130px;text-align: center;">
+                                    <img src="" id="headImg" style="width:130px;height:126px;"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">讲师姓名：</label>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                <span id="lecturerName"></span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">联系方式：</label>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                <span id="phone"></span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">在职公司：</label>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                <span id="company"></span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">所在职位：</label>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                <span id="position"></span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">简介：</label>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                <span id="introduction"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-white btn-info btn-bold" data-dismiss="modal">
+                    <i class="ace-icon glyphicon glyphicon-remove blue"></i>
+                    关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 预览信息end -->
 <script>
     jQuery(function($) {
 
@@ -166,6 +241,30 @@
                    $("#form1").submit();
                }else{
                    alert(data.msg);
+               }
+           }
+       });
+   }
+
+   function getInfo(id){
+       $.ajax({
+           url : basePath + "/lecturer/register/get",
+           type : 'post',
+           dataType:'json',
+           data : {
+               id:id
+           },
+           success : function(data) {
+               if(!!data){
+                    $("#headImg").attr("src",data.headPhotoFile);
+                    $("#lecturerName").html(data.lecturerName);
+                    $("#phone").html(data.phone);
+                    $("#company").html(data.company);
+                    $("#position").html(data.position);
+                    $("#introduction").html(data.introduction);
+                    $("#preview_modal").modal("show");
+               }else{
+
                }
            }
        });

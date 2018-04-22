@@ -84,4 +84,12 @@ public class LecturerRegisterController extends BaseController{
         }
         return result;
     }
+
+    /**
+     * 查询注册信息
+     */
+    @RequestMapping("/get")
+    public @ResponseBody LecturerRegisterDO get(Integer id){
+        return lecturerRegisterService.selectById(id);
+    }
 }

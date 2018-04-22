@@ -8,6 +8,8 @@
     <result column="position" jdbcType="VARCHAR" property="position" />
     <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="head_photo_file" jdbcType="VARCHAR" property="headPhotoFile" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
@@ -15,8 +17,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, lecturer_name, company, position, grade_id, phone, invite_code, status, create_user_id, 
-    create_time, update_time
+    id, lecturer_name, company, position, grade_id, phone, head_photo_file, introduction,
+    invite_code, status, create_user_id, create_time, update_time
   </sql>
 
   <select id="selectList" resultMap="BaseResultMap">
@@ -43,16 +45,7 @@
     delete from t_b_lecturer_invite
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerInviteDO">
-    insert into t_b_lecturer_invite (id, lecturer_name, company, 
-      position, grade_id, phone, 
-      invite_code, status, create_user_id, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{lecturerName,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR}, #{gradeId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
-      #{inviteCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerInviteDO">
     insert into t_b_lecturer_invite
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,6 +66,12 @@
       </if>
       <if test="phone != null">
         phone,
+      </if>
+      <if test="headPhotoFile != null">
+        head_photo_file,
+      </if>
+      <if test="introduction != null">
+        introduction,
       </if>
       <if test="inviteCode != null">
         invite_code,
@@ -109,6 +108,12 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="headPhotoFile != null">
+        #{headPhotoFile,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
       <if test="inviteCode != null">
         #{inviteCode,jdbcType=VARCHAR},
       </if>
@@ -144,6 +149,12 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="headPhotoFile != null">
+        head_photo_file = #{headPhotoFile,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
       <if test="inviteCode != null">
         invite_code = #{inviteCode,jdbcType=VARCHAR},
       </if>
@@ -162,18 +173,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerInviteDO">
-    update t_b_lecturer_invite
-    set lecturer_name = #{lecturerName,jdbcType=VARCHAR},
-      company = #{company,jdbcType=VARCHAR},
-      position = #{position,jdbcType=VARCHAR},
-      grade_id = #{gradeId,jdbcType=INTEGER},
-      phone = #{phone,jdbcType=VARCHAR},
-      invite_code = #{inviteCode,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      create_user_id = #{createUserId,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

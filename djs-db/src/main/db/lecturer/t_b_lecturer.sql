@@ -85,6 +85,8 @@ CREATE TABLE `t_b_lecturer_invite` (
   `position` varchar(100) DEFAULT NULL,
   `grade_id` int(11) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
+  `head_photo_file` varchar(500) DEFAULT NULL COMMENT '讲师头像',
+  `introduction` varchar(500) DEFAULT NULL COMMENT '讲师简介',
   `invite_code` varchar(50) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL COMMENT '状态 （notallow/allow）',
   `create_user_id` varchar(11) DEFAULT NULL,
@@ -122,6 +124,7 @@ CREATE TABLE `t_b_lecturer_register` (
   `phone` varchar(11) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL COMMENT '状态（WAIT/SUCCESS/FAILURE）',
   `head_photo_file` varchar(100) DEFAULT NULL COMMENT '头像',
+  `introduction` varchar(500) DEFAULT NULL COMMENT '讲师简介',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

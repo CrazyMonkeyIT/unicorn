@@ -55,9 +55,13 @@ public class LecturerInviteService {
      * @return
      */
     public BaseResult createLecturerInvite(LecturerInviteDO lecturerInvite){
-        lecturerInvite.setStatus("NOTALLOW");
-        lecturerInvite.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        lecturerInviteDOMapper.insertSelective(lecturerInvite);
+        if(Objects.isNull(lecturerInvite.getId())) {
+            lecturerInvite.setStatus("NOTALLOW");
+            lecturerInvite.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            lecturerInviteDOMapper.insertSelective(lecturerInvite);
+        }else{
+            lecturerInviteDOMapper.updateByPrimaryKeySelective(lecturerInvite);
+        }
         return new BaseResult(true);
     }
 
@@ -115,4 +119,22 @@ public class LecturerInviteService {
         return new BaseResult(true);
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    public BaseResult delete(Integer id){
+        lecturerInviteDOMapper.deleteByPrimaryKey(id);
+        return new BaseResult(true);
+    }
+    /**
+     * 查询邀请信息
+     */
+    public BaseResult selectById(Integer id){
+        LecturerInviteDO record = lecturerInviteDOMapper.selectByPrimaryKey(id);
+        BaseResult result = new  BaseResult(true);
+        result.setObj(record);
+        return result;
+    }
 }

@@ -21,6 +21,8 @@ public class LecturerRegisterDO {
 
     private String headPhotoFile;
 
+    private String introduction;
+
     private Date createTime;
 
     private Date updateTime;
@@ -111,5 +113,13 @@ public class LecturerRegisterDO {
 
     public void setHeadPhotoFile(String headPhotoFile) {
         this.headPhotoFile = headPhotoFile;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

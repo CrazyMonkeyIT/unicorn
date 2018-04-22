@@ -109,4 +109,13 @@ public class LecturerRegisterService {
 
         return new BaseResult(true);
     }
+
+    /**
+     * 查询注册信息
+     * @param id
+     * @return
+     */
+    public LecturerRegisterDO selectById(Integer id){
+        return lecturerRegisterDOMapper.selectByPrimaryKey(id);
+    }
 }

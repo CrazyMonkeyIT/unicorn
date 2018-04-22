@@ -8,15 +8,11 @@ import java.util.List;
 public interface LecturerInviteDOMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(LecturerInviteDO record);
-
     int insertSelective(LecturerInviteDO record);
 
     LecturerInviteDO selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(LecturerInviteDO record);
-
-    int updateByPrimaryKey(LecturerInviteDO record);
 
     LecturerInviteDO selectByInviteCode(@Param("inviteCode")Integer inviteCode);
 

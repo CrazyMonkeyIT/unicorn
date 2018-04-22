@@ -86,4 +86,24 @@ public class LecturerInviteController extends BaseController {
         record.setCreateUserId(getCurrentUser().getUserId().toString());
         return lecturerInviteService.createLecturerInvite(record);
     }
+
+    /**
+     * 删除讲师邀请
+     * @param id
+     * @return
+     */
+    @RequestMapping("/del")
+    public @ResponseBody BaseResult delete(Integer id){
+        return lecturerInviteService.delete(id);
+    }
+
+    /**
+     * 获取邀请信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/get")
+    public @ResponseBody BaseResult selectById(Integer id){
+        return lecturerInviteService.selectById(id);
+    }
 }

@@ -1,5 +1,6 @@
 // pages/personal/speaker/speaker.js
 const app = getApp();
+var that = null;
 Page({
 
   /**
@@ -13,13 +14,18 @@ Page({
     inviteInfoDiv:true,
     lecturerInfoDiv:true,
     inviteInfo:{},
-    lecturerInfo:{}
+    lecturerInfo:{},
+    descView:true,
+    descInpt:false,
+    textareaFocus: false,
+    desc: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    that = this;
     if(!!app.globalData.lecturerInfo){
       //已经是讲师，直接显示讲师信息
       this.setData({
@@ -112,6 +118,7 @@ Page({
     var phone = e.detail.value.phone;
     var company = e.detail.value.company;
     var position = e.detail.value.position;
+    var introduction = that.data.desc;
     if (!lecturerName){
       app.alert("讲师姓名必须填写");
       return false;
@@ -145,7 +152,8 @@ Page({
               openId: openId,
               phone: phone,
               company: company,
-              position: position
+              position: position,
+              introduction: introduction
             },
             method: 'POST',
             header: {
@@ -262,5 +270,31 @@ Page({
         }
       }
     })
-  }
+  },
+  clickTextarea: function () {
+    this.setData({
+      textareaFocus: true
+    });
+  },
+  inputDesc: function (e) {
+    this.setData({
+      desc: e.detail.value
+    });
+  },
+  closeDescInput: function () {
+    this.setData({
+      descView: false,
+      descInpt: true
+    });
+  },
+  clickDescView: function () {
+    this.setData({
+      descView: true,
+      descInpt: false,
+      textareaFocus: true
+    });
+    this.setData({
+      textareaFocus: true
+    })
+  },
 })
