@@ -76,13 +76,16 @@ INSERT INTO `t_b_live_type` VALUES ('3', 'VIP');
 -- ----------------------------
 DROP TABLE IF EXISTS `t_b_room_courseware`;
 CREATE TABLE `t_b_room_courseware` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT ,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '房间UUID',
+  `room_id` bigint(20) DEFAULT NULL COMMENT '直播房间ID',
   `courseware_id` bigint(20) DEFAULT NULL COMMENT '课件ID',
   `herald_path` varchar(255) DEFAULT NULL COMMENT '预告封面',
+  `split_files` text COMMENT '课件文件集合，保存JSON字符串',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
 
 
 

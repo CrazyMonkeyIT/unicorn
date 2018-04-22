@@ -3,13 +3,15 @@
 <mapper namespace="com.valueservice.djs.db.dao.chat.RoomCoursewareDOMapper">
   <resultMap id="BaseResultMap" type="com.valueservice.djs.db.entity.chat.RoomCoursewareDO">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="room_id" jdbcType="BIGINT" property="roomId" />
     <result column="courseware_id" jdbcType="BIGINT" property="coursewareId" />
     <result column="herald_path" jdbcType="VARCHAR" property="heraldPath" />
+    <result column="split_files" jdbcType="VARCHAR" property="splitFiles"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, courseware_id, herald_path, create_time, update_time
+    id, room_id, courseware_id, herald_path, split_files, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,11 +33,17 @@
       <if test="id != null">
         id,
       </if>
+      <if test="roomId != null">
+        room_id,
+      </if>
       <if test="coursewareId != null">
         courseware_id,
       </if>
       <if test="heraldPath != null">
         herald_path,
+      </if>
+      <if test="splitFiles != null">
+        split_files,
       </if>
       <if test="createTime != null">
         create_time,
@@ -48,11 +56,17 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=BIGINT},
+      </if>
       <if test="coursewareId != null">
         #{coursewareId,jdbcType=BIGINT},
       </if>
       <if test="heraldPath != null">
         #{heraldPath,jdbcType=VARCHAR},
+      </if>
+      <if test="splitFiles != null">
+        #{splitFiles,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -65,11 +79,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.valueservice.djs.db.entity.chat.RoomCoursewareDO">
     update t_b_room_courseware
     <set>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
       <if test="coursewareId != null">
         courseware_id = #{coursewareId,jdbcType=BIGINT},
       </if>
       <if test="heraldPath != null">
         herald_path = #{heraldPath,jdbcType=VARCHAR},
+      </if>
+      <if test="splitFiles != null">
+        split_files = #{splitFiles,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
