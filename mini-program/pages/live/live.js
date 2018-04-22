@@ -11,12 +11,14 @@ Page({
   data: {
     navbar: ['路演', 'VIP', '专题'],
     currentTab: 0,
-    roadShowList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}]
+    roomList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}]
   },
+  //页面顶部tab切换事件
   navbarTap: function (e) {
     this.setData({
       currentTab: e.currentTarget.dataset.idx
-    })
+    });
+    this.roomList()
   },
   /**
    * 生命周期函数--监听页面加载
@@ -28,7 +30,6 @@ Page({
      * 获取系统信息 
      */
     wx.getSystemInfo({
-
       success: function (res) {
         console.log(res);
         that.setData({
@@ -46,6 +47,29 @@ Page({
   onReady: function () {
   
   },
+  
+  roomList: function(){
+    let roomType;
+    if (this.data.currentTab == 0) {
+      roomType = 1;
+    } else if (this.data.currentTab == 1) {
+      roomType = 0;
+    } else {
+      //未知类型
+      roomType = -1;
+    }
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + '/mini/home/room/' + roomType + '/list',
+      method: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        that.setData({
+          'roomList': result.data.obj
+        })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -53,18 +77,8 @@ Page({
   onShow: function () {
     this.setData({
       'currentTab': app.currentTab
-    })
-    var that = this;
-    /*wx.request({
-      url: app.globalData.serverPath + '/mini/home/roadshow/list',
-      method: 'GET',
-      dataType: 'json',
-      success: function (result) {
-        that.setData({
-          'roadShowList': result.data.obj
-        })
-      }
-    })*/
+    });
+    this.roomList();
   },
 
   /**
@@ -109,20 +123,6 @@ Page({
     var that = this;
     that.setData({ currentTab: e.detail.current });
 
-  },
-  /** 
-   * 点击tab切换 
-   */
-  swichNav: function (e) {
+  }
 
-    var that = this;
-
-    if (this.data.currentTab === e.target.dataset.current) {
-      return false;
-    } else {
-      that.setData({
-        currentTab: e.target.dataset.current
-      })
-    }
-  } 
 })

@@ -66,10 +66,6 @@ Page({
       icon: 'none'
     })
   },
-  //首页跳转首席讲师直播
-  chiefLive: function(e){
-    console.log(e.detail);
-  },
   //首页广告分析/跳转
   advertisementLink: function(e){
     let info = e.target.dataset.item;

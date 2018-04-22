@@ -3,7 +3,7 @@
 </view>
 
 <view hidden="{{currentTab!==0}}">  
-  <view wx:for="{{roadShowList}}" wx:key="item">
+  <view wx:for="{{roomList}}" wx:key="item">
     <navigator open-type="navigate" url="/pages/live/startlive/startlive?roomId={{item.roomId}}">
       <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
     </navigator>
@@ -11,7 +11,11 @@
 </view>  
   
 <view hidden="{{currentTab!==1}}">  
-  VIP
+  <view wx:for="{{roomList}}" wx:key="item">
+    <navigator open-type="navigate" url="/pages/live/startlive/startlive?roomId={{item.roomId}}">
+      <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+    </navigator>
+  </view>
 </view>  
   
 <view hidden="{{currentTab!==2}}">  

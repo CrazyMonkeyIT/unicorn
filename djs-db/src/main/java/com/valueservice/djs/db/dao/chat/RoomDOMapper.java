@@ -25,7 +25,7 @@ public interface RoomDOMapper {
 
     List<RoomDO> selectLiveRoom();
 
-    List<RoomDO> selectRoadShowData();
+    List<RoomDO> selectByType(@Param(value = "type") Integer type);
 
     RoomDO selectRoomExt(@Param("roomId") Long roomId);
 

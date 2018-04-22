@@ -68,23 +68,13 @@ public class RoomService {
         return homeLiveVOList;
     }
 
-    public List<HomeRoadShowVO> selectRoadShowInfo(){
-        List<HomeRoadShowVO> roadShowVOList = new ArrayList<>();
-        List<RoomDO> roomDOList = roomDOMapper.selectRoadShowData();
-        for(RoomDO roomDO : roomDOList){
-            HomeRoadShowVO roadShowVO = new HomeRoadShowVO();
-            roadShowVO.setRoomId(roomDO.getId().intValue());
-            roadShowVO.setRoadShowName(roomDO.getName());
-            roadShowVO.setRoadShowTime(roomDO.getRoadShowTimeStr());
-            roadShowVO.setRoadShowDesc(roomDO.getRoomDesc());
-            roadShowVO.setLecturerName(roomDO.getLecturerName());
-            roadShowVO.setCompany(roomDO.getCompany());
-            roadShowVO.setRoomPosterPath(roomDO.getRoomPosterPath());
-            roadShowVO.setRoomPersonCount(roomDO.getCount());
-            roadShowVOList.add(roadShowVO);
-        }
-
-        return roadShowVOList;
+    /**
+     * 获取直播房间信息
+     * @param type  房间类型 0：vip 1：路演
+     * @return
+     */
+    public List<RoomDO> selectByType(Integer type){
+        return roomDOMapper.selectByType(type);
     }
 
     /**

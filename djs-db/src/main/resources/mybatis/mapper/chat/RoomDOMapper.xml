@@ -266,14 +266,17 @@
     where a.status = 0
   </select>
 
-  <select id="selectRoadShowData" resultMap="ResultMapWithBLOBs" >
+  <select id="selectByType" resultMap="ResultMapWithBLOBs" >
     select a.id,a.`name`,a.room_desc,a.count,
     date_format(a.prepare_live_begin_time,'%m-%d %H:%i') road_show_time_str,
     a.room_poster_path,
     b.lecturer_name,b.company
     from t_b_room a
     inner join t_b_lecturer b on a.lecturer_id = b.id
-    where a.type = 1 and a.status = -1
+    where a.status = -1
+    <if test="type != null" >
+      and a.type = #{type}
+    </if>
   </select>
 
   <select id="selectByLecturerId" resultMap="ResultMapWithBLOBs" >
