@@ -18,7 +18,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + '/mini/home/roadshow/list',
+      url: app.globalData.serverPath + '/mini/home/room/1/list',
       method: 'GET',
       dataType: 'json',
       success: function (result) {

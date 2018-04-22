@@ -1,10 +1,6 @@
 
 /**index.wxss**/
 
-.index{
-  font-size: 15px;
-  width: 100%;
-}
 .index_search{
   height: 50px;
 }
@@ -50,6 +46,12 @@
 .lecturer-intro {
   padding: 10rpx;
   text-indent:2em;
+}
+
+.page{
+  width: 100%;
+  overflow: hidden;
+  font-size: 15px;
 }
 
 /**讲师content列表样式*/
