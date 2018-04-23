@@ -4,6 +4,6 @@
   </view>
   <view style="width:100%;text-align:center;">申请信息已提交，请耐心等候</view>
   <view style="margin-top:100rpx;text-align:center;padding:0rpx 40rpx;">
-      <button type="primary" bindtap='close' >确定</button>
+      <button type="primary" bindtap='close' style='background-color: #F76A2B !important;'>确定</button>
   </view>
 </view>

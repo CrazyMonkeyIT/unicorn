@@ -4,7 +4,8 @@
   height :100%;
   font-size: 14px;
   /*font-family:"微软雅黑","黑体","宋体";*/
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
   color:#5F615E;
 }
 

@@ -37,7 +37,12 @@
               <view class="navigator-content" style="padding:8rpx;">
                 <view class="navigator-text" style="display:inline-flex;width:100%;">
                     <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">联系方式</text>
-                    <input style="flex:4;" class="weui-input" name="phone" placeholder="" />
+                    <view style="flex:4;" >
+                      <view style="display:inline-flex;">
+                      <input  style="flex:3;" class="weui-input" name="phone" placeholder="" />
+                      <button style="flex:1;margin:10rpx 0rpx 10rpx 0rpx;height:56rpx;" size="mini" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">快速获取</button>
+                      </view>
+                    </view>
                 </view>
               </view>
             </view>

@@ -2,3 +2,19 @@
 button{
   background-color: #F76A2B !important;
 }
+
+.price{
+  margin-top: 30rpx;
+  margin-bottom: 25rpx;
+  position: relative;
+  display: inline-block;
+  font-size: 78rpx;
+  line-height: 1;
+}
+.price:before{
+  content: "¥";
+  position: absolute;
+  font-size: 40rpx;
+  top: 8rpx;
+  left: -40rpx;
+}

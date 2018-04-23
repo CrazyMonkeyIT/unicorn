@@ -19,6 +19,7 @@ Page({
     descInpt:false,
     textareaFocus: false,
     desc: '',
+    phone:''
   },
 
   /**
@@ -297,4 +298,37 @@ Page({
       textareaFocus: true
     })
   },
+  getPhoneNumber: function (e) {
+    var errMsg = e.detail.errMsg;
+    var iv = e.detail.iv;
+    var encryptedData = e.detail.encryptedData;
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      consolw.log("用户未授权获取手机号");
+    }else{
+      wx.login({
+        success: function (res) {
+          if (res.code) {
+            wx.request({
+              url: config.service.getauth,
+              data: {
+                code: res.code,
+                iv: iv,
+                encryptedData: encryptedData
+              },
+              header: {},
+              method: 'GET',
+              dataType: 'json',
+              success: function (result) {
+                that.setData({
+                  phone: result.data.purePhoneNumber
+                })
+              }
+            })
+          }
+        },
+        fail: function (res) { },
+        complete: function (res) { },
+      });
+    }
+  } 
 })
