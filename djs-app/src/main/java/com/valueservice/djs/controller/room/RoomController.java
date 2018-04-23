@@ -111,6 +111,13 @@ public class RoomController extends BaseController{
         return roomService.getRoomInfo(roomId);
     }
 
+    @PostMapping("/minigram/get/{roomId}")
+    @ResponseBody
+    public RoomDO getRoom(@PathVariable Integer roomId){
+        return roomService.getRoomInfo(roomId);
+    }
+
+
     /**
      * 验证用户输入的邀请码是否正确
      * 正确：添加用户邀请码记录并通知小程序进入直播间

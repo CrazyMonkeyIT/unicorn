@@ -22,7 +22,7 @@
   <view class="flex-wrp" style="flex-direction:row;">
     <view class="flex-item " hover-class="flex-item-hover" bindtap="toMylive">
       <view><image src="../../images/personal/audio.png"/></view>
-      <view><text>发起直播</text></view>
+      <view><text>我的直播</text></view>
     </view>
     <view class="separator"></view>
     <view class="flex-item" hover-class="flex-item-hover" bindtap="toMySubscribe">

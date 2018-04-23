@@ -40,16 +40,13 @@ Page({
       duration: 1000,
       timingFunction: 'ease',
     }),
-    imgUrls: [{
-      id: 'tp10282395', url: 'http://image.tupian114.com/20151104/10282395.jpg'
-    },{
-      id: 'tp19234926', url: 'http://image.tupian114.com/20120410/19234926.jpg'
-    }
+    imgUrls: [
     ] 
   },
   onLoad: function (e) {
     that = this;
     roomId = e.roomId;
+    that.rommCourseware();
     currentUser = userUtil.login();
     //获取用户登录信息
     wx.getSetting({
@@ -86,6 +83,25 @@ Page({
 
     //远程取一次本聊天室所有的聊天记录做一次初始化
     this.setData({ chatList: chatListData});
+  },
+  rommCourseware : function(){
+    wx.request({
+      url: config.service.host + '/minigram/getCoursewareByRoom/' + roomId,
+      method: 'POST',
+      dataType: 'json',
+      responseType: 'text',
+      success: function(res) {
+        let coursewareList = JSON.parse(res.data.splitFiles),images=[];
+        coursewareList.forEach(function(data){
+          images.push({
+            id: 'tp' + new Date().getTime(), url: data.splitFilePath
+          })
+        });
+        that.setData({
+          imgUrls: images
+        })
+      },
+    })
   },
   //发送socket消息
   socketSend: function (chatContent,client){

@@ -69,6 +69,17 @@ public class RoomCoursewareController extends BaseController{
     }
 
     /**
+     * 根据房间查课件
+     */
+    @RequestMapping("/minigram/getCoursewareByRoom/{roomId}")
+    @ResponseBody
+    public RoomCoursewareDO getRoomCourseware(@PathVariable Long roomId){
+        RoomCoursewareDO record = roomCoursewareService.getRoomCourseware(roomId);
+        return record;
+
+    }
+
+    /**
      * 保存课件
      */
     @RequestMapping("/minigram/saveCoursewareInfo")
