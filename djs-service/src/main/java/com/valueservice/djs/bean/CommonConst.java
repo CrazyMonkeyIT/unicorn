@@ -23,12 +23,12 @@ public class CommonConst {
     /**
      * 小程序的appid
      */
-    public static final String MINI_PROGRAM_APPID = "wx99b01206c5360b49";
+    public static final String MINI_PROGRAM_APPID = "wxa85064fe5afbac47";//"wx99b01206c5360b49";
 
     /**
      * 小程序的app secret
      */
-    public static final String MINI_PROGRAM_APPSECRET = "113424b4213786ce6d508d62e04ece26";
+    public static final String MINI_PROGRAM_APPSECRET = "8eba78c8b8726caddbab23737a360a69";//"113424b4213786ce6d508d62e04ece26";
 
     /**
      * 小程序的grantType
