@@ -38,7 +38,7 @@ public class WithdrawExamineService {
      * @return
      */
     public PageInfo<WithdrawExamineDO> selectList(Integer pageIndex){
-        PageHelper.offsetPage(pageIndex == null ? 1 : pageIndex, CommonConst.DEFAULT_PAGE_SIZE);
+        PageHelper.startPage(pageIndex == null ? 1 : pageIndex, CommonConst.DEFAULT_PAGE_SIZE);
         List<WithdrawExamineDO> list = withdrawExamineDOMapper.selectByList();
         return new PageInfo<WithdrawExamineDO>(list);
     }

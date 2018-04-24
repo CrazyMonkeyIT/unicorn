@@ -4,6 +4,7 @@ import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.db.dao.payment.EnterprisePayDOMapper;
 import com.valueservice.djs.db.entity.payment.EnterprisePayDO;
 import com.valueservice.djs.util.HttpClientUtil;
+import com.valueservice.djs.util.Md5Util;
 import com.valueservice.djs.util.PayUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,22 +22,22 @@ import java.util.TreeMap;
  */
 @Service
 public class EnterprisePayService {
-    @Value("appid")
+    @Value("${appid}")
     private String appId;
 
-    @Value("mchid")
+    @Value("${mchid}")
     private String mchId;
 
-    @Value("apikey")
+    @Value("${apikey}")
     private  String apiKey;
 
-    @Value("cert.file.path")
+    @Value("${cert.file.path}")
     private String certFilePath;
 
-    @Value("extranet.url")
+    @Value("${extranet.url}")
     private String extranetUrl;
 
-    @Value("local.ip")
+    @Value("${local.ip}")
     private String localIp;
 
     @Resource
@@ -62,7 +63,7 @@ public class EnterprisePayService {
         param.put("amount",amount.toString());
         param.put("desc",desc);
         param.put("spbill_create_ip",localIp);
-        param.put("sign",PayUtil.createSignString(param,apiKey));
+        param.put("sign", Md5Util.encryption(PayUtil.createSignString(param,apiKey), 32, true));
         Map<String,String> resultMap = HttpClientUtil.doPostXml(url, param, true, mchId, certFilePath);
 
         EnterprisePayDO enterprisePayDO = new EnterprisePayDO();

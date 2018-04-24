@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 用户付款接口
@@ -104,11 +102,11 @@ public class UserPayService {
             result.setResult(true);
             SortedMap<String,String> payPackage = new TreeMap<String,String>();
             payPackage.put("appId",appId);
-            payPackage.put("timeStamp",System.currentTimeMillis()+"");
-            payPackage.put("nonceStr",PayUtil.getRandomString(32));
+            payPackage.put("timeStamp",String.format("%s", (System.currentTimeMillis()/1000)));
+            payPackage.put("nonceStr",PayUtil.getRandomString(30));
             payPackage.put("package","prepay_id="+uo.getPrepayId());
             payPackage.put("signType","MD5");
-            payPackage.put("paySign",PayUtil.createSignString(payPackage,apiKey));
+            payPackage.put("paySign",Md5Util.encryption(PayUtil.createSignString(payPackage,apiKey), 32, true));
             payPackage.remove("appId");
             result.setObj(payPackage);
         }

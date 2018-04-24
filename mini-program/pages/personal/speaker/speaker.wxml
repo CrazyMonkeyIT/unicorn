@@ -39,7 +39,7 @@
                     <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">联系方式</text>
                     <view style="flex:4;" >
                       <view style="display:inline-flex;">
-                      <input  style="flex:3;" class="weui-input" name="phone" placeholder="" />
+                      <input  style="flex:3;" class="weui-input" name="phone" value="{{phone}}" placeholder="" />
                       <button style="flex:1;margin:10rpx 0rpx 10rpx 0rpx;height:56rpx;" size="mini" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">快速获取</button>
                       </view>
                     </view>
@@ -114,6 +114,15 @@
     </view>
 
     <view hidden="{{inviteInfoDiv}}">
+
+      <block wx:if="{{inviteInfo.headPhotoFile != ''}}">
+        <view class="head-page-body-info" >
+          <view style="height:240rpx;width:240rpx;border:1px dashed #E8DFDC;text-align:center;" >
+              <image src="{{inviteInfo.headPhotoFile}}" class="image" mode="aspectFit" style="width:100%;height:100%;"></image>
+          </view>
+        </view>
+      </block>
+
       <view class="navigator-box navigator-box-show">
         <view class="navigator" hover-class="none">
             <view class="navigator-content">
@@ -156,6 +165,17 @@
               <view class="navigator-text" >讲师等级</view>
               <view class='navigator-righttext-grey'>
                 {{inviteInfo.gradeName}}
+              </view>
+            </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+        <view class="navigator" hover-class="none">
+            <view class="navigator-content" style="align-items:stretch;">
+              <view class="navigator-text" style="width:50rpx;">
+                个人简介
+              </view>
+              <view class='navigator-righttext-grey' style="width:500rpx;height:auto;text-align:left;">
+                {{inviteInfo.introduction}}
               </view>
             </view>
         </view>

@@ -3,8 +3,8 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://health100.cnsoc.org/unicorn';
-'http://localhost:9090/unicorn'; ////'https://dujiaoshouzhiku.com/unicorn'////
+var host = 'http://localhost:9090/unicorn';//'https://health100.cnsoc.org/unicorn';
+ ////'https://dujiaoshouzhiku.com/unicorn'////
 var wsshost = 'wss://health100.cnsoc.org/unicorn/websocket/endpointChat';
 //'ws://localhost:9090/unicorn/websocket/endpointChat';
 //

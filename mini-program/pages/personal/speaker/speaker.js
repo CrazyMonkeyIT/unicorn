@@ -1,4 +1,5 @@
 // pages/personal/speaker/speaker.js
+const config = require("../../../config.js");
 const app = getApp();
 var that = null;
 Page({
@@ -302,11 +303,14 @@ Page({
     var errMsg = e.detail.errMsg;
     var iv = e.detail.iv;
     var encryptedData = e.detail.encryptedData;
+    console.log(e);
     if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
       consolw.log("用户未授权获取手机号");
     }else{
+      console.log("用户已授权获取手机号");
       wx.login({
         success: function (res) {
+          console.log("res.code:" + res.code);
           if (res.code) {
             wx.request({
               url: config.service.getauth,
@@ -319,6 +323,7 @@ Page({
               method: 'GET',
               dataType: 'json',
               success: function (result) {
+                console.log(result);
                 that.setData({
                   phone: result.data.purePhoneNumber
                 })

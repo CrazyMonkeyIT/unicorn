@@ -6,7 +6,7 @@ const config = require("../config.js")
  * @totalFee      金额
  * @callback      支付结束后的回调函数
  */
-const pay = function(productDetail, totalFee, payType, callback){
+const pay = function(productDetail, totalFee, callback){
   var user = wx.getStorageSync('miniUser');
   let openId = user.openId;
   wx.request({
@@ -34,14 +34,15 @@ const openPay = function (obj, callback){
     'timeStamp': obj.timeStamp,
     'nonceStr': obj.nonceStr,
     'package': obj.package,
-    'signType': 'MD5',
+    'signType': obj.signType,
     'paySign': obj.paySign,
     'success': function (res) {
         showAlter("恭喜您支付成功");
         callback();
      },
     'fail': function (res) {
-        showAlter("可能支付遇到了异常：" + res.data.message);
+        console.log(res);
+        showAlter("可能支付遇到了异常");
     }
   })
 }

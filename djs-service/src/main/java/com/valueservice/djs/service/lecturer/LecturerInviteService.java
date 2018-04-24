@@ -96,6 +96,8 @@ public class LecturerInviteService {
         lecturer.setGradeId(lecturerInvite.getGradeId());
         lecturer.setCompany(lecturerInvite.getCompany());
         lecturer.setPosition(lecturerInvite.getPosition());
+        lecturer.setIntroduction(lecturerInvite.getIntroduction());
+        lecturer.setHeadPhotoFile(lecturerInvite.getHeadPhotoFile());
         lecturer.setIsChief("NO");
         lecturer.setStatus(LecturerStatus.NORMAL.getCode());
         lecturer.setStatusDesc("首次激活");
