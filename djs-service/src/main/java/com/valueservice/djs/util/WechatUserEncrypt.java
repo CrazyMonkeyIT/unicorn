@@ -5,8 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.valueservice.djs.bean.CommonConst;
 import com.valueservice.djs.bean.EncryptUserInfo;
 import org.apache.tomcat.util.codec.binary.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +33,6 @@ public class WechatUserEncrypt {
      * @return
      */
     public static JSONObject userInfoEncrypt(String session_key, String encryptedData,String iv){
-
-        Map map = new HashMap();
         try {
             byte[] resultByte  = AES.decrypt(Base64.decodeBase64(encryptedData),
                     Base64.decodeBase64(session_key),
@@ -80,5 +85,28 @@ public class WechatUserEncrypt {
         encryptUserInfo.setProvince(userInfoJson.getString("province"));
         return encryptUserInfo;
 
+    }
+
+    /**
+     * 获取手机号授权
+     */
+    public static JSONObject getPhoneNumber(String code,String iv,String encryptedData) throws Exception{
+        JSONObject wechatAuthJson = wechatAuth(code);
+        String sessionKey = wechatAuthJson.getString("session_key");
+        byte[] resultByte = decrypt(Base64.decodeBase64(sessionKey), Base64.decodeBase64(iv), Base64.decodeBase64(encryptedData));
+        JSONObject userInfoJson = null;
+        if(null != resultByte && resultByte.length > 0){
+            String userInfo = new String(resultByte, "UTF-8");
+            userInfoJson = JSON.parseObject(userInfo);
+        }
+        return userInfoJson;
+    }
+
+    public static byte[] decrypt(byte[] key, byte[] iv, byte[] encData) throws Exception{
+        AlgorithmParameterSpec ivSpec = new IvParameterSpec(iv);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+        return cipher.doFinal(encData);
     }
 }

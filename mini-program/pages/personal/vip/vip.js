@@ -2,6 +2,7 @@
 const app = getApp();
 const paymentUtils = require("../../../global-js/paymentUtil.js");
 const userUtils = require("../../../global-js/userUtil.js")
+var that = null;
 Page({
 
   /**
@@ -18,6 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    that = this;
     if (!!app.globalData.user) {
       this.setData({
         userInfo: app.globalData.user,
@@ -60,12 +62,12 @@ Page({
     var vipid = e.target.dataset.vipid;
     var money = e.target.dataset.money;
     paymentUtils.pay("开通VIP", (money * 100), function(){
-      handleOpenMember(vipid);
+      that.handleOpenMember(vipid);
     });
   },
   //处理用户开通会员
   handleOpenMember:function(vipId){
-    var that = this;
+    
     wx.request({
       url: app.globalData.serverPath + '/vip/noauth/openMember',
       data:{

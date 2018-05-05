@@ -85,6 +85,7 @@ CREATE TABLE `t_b_enterprise_pay` (
   `amount` int(20) DEFAULT NULL,
   `desc` varchar(128) DEFAULT NULL,
   `spbill_create_ip` varchar(32) DEFAULT NULL,
+  `cmms_amt` int(20) DEFAULT NULL COMMENT '手续费（转到银行卡产生）',
   `result_code` varchar(16) DEFAULT NULL,
   `err_code` varchar(32) DEFAULT NULL,
   `err_code_des` varchar(128) DEFAULT NULL,

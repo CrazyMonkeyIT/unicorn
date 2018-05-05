@@ -299,6 +299,7 @@ Page({
       textareaFocus: true
     })
   },
+  //获取用户微信绑定的手机号（需要用户授权）
   getPhoneNumber: function (e) {
     var errMsg = e.detail.errMsg;
     var iv = e.detail.iv;
@@ -310,20 +311,17 @@ Page({
       console.log("用户已授权获取手机号");
       wx.login({
         success: function (res) {
-          console.log("res.code:" + res.code);
           if (res.code) {
             wx.request({
-              url: config.service.getauth,
+              url: app.globalData.serverPath + '/minigram/getPhoneNumber',
               data: {
                 code: res.code,
                 iv: iv,
                 encryptedData: encryptedData
               },
-              header: {},
               method: 'GET',
               dataType: 'json',
               success: function (result) {
-                console.log(result);
                 that.setData({
                   phone: result.data.purePhoneNumber
                 })

@@ -5,10 +5,13 @@
           <view class="navigator-content">
             <view class="navigator-text" >提现账户</view>
             <view class='navigator-righttext-grey'>
-              <image src='../../../../images/personal/wallet/wechat_icon.png' style="height:45rpx;width:65rpx;"></image>
+              <image hidden="{{icon0Hidden}}" src='../../../../images/personal/wallet/wechat_icon0.png' style="height:45rpx;width:65rpx;"></image>
+              <image hidden="{{icon1Hidden}}" src='../../../../images/personal/wallet/wechat_icon1.png' style="height:45rpx;width:65rpx;"></image>
             </view>
             <view class='navigator-righttext-grey' >
-              微信零钱
+              <picker style="flex:4;padding-right:30rpx;" bindchange="bindChannelChange" value="{{channelIndex}}" range-key="name" range="{{channelArray}}">
+                  <view class="weui-input">{{channelArray[channelIndex].name}}</view>
+                </picker>
             </view>
             <!--<view class="navigator-arrow"></view>-->
           </view>

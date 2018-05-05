@@ -1,5 +1,6 @@
 package com.valueservice.djs.controller.minigram;
 
+import com.alibaba.fastjson.JSONObject;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.EncryptUserInfo;
 import com.valueservice.djs.db.entity.mini.MiniUserDO;
@@ -27,8 +28,26 @@ public class MiniGramController {
     @RequestMapping(value = "/getauth", method = RequestMethod.GET)
     public @ResponseBody EncryptUserInfo getUserInfo(String code, String iv, String encryptedData){
         return WechatUserEncrypt.getEncryptUserInfo(code,iv,encryptedData);
+
     }
 
+    /**
+     * 获取用户授权手机号
+     * @param code
+     * @param iv
+     * @param encryptedData
+     * @return
+     */
+    @RequestMapping(value = "/getPhoneNumber",method = RequestMethod.GET)
+    public @ResponseBody JSONObject getPhoneNumber(String code, String iv, String encryptedData){
+        JSONObject result = null;
+        try{
+            result = WechatUserEncrypt.getPhoneNumber(code,iv,encryptedData);
+        }catch (Exception ex){
+            LOGGER.error("获取用户手机号异常",ex);
+        }
+        return result;
+    }
 
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
     public @ResponseBody BaseResult saveMiniUser(@RequestBody MiniUserDO miniUserDO){

@@ -25,7 +25,7 @@
         <view wx:if="{{index != (rooms.length - 1) }}" style="margin-left:20rpx;margin-right:20rpx;border-bottom:1px solid #ccc;"></view>
       </view>
 
-      <view wx:if=" rooms.length > 6" style="height:150rpx;width:100%;text-align:center;color:#999;">— 没有更多记录了 —</view>
+      <view wx:if="{{rooms.length > 6}}" style="height:150rpx;width:100%;text-align:center;color:#999;">— 没有更多记录了 —</view>
     </scroll-view>
 
     <navigator class="bottom-botton" url="create/create">

@@ -23,7 +23,7 @@ Page({
     roomPosterTemp: '',
     subjectArray: [],
     subjectIndex:0,
-    roomTypeArray:[{"id":0,"name":'VIP'},{"id":0,"name":'路演'}],
+    roomTypeArray:[{"id":0,"name":'VIP'},{"id":1,"name":'路演'}],
     roomTypeIndex:0,
     beginDate:'2018-01-01',
     endDate:'2018-01-02',

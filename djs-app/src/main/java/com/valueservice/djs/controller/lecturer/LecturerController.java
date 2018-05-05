@@ -133,4 +133,12 @@ public class LecturerController extends BaseController{
         return result;
     }
 
+    /**
+     * 更新讲师的账户信息
+     * @param account 讲师账户信息
+     */
+    @RequestMapping({"/updateAccount", "/noauth/updateAccount"})
+    public @ResponseBody BaseResult updateAccountBank(LecturerAccountDO account){
+        return lecturerService.updateLecturerAccount(account);
+    }
 }

@@ -29,7 +29,8 @@
     "pages/personal/mylive/create-success/create-success",
     "pages/personal/mylive/edit-field/edit-field",
     "pages/live/subjectroom/subjectroom",
-    "pages/home/search/result/result"
+    "pages/home/search/result/result",
+    "pages/personal/wallet/bind-bankcard/bind-bankcard"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

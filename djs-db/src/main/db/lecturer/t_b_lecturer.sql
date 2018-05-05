@@ -52,6 +52,9 @@ CREATE TABLE `t_b_lecturer_account` (
   `withdraw_cash` decimal(11,2) DEFAULT NULL COMMENT '可提现金额',
   `withdraw_switch` varchar(10) DEFAULT NULL COMMENT '提现开关 （ON/OFF）',
   `withdraw_off_desc` varchar(200) DEFAULT NULL COMMENT '禁止提现原因',
+  `real_name` varchar(50) DEFAULT NULL COMMENT '真实姓名',
+  `bank_code` varchar(10) DEFAULT NULL COMMENT '银行代码',
+  `bank_card_no` varchar(19) DEFAULT NULL COMMENT '银行卡号',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -104,6 +107,7 @@ CREATE TABLE `t_b_withdraw_examine` (
   `lecturer_id` int(11) DEFAULT NULL COMMENT '讲师ID',
   `withdraw_money` decimal(11,2) DEFAULT NULL COMMENT '提现金额',
   `status` varchar(10) DEFAULT NULL COMMENT '状态 （wait 等待审核/already 已通过/refuse 已拒绝）',
+  `withdraw_channel` int(1) DEFAULT NULL COMMENT '提现通道（0：微信余额 1：银行卡）',
   `create_time` timestamp NULL ,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

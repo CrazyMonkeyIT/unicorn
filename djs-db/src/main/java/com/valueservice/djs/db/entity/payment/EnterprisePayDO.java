@@ -27,6 +27,8 @@ public class EnterprisePayDO {
 
     private String spbillCreateIp;
 
+    private Integer cmmsAmt;
+
     private String resultCode;
 
     private String errCode;
@@ -40,6 +42,14 @@ public class EnterprisePayDO {
     private Date createTime;
 
     private Date updateTime;
+
+    public Integer getCmmsAmt() {
+        return cmmsAmt;
+    }
+
+    public void setCmmsAmt(Integer cmmsAmt) {
+        this.cmmsAmt = cmmsAmt;
+    }
 
     public Integer getId() {
         return id;

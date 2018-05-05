@@ -18,6 +18,12 @@ public class LecturerAccountDO {
 
     private String withdrawOffDesc;
 
+    private String realName;
+
+    private String bankCode;
+
+    private String bankCardNo;
+
     private Date createTime;
 
     private Date updateTime;
@@ -92,5 +98,29 @@ public class LecturerAccountDO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getBankCardNo() {
+        return bankCardNo;
+    }
+
+    public void setBankCardNo(String bankCardNo) {
+        this.bankCardNo = bankCardNo;
     }
 }

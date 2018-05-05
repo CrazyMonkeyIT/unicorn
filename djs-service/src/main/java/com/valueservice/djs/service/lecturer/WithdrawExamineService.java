@@ -4,10 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.valueservice.djs.bean.BaseResult;
 import com.valueservice.djs.bean.CommonConst;
+import com.valueservice.djs.db.dao.lecturer.LecturerAccountDOMapper;
 import com.valueservice.djs.db.dao.lecturer.LecturerDOMapper;
 import com.valueservice.djs.db.dao.lecturer.WithdrawExamineDOMapper;
+import com.valueservice.djs.db.entity.lecturer.LecturerAccountDO;
 import com.valueservice.djs.db.entity.lecturer.LecturerDO;
 import com.valueservice.djs.db.entity.lecturer.WithdrawExamineDO;
+import com.valueservice.djs.enums.WithdrawChannelEnum;
 import com.valueservice.djs.service.pay.EnterprisePayService;
 import com.valueservice.djs.util.DateUtil;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,9 @@ public class WithdrawExamineService {
 
     @Resource
     EnterprisePayService enterprisePayService;
+
+    @Resource
+    LecturerAccountDOMapper lectuerrAccountDOMapper;
     /**
      * 查询提现申请列表
      * @param pageIndex
@@ -65,12 +71,21 @@ public class WithdrawExamineService {
      * @param handleResult (WAIT:等待审核  ALREADY: 已通过 REFUSE: 已拒绝)
      * @return
      */
-    public BaseResult handle(Integer id,String handleResult){
+    public BaseResult handle(Integer id,String handleResult) throws Exception{
         BaseResult result = new BaseResult();
         WithdrawExamineDO record = withdrawExamineDOMapper.selectByPrimaryKey(id);
         if("ALREADY".equals(handleResult)){
             LecturerDO lecturer = lecturerDOMapper.selectByPrimaryKey(record.getLecturerId());
-            BaseResult br = enterprisePayService.pay(lecturer.getOpenId(), record.getWithdrawMoney().intValue(), "提现");
+            LecturerAccountDO lecturerAccount = lectuerrAccountDOMapper.selectByLecturerId(record.getLecturerId());
+            BaseResult br = null;
+            if(WithdrawChannelEnum.BALANCE.getCode().equals(record.getWithdrawChannel())){
+                //提交到微信余额
+                br = enterprisePayService.pay(lecturer.getOpenId(), record.getWithdrawMoney().intValue(), "提现到余额");
+            }else if(WithdrawChannelEnum.BANKCARD.getCode().equals(record.getWithdrawChannel())){
+                //提现到银行卡
+                br = enterprisePayService.payToCard(lecturerAccount.getRealName(), lecturerAccount.getBankCode(), lecturerAccount.getBankCardNo(),
+                        record.getWithdrawMoney().intValue(), "提现到银行卡");
+            }
             if(br.getResult()){
                 record.setStatus(handleResult);
                 withdrawExamineDOMapper.updateByPrimaryKeySelective(record);

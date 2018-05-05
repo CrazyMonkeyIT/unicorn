@@ -15,6 +15,7 @@
                     <th >序号</th>
                     <th >讲师姓名</th>
                     <th >提现金额</th>
+                    <th >提现通道</th>
                     <th >状态</th>
                     <th ><i class="normal-icon ace-icon fa fa-clock-o"></i>创建时间</th>
                     <th>操作</th>
@@ -27,6 +28,16 @@
                             <td>${((page.pageNum-1) * 10) + (data_index+1)}</td>
                             <td>${data.lecturerName!''}</td>
                             <td>${data.withdrawMoney!''}</td>
+                            <td>
+                                <#if data.withdrawChannel??>
+                                    <#if data.withdrawChannel == 0>
+                                        微信零钱
+                                    </#if>
+                                    <#if data.withdrawChannel == 1>
+                                        银行卡
+                                    </#if>
+                                </#if>
+                            </td>
                             <td>
                                 <#if data.status == 'WAIT'>
                                     <span class="label label-yellow label-white middle">等待审核</span>

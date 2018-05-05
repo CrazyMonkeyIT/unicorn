@@ -171,4 +171,12 @@ public class LecturerService {
         return chiefListVOList;
     }
 
+    /**
+     * 更新讲师账户信息
+     */
+    public BaseResult updateLecturerAccount(LecturerAccountDO record){
+        lecturerAccountDOMapper.updateByPrimaryKeySelective(record);
+        return new BaseResult(true);
+    }
+
 }

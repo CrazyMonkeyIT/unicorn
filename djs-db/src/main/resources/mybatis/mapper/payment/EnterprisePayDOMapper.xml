@@ -14,6 +14,7 @@
     <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
     <result column="spbill_create_ip" jdbcType="VARCHAR" property="spbillCreateIp" />
+    <result column="cmms_amt" jdbcType="INTEGER" property="cmmsAmt"/>
     <result column="result_code" jdbcType="VARCHAR" property="resultCode" />
     <result column="err_code" jdbcType="VARCHAR" property="errCode" />
     <result column="err_code_des" jdbcType="VARCHAR" property="errCodeDes" />
@@ -24,7 +25,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, mch_appid, mchid, nonce_str, sign, partner_trade_no, openid, check_name, re_user_name, 
-    amount, desc, spbill_create_ip, result_code, err_code, err_code_des, payment_no, 
+    amount, desc, spbill_create_ip, cmms_amt, result_code, err_code, err_code_des, payment_no,
     payment_time, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -76,6 +77,9 @@
       </if>
       <if test="spbillCreateIp != null">
         spbill_create_ip,
+      </if>
+      <if test="cmmsAmt != null">
+        cmms_amt,
       </if>
       <if test="resultCode != null">
         result_code,
@@ -136,6 +140,9 @@
       <if test="spbillCreateIp != null">
         #{spbillCreateIp,jdbcType=VARCHAR},
       </if>
+      <if test="cmmsAmt != null">
+        #{cmmsAmt,jdbcType=INTEGER},
+      </if>
       <if test="resultCode != null">
         #{resultCode,jdbcType=VARCHAR},
       </if>
@@ -194,6 +201,9 @@
       </if>
       <if test="spbillCreateIp != null">
         spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="cmmsAmt != null">
+        cmms_amt = #{cmmsAmt,jdbcType=INTEGER},
       </if>
       <if test="resultCode != null">
         result_code = #{resultCode,jdbcType=VARCHAR},

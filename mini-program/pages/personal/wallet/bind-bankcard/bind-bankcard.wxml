@@ -1,0 +1,54 @@
+<view class="container globle_back_view" >
+  <view class="page-body" >
+    <form bindsubmit="submit" >
+    <view class="page-section">
+
+      <view class="navigator-box navigator-box-show">
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">选择银行</text>
+                <picker style="flex:4;padding-right:30rpx;" bindchange="bindBankChange" value="{{bankIndex}}" range-key="desc" range="{{bankArray}}">
+                  <view class="weui-input">{{bankArray[bankIndex].desc}}</view>
+                </picker>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">真实姓名</text>
+                <view style="flex:4;padding-right:30rpx;">
+                  <input style="flex:4;" class="weui-input" name="realName" placeholder="" />
+                </view>
+            </view>
+          </view>
+        </view>
+        <view class="navigator-bottom-border"></view>
+
+        <view class="navigator" >
+          <view class="navigator-content" style="padding:6rpx;">
+            <view class="navigator-text" style="display:inline-flex;width:100%;">
+                <text style="flex:1;height:80rpx;line-height:80rpx;text-align:right;padding-right:20rpx;color:#000;">银行卡号</text>
+                <view style="flex:4;padding-right:30rpx;">
+                  <input style="flex:4;" class="weui-input" name="cardNo" placeholder="" />
+                </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+     
+
+      <view class="btn-area">
+        <button type="primary" formType="submit" style='background-color: #F76A2B !important;'>绑定</button>
+        <button bindtap="cancel">取消</button>
+      </view>
+    </view>
+    </form>
+  </view>
+</view>

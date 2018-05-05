@@ -14,6 +14,8 @@ public class WithdrawExamineDO {
 
     private String status;
 
+    private Integer withdrawChannel;
+
     private Date createTime;
 
     private Date updateTime;
@@ -72,5 +74,13 @@ public class WithdrawExamineDO {
 
     public void setLecturerName(String lecturerName) {
         this.lecturerName = lecturerName;
+    }
+
+    public Integer getWithdrawChannel() {
+        return withdrawChannel;
+    }
+
+    public void setWithdrawChannel(Integer withdrawChannel) {
+        this.withdrawChannel = withdrawChannel;
     }
 }

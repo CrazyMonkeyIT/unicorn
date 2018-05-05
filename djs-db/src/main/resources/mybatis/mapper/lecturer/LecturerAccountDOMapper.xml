@@ -9,12 +9,15 @@
     <result column="withdraw_cash" jdbcType="DECIMAL" property="withdrawCash" />
     <result column="withdraw_switch" jdbcType="VARCHAR" property="withdrawSwitch" />
     <result column="withdraw_off_desc" jdbcType="VARCHAR" property="withdrawOffDesc" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="bank_card_no" jdbcType="VARCHAR" property="bankCardNo" />
+    <result column="bank_code" jdbcType="VARCHAR" property="bankCode" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, lecturer_id, payment_ratio, total_income, withdraw_cash, withdraw_switch, withdraw_off_desc, 
-    create_time, update_time
+    real_name, bank_card_no, bank_code, create_time, update_time
   </sql>
   
   <select id="selectByLecturerId" resultMap="BaseResultMap">
@@ -34,16 +37,7 @@
     delete from t_b_lecturer_account
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerAccountDO">
-    insert into t_b_lecturer_account (id, lecturer_id, payment_ratio, 
-      total_income, withdraw_cash, withdraw_switch, 
-      withdraw_off_desc, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{lecturerId,jdbcType=INTEGER}, #{paymentRatio,jdbcType=INTEGER}, 
-      #{totalIncome,jdbcType=DECIMAL}, #{withdrawCash,jdbcType=DECIMAL}, #{withdrawSwitch,jdbcType=VARCHAR}, 
-      #{withdrawOffDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+
   <insert id="insertSelective" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerAccountDO">
     insert into t_b_lecturer_account
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -67,6 +61,15 @@
       </if>
       <if test="withdrawOffDesc != null">
         withdraw_off_desc,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no,
+      </if>
+      <if test="bankCode != null">
+        bank_code,
       </if>
       <if test="createTime != null">
         create_time,
@@ -97,6 +100,15 @@
       <if test="withdrawOffDesc != null">
         #{withdrawOffDesc,jdbcType=VARCHAR},
       </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null">
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -126,6 +138,15 @@
       <if test="withdrawOffDesc != null">
         withdraw_off_desc = #{withdrawOffDesc,jdbcType=VARCHAR},
       </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -135,16 +156,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.valueservice.djs.db.entity.lecturer.LecturerAccountDO">
-    update t_b_lecturer_account
-    set lecturer_id = #{lecturerId,jdbcType=INTEGER},
-      payment_ratio = #{paymentRatio,jdbcType=INTEGER},
-      total_income = #{totalIncome,jdbcType=DECIMAL},
-      withdraw_cash = #{withdrawCash,jdbcType=DECIMAL},
-      withdraw_switch = #{withdrawSwitch,jdbcType=VARCHAR},
-      withdraw_off_desc = #{withdrawOffDesc,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>
