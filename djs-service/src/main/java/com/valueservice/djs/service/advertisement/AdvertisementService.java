@@ -56,6 +56,38 @@ public class AdvertisementService {
         return advertisementDOMapper.selectAll();
     }
 
+    public void updateAdvertisement(AdvertisementVO advertisementVO){
+        AdvertisementDO advertisementDO = advertisementDOMapper.selectByPrimaryKey(advertisementVO.getAdvertisementId());
+        if(null == advertisementDO){
+            return;
+        }
+        advertisementDO.setAdvertisementTitle(advertisementVO.getAdvertisementTitle());
+        advertisementDO.setAdvertisementDesc(advertisementVO.getAdvertisementDesc());
+        String invalidDateStr;
+        if(advertisementVO.getInvalidDateStr().contains(":")){
+            invalidDateStr = advertisementVO.getInvalidDateStr();
+        }else{
+            invalidDateStr = String.format("%s %s", advertisementVO.getInvalidDateStr(), "23:59:59");
+        }
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            invalidDateStr = String.format("%s %s", advertisementVO.getInvalidDateStr(), "23:59:59");
+            advertisementDO.setInvalidDate(sf.parse(invalidDateStr));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            //TODO log
+        }
+        advertisementDO.setAdvertisementTypeId(advertisementVO.getAdvertisementTypeId());
+        advertisementDO.setAdvertisementImgPath(advertisementVO.getAdvertisementImgPath());
+        if(advertisementVO.getLecturerId() != null){
+            advertisementDO.setLecturerId(advertisementVO.getLecturerId());
+        }
+        if(advertisementVO.getRoomId() != null){
+            advertisementDO.setRoomId(advertisementVO.getRoomId());
+        }
+        advertisementDOMapper.updateByPrimaryKeySelective(advertisementDO);
+    }
+
     public void addAdvertisement(AdvertisementVO advertisementVO){
         AdvertisementDO advertisementDO = new AdvertisementDO();
         advertisementDO.setAdvertisementTypeId(advertisementVO.getAdvertisementTypeId());
@@ -84,6 +116,10 @@ public class AdvertisementService {
         AdvertisementDO dbRecord = advertisementDOMapper.selectByPrimaryKey(advertisementId);
         dbRecord.setStatus(status);
         advertisementDOMapper.updateByPrimaryKeySelective(dbRecord);
+    }
+
+    public AdvertisementDO selectById(Integer advertisementId){
+        return advertisementDOMapper.selectByPrimaryKey(advertisementId);
     }
 
 }

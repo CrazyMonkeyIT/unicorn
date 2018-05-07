@@ -22,7 +22,6 @@
                 <th >广告标题</th>
                 <th >广告描述</th>
                 <th >广告类型</th>
-                <th >广告连接</th>
                 <th >广告图片</th>
                 <th >到期时间</th>
                 <th >广告状态</th>
@@ -37,22 +36,17 @@
                 <td>${data.advertisementDesc!''}</td>
                 <td>
                     <#if data.advertisementTypeId == 1>
-                    超链接广告
+                        专题广告
                     <#elseif data.advertisementTypeId == 2>
-                    路演主题广告
+                        讲师广告
                     <#elseif data.advertisementTypeId == 3>
-                    专题广告
+                        指定路演广告
                     <#elseif data.advertisementTypeId == 4>
-                    讲师广告
-                    <#elseif data.advertisementTypeId == 5>
-                    指定路演广告
-                    <#elseif data.advertisementTypeId == 6>
-                    VIP广告
+                        VIP广告
                     <#else>
-                    未知广告类型
+                        未知广告类型
                     </#if>
                 </td>
-                <td>${data.advertisementUrl!''}</td>
                 <td style="width: 100px; height: 25px">
                     <a href="${data.advertisementImgPath}" target="_blank" >
                         <img src="${data.advertisementImgPath}" style="width: 100px; height: 25px">

@@ -27,6 +27,16 @@ public class AdvertisementDO {
 
     private Date updateTime;
 
+    private String invalidDateStr;
+
+    public String getInvalidDateStr() {
+        return invalidDateStr;
+    }
+
+    public void setInvalidDateStr(String invalidDateStr) {
+        this.invalidDateStr = invalidDateStr;
+    }
+
     public Integer getAdvertisementId() {
         return advertisementId;
     }

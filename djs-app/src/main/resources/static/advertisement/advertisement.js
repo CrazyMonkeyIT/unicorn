@@ -37,7 +37,6 @@ function saveAdvertisementInfo(){
         alert("广告描述不能为空！");
         return;
     }
-    debugger;
     var invalidDateStr = $("#editForm").find("input[name='invalidDateStr']").val();
     if(!invalidDateStr){
         alert("广告到期时间不能为空！");
@@ -61,6 +60,11 @@ function saveAdvertisementInfo(){
         }
     }
     $("#advertisementTypeId").val(type);
+    var imgInfo = $("#advertisementImgPath").val();
+    if(!imgInfo){
+        alert("请上传广告图片！");
+        return;
+    }
     $.ajax({
         url : $("#editForm").attr("action"),
         type : 'post',
@@ -76,8 +80,25 @@ function saveAdvertisementInfo(){
 }
 
 function showEditModal(advertisementTitle){
-    alert(advertisementTitle);
-//    $("#editForm").find("input[name='advertisementTitle']").val(advertisementTitle);
+    $.ajax({
+        url : basePath + "/advertisement/"+advertisementTitle,
+        type : 'get',
+        success : function(data) {
+            $("#editForm").find("input[name='advertisementId']").val(advertisementTitle);
+            $("#editForm").find("input[name='advertisementTitle']").val(data.advertisementTitle);
+            $("#editForm").find("input[name='advertisementDesc']").val(data.advertisementDesc);
+            $("#editForm").find("input[name='invalidDateStr']").val(data.invalidDateStr);
+            $("#editForm").find("input[name='advertisementImgPath']").val(data.advertisementImgPath);
+            $('#advertisementType').val(data.advertisementTypeId);
+            if(data.roomId){
+                $("#room").val(data.roomId);
+            }
+            if(data.lecturerId){
+                $("#lecturer").val(data.lecturerId);
+            }
+            $("#edit_grade_modal").modal("show");
+        }
+    });
 
 }
 
@@ -89,7 +110,6 @@ $(function(){
         $("#imgForm").ajaxSubmit({
             dataType: 'json',
             success: function (data) {
-                alert(data[0].filePath);
                 $("#advertisementImgPath").val(data[0].filePath);
             },
             error: function (msg) {
