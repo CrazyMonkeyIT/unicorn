@@ -8,6 +8,8 @@
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="subject_poster" jdbcType="VARCHAR" property="subjectPoster" />
+    <result column="start_time_str" jdbcType="VARCHAR" property="startTimeStr" />
+    <result column="end_time_str" jdbcType="VARCHAR" property="endTimeStr" />
   </resultMap>
   <sql id="Base_Column_List">
     subject_id, subject_name, start_time, end_time, create_time, subject_poster
@@ -21,7 +23,9 @@
 
   <select id="selectValidList" resultMap="BaseResultMap" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    date_format(start_time,'%Y-%m-%d') start_time_str,
+    date_format(end_time,'%Y-%m-%d') end_time_str
     from t_b_subject
     where now() between start_time and end_time
   </select>

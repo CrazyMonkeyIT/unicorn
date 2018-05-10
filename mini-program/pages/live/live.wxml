@@ -3,19 +3,57 @@
 </view>
 
 <view hidden="{{currentTab!==0}}">  
-  <navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
-    <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
-  </navigator>
+   <navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
+    <!--直播宣传图片-->
+    <view class="home-view2">
+      <image class="home-image1" src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+    </view>
+    <!--描述-->
+    <text class="home-text1">{{item.roomDesc}}</text>
+    <!--其它信息-->
+    <view class="home-view3"> 
+      <view class="home-view4" >
+        <image class="home-image-heart" src="/images/live/persons.jpeg"></image>
+        <text class="home-text-heart bgColor" >{{item.count}}</text>
+      </view>
+      <text class="home-text-time" >{{item.roadShowTimeStr}}</text>
+    </view>
+    <view class="home-view-line"></view>
+  </navigator> 
 </view>  
   
 <view hidden="{{currentTab!==1}}">  
   <navigator wx:for="{{roomList}}" wx:key="item" url="/pages/live/startlive/startlive?roomId={{item.roomId}}" open-type="navigate">
-    <image src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+    <!--直播宣传图片-->
+    <view class="home-view2">
+      <image class="home-image1" src="{{item.roomPosterPath}}" style='width:100%' mode="scaleToFill"></image>
+    </view>
+    <!--描述-->
+    <text class="home-text1">{{item.roomDesc}}</text>
+    <!--其它信息-->
+    <view class="home-view3"> 
+      <view class="home-view4" >
+        <image class="home-image-heart" src="/images/live/persons.jpeg"></image>
+        <text class="home-text-heart bgColor" >{{item.count}}</text>
+      </view>
+      <text class="home-text-time" >{{item.roadShowTimeStr}}</text>
+    </view>
+    <view class="home-view-line"></view>
   </navigator>
 </view>  
   
 <view hidden="{{currentTab!==2}}">  
   <navigator wx:for="{{subjectList}}" wx:key="item" url="/pages/live/subjectroom/subjectroom?subjectId={{item.subjectId}}" open-type="navigate">
-    <image src="{{item.subjectPoster}}" style='width:100%' mode="scaleToFill"></image>
+    <!--直播宣传图片-->
+    <view class="home-view2">
+      <image class="home-image1" src="{{item.subjectPoster}}" style='width:100%' mode="scaleToFill"></image>
+    </view>
+    <!--描述-->
+    <text class="home-text1">{{item.subjectName}}</text>
+    <!--其它信息-->
+    <view class="home-view3"> 
+      <text class="home-text-time" >专题周期：{{item.startTimeStr}} 至 {{item.endTimeStr}}</text>
+    </view>
+    <view class="home-view-line"></view>
   </navigator>
 </view>
