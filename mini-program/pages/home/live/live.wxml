@@ -1,4 +1,4 @@
-<navigator wx:for="{{liveList}}" wx:key="lives" class="live-container" url='/pages/live/startlive/startlive?roomId={{item.roomId}}'>
+<!-- <navigator wx:for="{{liveList}}" wx:key="lives" class="live-container" url='/pages/live/startlive/startlive?roomId={{item.roomId}}'>
   <view class='left'>
     <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
     <view>{{item.lecturerName}}</view>
@@ -11,3 +11,21 @@
     <view style='font-size:13px;color:#616161'>{{item.roomDesc}}</view>
   </view>
 </navigator>
+ -->
+
+<view class="live-container">
+  <navigator wx:for="{{liveList}}" wx:key="lives"  url='/pages/live/startlive/startlive?roomId={{item.roomId}}'>
+    <view class='area'>
+      <image class='images' src="{{item.roomPosterPath}}" mode="scaleToFill" ></image>
+    </view>
+    <view class='detail' >
+      <view style='width:50%'>
+        <text>讲师：{{item.lecturerName}}</text>
+      </view>
+      <view style='width:50%;text-align: center;'>
+        <image src='/images/home/persons.png' style='width: 25rpx;height: 25rpx;' ></image>
+        {{item.count}}
+      </view>
+    </view>
+  </navigator>
+</view>

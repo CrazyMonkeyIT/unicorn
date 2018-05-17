@@ -5,7 +5,7 @@
       <view class="weui-search-bar__form">
           <view class="weui-search-bar__box">
               <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-              <input type="text" class="weui-search-bar__input" placeholder="讲师/直播" value="{{wxSearchData.value}}" bindconfirm='bindconfirm'  />
+              <input type="text" class="weui-search-bar__input" placeholder="讲师 / 直播" value="{{wxSearchData.value}}" bindconfirm='bindconfirm' style='text-align: center'  />
           </view>
       </view>
   </view>
@@ -13,7 +13,7 @@
   <!--广告-->
 	<view>
     <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      autoplay="{{autoplay}}" interval="{{interval}}" circular="{{circular}}" duration="{{duration}}" >
       <block wx:for="{{advertisementList}}" wx:key="imgs">
         <swiper-item>
           <image src="{{item.advertisementImgPath}}" data-item='{{item}}' bindtap='advertisementLink' class="slide-image"/>
@@ -26,80 +26,66 @@
 	<view>
     <view class='head-container'>
       <view class="left">路演预告</view>
-      <navigator open-type='switchTab' url='../live/live' class='right'>更多 ></navigator>
+      <navigator open-type='switchTab' url='../live/live' class='right'>更多 >></navigator>
+    </view>
+    <view>
+       <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" previous-margin="100rpx" next-margin="100rpx" current="{{current}}" circular="{{circular}}">
+        <block wx:for="{{roadShowList}}" wx:key="roadShows" >
+          <swiper-item>
+            <image src="{{item.roomPosterPath}}" class="swiper-image"></image>
+          </swiper-item>
+        </block>
+      </swiper>  
     </view> 
-    <block wx:if="{{roadShowList.length > 0}}">
-      <view class="content">
-        <scroll-view scroll-x="true" style=" white-space: nowrap; display: flex">  
-          <view class="content_image" wx:for="{{roadShowList}}" wx:key="roadShows" >  
-            <view style='text-align:center'>{{item.roadShowTime}}</view>
-            <image src="{{item.roomPosterPath}}" mode="scaleToFill" style="width: 300rpx;height: 250rpx;"></image>
-          </view>  
-        </scroll-view> 
-      </view>
-    </block>
-    <block wx:else>
-      <view class='empty-info'>
-        暂无路演预告
-      </view>
-    </block>
 	</view>
 
   <!--首席-->
-  <view>
-    <view class = "head-container">
-      <view class="left">首席推荐</view>
-      <navigator url='chief/chief' class='right'>更多 ></navigator>
+  <view style="white-space: nowrap;" class="box" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
+    <view class="club" animation="{{animation1}}" bindtap="scrollLeft">
+      <image src="{{chiefList[3].headPhotoFile}}"/>
     </view>
-    <block wx:if="{{chiefList.length > 0}}">
-      <navigator wx:for="{{chiefList}}" wx:key="chiefs" class="lecturer-container" url='chief/detail/detail?chiefId={{item.lecturerId}}'>
-        <view class='left'>
-          <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:100rpx;height:100rpx;border-radius:50%"></image> </view>
-          <view>{{item.lecturerName}}</view>
-        </view>
-        <view class='right'>
-          <view class='tag'>
-            <view>{{item.company}}</view>
-            <view style='margin-left:10px;'>{{item.position}}</view>
-          </view>
-          <view style='font-size:13px;color:#616161'>{{item.introduction}}</view>
-        </view> 
+    <view class="club" animation="{{animation2}}" bindtap="scrollLeft">
+      <image src="{{chiefList[1].headPhotoFile}}"/>
+    </view>
+    <view class="club" animation="{{animation3}}">
+      <image src="{{chiefList[0].headPhotoFile}}"/>
+    </view>
+    <view class="club" animation="{{animation4}}" bindtap="scrollRight">
+      <image src="{{chiefList[2].headPhotoFile}}"/>
+    </view>
+    <view class="club" animation="{{animation5}}" bindtap="scrollRight">
+      <image src="{{chiefList[4].headPhotoFile}}"/>
+    </view>
+    <view style='text-align: center;margin-top: 60rpx;'>
+      <navigator url='chief/chief'>
+        <image src='/images/home/more.png' style='height:40rpx;width:130rpx;'></image>
       </navigator>
-    </block>
-    <block wx:else>
-      <view class='empty-info'>
-        暂无讲师信息
-      </view>
-    </block>
-    
+    </view>
   </view>
   
   <!--直播-->
-	<view>
+  <view>
     <view class = "head-container">
       <view class="left">直播列表</view>
-      <navigator url='live/live' class='right'>更多 ></navigator>
+      <navigator url='live/live' class='right'>更多 >></navigator>
     </view>
-    <block wx:if="{{liveList.length > 0}}">
-      <navigator wx:for="{{liveList}}" wx:key="lives" class="live-container" url='/pages/live/startlive/startlive?roomId={{item.roomId}}'>
-        <view class='left'>
-          <view><image src="{{item.headPhotoFile}}" mode="aspectFit" style="width:50px;height:50px;border-radius:50%"></image> </view>
-          <view>{{item.lecturerName}}</view>
+    <view class="live-container">
+      <navigator wx:for="{{liveList}}" wx:key="lives"  url='/pages/live/startlive/startlive?roomId={{item.roomId}}'>
+        <view class='area'>
+          <image class='images' src="{{item.roomPosterPath}}" mode="scaleToFill" ></image>
         </view>
-        <view class='right'>
-          <view class='tag'>
-            <view>{{item.roomName}}</view>
-            <view style='margin-left:10px;'>{{item.roomPersonCount}}</view>
+        <view class='detail' >
+          <view style='width:50%'>
+            <text>讲师：{{item.lecturerName}}</text>
           </view>
-          <view style='font-size:13px;color:#616161'>{{item.roomDesc}}</view>
+          <view style='width:50%;text-align: center;'>
+            <image src='/images/home/persons.png' style='width: 25rpx;height: 25rpx;' ></image>
+            {{item.count}}
+          </view>
         </view>
       </navigator>
-    </block>
-    <block wx:else>
-      <view class='empty-info'>
-        暂无直播
-      </view>
-    </block>
+    </view>
   </view>
 
 </view>

@@ -262,7 +262,7 @@
   <select id="selectLiveRoom" resultMap="ResultMapWithBLOBs" >
     select
     b.id lecturer_id,b.lecturer_name,b.head_photo_file,
-    a.id,a.name,a.count,a.room_desc
+    a.id,a.name,a.count,a.room_desc,room_poster_path
     from t_b_room a
     inner join t_b_lecturer b on a.lecturer_id = b.id
     where a.status = 0
