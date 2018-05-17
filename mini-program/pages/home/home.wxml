@@ -12,7 +12,7 @@
 
   <!--广告-->
 	<view>
-    <swiper indicator-dots="{{indicatorDots}}"
+    <swiper style='height:260rpx;' indicator-dots="{{indicatorDots}}"
       autoplay="{{autoplay}}" interval="{{interval}}" circular="{{circular}}" duration="{{duration}}" >
       <block wx:for="{{advertisementList}}" wx:key="imgs">
         <swiper-item>

@@ -9,10 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    indicatorDots: false,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    circular: true,
+
     navbar: ['路演', 'VIP', '专题'],
     currentTab: 0,
     roomList: [{ roomId: 1, roomPosterPath:'../../images/home/test/1.jpg'}],
-    subjectList: []
+    subjectList: [],
+    advertisementList: []
   },
   
   /**
@@ -97,6 +104,21 @@ Page({
       'currentTab': app.currentTab
     });
     this.roomList();
+    var that = this;
+    var serverPath = app.globalData.serverPath;
+    //首席列表
+    wx.request({
+      url: serverPath + '/mini/home/list',
+      method: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        let obj = result.data.obj;
+        that.setData({
+          //广告数据
+          'advertisementList': obj.advertisementList
+        })
+      }
+    })
   },
 
   /**

@@ -22,29 +22,7 @@ Page({
     roadShowList: [],
     chiefList: [],
     advertisementList: [],
-    liveList: [],
-    clubs: [
-      {
-        "image": "https://www.comein.cn/data/attachment/portal/201609/19/120230k5aa55i5daii0v5i.jpg",
-        "name": "第1个"
-      },
-      {
-        "image": "https://image.comein.cn/comein-files//img/2018-05-14/737265fc-cd25-43cc-92fa-9de6cc7f6e26/737265fc-cd25-43cc-92fa-9de6cc7f6e26.jpg!285_160",
-        "name": "第2个"
-      },
-      {
-        "image": "https://image.comein.cn/comein-files//img/2018-05-16/644fdc4d-ab66-41c4-9e18-077ce55a569e/644fdc4d-ab66-41c4-9e18-077ce55a569e.jpg!285_160",
-        "name": "第3个"
-      },
-      {
-        "image": "https://image.comein.cn/comein-files//img/2018-05-04/8f712970-ecef-40c6-a953-c1fb7e0e1765/8f712970-ecef-40c6-a953-c1fb7e0e1765.jpg!285_160",
-        "name": "第4个"
-      },
-      {
-        "image": "https://image.comein.cn/comein-files//img/2018-05-14/7069a96f-42a7-4e73-a674-cc84c2f6af57/7069a96f-42a7-4e73-a674-cc84c2f6af57.jpg!285_160",
-        "name": "第5个"
-      }
-    ]
+    liveList: []
   },
   //事件处理函数
   bindViewTap: function () {

@@ -5,6 +5,7 @@
   flex-wrap:wrap;  
   align-content:center;  
   justify-content:space-around;  
+  font-size: 25rpx;
 }
 .live-container .area {
   width:46vw;  

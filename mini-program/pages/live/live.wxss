@@ -3,6 +3,10 @@ page{
   display: flex;  
   flex-direction: column;  
 }  
+.slide-image{
+  width: 100%;
+  height: 250rpx;
+}
 .navbar{  
   flex: none;  
   display: flex;  

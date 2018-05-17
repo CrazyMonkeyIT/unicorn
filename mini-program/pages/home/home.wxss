@@ -9,7 +9,7 @@
 }
 
 .index_search{
-  height: 50px;
+  height: 50rpx;
 }
 .slide-image{
   width: 100%;
@@ -31,7 +31,7 @@
 }
 .content_image{
   display: inline-block;
-  margin: 5px;
+  margin: 5rpx;
 }
 .lecturer-list {
   width: 100%;
