@@ -65,3 +65,25 @@
   background-color: lightblue;
   opacity: 0.6;
 }
+
+/**直播列表样式*/
+.room-list{
+  display: flex;  
+  flex-direction: row;
+  font-size: 25rpx;
+}
+.room-list .img{
+  width: 30%;
+  margin-left: 20rpx;
+}
+.room-list .desc{
+  display: flex;  
+  flex-direction: column;
+  width: 40%;
+  margin-left: 20rpx;
+  color: #A9A9A9;
+}
+.room-list .btn{
+  width: 30%;
+  margin-right: 10rpx;
+}

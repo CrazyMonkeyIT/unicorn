@@ -122,6 +122,20 @@ Page({
   },
 
   /**
+   * 跳转直播页面
+   */
+  goToLive: function(event){
+    let roomId = event.target.dataset.roomid;
+    if (!roomId){
+      console.log("The room id is empty.");
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/live/startlive/startlive?roomId=' + roomId
+    })
+  },
+
+  /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
